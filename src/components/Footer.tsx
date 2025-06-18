@@ -31,12 +31,12 @@ const Footer = () => {
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Expert technology consulting services helping businesses transform 
-              their operations through innovative solutions.
+              their operations through innovative solutions since 1998.
             </p>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">+1 (202) 555-0123</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400" />
@@ -44,7 +44,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">123 Business Center Dr, Suite 100</span>
+                <span className="text-gray-300">1150 Connecticut Ave NW, Washington, DC 20036</span>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {services.map((service, index) => (
                 <li key={index}>
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
+                  <a href="#services" className="text-gray-300 hover:text-blue-400 transition-colors">
                     {service}
                   </a>
                 </li>
@@ -69,7 +69,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {company.map((item, index) => (
                 <li key={index}>
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
+                  <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">
                     {item}
                   </a>
                 </li>
@@ -97,13 +97,13 @@ const Footer = () => {
               
               {/* Social Links */}
               <div className="flex space-x-4 pt-4">
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="https://linkedin.com/company/tcl-tech-solutions" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Linkedin className="w-6 h-6" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="https://twitter.com/tcltechsolutions" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Twitter className="w-6 h-6" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="https://facebook.com/tcltechsolutions" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Facebook className="w-6 h-6" />
                 </a>
               </div>

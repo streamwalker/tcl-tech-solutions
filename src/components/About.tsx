@@ -4,8 +4,8 @@ import { CheckCircle, Award, Users, Globe } from "lucide-react";
 const About = () => {
   const stats = [
     { number: "500+", label: "Projects Completed" },
-    { number: "15+", label: "Years Experience" },
-    { number: "50+", label: "Happy Clients" },
+    { number: "25+", label: "Years Experience" },
+    { number: "150+", label: "Happy Clients" },
     { number: "24/7", label: "Support Available" }
   ];
 
@@ -38,14 +38,15 @@ const About = () => {
             </h2>
             
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              With over 25 years of experience in technology consulting, we've helped hundreds of 
-              businesses transform their operations through innovative technology solutions.
+              Founded in 1998, TCL Tech Solutions has been at the forefront of technology 
+              consulting for over 25 years. We've helped hundreds of businesses transform 
+              their operations through innovative technology solutions.
             </p>
             
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               Our team of certified experts specializes in cloud computing, cybersecurity, 
-              digital transformation, and IT infrastructure. We're committed to delivering 
-              solutions that drive growth and efficiency.
+              digital transformation, and IT infrastructure. Based in Washington, DC, we 
+              serve clients nationwide with solutions that drive growth and efficiency.
             </p>
 
             <div className="space-y-4 mb-8">

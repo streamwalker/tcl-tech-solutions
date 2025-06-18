@@ -8,8 +8,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      details: ["+1 (555) 123-4567", "+1 (555) 123-4568"],
-      link: "tel:+15551234567"
+      details: ["+1 (202) 555-0123", "+1 (202) 555-0124"],
+      link: "tel:+12025550123"
     },
     {
       icon: Mail,
@@ -20,13 +20,13 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Office",
-      details: ["123 Business Center Dr", "Suite 100, City, ST 12345"],
+      details: ["1150 Connecticut Ave NW", "Washington, DC 20036"],
       link: "https://maps.google.com"
     },
     {
       icon: Clock,
       title: "Business Hours",
-      details: ["Mon - Fri: 8:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM"],
+      details: ["Mon - Fri: 8:00 AM - 6:00 PM EST", "Sat: 9:00 AM - 2:00 PM EST"],
       link: null
     }
   ];
