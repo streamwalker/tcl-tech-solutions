@@ -38,7 +38,7 @@ const About = () => {
             </h2>
             
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              With over 15 years of experience in technology consulting, we've helped hundreds of 
+              With over 25 years of experience in technology consulting, we've helped hundreds of 
               businesses transform their operations through innovative technology solutions.
             </p>
             
