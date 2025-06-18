@@ -1,16 +1,22 @@
 
+import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
-import Features from "../components/Features";
-import TechShowcase from "../components/TechShowcase";
-import CallToAction from "../components/CallToAction";
+import Services from "../components/Services";
+import About from "../components/About";
+import Experience from "../components/Experience";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-white">
+      <Navigation />
       <Hero />
-      <Features />
-      <TechShowcase />
-      <CallToAction />
+      <Services />
+      <About />
+      <Experience />
+      <Contact />
+      <Footer />
     </div>
   );
 };

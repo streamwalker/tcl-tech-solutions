@@ -1,68 +1,83 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Home, Mic, Zap } from "lucide-react";
+import { ArrowRight, Shield, Zap, Users } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-3xl"></div>
-      
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
+    <section id="home" className="relative pt-16 pb-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left content */}
+          <div>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Expert Technology
+              <span className="block text-blue-600">Consulting Services</span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              Transform your business with cutting-edge technology solutions. 
+              We provide comprehensive IT consulting, cloud migration, cybersecurity, 
+              and digital transformation services.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+                Get Started
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
+                View Our Services
+              </Button>
+            </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto">
-        {/* Icon group */}
-        <div className="flex justify-center space-x-4 mb-8 animate-fade-in">
-          <div className="p-3 bg-white/10 rounded-full backdrop-blur-lg">
-            <Home className="w-6 h-6 text-blue-400" />
+            {/* Key features */}
+            <div className="grid grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-blue-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                  <Shield className="w-8 h-8 text-blue-600" />
+                </div>
+                <p className="text-sm font-medium text-gray-700">Secure Solutions</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-green-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-green-600" />
+                </div>
+                <p className="text-sm font-medium text-gray-700">Fast Implementation</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-purple-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                  <Users className="w-8 h-8 text-purple-600" />
+                </div>
+                <p className="text-sm font-medium text-gray-700">Expert Team</p>
+              </div>
+            </div>
           </div>
-          <div className="p-3 bg-white/10 rounded-full backdrop-blur-lg">
-            <Mic className="w-6 h-6 text-purple-400" />
-          </div>
-          <div className="p-3 bg-white/10 rounded-full backdrop-blur-lg">
-            <Zap className="w-6 h-6 text-green-400" />
-          </div>
-        </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
-          Your Home
-          <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Thinks Ahead
-          </span>
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in delay-200">
-          Experience the future of smart homes with AI that learns, adapts, and anticipates your every need. 
-          Transform your living space into an intelligent sanctuary.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-400">
-          <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            Experience the Future
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-          <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full backdrop-blur-lg transition-all duration-300 hover:scale-105">
-            Watch Demo
-          </Button>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-8 mt-16 animate-fade-in delay-600">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">500K+</div>
-            <div className="text-gray-400 text-sm md:text-base">Homes Automated</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">99.9%</div>
-            <div className="text-gray-400 text-sm md:text-base">Uptime</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">24/7</div>
-            <div className="text-gray-400 text-sm md:text-base">AI Learning</div>
+          {/* Right visual */}
+          <div className="relative">
+            <div className="bg-white rounded-2xl shadow-2xl p-8">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                  <span className="font-medium text-gray-800">Cloud Migration</span>
+                  <span className="text-blue-600 font-semibold">95% Complete</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                  <span className="font-medium text-gray-800">Security Audit</span>
+                  <span className="text-green-600 font-semibold">✓ Complete</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                  <span className="font-medium text-gray-800">System Integration</span>
+                  <span className="text-yellow-600 font-semibold">In Progress</span>
+                </div>
+                <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white">
+                  <p className="text-sm mb-2">Next Recommendation:</p>
+                  <p className="font-semibold">Implement automated backup solution for enhanced data protection</p>
+                </div>
+              </div>
+            </div>
+            {/* Decorative elements */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-200 rounded-full opacity-50"></div>
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-200 rounded-full opacity-30"></div>
           </div>
         </div>
       </div>
