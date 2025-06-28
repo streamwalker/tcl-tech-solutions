@@ -1,5 +1,7 @@
+
 import { Home, Shield, Smartphone, Database, Cog, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { handleContactClick } from "@/utils/smoothScroll";
 
 const Services = () => {
   const services = [
@@ -103,7 +105,10 @@ const Services = () => {
             <p className="text-lg text-gray-600 mb-6">
               Partnerships with Coventry, Lennar, and Perry Homes. Specializing in zip codes 78245, 78253, and 78254.
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3">
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3"
+              onClick={handleContactClick}
+            >
               Schedule Consultation
             </Button>
           </div>

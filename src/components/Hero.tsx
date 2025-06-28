@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Zap, Users } from "lucide-react";
+import { handleContactClick, handleServicesClick } from "@/utils/smoothScroll";
 
 const Hero = () => {
   return (
@@ -21,11 +22,20 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+              <Button 
+                size="lg" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg"
+                onClick={handleContactClick}
+              >
                 Get Smart Home Quote
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg"
+                onClick={handleServicesClick}
+              >
                 View Our Packages
               </Button>
             </div>

@@ -1,5 +1,6 @@
 
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
+import { handleContactClick } from "@/utils/smoothScroll";
 
 const Footer = () => {
   const services = [
@@ -20,6 +21,12 @@ const Footer = () => {
     "Service Areas"
   ];
 
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // For now, redirect to contact form
+    handleContactClick();
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -34,18 +41,27 @@ const Footer = () => {
               Veteran-founded company specializing in AI-powered home technology solutions.
             </p>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
+              <button 
+                onClick={() => window.location.href = "tel:+12109958655"}
+                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
+              >
                 <Phone className="w-5 h-5 text-blue-400" />
                 <span className="text-gray-300">(210) 995-8655</span>
-              </div>
-              <div className="flex items-center space-x-3">
+              </button>
+              <button 
+                onClick={() => window.location.href = "mailto:theconnectedlifestyletech@gmail.com"}
+                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
+              >
                 <Mail className="w-5 h-5 text-blue-400" />
                 <span className="text-gray-300">theconnectedlifestyletech@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
+              </button>
+              <button 
+                onClick={() => window.open("https://maps.google.com/?q=7634+Goldstrike+Drive+San+Antonio+TX+78254", "_blank")}
+                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
+              >
                 <MapPin className="w-5 h-5 text-blue-400" />
                 <span className="text-gray-300">7634 Goldstrike Drive, San Antonio, TX 78254</span>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -55,9 +71,22 @@ const Footer = () => {
             <ul className="space-y-3">
               {services.map((service, index) => (
                 <li key={index}>
-                  <a href="#services" className="text-gray-300 hover:text-blue-400 transition-colors">
+                  <button 
+                    onClick={() => {
+                      const element = document.getElementById('services');
+                      if (element) {
+                        const navHeight = 64;
+                        const elementPosition = element.offsetTop - navHeight;
+                        window.scrollTo({
+                          top: elementPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="text-gray-300 hover:text-blue-400 transition-colors text-left"
+                  >
                     {service}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -69,9 +98,26 @@ const Footer = () => {
             <ul className="space-y-3">
               {company.map((item, index) => (
                 <li key={index}>
-                  <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">
+                  <button 
+                    onClick={() => {
+                      if (item === "Contact") {
+                        handleContactClick();
+                      } else {
+                        const element = document.getElementById('about');
+                        if (element) {
+                          const navHeight = 64;
+                          const elementPosition = element.offsetTop - navHeight;
+                          window.scrollTo({
+                            top: elementPosition,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }
+                    }}
+                    className="text-gray-300 hover:text-blue-400 transition-colors text-left"
+                  >
                     {item}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -84,16 +130,20 @@ const Footer = () => {
               Subscribe to our newsletter for the latest smart home technology insights and updates.
             </p>
             <div className="space-y-4">
-              <div className="flex">
+              <form onSubmit={handleNewsletterSubmit} className="flex">
                 <input
                   type="email"
                   placeholder="Enter your email"
                   className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                  required
                 />
-                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md transition-colors">
+                <button 
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md transition-colors"
+                >
                   Subscribe
                 </button>
-              </div>
+              </form>
               
               {/* Social Links */}
               <div className="flex space-x-4 pt-4">

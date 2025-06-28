@@ -1,8 +1,13 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, Phone } from "lucide-react";
+import { handleContactClick } from "@/utils/smoothScroll";
 
 const CallToAction = () => {
+  const handlePhoneCall = () => {
+    window.location.href = "tel:+12109958655";
+  };
+
   return (
     <section className="py-20 px-6 relative">
       <div className="max-w-4xl mx-auto text-center">
@@ -24,25 +29,40 @@ const CallToAction = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                onClick={handleContactClick}
+              >
                 Schedule Consultation
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full backdrop-blur-lg transition-all duration-300 hover:scale-105">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full backdrop-blur-lg transition-all duration-300 hover:scale-105"
+                onClick={handleContactClick}
+              >
                 Download Brochure
               </Button>
             </div>
 
             {/* Contact info */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-gray-300">
-              <div className="flex items-center space-x-2">
+              <button 
+                onClick={() => window.location.href = "mailto:theconnectedlifestyletech@gmail.com"}
+                className="flex items-center space-x-2 hover:text-blue-400 transition-colors"
+              >
                 <Mail className="w-5 h-5 text-blue-400" />
                 <span>theconnectedlifestyletech@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-2">
+              </button>
+              <button 
+                onClick={handlePhoneCall}
+                className="flex items-center space-x-2 hover:text-purple-400 transition-colors"
+              >
                 <Phone className="w-5 h-5 text-purple-400" />
                 <span>(210) 995-8655</span>
-              </div>
+              </button>
             </div>
           </div>
         </div>
