@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
@@ -8,8 +7,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      details: ["210-544-8355"],
-      link: "tel:+12105448355"
+      details: ["(210) 995-8655"],
+      link: "tel:+12109958655"
     },
     {
       icon: Mail,

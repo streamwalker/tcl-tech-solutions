@@ -41,7 +41,7 @@ const CallToAction = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-5 h-5 text-purple-400" />
-                <span>210-544-8355</span>
+                <span>(210) 995-8655</span>
               </div>
             </div>
           </div>
