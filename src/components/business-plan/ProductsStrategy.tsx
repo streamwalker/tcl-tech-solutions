@@ -107,7 +107,7 @@ const ProductsStrategy = () => {
               <div className="text-sm text-gray-600">Lifetime Value (3-yr)</div>
             </div>
             <div className="text-center p-4 bg-orange-50 rounded-lg">
-              <div className="text-2xl font-bold text-orange-600">< 3 mo</div>
+              <div className="text-2xl font-bold text-orange-600">{"< 3 mo"}</div>
               <div className="text-sm text-gray-600">Payback Period (Tier 2+)</div>
             </div>
           </div>
@@ -176,7 +176,7 @@ const ProductsStrategy = () => {
                 <div className="text-sm text-gray-600">Free-to-Paid Conversion</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-orange-600">< $175</div>
+                <div className="font-bold text-orange-600">{"< $175"}</div>
                 <div className="text-sm text-gray-600">Cost Per Lead</div>
               </div>
             </div>

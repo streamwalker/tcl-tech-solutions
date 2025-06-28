@@ -38,15 +38,15 @@ const OperationsTeam = () => {
             <h3 className="font-semibold mb-4">Service Level Agreements</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">< 48h</div>
+                <div className="text-2xl font-bold text-blue-600">{"< 48h"}</div>
                 <div className="text-sm text-gray-600">Quote Response Time</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">< 7 days</div>
+                <div className="text-2xl font-bold text-green-600">{"< 7 days"}</div>
                 <div className="text-sm text-gray-600">Install Start Time</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">< 4h</div>
+                <div className="text-2xl font-bold text-purple-600">{"< 4h"}</div>
                 <div className="text-sm text-gray-600">Support Response</div>
               </div>
               <div className="text-center">

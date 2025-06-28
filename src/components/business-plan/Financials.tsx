@@ -159,7 +159,7 @@ const Financials = () => {
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>• Customer Acquisition Cost: $500</li>
                 <li>• Lifetime Value: $5,000 (3-year horizon)</li>
-                <li>• Payback Period: < 3 months (Tier 2+)</li>
+                <li>• Payback Period: {"< 3 months"} (Tier 2+)</li>
                 <li>• Monthly Recurring Revenue target: $500K by Month 24</li>
               </ul>
             </div>

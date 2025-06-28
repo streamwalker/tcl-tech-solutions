@@ -72,7 +72,7 @@ const CompanyMarket = () => {
             <h3 className="text-lg font-semibold mb-4">Industry Outlook</h3>
             <p className="text-gray-700 mb-4">
               Global smart-home market projected to reach $537B by 2030 (CAGR 19.2%). 
-              U.S. market > $40B in 2024; AI voice-control & energy-management segments growing fastest.
+              U.S. market exceeds $40B in 2024; AI voice-control & energy-management segments growing fastest.
             </p>
           </div>
 
