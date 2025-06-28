@@ -3,27 +3,27 @@ import { CheckCircle, Award, Users, Globe } from "lucide-react";
 
 const About = () => {
   const stats = [
-    { number: "500+", label: "Projects Completed" },
-    { number: "25+", label: "Years Experience" },
-    { number: "150+", label: "Happy Clients" },
+    { number: "15+", label: "Smart Homes Installed" },
+    { number: "22+", label: "Years Military Experience" },
+    { number: "2024", label: "Founded in San Antonio" },
     { number: "24/7", label: "Support Available" }
   ];
 
   const values = [
     {
       icon: Award,
-      title: "Excellence",
-      description: "We deliver exceptional results through cutting-edge technology and proven methodologies."
+      title: "Veteran Discipline",
+      description: "Military precision and attention to detail in every installation and service call."
     },
     {
       icon: Users,
-      title: "Partnership",
-      description: "We work closely with our clients as trusted partners, not just service providers."
+      title: "Customer Obsession",
+      description: "We work closely with clients as trusted partners, delivering personalized smart home experiences."
     },
     {
       icon: Globe,
-      title: "Innovation",
-      description: "We stay ahead of technology trends to provide innovative solutions for your business."
+      title: "Innovation at Speed",
+      description: "We stay ahead of smart home trends with proprietary AI logic and cutting-edge integration."
     }
   ];
 
@@ -38,37 +38,39 @@ const About = () => {
             </h2>
             
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Founded in 1998, TCL Tech Solutions has been at the forefront of technology 
-              consulting for over 25 years. We've helped hundreds of businesses transform 
-              their operations through innovative technology solutions.
+              Founded in 2024, TCL Tech Solutions is San Antonio's premier smart home integration 
+              company. Led by Damon Jackson, a 22-year U.S. Air Force veteran with a B.S. in 
+              Network & Communications Management, we specialize in transforming homes with 
+              intelligent automation systems.
             </p>
             
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Our team of certified experts specializes in cloud computing, cybersecurity, 
-              digital transformation, and IT infrastructure. Based in Washington, DC, we 
-              serve clients nationwide with solutions that drive growth and efficiency.
+              We've completed over 15 smart home installations, integrating enterprise-grade 
+              networks, home automation, and custom theater systems enhanced by proprietary AI logic. 
+              Our direct-dealer relationships with SnapAV, Wave Electronics, URC, and AVA Cinema 
+              ensure premium quality at competitive prices.
             </p>
 
             <div className="space-y-4 mb-8">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-600 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900">Certified Professionals</h4>
-                  <p className="text-gray-600">AWS, Azure, and Google Cloud certified consultants</p>
+                  <h4 className="font-semibold text-gray-900">Veteran Leadership</h4>
+                  <p className="text-gray-600">22 years of Air Force experience bringing discipline and precision</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-600 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900">Industry Expertise</h4>
-                  <p className="text-gray-600">Deep knowledge across multiple industries and sectors</p>
+                  <h4 className="font-semibold text-gray-900">Local Expertise</h4>
+                  <p className="text-gray-600">Deep knowledge of San Antonio market and builder partnerships</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-600 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900">Proven Track Record</h4>
-                  <p className="text-gray-600">500+ successful projects and 98% client satisfaction</p>
+                  <h4 className="font-semibold text-gray-900">AI-Enhanced Systems</h4>
+                  <p className="text-gray-600">Proprietary logic that learns and adapts to your lifestyle</p>
                 </div>
               </div>
             </div>
@@ -107,6 +109,18 @@ const About = () => {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                Our Competitive Advantages
+              </h4>
+              <ul className="space-y-2 text-gray-700">
+                <li>• Integrated solutions combining networking, automation, and entertainment</li>
+                <li>• Rapid 2.5-day installation window with 24-hour support SLA</li>
+                <li>• Customization for each client's unique lifestyle and preferences</li>
+                <li>• Proactive monitoring and predictive maintenance</li>
+              </ul>
             </div>
           </div>
         </div>

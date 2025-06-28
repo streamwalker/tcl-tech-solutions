@@ -1,43 +1,49 @@
 
-import { Cloud, Shield, Smartphone, Database, Cog, BarChart } from "lucide-react";
+import { Home, Shield, Smartphone, Database, Cog, BarChart } from "lucide-react";
 
 const Services = () => {
   const services = [
     {
-      icon: Cloud,
-      title: "Cloud Computing",
-      description: "Migrate to the cloud with confidence. AWS, Azure, and Google Cloud solutions tailored to your business needs.",
-      features: ["Cloud Migration", "Infrastructure Setup", "Cost Optimization"]
+      icon: Home,
+      title: "Smart Home Automation",
+      description: "Complete home automation with lighting, climate, security, and entertainment integrated into one seamless system.",
+      features: ["Smart Lighting Control", "Climate Automation", "Security Integration"],
+      tier: "Tier 1: $2k-8k"
     },
     {
       icon: Shield,
-      title: "Cybersecurity",
-      description: "Protect your business with comprehensive security solutions and threat monitoring.",
-      features: ["Security Audits", "Threat Detection", "Compliance Management"]
+      title: "Enterprise Networks",
+      description: "Robust, scalable networking solutions traditionally reserved for enterprises, tailored for homes and small businesses.",
+      features: ["Secure WiFi Networks", "Remote Monitoring", "VPN Configuration"],
+      tier: "All Tiers"
     },
     {
       icon: Database,
-      title: "Data Management",
-      description: "Optimize your data infrastructure for better insights and business intelligence.",
-      features: ["Database Design", "Data Analytics", "Business Intelligence"]
+      title: "Home Theater Technology",
+      description: "Custom home theater environments with immersive audio-visual systems and smart control integration.",
+      features: ["Custom Theater Design", "Multi-Room Audio", "Universal Control"],
+      tier: "Tier 2: $8k-40k"
     },
     {
       icon: Smartphone,
-      title: "Digital Transformation",
-      description: "Modernize your business processes with cutting-edge digital solutions.",
-      features: ["Process Automation", "Mobile Solutions", "Digital Strategy"]
+      title: "AI Logic Integration",
+      description: "Proprietary AI that learns your behavior patterns and automates your home systems intelligently.",
+      features: ["Behavioral Learning", "Predictive Automation", "Voice Integration"],
+      tier: "Premium Add-on"
     },
     {
       icon: Cog,
-      title: "IT Infrastructure",
-      description: "Build robust, scalable IT infrastructure that grows with your business.",
-      features: ["Network Design", "Server Management", "System Integration"]
+      title: "Managed Services",
+      description: "24/7 monitoring, proactive maintenance, and ongoing support to keep your systems running perfectly.",
+      features: ["24/7 Monitoring", "Remote Diagnostics", "Proactive Updates"],
+      tier: "$50-200/month"
     },
     {
       icon: BarChart,
-      title: "Business Analytics",
-      description: "Turn your data into actionable insights with advanced analytics solutions.",
-      features: ["Data Visualization", "Predictive Analytics", "Performance Metrics"]
+      title: "Premium Installations",
+      description: "High-end whole-home automation and custom theater installations for luxury properties.",
+      features: ["Estate Automation", "Custom Theaters", "Luxury Integration"],
+      tier: "Tier 3: $40k+"
     }
   ];
 
@@ -46,10 +52,10 @@ const Services = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Our Technology Services
+            Our Smart Home Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We provide comprehensive technology solutions to help your business thrive in the digital age.
+            We provide comprehensive smart home integration services tailored to San Antonio homeowners and small businesses.
           </p>
         </div>
 
@@ -67,9 +73,15 @@ const Services = () => {
                 {service.title}
               </h3>
               
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-4 leading-relaxed">
                 {service.description}
               </p>
+
+              <div className="mb-4">
+                <span className="inline-block bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1 rounded-full">
+                  {service.tier}
+                </span>
+              </div>
 
               <ul className="space-y-2">
                 {service.features.map((feature, featureIndex) => (
@@ -81,6 +93,20 @@ const Services = () => {
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Serving San Antonio & Surrounding Areas
+            </h3>
+            <p className="text-lg text-gray-600 mb-6">
+              Partnerships with Coventry, Lennar, and Perry Homes. Specializing in zip codes 78245, 78253, and 78254.
+            </p>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3">
+              Schedule Consultation
+            </Button>
+          </div>
         </div>
       </div>
     </section>

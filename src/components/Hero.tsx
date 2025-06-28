@@ -10,23 +10,23 @@ const Hero = () => {
           {/* Left content */}
           <div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Expert Technology
-              <span className="block text-blue-600">Consulting Services</span>
+              Smart Home Integration
+              <span className="block text-blue-600">Powered by AI</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Transform your business with cutting-edge technology solutions. 
-              We provide comprehensive IT consulting, cloud migration, cybersecurity, 
-              and digital transformation services.
+              Transform your San Antonio home with cutting-edge automation systems. 
+              We provide comprehensive smart home integration, enterprise-grade networks, 
+              and custom home theater solutions with proprietary AI logic.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
-                Get Started
+                Get Smart Home Quote
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
-                View Our Services
+                View Our Packages
               </Button>
             </div>
 
@@ -36,19 +36,19 @@ const Hero = () => {
                 <div className="bg-blue-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                   <Shield className="w-8 h-8 text-blue-600" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Secure Solutions</p>
+                <p className="text-sm font-medium text-gray-700">Veteran Founded</p>
               </div>
               <div className="text-center">
                 <div className="bg-green-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                   <Zap className="w-8 h-8 text-green-600" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Fast Implementation</p>
+                <p className="text-sm font-medium text-gray-700">2.5-Day Install</p>
               </div>
               <div className="text-center">
                 <div className="bg-purple-100 rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Expert Team</p>
+                <p className="text-sm font-medium text-gray-700">24/7 Support</p>
               </div>
             </div>
           </div>
@@ -58,20 +58,20 @@ const Hero = () => {
             <div className="bg-white rounded-2xl shadow-2xl p-8">
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                  <span className="font-medium text-gray-800">Cloud Migration</span>
+                  <span className="font-medium text-gray-800">Smart Lighting</span>
                   <span className="text-blue-600 font-semibold">95% Complete</span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                  <span className="font-medium text-gray-800">Security Audit</span>
+                  <span className="font-medium text-gray-800">Home Theater Setup</span>
                   <span className="text-green-600 font-semibold">✓ Complete</span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
-                  <span className="font-medium text-gray-800">System Integration</span>
+                  <span className="font-medium text-gray-800">AI Integration</span>
                   <span className="text-yellow-600 font-semibold">In Progress</span>
                 </div>
                 <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white">
                   <p className="text-sm mb-2">Next Recommendation:</p>
-                  <p className="font-semibold">Implement automated backup solution for enhanced data protection</p>
+                  <p className="font-semibold">Enable voice control for climate system based on your daily patterns</p>
                 </div>
               </div>
             </div>
