@@ -8,25 +8,25 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      details: ["+1 (202) 555-0123", "+1 (202) 555-0124"],
-      link: "tel:+12025550123"
+      details: ["210-544-8355"],
+      link: "tel:+12105448355"
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@tcltechsolutions.com", "support@tcltechsolutions.com"],
-      link: "mailto:info@tcltechsolutions.com"
+      details: ["theconnectedlifestyletech@gmail.com"],
+      link: "mailto:theconnectedlifestyletech@gmail.com"
     },
     {
       icon: MapPin,
       title: "Office",
-      details: ["1150 Connecticut Ave NW", "Washington, DC 20036"],
-      link: "https://maps.google.com"
+      details: ["7634 Goldstrike Drive", "San Antonio, TX 78254"],
+      link: "https://maps.google.com/?q=7634+Goldstrike+Drive+San+Antonio+TX+78254"
     },
     {
       icon: Clock,
       title: "Business Hours",
-      details: ["Mon - Fri: 8:00 AM - 6:00 PM EST", "Sat: 9:00 AM - 2:00 PM EST"],
+      details: ["Mon - Fri: 8:00 AM - 6:00 PM CST", "Sat: 9:00 AM - 2:00 PM CST"],
       link: null
     }
   ];
@@ -39,8 +39,8 @@ const Contact = () => {
             Get In Touch
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Ready to transform your business with technology? Contact us for a free consultation 
-            and discover how we can help you achieve your goals.
+            Ready to transform your home with smart technology? Contact us for a free consultation 
+            and discover how we can automate your San Antonio home.
           </p>
         </div>
 
@@ -68,14 +68,14 @@ const Contact = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email
                 </label>
-                <Input type="email" placeholder="john@company.com" />
+                <Input type="email" placeholder="john@example.com" />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Company
+                  Phone
                 </label>
-                <Input placeholder="Your Company Name" />
+                <Input placeholder="Your phone number" />
               </div>
               
               <div>
@@ -83,12 +83,12 @@ const Contact = () => {
                   Service Interest
                 </label>
                 <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option>Cloud Computing</option>
-                  <option>Cybersecurity</option>
-                  <option>Digital Transformation</option>
-                  <option>IT Infrastructure</option>
-                  <option>Data Management</option>
-                  <option>Business Analytics</option>
+                  <option>Smart Home Automation</option>
+                  <option>Enterprise Networks</option>
+                  <option>Home Theater Technology</option>
+                  <option>AI Logic Integration</option>
+                  <option>Managed Services</option>
+                  <option>Premium Installations</option>
                 </select>
               </div>
               
@@ -99,7 +99,7 @@ const Contact = () => {
                 <textarea 
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows={4}
-                  placeholder="Tell us about your project..."
+                  placeholder="Tell us about your smart home project..."
                 ></textarea>
               </div>
               
@@ -140,8 +140,8 @@ const Contact = () => {
             <div className="mt-12 bg-blue-600 rounded-2xl p-8 text-white">
               <h4 className="text-xl font-bold mb-4">Ready to Get Started?</h4>
               <p className="mb-6">
-                Schedule a free consultation with our technology experts. We'll assess your 
-                current setup and provide recommendations tailored to your business needs.
+                Schedule a free consultation with our smart home experts. We'll assess your 
+                current setup and provide recommendations tailored to your home automation needs.
               </p>
               <Button variant="outline" className="bg-white text-blue-600 hover:bg-gray-100 border-white">
                 Schedule Consultation

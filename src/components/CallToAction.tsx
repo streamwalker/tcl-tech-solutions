@@ -37,11 +37,11 @@ const CallToAction = () => {
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-gray-300">
               <div className="flex items-center space-x-2">
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span>hello@smarthome.ai</span>
+                <span>theconnectedlifestyletech@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-5 h-5 text-purple-400" />
-                <span>1-800-SMART-AI</span>
+                <span>210-544-8355</span>
               </div>
             </div>
           </div>

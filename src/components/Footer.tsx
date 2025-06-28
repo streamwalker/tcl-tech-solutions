@@ -3,21 +3,21 @@ import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
 
 const Footer = () => {
   const services = [
-    "Cloud Computing",
-    "Cybersecurity",
-    "Digital Transformation",
-    "IT Infrastructure",
-    "Data Management",
-    "Business Analytics"
+    "Smart Home Automation",
+    "Enterprise Networks", 
+    "Home Theater Technology",
+    "AI Logic Integration",
+    "Managed Services",
+    "Premium Installations"
   ];
 
   const company = [
     "About Us",
     "Our Team",
-    "Careers",
     "Case Studies",
     "Blog",
-    "Contact"
+    "Contact",
+    "Service Areas"
   ];
 
   return (
@@ -27,24 +27,24 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <h3 className="text-2xl font-bold text-blue-400 mb-6">
-              TCL Tech Solutions
+              The Connected Lifestyle
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Expert technology consulting services helping businesses transform 
-              their operations through innovative solutions since 1998.
+              Smart home integration and automation services for San Antonio homeowners. 
+              Veteran-founded company specializing in AI-powered home technology solutions.
             </p>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">+1 (202) 555-0123</span>
+                <span className="text-gray-300">210-544-8355</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">info@tcltechsolutions.com</span>
+                <span className="text-gray-300">theconnectedlifestyletech@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">1150 Connecticut Ave NW, Washington, DC 20036</span>
+                <span className="text-gray-300">7634 Goldstrike Drive, San Antonio, TX 78254</span>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6">Stay Updated</h4>
             <p className="text-gray-300 mb-4">
-              Subscribe to our newsletter for the latest technology insights and updates.
+              Subscribe to our newsletter for the latest smart home technology insights and updates.
             </p>
             <div className="space-y-4">
               <div className="flex">
@@ -97,13 +97,13 @@ const Footer = () => {
               
               {/* Social Links */}
               <div className="flex space-x-4 pt-4">
-                <a href="https://linkedin.com/company/tcl-tech-solutions" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Linkedin className="w-6 h-6" />
                 </a>
-                <a href="https://twitter.com/tcltechsolutions" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Twitter className="w-6 h-6" />
                 </a>
-                <a href="https://facebook.com/tcltechsolutions" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Facebook className="w-6 h-6" />
                 </a>
               </div>
@@ -114,7 +114,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 TCL Tech Solutions. All rights reserved.
+            © 2024 The Connected Lifestyle. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
