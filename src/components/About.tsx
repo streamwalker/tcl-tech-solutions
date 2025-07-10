@@ -47,8 +47,8 @@ const About = () => {
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               We've completed over 15 smart home installations, integrating enterprise-grade 
               networks, home automation, and custom theater systems enhanced by proprietary AI logic. 
-              Our direct-dealer relationships with SnapAV, Wave Electronics, URC, and AVA Cinema 
-              ensure premium quality at competitive prices.
+              Our authorized dealer partnerships with Control4, URC, AVA Cinema, Savant, RTI, and 
+              Lutron RadioRA2 ensure access to professional-grade equipment at competitive prices.
             </p>
 
             <div className="space-y-4 mb-8">

@@ -103,7 +103,8 @@ const Services = () => {
               Serving San Antonio & Surrounding Areas
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Partnerships with Coventry, Lennar, and Perry Homes. Specializing in zip codes 78245, 78253, and 78254.
+              Authorized dealer for Control4, URC, AVA Cinema, Savant, RTI, and Lutron RadioRA2. 
+              Partnerships with Coventry, Lennar, and Perry Homes in zip codes 78245, 78253, and 78254.
             </p>
             <Button 
               className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3"
