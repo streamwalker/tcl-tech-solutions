@@ -21,6 +21,20 @@ const Hero = () => {
               and custom home theater solutions with proprietary AI logic.
             </p>
             
+            {/* Veteran-Owned Trust Badge */}
+            <div className="flex justify-center sm:justify-start mb-8">
+              <div className="flex items-center bg-white rounded-lg shadow-lg px-6 py-3 border border-blue-100">
+                <img 
+                  src="/VetOwnedLogo.jpg" 
+                  alt="Certified Veteran-Owned Business" 
+                  className="h-12 w-auto mr-3"
+                />
+                <span className="text-sm font-semibold text-gray-700">
+                  Certified Veteran-Owned Business
+                </span>
+              </div>
+            </div>
+            
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button 
                 size="lg" 
