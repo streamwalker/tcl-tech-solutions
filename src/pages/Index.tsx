@@ -27,11 +27,8 @@ const Index = () => {
             Transform your business operations with our comprehensive workforce intelligence and management platform.
           </p>
           <div className="space-x-4">
-            <Link to="/auth">
-              <Button size="lg">Get Started</Button>
-            </Link>
             <Link to="/dashboard">
-              <Button variant="outline" size="lg">View Dashboard</Button>
+              <Button size="lg">Access Platform</Button>
             </Link>
           </div>
         </div>
