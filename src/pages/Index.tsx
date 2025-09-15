@@ -1,5 +1,7 @@
 
 import Navigation from "../components/Navigation";
+import { Button } from "../components/ui/button";
+import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Services from "../components/Services";
 import DealerPartners from "../components/DealerPartners";
@@ -16,6 +18,25 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Navigation />
       <Hero />
+      
+      {/* Workforce Management Platform Access */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Access Workforce Management Platform</h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Transform your business operations with our comprehensive workforce intelligence and management platform.
+          </p>
+          <div className="space-x-4">
+            <Link to="/auth">
+              <Button size="lg">Get Started</Button>
+            </Link>
+            <Link to="/dashboard">
+              <Button variant="outline" size="lg">View Dashboard</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       <Services />
       <DealerPartners />
       <ValuePropositions />
