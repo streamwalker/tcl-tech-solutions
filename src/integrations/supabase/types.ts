@@ -7,567 +7,382 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      approval_workflows: {
+      access_requests: {
         Row: {
-          assigned_to: string | null
-          comments: string | null
+          created_at: string | null
+          email: string
           id: string
-          post_id: string
-          requested_at: string | null
-          requested_by: string
+          notes: string | null
+          reason: string | null
           reviewed_at: string | null
+          reviewed_by: string | null
           status: string | null
-          workspace_id: string
-        }
-        Insert: {
-          assigned_to?: string | null
-          comments?: string | null
-          id?: string
-          post_id: string
-          requested_at?: string | null
-          requested_by: string
-          reviewed_at?: string | null
-          status?: string | null
-          workspace_id: string
-        }
-        Update: {
-          assigned_to?: string | null
-          comments?: string | null
-          id?: string
-          post_id?: string
-          requested_at?: string | null
-          requested_by?: string
-          reviewed_at?: string | null
-          status?: string | null
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "approval_workflows_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "approval_workflows_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      automated_tasks: {
-        Row: {
-          checklist_item_id: string
-          completed_at: string | null
-          created_at: string
-          error_message: string | null
-          execution_results: Json | null
-          id: string
-          priority: number
-          progress_percentage: number | null
-          scheduled_for: string | null
-          started_at: string | null
-          status: string
-          task_config: Json | null
-          task_description: string | null
-          task_name: string
-          task_type: string
-          updated_at: string
-        }
-        Insert: {
-          checklist_item_id: string
-          completed_at?: string | null
-          created_at?: string
-          error_message?: string | null
-          execution_results?: Json | null
-          id?: string
-          priority?: number
-          progress_percentage?: number | null
-          scheduled_for?: string | null
-          started_at?: string | null
-          status?: string
-          task_config?: Json | null
-          task_description?: string | null
-          task_name: string
-          task_type: string
-          updated_at?: string
-        }
-        Update: {
-          checklist_item_id?: string
-          completed_at?: string | null
-          created_at?: string
-          error_message?: string | null
-          execution_results?: Json | null
-          id?: string
-          priority?: number
-          progress_percentage?: number | null
-          scheduled_for?: string | null
-          started_at?: string | null
-          status?: string
-          task_config?: Json | null
-          task_description?: string | null
-          task_name?: string
-          task_type?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      avatar_configs: {
-        Row: {
-          created_at: string | null
-          emotion_triggers: Json | null
-          expressions: Json | null
-          id: string
-          model: string
-          style: string | null
           updated_at: string | null
-          user_id: string
-          voice_id: string
         }
         Insert: {
           created_at?: string | null
-          emotion_triggers?: Json | null
-          expressions?: Json | null
+          email: string
           id?: string
-          model: string
-          style?: string | null
+          notes?: string | null
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           updated_at?: string | null
-          user_id: string
-          voice_id: string
         }
         Update: {
           created_at?: string | null
-          emotion_triggers?: Json | null
-          expressions?: Json | null
+          email?: string
           id?: string
-          model?: string
-          style?: string | null
+          notes?: string | null
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           updated_at?: string | null
-          user_id?: string
-          voice_id?: string
         }
         Relationships: []
       }
-      checklist_assessments: {
-        Row: {
-          ai_reasoning: string | null
-          ai_score: number | null
-          confidence_level: string | null
-          created_at: string
-          evidence_found: string[] | null
-          id: string
-          item_id: string
-          last_assessed_at: string
-          suggested_actions: string[] | null
-          updated_at: string
-        }
-        Insert: {
-          ai_reasoning?: string | null
-          ai_score?: number | null
-          confidence_level?: string | null
-          created_at?: string
-          evidence_found?: string[] | null
-          id?: string
-          item_id: string
-          last_assessed_at?: string
-          suggested_actions?: string[] | null
-          updated_at?: string
-        }
-        Update: {
-          ai_reasoning?: string | null
-          ai_score?: number | null
-          confidence_level?: string | null
-          created_at?: string
-          evidence_found?: string[] | null
-          id?: string
-          item_id?: string
-          last_assessed_at?: string
-          suggested_actions?: string[] | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      completed_checklist_items: {
-        Row: {
-          created_at: string
-          item_id: string
-        }
-        Insert: {
-          created_at?: string
-          item_id: string
-        }
-        Update: {
-          created_at?: string
-          item_id?: string
-        }
-        Relationships: []
-      }
-      document_scans: {
-        Row: {
-          checklist_item_id: string
-          confidence_score: number | null
-          created_at: string
-          extracted_evidence: Json | null
-          file_name: string
-          file_size: number
-          file_type: string
-          file_url: string
-          id: string
-          scan_results: Json | null
-          scan_status: string
-          updated_at: string
-        }
-        Insert: {
-          checklist_item_id: string
-          confidence_score?: number | null
-          created_at?: string
-          extracted_evidence?: Json | null
-          file_name: string
-          file_size: number
-          file_type: string
-          file_url: string
-          id?: string
-          scan_results?: Json | null
-          scan_status?: string
-          updated_at?: string
-        }
-        Update: {
-          checklist_item_id?: string
-          confidence_score?: number | null
-          created_at?: string
-          extracted_evidence?: Json | null
-          file_name?: string
-          file_size?: number
-          file_type?: string
-          file_url?: string
-          id?: string
-          scan_results?: Json | null
-          scan_status?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      integration_monitors: {
-        Row: {
-          api_endpoint: string | null
-          check_frequency: number
-          check_results: Json | null
-          checklist_item_id: string
-          compliance_status: string | null
-          created_at: string
-          error_message: string | null
-          id: string
-          integration_name: string
-          last_check_at: string | null
-          next_check_at: string | null
-          provider_type: string
-          status: string
-          updated_at: string
-        }
-        Insert: {
-          api_endpoint?: string | null
-          check_frequency?: number
-          check_results?: Json | null
-          checklist_item_id: string
-          compliance_status?: string | null
-          created_at?: string
-          error_message?: string | null
-          id?: string
-          integration_name: string
-          last_check_at?: string | null
-          next_check_at?: string | null
-          provider_type: string
-          status?: string
-          updated_at?: string
-        }
-        Update: {
-          api_endpoint?: string | null
-          check_frequency?: number
-          check_results?: Json | null
-          checklist_item_id?: string
-          compliance_status?: string | null
-          created_at?: string
-          error_message?: string | null
-          id?: string
-          integration_name?: string
-          last_check_at?: string | null
-          next_check_at?: string | null
-          provider_type?: string
-          status?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      keycrafter_jobs: {
-        Row: {
-          app_website: string
-          company_name: string
-          completed_at: string | null
-          created_at: string | null
-          current_step: string | null
-          error_message: string | null
-          id: string
-          intervention_data: Json | null
-          platform: string
-          progress_percentage: number | null
-          redirect_uri: string
-          requires_intervention: string | null
-          screenshot_url: string | null
-          status: string
-          updated_at: string | null
-          workspace_id: string
-        }
-        Insert: {
-          app_website: string
-          company_name: string
-          completed_at?: string | null
-          created_at?: string | null
-          current_step?: string | null
-          error_message?: string | null
-          id?: string
-          intervention_data?: Json | null
-          platform: string
-          progress_percentage?: number | null
-          redirect_uri: string
-          requires_intervention?: string | null
-          screenshot_url?: string | null
-          status?: string
-          updated_at?: string | null
-          workspace_id: string
-        }
-        Update: {
-          app_website?: string
-          company_name?: string
-          completed_at?: string | null
-          created_at?: string | null
-          current_step?: string | null
-          error_message?: string | null
-          id?: string
-          intervention_data?: Json | null
-          platform?: string
-          progress_percentage?: number | null
-          redirect_uri?: string
-          requires_intervention?: string | null
-          screenshot_url?: string | null
-          status?: string
-          updated_at?: string | null
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "keycrafter_jobs_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      oauth_states: {
+      ai_research_history: {
         Row: {
           created_at: string | null
-          expires_at: string
           id: string
-          platform: Database["public"]["Enums"]["social_platform"]
-          redirect_uri: string
-          scopes: string[] | null
-          state_token: string
-          used_at: string | null
-          user_id: string
-          workspace_id: string
+          query: string
+          response: Json | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string | null
-          expires_at: string
           id?: string
-          platform: Database["public"]["Enums"]["social_platform"]
-          redirect_uri: string
-          scopes?: string[] | null
-          state_token: string
-          used_at?: string | null
-          user_id: string
-          workspace_id: string
+          query: string
+          response?: Json | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string | null
-          expires_at?: string
           id?: string
-          platform?: Database["public"]["Enums"]["social_platform"]
-          redirect_uri?: string
-          scopes?: string[] | null
-          state_token?: string
-          used_at?: string | null
-          user_id?: string
-          workspace_id?: string
+          query?: string
+          response?: Json | null
+          user_id?: string | null
         }
         Relationships: []
       }
-      platform_configs: {
+      amenities: {
         Row: {
-          api_base_url: string
-          created_at: string | null
-          default_scopes: string[] | null
+          additional_fee: number | null
+          amenity_type: string
+          community_id: string
+          created_at: string
+          description: string | null
           id: string
           is_active: boolean | null
-          oauth_authorize_url: string
-          oauth_token_url: string
-          platform: Database["public"]["Enums"]["social_platform"]
-          rate_limit_per_hour: number | null
-          updated_at: string | null
+          name: string
+          updated_at: string
         }
         Insert: {
-          api_base_url: string
-          created_at?: string | null
-          default_scopes?: string[] | null
+          additional_fee?: number | null
+          amenity_type: string
+          community_id: string
+          created_at?: string
+          description?: string | null
           id?: string
           is_active?: boolean | null
-          oauth_authorize_url: string
-          oauth_token_url: string
-          platform: Database["public"]["Enums"]["social_platform"]
-          rate_limit_per_hour?: number | null
-          updated_at?: string | null
+          name: string
+          updated_at?: string
         }
         Update: {
-          api_base_url?: string
-          created_at?: string | null
-          default_scopes?: string[] | null
+          additional_fee?: number | null
+          amenity_type?: string
+          community_id?: string
+          created_at?: string
+          description?: string | null
           id?: string
           is_active?: boolean | null
-          oauth_authorize_url?: string
-          oauth_token_url?: string
-          platform?: Database["public"]["Enums"]["social_platform"]
-          rate_limit_per_hour?: number | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      post_analytics: {
-        Row: {
-          clicks: number | null
-          comments: number | null
-          engagement_rate: number | null
-          external_post_id: string | null
-          id: string
-          impressions: number | null
-          last_updated: string | null
-          likes: number | null
-          platform: Database["public"]["Enums"]["social_platform"]
-          post_id: string
-          shares: number | null
-        }
-        Insert: {
-          clicks?: number | null
-          comments?: number | null
-          engagement_rate?: number | null
-          external_post_id?: string | null
-          id?: string
-          impressions?: number | null
-          last_updated?: string | null
-          likes?: number | null
-          platform: Database["public"]["Enums"]["social_platform"]
-          post_id: string
-          shares?: number | null
-        }
-        Update: {
-          clicks?: number | null
-          comments?: number | null
-          engagement_rate?: number | null
-          external_post_id?: string | null
-          id?: string
-          impressions?: number | null
-          last_updated?: string | null
-          likes?: number | null
-          platform?: Database["public"]["Enums"]["social_platform"]
-          post_id?: string
-          shares?: number | null
+          name?: string
+          updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "post_analytics_post_id_fkey"
-            columns: ["post_id"]
+            foreignKeyName: "amenities_community_id_fkey"
+            columns: ["community_id"]
             isOneToOne: false
-            referencedRelation: "posts"
+            referencedRelation: "communities"
             referencedColumns: ["id"]
           },
         ]
       }
-      posts: {
+      audit_logs: {
         Row: {
-          approval_required: boolean | null
-          approved_at: string | null
-          approved_by: string | null
-          content: string
-          created_at: string | null
-          created_by: string
-          hashtags: string[] | null
+          action: string
+          actor_id: string | null
+          created_at: string
+          details: Json | null
+          event_type: string
           id: string
-          is_recurring: boolean | null
-          media_urls: string[] | null
-          platforms: Database["public"]["Enums"]["social_platform"][] | null
-          published_at: string | null
-          recurring_schedule: Json | null
-          scheduled_for: string | null
-          social_account_ids: string[] | null
-          status: Database["public"]["Enums"]["post_status"] | null
-          updated_at: string | null
-          workspace_id: string
+          ip_address: string | null
+          resource_id: string | null
+          resource_type: string
+          user_agent: string | null
         }
         Insert: {
-          approval_required?: boolean | null
-          approved_at?: string | null
-          approved_by?: string | null
-          content: string
-          created_at?: string | null
-          created_by: string
-          hashtags?: string[] | null
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json | null
+          event_type: string
           id?: string
-          is_recurring?: boolean | null
-          media_urls?: string[] | null
-          platforms?: Database["public"]["Enums"]["social_platform"][] | null
-          published_at?: string | null
-          recurring_schedule?: Json | null
-          scheduled_for?: string | null
-          social_account_ids?: string[] | null
-          status?: Database["public"]["Enums"]["post_status"] | null
-          updated_at?: string | null
-          workspace_id: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type: string
+          user_agent?: string | null
         }
         Update: {
-          approval_required?: boolean | null
-          approved_at?: string | null
-          approved_by?: string | null
-          content?: string
-          created_at?: string | null
-          created_by?: string
-          hashtags?: string[] | null
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json | null
+          event_type?: string
           id?: string
-          is_recurring?: boolean | null
-          media_urls?: string[] | null
-          platforms?: Database["public"]["Enums"]["social_platform"][] | null
-          published_at?: string | null
-          recurring_schedule?: Json | null
-          scheduled_for?: string | null
-          social_account_ids?: string[] | null
-          status?: Database["public"]["Enums"]["post_status"] | null
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      beta_whitelist: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          invited: boolean | null
+          is_admin_notified: boolean | null
+          role: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          invited?: boolean | null
+          is_admin_notified?: boolean | null
+          role?: string | null
           updated_at?: string | null
-          workspace_id?: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          invited?: boolean | null
+          is_admin_notified?: boolean | null
+          role?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      buying_power_data: {
+        Row: {
+          calculated: Json | null
+          created_at: string | null
+          id: string
+          inputs: Json
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          calculated?: Json | null
+          created_at?: string | null
+          id?: string
+          inputs?: Json
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          calculated?: Json | null
+          created_at?: string | null
+          id?: string
+          inputs?: Json
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      communities: {
+        Row: {
+          city: string | null
+          completion_status: string | null
+          county: string | null
+          created_at: string
+          created_by: string | null
+          data_quality_score: number | null
+          description: string | null
+          developer_name: string | null
+          email: string | null
+          home_count: number | null
+          id: string
+          last_updated: string | null
+          lot_size_range: string | null
+          name: string
+          phone: string | null
+          price_range_max: number | null
+          price_range_min: number | null
+          source_type: string | null
+          source_url: string | null
+          square_footage_range: string | null
+          state: string | null
+          updated_at: string
+          website_url: string | null
+          year_established: number | null
+          zip_code: string | null
+        }
+        Insert: {
+          city?: string | null
+          completion_status?: string | null
+          county?: string | null
+          created_at?: string
+          created_by?: string | null
+          data_quality_score?: number | null
+          description?: string | null
+          developer_name?: string | null
+          email?: string | null
+          home_count?: number | null
+          id?: string
+          last_updated?: string | null
+          lot_size_range?: string | null
+          name: string
+          phone?: string | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          source_type?: string | null
+          source_url?: string | null
+          square_footage_range?: string | null
+          state?: string | null
+          updated_at?: string
+          website_url?: string | null
+          year_established?: number | null
+          zip_code?: string | null
+        }
+        Update: {
+          city?: string | null
+          completion_status?: string | null
+          county?: string | null
+          created_at?: string
+          created_by?: string | null
+          data_quality_score?: number | null
+          description?: string | null
+          developer_name?: string | null
+          email?: string | null
+          home_count?: number | null
+          id?: string
+          last_updated?: string | null
+          lot_size_range?: string | null
+          name?: string
+          phone?: string | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          source_type?: string | null
+          source_url?: string | null
+          square_footage_range?: string | null
+          state?: string | null
+          updated_at?: string
+          website_url?: string | null
+          year_established?: number | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
+      drafts: {
+        Row: {
+          created_at: string | null
+          data: Json | null
+          form_slug: string
+          id: string
+          step: number
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data?: Json | null
+          form_slug: string
+          id?: string
+          step?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json | null
+          form_slug?: string
+          id?: string
+          step?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      hoa_profiles: {
+        Row: {
+          amenities_included: string[] | null
+          annual_fee: number | null
+          community_id: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          hoa_name: string | null
+          id: string
+          initiation_fee: number | null
+          management_company: string | null
+          monthly_fee: number | null
+          restrictions: Json | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          amenities_included?: string[] | null
+          annual_fee?: number | null
+          community_id: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          hoa_name?: string | null
+          id?: string
+          initiation_fee?: number | null
+          management_company?: string | null
+          monthly_fee?: number | null
+          restrictions?: Json | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          amenities_included?: string[] | null
+          annual_fee?: number | null
+          community_id?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          hoa_name?: string | null
+          id?: string
+          initiation_fee?: number | null
+          management_company?: string | null
+          monthly_fee?: number | null
+          restrictions?: Json | null
+          updated_at?: string
+          website_url?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "posts_workspace_id_fkey"
-            columns: ["workspace_id"]
+            foreignKeyName: "hoa_profiles_community_id_fkey"
+            columns: ["community_id"]
             isOneToOne: false
-            referencedRelation: "workspaces"
+            referencedRelation: "communities"
             referencedColumns: ["id"]
           },
         ]
@@ -576,307 +391,256 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string | null
-          email: string
-          full_name: string | null
+          display_name: string | null
+          email: string | null
+          first_name: string | null
           id: string
-          timezone: string | null
+          last_name: string | null
           updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string | null
-          email: string
-          full_name?: string | null
+          display_name?: string | null
+          email?: string | null
+          first_name?: string | null
           id: string
-          timezone?: string | null
+          last_name?: string | null
           updated_at?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string | null
-          email?: string
-          full_name?: string | null
+          display_name?: string | null
+          email?: string | null
+          first_name?: string | null
           id?: string
-          timezone?: string | null
+          last_name?: string | null
           updated_at?: string | null
         }
         Relationships: []
       }
-      social_accounts: {
-        Row: {
-          account_id: string
-          account_name: string
-          connected_by: string
-          created_at: string | null
-          encrypted_access_token: string | null
-          encrypted_refresh_token: string | null
-          error_message: string | null
-          expires_at: string | null
-          id: string
-          is_active: boolean | null
-          last_sync_at: string | null
-          platform: Database["public"]["Enums"]["social_platform"]
-          platform_user_id: string | null
-          platform_username: string | null
-          scopes: string[] | null
-          sync_status: string | null
-          token_expires_at: string | null
-          updated_at: string | null
-          workspace_id: string
-        }
-        Insert: {
-          account_id: string
-          account_name: string
-          connected_by: string
-          created_at?: string | null
-          encrypted_access_token?: string | null
-          encrypted_refresh_token?: string | null
-          error_message?: string | null
-          expires_at?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_sync_at?: string | null
-          platform: Database["public"]["Enums"]["social_platform"]
-          platform_user_id?: string | null
-          platform_username?: string | null
-          scopes?: string[] | null
-          sync_status?: string | null
-          token_expires_at?: string | null
-          updated_at?: string | null
-          workspace_id: string
-        }
-        Update: {
-          account_id?: string
-          account_name?: string
-          connected_by?: string
-          created_at?: string | null
-          encrypted_access_token?: string | null
-          encrypted_refresh_token?: string | null
-          error_message?: string | null
-          expires_at?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_sync_at?: string | null
-          platform?: Database["public"]["Enums"]["social_platform"]
-          platform_user_id?: string | null
-          platform_username?: string | null
-          scopes?: string[] | null
-          sync_status?: string | null
-          token_expires_at?: string | null
-          updated_at?: string | null
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "social_accounts_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      sync_logs: {
+      scheduled_scraping_jobs: {
         Row: {
           completed_at: string | null
-          error_details: Json | null
-          id: string
-          next_sync_at: string | null
-          records_processed: number | null
-          social_account_id: string
-          started_at: string | null
-          status: string
-          sync_type: string
-        }
-        Insert: {
-          completed_at?: string | null
-          error_details?: Json | null
-          id?: string
-          next_sync_at?: string | null
-          records_processed?: number | null
-          social_account_id: string
-          started_at?: string | null
-          status: string
-          sync_type: string
-        }
-        Update: {
-          completed_at?: string | null
-          error_details?: Json | null
-          id?: string
-          next_sync_at?: string | null
-          records_processed?: number | null
-          social_account_id?: string
-          started_at?: string | null
-          status?: string
-          sync_type?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sync_logs_social_account_id_fkey"
-            columns: ["social_account_id"]
-            isOneToOne: false
-            referencedRelation: "social_accounts"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      templates: {
-        Row: {
-          content: string
-          created_at: string | null
-          created_by: string
-          hashtags: string[] | null
-          id: string
-          is_public: boolean | null
-          name: string
-          platforms: Database["public"]["Enums"]["social_platform"][] | null
-          updated_at: string | null
-          usage_count: number | null
-          workspace_id: string
-        }
-        Insert: {
-          content: string
-          created_at?: string | null
-          created_by: string
-          hashtags?: string[] | null
-          id?: string
-          is_public?: boolean | null
-          name: string
-          platforms?: Database["public"]["Enums"]["social_platform"][] | null
-          updated_at?: string | null
-          usage_count?: number | null
-          workspace_id: string
-        }
-        Update: {
-          content?: string
-          created_at?: string | null
-          created_by?: string
-          hashtags?: string[] | null
-          id?: string
-          is_public?: boolean | null
-          name?: string
-          platforms?: Database["public"]["Enums"]["social_platform"][] | null
-          updated_at?: string | null
-          usage_count?: number | null
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "templates_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      workflow_orchestrations: {
-        Row: {
           created_at: string
-          execution_history: Json | null
+          created_by: string | null
+          cron_schedule: string
+          error_message: string | null
+          estimated_duration: number | null
           id: string
-          last_execution: string | null
-          next_execution: string | null
-          priority_algorithm: string
-          scheduling_rules: Json | null
-          status: string
+          isActive: boolean
+          job_type: string
+          last_run: string | null
+          name: string
+          next_run: string | null
+          priority: string | null
+          progress: Json | null
+          results: Json | null
+          started_at: string | null
+          status: string | null
+          target_config: Json
           updated_at: string
-          workflow_config: Json
-          workflow_description: string | null
-          workflow_name: string
         }
         Insert: {
+          completed_at?: string | null
           created_at?: string
-          execution_history?: Json | null
+          created_by?: string | null
+          cron_schedule: string
+          error_message?: string | null
+          estimated_duration?: number | null
           id?: string
-          last_execution?: string | null
-          next_execution?: string | null
-          priority_algorithm?: string
-          scheduling_rules?: Json | null
-          status?: string
+          isActive?: boolean
+          job_type: string
+          last_run?: string | null
+          name: string
+          next_run?: string | null
+          priority?: string | null
+          progress?: Json | null
+          results?: Json | null
+          started_at?: string | null
+          status?: string | null
+          target_config?: Json
           updated_at?: string
-          workflow_config?: Json
-          workflow_description?: string | null
-          workflow_name: string
         }
         Update: {
+          completed_at?: string | null
           created_at?: string
-          execution_history?: Json | null
+          created_by?: string | null
+          cron_schedule?: string
+          error_message?: string | null
+          estimated_duration?: number | null
           id?: string
-          last_execution?: string | null
-          next_execution?: string | null
-          priority_algorithm?: string
-          scheduling_rules?: Json | null
-          status?: string
+          isActive?: boolean
+          job_type?: string
+          last_run?: string | null
+          name?: string
+          next_run?: string | null
+          priority?: string | null
+          progress?: Json | null
+          results?: Json | null
+          started_at?: string | null
+          status?: string | null
+          target_config?: Json
           updated_at?: string
-          workflow_config?: Json
-          workflow_description?: string | null
-          workflow_name?: string
         }
         Relationships: []
       }
-      workspace_members: {
+      scraping_jobs: {
         Row: {
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          error_message: string | null
           id: string
-          invited_by: string | null
-          joined_at: string | null
-          role: Database["public"]["Enums"]["workspace_role"]
-          user_id: string
-          workspace_id: string
+          job_type: string
+          priority: string
+          progress: Json
+          results: Json | null
+          started_at: string | null
+          status: string
+          target_config: Json
+          updated_at: string
         }
         Insert: {
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
           id?: string
-          invited_by?: string | null
-          joined_at?: string | null
-          role?: Database["public"]["Enums"]["workspace_role"]
-          user_id: string
-          workspace_id: string
+          job_type: string
+          priority?: string
+          progress?: Json
+          results?: Json | null
+          started_at?: string | null
+          status?: string
+          target_config?: Json
+          updated_at?: string
         }
         Update: {
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
           id?: string
-          invited_by?: string | null
-          joined_at?: string | null
-          role?: Database["public"]["Enums"]["workspace_role"]
-          user_id?: string
-          workspace_id?: string
+          job_type?: string
+          priority?: string
+          progress?: Json
+          results?: Json | null
+          started_at?: string | null
+          status?: string
+          target_config?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tax_profiles: {
+        Row: {
+          assessment_ratio: number | null
+          community_id: string
+          county_name: string | null
+          created_at: string
+          disability_exemption: number | null
+          homestead_exemption: number | null
+          id: string
+          last_assessment_year: number | null
+          senior_exemption: number | null
+          tax_rate: number | null
+          updated_at: string
+          veteran_exemption: number | null
+        }
+        Insert: {
+          assessment_ratio?: number | null
+          community_id: string
+          county_name?: string | null
+          created_at?: string
+          disability_exemption?: number | null
+          homestead_exemption?: number | null
+          id?: string
+          last_assessment_year?: number | null
+          senior_exemption?: number | null
+          tax_rate?: number | null
+          updated_at?: string
+          veteran_exemption?: number | null
+        }
+        Update: {
+          assessment_ratio?: number | null
+          community_id?: string
+          county_name?: string | null
+          created_at?: string
+          disability_exemption?: number | null
+          homestead_exemption?: number | null
+          id?: string
+          last_assessment_year?: number | null
+          senior_exemption?: number | null
+          tax_rate?: number | null
+          updated_at?: string
+          veteran_exemption?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "workspace_members_workspace_id_fkey"
-            columns: ["workspace_id"]
+            foreignKeyName: "tax_profiles_community_id_fkey"
+            columns: ["community_id"]
             isOneToOne: false
-            referencedRelation: "workspaces"
+            referencedRelation: "communities"
             referencedColumns: ["id"]
           },
         ]
       }
-      workspaces: {
+      user_page_states: {
         Row: {
-          created_at: string | null
-          description: string | null
+          created_at: string
           id: string
-          name: string
-          owner_id: string
-          slug: string
-          updated_at: string | null
+          last_modified: string
+          route: string
+          state_data: Json
+          user_id: string
+          version: string
         }
         Insert: {
-          created_at?: string | null
-          description?: string | null
+          created_at?: string
           id?: string
-          name: string
-          owner_id: string
-          slug: string
-          updated_at?: string | null
+          last_modified?: string
+          route: string
+          state_data?: Json
+          user_id: string
+          version?: string
         }
         Update: {
-          created_at?: string | null
-          description?: string | null
+          created_at?: string
           id?: string
-          name?: string
-          owner_id?: string
-          slug?: string
-          updated_at?: string | null
+          last_modified?: string
+          route?: string
+          state_data?: Json
+          user_id?: string
+          version?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -885,34 +649,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_user_workspace_role: {
-        Args: { workspace_id: string; user_id: string }
-        Returns: Database["public"]["Enums"]["workspace_role"]
-      }
-      user_has_workspace_access: {
-        Args: { workspace_id: string; user_id: string }
-        Returns: boolean
-      }
-      user_is_workspace_owner: {
-        Args: { workspace_id: string; user_id: string }
+      check_email_whitelist_secure: {
+        Args: { check_email: string }
         Returns: boolean
       }
     }
     Enums: {
-      post_status:
-        | "draft"
-        | "scheduled"
-        | "published"
-        | "failed"
-        | "pending_approval"
-      social_platform:
-        | "facebook"
-        | "instagram"
-        | "twitter"
-        | "linkedin"
-        | "youtube"
-        | "tiktok"
-      workspace_role: "owner" | "admin" | "editor" | "viewer"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1039,23 +782,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      post_status: [
-        "draft",
-        "scheduled",
-        "published",
-        "failed",
-        "pending_approval",
-      ],
-      social_platform: [
-        "facebook",
-        "instagram",
-        "twitter",
-        "linkedin",
-        "youtube",
-        "tiktok",
-      ],
-      workspace_role: ["owner", "admin", "editor", "viewer"],
-    },
+    Enums: {},
   },
 } as const
