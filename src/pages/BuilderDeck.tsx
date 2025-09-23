@@ -629,34 +629,42 @@ const BuilderDeck = () => {
 
           {/* Brand Partners */}
           <div className="grid md:grid-cols-4 gap-6">
-            <Card className="card-elevated p-6 text-center">
-              <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Lightbulb className="w-8 h-8 text-primary" />
-              </div>
-              <h4 className="font-semibold">Lutron</h4>
-              <p className="text-sm text-muted-foreground">Lighting Control</p>
-            </Card>
-            <Card className="card-elevated p-6 text-center">
-              <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Home className="w-8 h-8 text-primary" />
-              </div>
-              <h4 className="font-semibold">Control4</h4>
-              <p className="text-sm text-muted-foreground">Automation</p>
-            </Card>
-            <Card className="card-elevated p-6 text-center">
-              <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Volume2 className="w-8 h-8 text-primary" />
-              </div>
-              <h4 className="font-semibold">Savant</h4>
-              <p className="text-sm text-muted-foreground">Premium Systems</p>
-            </Card>
-            <Card className="card-elevated p-6 text-center">
-              <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Camera className="w-8 h-8 text-primary" />
-              </div>
-              <h4 className="font-semibold">IC Realtime</h4>
-              <p className="text-sm text-muted-foreground">Security Systems</p>
-            </Card>
+            <a href="https://www.lutron.com/us/en" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
+              <Card className="card-elevated p-6 text-center cursor-pointer">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Lightbulb className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="font-semibold">Lutron</h4>
+                <p className="text-sm text-muted-foreground">Lighting Control</p>
+              </Card>
+            </a>
+            <a href="https://www.control4.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
+              <Card className="card-elevated p-6 text-center cursor-pointer">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Home className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="font-semibold">Control4</h4>
+                <p className="text-sm text-muted-foreground">Automation</p>
+              </Card>
+            </a>
+            <a href="https://www.savant.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
+              <Card className="card-elevated p-6 text-center cursor-pointer">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Volume2 className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="font-semibold">Savant</h4>
+                <p className="text-sm text-muted-foreground">Premium Systems</p>
+              </Card>
+            </a>
+            <a href="https://icrealtime.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
+              <Card className="card-elevated p-6 text-center cursor-pointer">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Camera className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="font-semibold">IC Realtime</h4>
+                <p className="text-sm text-muted-foreground">Security Systems</p>
+              </Card>
+            </a>
           </div>
 
           {/* Trust Indicators */}
