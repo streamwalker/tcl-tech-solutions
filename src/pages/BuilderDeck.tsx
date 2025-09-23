@@ -27,7 +27,8 @@ import {
   DollarSign,
   Star,
   Target,
-  Handshake
+  Handshake,
+  Settings
 } from "lucide-react";
 
 const BuilderDeck = () => {
@@ -283,14 +284,14 @@ const BuilderDeck = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="card-elevated p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-8 h-8 text-primary" />
-                <h4 className="text-lg font-semibold">2.5-Day Installation</h4>
+                <Settings className="w-8 h-8 text-primary" />
+                <h4 className="text-lg font-semibold">Precision Integration Protocol</h4>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">Faster turnaround means faster closes and happier buyers</p>
+              <p className="text-sm text-muted-foreground mb-3">Meticulous care and innovative methodology ensuring seamless total system integration</p>
               <div className="text-sm space-y-1">
-                <div>• Pre-wire during framing</div>
-                <div>• Equipment install pre-drywall</div>
-                <div>• Final configuration at handoff</div>
+                <div>• Comprehensive multi-phase integration testing</div>
+                <div>• Advanced device communication protocols</div>
+                <div>• Rigorous quality assurance at every step</div>
               </div>
             </Card>
 
