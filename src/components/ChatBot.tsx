@@ -52,11 +52,17 @@ const ChatBot = () => {
         content: msg.content
       }));
 
+      // Get current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      
       const { data, error } = await supabase.functions.invoke('chat-bot', {
         body: {
           message: inputMessage,
           conversationHistory
-        }
+        },
+        headers: session ? {
+          Authorization: `Bearer ${session.access_token}`
+        } : undefined
       });
 
       if (error) throw error;

@@ -55,6 +55,22 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Verify authentication
+  const authHeader = req.headers.get('Authorization');
+  if (!authHeader) {
+    return new Response(
+      JSON.stringify({ 
+        error: 'Authentication required',
+        response: "Please sign in to use the chat feature.",
+        success: false 
+      }),
+      { 
+        status: 401, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    );
+  }
+
   try {
     const { message, conversationHistory = [] } = await req.json();
 

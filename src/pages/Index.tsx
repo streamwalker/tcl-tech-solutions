@@ -30,6 +30,9 @@ const Index = () => {
             <Link to="/dashboard">
               <Button size="lg">Access Platform</Button>
             </Link>
+            <Link to="/auth">
+              <Button variant="outline" size="lg">Sign In to Get Started</Button>
+            </Link>
           </div>
         </div>
       </section>
