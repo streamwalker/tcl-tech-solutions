@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -763,6 +764,11 @@ const BuilderDeck = () => {
       <div className="bg-primary text-primary-foreground p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
+            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Home className="w-6 h-6" />
+              <span className="text-sm font-medium">Home</span>
+            </Link>
+            <div className="w-px h-6 bg-primary-foreground/30"></div>
             <Building className="w-8 h-8" />
             <h1 className="text-xl font-bold">TCL Tech Solutions - Builder Partnership Deck</h1>
           </div>
