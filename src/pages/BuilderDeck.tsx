@@ -936,7 +936,7 @@ const BuilderDeck = () => {
                     </div>
                     <div className="text-left">
                       <h4 className="font-semibold">Phil Russell</h4>
-                      <p className="text-muted-foreground">Business Development</p>
+                      <p className="text-muted-foreground">Management Consultant, Investment Group Liaison</p>
                     </div>
                   </div>
                 </div>
