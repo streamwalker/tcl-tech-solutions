@@ -29,7 +29,15 @@ import {
   Star,
   Target,
   Handshake,
-  Settings
+  Settings,
+  Brain,
+  Eye,
+  Network,
+  Cpu,
+  ShieldCheck,
+  Cog,
+  Activity,
+  Radar
 } from "lucide-react";
 
 const BuilderDeck = () => {
@@ -57,6 +65,22 @@ const BuilderDeck = () => {
               </div>
               <div className="text-lg md:text-xl text-muted-foreground max-w-2xl">
                 Your One-Stop Partner for Smart Homes & Lifestyle Technology
+              </div>
+              
+              {/* Unique Differentiator Badges */}
+              <div className="flex flex-wrap justify-center gap-3 mt-6">
+                <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2">
+                  <Brain className="w-4 h-4 mr-2" />
+                  Proprietary AI Logic Engine
+                </Badge>
+                <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2">
+                  <Cpu className="w-4 h-4 mr-2" />
+                  Edge AI Processing
+                </Badge>
+                <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2">
+                  <ShieldCheck className="w-4 h-4 mr-2" />
+                  Military Intelligence Security
+                </Badge>
               </div>
             </div>
 
@@ -225,6 +249,106 @@ const BuilderDeck = () => {
       )
     },
 
+    // Slide 2.5: Technology Architecture Showcase
+    {
+      title: "Proprietary Technology Stack",
+      subtitle: "What makes TCL different from every other home automation company",
+      content: (
+        <div className="space-y-8">
+          {/* Technology Grid */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="card-elevated p-8 gradient-primary text-white">
+              <div className="text-center space-y-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-white/20 flex items-center justify-center">
+                  <Brain className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold">Proprietary AI Logic Engine</h3>
+                <p className="text-sm opacity-90">
+                  Our behavioral learning AI creates personalized automation that adapts and predicts user needs. 
+                  Unlike basic timers, our system learns patterns and optimizes automatically.
+                </p>
+                <div className="space-y-2 text-xs">
+                  <div>• Predictive lighting based on daily routines</div>
+                  <div>• Behavioral climate optimization</div>
+                  <div>• Intelligent security pattern recognition</div>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="card-elevated p-8 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950 dark:to-cyan-950">
+              <div className="text-center space-y-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-primary/20 flex items-center justify-center">
+                  <Cpu className="w-10 h-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Edge AI Processing</h3>
+                <p className="text-sm text-muted-foreground">
+                  Local processing means instant response times and complete privacy. Your data never leaves your home - 
+                  a capability traditional integrators simply cannot provide.
+                </p>
+                <div className="space-y-2 text-xs">
+                  <div>• Sub-second response times</div>
+                  <div>• Zero cloud dependency for core functions</div>
+                  <div>• Military-grade data privacy</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="card-elevated p-8 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+              <div className="text-center space-y-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-primary/20 flex items-center justify-center">
+                  <Network className="w-10 h-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Self-Healing Mesh Networks</h3>
+                <p className="text-sm text-muted-foreground">
+                  Military-grade network reliability with automatic failover and optimization. 
+                  Our networks adapt and heal themselves - technology others can't match.
+                </p>
+                <div className="space-y-2 text-xs">
+                  <div>• Automatic device discovery and integration</div>
+                  <div>• Dynamic routing optimization</div>
+                  <div>• Zero single points of failure</div>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="card-elevated p-8 bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950 dark:to-violet-950">
+              <div className="text-center space-y-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-primary/20 flex items-center justify-center">
+                  <Eye className="w-10 h-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Computer Vision Integration</h3>
+                <p className="text-sm text-muted-foreground">
+                  Advanced visual recognition enables context-aware automation. 
+                  Cameras become intelligent sensors that understand and respond to real-world scenarios.
+                </p>
+                <div className="space-y-2 text-xs">
+                  <div>• Occupancy-based lighting automation</div>
+                  <div>• Security with facial recognition</div>
+                  <div>• Activity-triggered scene changes</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Military Expertise Callout */}
+          <Card className="p-6 gradient-success text-white">
+            <div className="text-center">
+              <h4 className="text-lg font-semibold mb-4 flex items-center justify-center gap-2">
+                <ShieldCheck className="w-6 h-6" />
+                22 Years Military Intelligence Expertise
+              </h4>
+              <p className="text-sm opacity-90 max-w-3xl mx-auto">
+                Our founder's 22-year military intelligence background brings enterprise-grade security and network design 
+                to residential automation - a level of expertise no traditional integrator can match.
+              </p>
+            </div>
+          </Card>
+        </div>
+      )
+    },
+
     // Slide 3: Why TCL Solutions - One-Stop Service Visual
     {
       title: "Why TCL Tech Solutions",
@@ -288,24 +412,37 @@ const BuilderDeck = () => {
                 <Settings className="w-8 h-8 text-primary" />
                 <h4 className="text-lg font-semibold">Precision Integration Protocol</h4>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">Meticulous care and innovative methodology ensuring seamless total system integration</p>
+              <p className="text-sm text-muted-foreground mb-3">Our proprietary multi-phase testing methodology ensures flawless system integration</p>
               <div className="text-sm space-y-1">
-                <div>• Comprehensive multi-phase integration testing</div>
-                <div>• Advanced device communication protocols</div>
-                <div>• Rigorous quality assurance at every step</div>
+                <div>• AI-powered device compatibility analysis</div>
+                <div>• Predictive maintenance system monitoring</div>
+                <div>• Military-grade network security protocols</div>
               </div>
             </Card>
 
             <Card className="card-elevated p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Handshake className="w-8 h-8 text-primary" />
-                <h4 className="text-lg font-semibold">Builder-Exclusive Benefits</h4>
+                <Activity className="w-8 h-8 text-primary" />
+                <h4 className="text-lg font-semibold">Behavioral Learning Engine</h4>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">Dedicated support and pricing for our builder partners</p>
+              <p className="text-sm text-muted-foreground mb-3">AI that learns and adapts to create truly personalized automation</p>
               <div className="text-sm space-y-1">
-                <div>• Direct dealer pricing</div>
-                <div>• Dedicated account manager</div>
-                <div>• 24-hour response SLA</div>
+                <div>• Predictive climate intelligence</div>
+                <div>• Adaptive lighting based on usage patterns</div>
+                <div>• Proactive system optimization</div>
+              </div>
+            </Card>
+
+            <Card className="card-elevated p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Radar className="w-8 h-8 text-primary" />
+                <h4 className="text-lg font-semibold">Predictive Maintenance</h4>
+              </div>
+              <p className="text-sm text-muted-foreground mb-3">AI-powered system monitoring prevents issues before they occur</p>
+              <div className="text-sm space-y-1">
+                <div>• Real-time system health monitoring</div>
+                <div>• Automated firmware optimization</div>
+                <div>• Predictive component failure alerts</div>
               </div>
             </Card>
           </div>
@@ -355,8 +492,16 @@ const BuilderDeck = () => {
                 <p className="text-muted-foreground">Lead Designer & Programmer</p>
               </div>
               <div className="md:col-span-2 space-y-6">
-                <h4 className="text-lg font-semibold">Professional Certifications</h4>
+                <h4 className="text-lg font-semibold">Professional Certifications & Unique Expertise</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="certification-badge">
+                    <ShieldCheck className="w-4 h-4 mr-2" />
+                    Military Intelligence (22 years)
+                  </div>
+                  <div className="certification-badge">
+                    <Brain className="w-4 h-4 mr-2" />
+                    AI Logic Integration Specialist
+                  </div>
                   <div className="certification-badge">
                     <Lightbulb className="w-4 h-4 mr-2" />
                     Lutron RadioRA 3
@@ -386,8 +531,8 @@ const BuilderDeck = () => {
                     Home Theater Designer
                   </div>
                   <div className="certification-badge">
-                    <Target className="w-4 h-4 mr-2" />
-                    Professional Calibrator
+                    <Cog className="w-4 h-4 mr-2" />
+                    Bespoke AI Scripting
                   </div>
                 </div>
               </div>
@@ -465,10 +610,10 @@ const BuilderDeck = () => {
               <div className="text-2xl font-bold">$2K - $10K</div>
               <p className="text-sm text-muted-foreground">Networking + entry-level automation (depending on networking and other factors)</p>
               <div className="space-y-2 text-sm text-left">
-                <div>• Basic lighting control</div>
-                <div>• Security system pre-wire</div>
-                <div>• Smart thermostat ready</div>
-                <div>• Door lock integration</div>
+                <div>• Basic AI lighting control</div>
+                <div>• Behavioral learning setup</div>
+                <div>• Edge processing foundation</div>
+                <div>• Smart security integration</div>
               </div>
             </div>
           </Card>
@@ -481,10 +626,10 @@ const BuilderDeck = () => {
               <div className="text-2xl font-bold">$10K - $40K</div>
               <p className="text-sm text-muted-foreground">Whole-home audio + lighting control</p>
               <div className="space-y-2 text-sm text-left">
-                <div>• Whole-home automation</div>
-                <div>• Multi-zone audio/video</div>
-                <div>• Advanced security</div>
-                <div>• Energy management</div>
+                <div>• Full AI automation system</div>
+                <div>• Predictive climate intelligence</div>
+                <div>• Computer vision integration</div>
+                <div>• Proactive system monitoring</div>
               </div>
             </div>
           </Card>
@@ -497,10 +642,10 @@ const BuilderDeck = () => {
               <div className="text-2xl font-bold">$40K+</div>
               <p className="text-sm text-muted-foreground">Full theater, Savant automation, enterprise security</p>
               <div className="space-y-2 text-sm text-left">
-                <div>• Custom theater systems</div>
-                <div>• Estate automation</div>
-                <div>• Outdoor integration</div>
-                <div>• Concierge programming</div>
+                <div>• Bespoke AI scripting services</div>
+                <div>• Military-grade security</div>
+                <div>• Custom behavioral automation</div>
+                <div>• AI consulting & optimization</div>
               </div>
             </div>
           </Card>
@@ -519,8 +664,9 @@ const BuilderDeck = () => {
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold">Partnership Success Story</h3>
                 <p className="text-lg">
-                  "Custom builder in San Antonio partnered with TCL to deliver a $150K automation package, 
-                  reducing subcontractors from 5 to 1 and cutting project timelines by 3 weeks."
+                  "Custom builder in San Antonio partnered with TCL to deliver a $150K automation package with 
+                  AI behavioral learning, edge processing, and predictive maintenance - technology that saved 
+                  3 weeks in scheduling and eliminated 4 subcontractors."
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
@@ -552,8 +698,9 @@ const BuilderDeck = () => {
                 Homeowner Testimonial
               </h4>
               <blockquote className="text-sm italic text-muted-foreground">
-                "TCL transformed our new home into something truly special. The automation system 
-                works flawlessly, and their support has been outstanding. Best investment we made."
+                "TCL's AI system learns our daily routines and adjusts everything automatically. 
+                The predictive climate control and behavioral lighting feels like magic. 
+                No other company could deliver this level of intelligence."
               </blockquote>
               <div className="mt-3 text-sm font-medium">- Johnson Family, Stone Oak</div>
             </Card>
