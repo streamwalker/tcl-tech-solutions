@@ -37,7 +37,8 @@ import {
   ShieldCheck,
   Cog,
   Activity,
-  Radar
+  Radar,
+  Quote
 } from "lucide-react";
 
 const BuilderDeck = () => {
@@ -349,7 +350,94 @@ const BuilderDeck = () => {
       )
     },
 
-    // Slide 3: Why TCL Solutions - One-Stop Service Visual
+    // Slide 3: Customer Success Stories
+    {
+      title: "Customer Success Stories",
+      subtitle: "Real results from satisfied builders and homeowners",
+      content: (
+        <div className="space-y-8">
+          {/* Featured Testimonial */}
+          <Card className="card-elevated p-8 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center">
+                <Quote className="w-8 h-8 text-primary" />
+              </div>
+              
+              {/* Stars */}
+              <div className="flex items-center justify-center space-x-1">
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star key={index} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+
+              {/* Testimonial Quote */}
+              <blockquote className="text-xl md:text-2xl font-medium italic text-foreground max-w-4xl mx-auto leading-relaxed">
+                "TCL Tech Solutions transformed our home with their innovative tech installation and Wireless upgrades. Their commitment to excellence is truly commendable!"
+              </blockquote>
+
+              {/* Customer Details */}
+              <div className="space-y-4">
+                <div className="text-lg font-semibold text-primary">Carlos Dukes</div>
+                <div className="flex items-center justify-center gap-4">
+                  <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2">
+                    Smart Home & Wireless Upgrades
+                  </Badge>
+                  <Badge className="bg-green-100 text-green-800 border-green-200 px-4 py-2">
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Verified Customer
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Trust Indicators */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="card-elevated p-6 text-center bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+              <div className="text-4xl font-bold text-primary mb-2">5.0★</div>
+              <div className="text-sm text-muted-foreground">Average Rating</div>
+              <div className="text-xs text-muted-foreground mt-1">Perfect satisfaction scores</div>
+            </Card>
+            <Card className="card-elevated p-6 text-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950 dark:to-cyan-950">
+              <div className="text-4xl font-bold text-primary mb-2">15+</div>
+              <div className="text-sm text-muted-foreground">Homes Transformed</div>
+              <div className="text-xs text-muted-foreground mt-1">Successful installations</div>
+            </Card>
+            <Card className="card-elevated p-6 text-center bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950 dark:to-violet-950">
+              <div className="text-4xl font-bold text-primary mb-2">100%</div>
+              <div className="text-sm text-muted-foreground">Satisfaction Rate</div>
+              <div className="text-xs text-muted-foreground mt-1">Zero unsatisfied customers</div>
+            </Card>
+          </div>
+
+          {/* Builder Benefits from Customer Success */}
+          <Card className="p-6 gradient-primary text-white">
+            <div className="text-center space-y-4">
+              <h4 className="text-xl font-semibold">Happy Customers = Growing Builder Success</h4>
+              <div className="grid md:grid-cols-3 gap-6 text-sm">
+                <div className="flex flex-col items-center space-y-2">
+                  <Handshake className="w-8 h-8" />
+                  <span className="font-medium">Referral Generation</span>
+                  <span className="text-xs opacity-90">Satisfied customers become brand ambassadors</span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <TrendingUp className="w-8 h-8" />
+                  <span className="font-medium">Premium Positioning</span>
+                  <span className="text-xs opacity-90">Stand out from standard builder packages</span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <Star className="w-8 h-8" />
+                  <span className="font-medium">Reputation Building</span>
+                  <span className="text-xs opacity-90">Quality work builds lasting partnerships</span>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )
+    },
+
+    // Slide 4: Why TCL Solutions - One-Stop Service Visual
     {
       title: "Why TCL Tech Solutions",
       subtitle: "One partner for all your smart home needs",
