@@ -16,6 +16,7 @@ const Navigation = () => {
     { name: "Experience", href: "/#experience" },
     { name: "Contact", href: "/#contact" },
     { name: "Business Plan", href: "/business-plan" },
+    { name: "Builder Deck", href: "/builder-deck" },
   ];
 
   const isActive = (href: string) => {
