@@ -4,6 +4,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { 
   ChevronLeft, 
   ChevronRight, 
   Home, 
@@ -43,6 +51,7 @@ import {
 
 const BuilderDeck = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [openDialog, setOpenDialog] = useState<string | null>(null);
 
   const slides = [
     // Slide 1: Hero Cover - TCL Tech Solutions
@@ -149,24 +158,312 @@ const BuilderDeck = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-red-600">Current Challenge</h3>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    A/V Vendor
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    Network Tech
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    Security Co.
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    Lighting Pro
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    Shade Expert
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center">
-                    Auto Tech
-                  </div>
+                  <Dialog open={openDialog === 'av'} onOpenChange={(open) => setOpenDialog(open ? 'av' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        A/V Vendor
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Volume2 className="w-5 h-5 text-red-600" />
+                          A/V Vendor Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          The complex reality of coordinating audio/visual installations in custom homes
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Primary Pain Points:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Multiple Site Visits:</strong> Often requires 3-5 separate visits for planning, rough-in, equipment installation, and final programming</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Coordination Conflicts:</strong> Must align with electrical, low-voltage, and finish contractors on precise timing</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Equipment Delays:</strong> Custom A/V gear often has 4-8 week lead times, delaying entire move-in schedules</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Integration Issues:</strong> Difficulty connecting with other smart home systems, requiring additional programming time</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                          <h4 className="font-semibold mb-2">Real-World Impact:</h4>
+                          <p className="text-sm text-muted-foreground">
+                            "We had a $2M custom home delayed by 3 weeks because the A/V installer couldn't sync with the lighting programmer. 
+                            The homeowner's move-in was postponed, costing us credibility and additional carrying costs." 
+                            <span className="italic">- Custom Builder, Austin TX</span>
+                          </p>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={openDialog === 'network'} onOpenChange={(open) => setOpenDialog(open ? 'network' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        Network Tech
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Wifi className="w-5 h-5 text-red-600" />
+                          Network Technology Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          Critical infrastructure planning that affects every connected device in the home
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Network Infrastructure Pain Points:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Inadequate Planning:</strong> Network design often happens too late, requiring expensive retrofits</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Coverage Gaps:</strong> Dead zones in large homes require additional access points and switch upgrades</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Future-Proofing Issues:</strong> Cat5e installations become obsolete quickly, requiring rewiring for modern smart homes</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Integration Complexity:</strong> Difficulty connecting IoT devices, security systems, and automation platforms</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                            <div className="text-2xl font-bold text-red-600">67%</div>
+                            <div className="text-xs text-muted-foreground">of custom homes need network upgrades within 2 years</div>
+                          </div>
+                          <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                            <div className="text-2xl font-bold text-red-600">$8,500</div>
+                            <div className="text-xs text-muted-foreground">average cost of post-construction network retrofits</div>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={openDialog === 'security'} onOpenChange={(open) => setOpenDialog(open ? 'security' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        Security Co.
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Shield className="w-5 h-5 text-red-600" />
+                          Security Company Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          Fragmented security installations that compromise both safety and smart home integration
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Security Installation Issues:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Delayed Installation:</strong> Security systems often installed weeks after move-in, leaving homes vulnerable</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Limited Integration:</strong> Standalone security that doesn't communicate with lighting, access, or automation</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Multiple Contracts:</strong> Separate monitoring fees, maintenance contracts, and equipment leases</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Inconsistent Service:</strong> Quality varies dramatically between technicians and service calls</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                          <h4 className="font-semibold mb-2">Homeowner Frustration:</h4>
+                          <p className="text-sm text-muted-foreground">
+                            "Our security system was installed 6 weeks after we moved in. When we finally got it working, 
+                            it couldn't integrate with our smart locks or lighting scenes. Now we have three different apps 
+                            just for basic home security." <span className="italic">- Homeowner, Denver CO</span>
+                          </p>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={openDialog === 'lighting'} onOpenChange={(open) => setOpenDialog(open ? 'lighting' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        Lighting Pro
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Lightbulb className="w-5 h-5 text-red-600" />
+                          Lighting Professional Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          Complex lighting control systems that often frustrate both installers and homeowners
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Lighting Control Complications:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Complex Programming:</strong> Advanced dimming scenes and keypads require specialized training and hours of setup</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Coordination Issues:</strong> Must align with electrical contractors on switch locations and load calculations</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Limited Smart Integration:</strong> Traditional lighting control systems struggle with modern IoT and voice control</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Inconsistent Implementation:</strong> Quality depends heavily on individual programmer expertise</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                            <div className="text-lg font-bold text-red-600">15+</div>
+                            <div className="text-xs text-muted-foreground">hours typical programming time</div>
+                          </div>
+                          <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                            <div className="text-lg font-bold text-red-600">40%</div>
+                            <div className="text-xs text-muted-foreground">systems need reprogramming</div>
+                          </div>
+                          <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                            <div className="text-lg font-bold text-red-600">3-5</div>
+                            <div className="text-xs text-muted-foreground">service calls typical</div>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={openDialog === 'shade'} onOpenChange={(open) => setOpenDialog(open ? 'shade' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        Shade Expert
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Home className="w-5 h-5 text-red-600" />
+                          Shade Expert Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          Window treatment installations that disrupt timelines and limit automation potential
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Shade Installation Problems:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Manual Installation Delays:</strong> Custom shades often arrive weeks after scheduled installation dates</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Limited Motorization:</strong> Retrofit motorization is expensive and often impossible with existing window treatments</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Poor Integration:</strong> Shade controls rarely sync with lighting scenes or time-of-day automation</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Separate Control Systems:</strong> Dedicated shade remotes add confusion to already complex smart home setups</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                          <h4 className="font-semibold mb-2">Missed Opportunities:</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Automated shades can reduce HVAC costs by up to 30% and protect furnishings from UV damage, 
+                            but poor integration means these benefits are rarely realized in custom homes.
+                          </p>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={openDialog === 'auto'} onOpenChange={(open) => setOpenDialog(open ? 'auto' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
+                        Auto Tech
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Settings className="w-5 h-5 text-red-600" />
+                          Automation Technology Challenges
+                        </DialogTitle>
+                        <DialogDescription>
+                          Smart home automation that's often anything but smart for builders and homeowners
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                          <h4 className="font-semibold text-red-600 mb-2">Automation Implementation Issues:</h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Delayed Programming:</strong> Automation setup often happens weeks after move-in, reducing initial home appeal</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Platform Incompatibility:</strong> Different systems don't communicate, creating isolated automation islands</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Complex User Training:</strong> Homeowners need extensive training sessions to use basic automation features</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                              <span><strong>Ongoing Maintenance:</strong> Systems require regular updates and troubleshooting from specialized technicians</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                          <h4 className="font-semibold mb-2">The Reality:</h4>
+                          <p className="text-sm text-muted-foreground">
+                            "We paid $45,000 for a 'smart home' but still have to manually adjust our thermostat, 
+                            turn on lights with wall switches, and remember to arm our security system. 
+                            The automation works maybe 60% of the time." <span className="italic">- Homeowner, Scottsdale AZ</span>
+                          </p>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <ul className="text-sm space-y-2 text-left">
                   <li className="flex items-center gap-2">
