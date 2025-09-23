@@ -461,8 +461,8 @@ const BuilderDeck = () => {
                 <Home className="w-8 h-8 text-blue-600" />
               </div>
               <Badge className="bg-blue-100 text-blue-800">Essential Package</Badge>
-              <div className="text-2xl font-bold">$2K - $5K</div>
-              <p className="text-sm text-muted-foreground">Networking + entry-level automation</p>
+              <div className="text-2xl font-bold">$2K - $10K</div>
+              <p className="text-sm text-muted-foreground">Networking + entry-level automation (depending on networking and other factors)</p>
               <div className="space-y-2 text-sm text-left">
                 <div>• Basic lighting control</div>
                 <div>• Security system pre-wire</div>
@@ -477,7 +477,7 @@ const BuilderDeck = () => {
                 <Volume2 className="w-8 h-8 text-green-600" />
               </div>
               <Badge className="bg-green-100 text-green-800">Lifestyle Package</Badge>
-              <div className="text-2xl font-bold">$5K - $15K</div>
+              <div className="text-2xl font-bold">$10K - $40K</div>
               <p className="text-sm text-muted-foreground">Whole-home audio + lighting control</p>
               <div className="space-y-2 text-sm text-left">
                 <div>• Whole-home automation</div>
@@ -493,7 +493,7 @@ const BuilderDeck = () => {
                 <Play className="w-8 h-8 text-purple-600" />
               </div>
               <Badge className="bg-purple-100 text-purple-800">Luxury Package</Badge>
-              <div className="text-2xl font-bold">$15K+</div>
+              <div className="text-2xl font-bold">$40K+</div>
               <p className="text-sm text-muted-foreground">Full theater, Savant automation, enterprise security</p>
               <div className="space-y-2 text-sm text-left">
                 <div>• Custom theater systems</div>
