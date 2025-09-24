@@ -49,11 +49,11 @@ const Footer = () => {
                 <span className="text-gray-300">(210) 995-8655</span>
               </button>
               <button 
-                onClick={() => window.location.href = "mailto:theconnectedlifestyletech@gmail.com"}
+                onClick={() => window.location.href = "mailto:info@tcltechsolutions.com"}
                 className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
               >
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">theconnectedlifestyletech@gmail.com</span>
+                <span className="text-gray-300">info@tcltechsolutions.com</span>
               </button>
               <button 
                 onClick={() => window.open("https://maps.google.com/?q=7634+Goldstrike+Drive+San+Antonio+TX+78254", "_blank")}

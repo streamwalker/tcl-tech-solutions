@@ -50,11 +50,11 @@ const CallToAction = () => {
             {/* Contact info */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-gray-300">
               <button 
-                onClick={() => window.location.href = "mailto:theconnectedlifestyletech@gmail.com"}
+                onClick={() => window.location.href = "mailto:info@tcltechsolutions.com"}
                 className="flex items-center space-x-2 hover:text-blue-400 transition-colors"
               >
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span>theconnectedlifestyletech@gmail.com</span>
+                <span>info@tcltechsolutions.com</span>
               </button>
               <button 
                 onClick={handlePhoneCall}
