@@ -1247,7 +1247,11 @@ const BuilderDeck = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <Button size="lg" className="w-full text-lg h-14">
+                  <Button 
+                    size="lg" 
+                    className="w-full text-lg h-14"
+                    onClick={() => window.location.href = "tel:+12109958655"}
+                  >
                     <Phone className="w-5 h-5 mr-2" />
                     Schedule Builder Strategy Session
                   </Button>
@@ -1255,7 +1259,7 @@ const BuilderDeck = () => {
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-2 justify-center">
                       <Phone className="w-4 h-4 text-primary" />
-                      <span>(210) 555-0123</span>
+                      <span>(210) 995-8655</span>
                     </div>
                     <div className="flex items-center gap-2 justify-center">
                       <Mail className="w-4 h-4 text-primary" />
