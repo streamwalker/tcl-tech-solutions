@@ -1259,7 +1259,7 @@ const BuilderDeck = () => {
                     </div>
                     <div className="flex items-center gap-2 justify-center">
                       <Mail className="w-4 h-4 text-primary" />
-                      <span>builders@tcltechsolutions.com</span>
+                      <span>info@tcltechsolutions.com</span>
                     </div>
                   </div>
                 </div>
