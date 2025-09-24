@@ -46,12 +46,127 @@ import {
   Cog,
   Activity,
   Radar,
-  Quote
+  Quote,
+  ExternalLink
 } from "lucide-react";
 
 const BuilderDeck = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [openDialog, setOpenDialog] = useState<string | null>(null);
+  const [certificationDialog, setCertificationDialog] = useState<string | null>(null);
+
+  const certificationData = {
+    military: {
+      title: "Military Intelligence (22 years)",
+      description: "Extensive background in military intelligence operations providing unparalleled expertise in network security, threat assessment, and system design.",
+      benefits: [
+        "Advanced security protocols and threat mitigation",
+        "Precision-based network architecture design", 
+        "Proven ability to handle complex, mission-critical systems",
+        "Leadership experience managing large-scale technology deployments"
+      ],
+      link: null
+    },
+    ai: {
+      title: "AI Logic Integration Specialist",
+      description: "Custom AI scripting and automation logic specialist, creating intelligent systems that learn and adapt to homeowner preferences.",
+      benefits: [
+        "Bespoke AI automation scripts for unique home scenarios",
+        "Machine learning integration for predictive home management",
+        "Custom voice control and natural language processing",
+        "Intelligent scene creation based on behavior patterns"
+      ],
+      link: null
+    },
+    lutron: {
+      title: "Lutron RadioRA 3 Certified",
+      description: "Expert in Lutron's latest lighting control technology, delivering energy-efficient and aesthetically pleasing lighting solutions.",
+      benefits: [
+        "Energy savings up to 60% with smart lighting control",
+        "Seamless integration with other home systems",
+        "Professional scene programming and customization",
+        "Wireless and hybrid installation expertise"
+      ],
+      link: "https://www.lutron.com/en-US/Education-Training/Pages/LutronEducationCenter.aspx"
+    },
+    urc: {
+      title: "URC HAP Dealer Certified",
+      description: "Universal Remote Control Home Automation Program dealer, specializing in comprehensive control system integration.",
+      benefits: [
+        "Universal control of all home entertainment systems",
+        "Custom user interface design for easy operation",
+        "Integration with lighting, HVAC, and security systems",
+        "Professional programming and ongoing support"
+      ],
+      link: "https://www.urc-automation.com/"
+    },
+    savant: {
+      title: "Savant Certified Professional",
+      description: "Premium home automation platform certification, delivering luxury smart home experiences with cutting-edge technology.",
+      benefits: [
+        "Premium luxury automation experiences",
+        "Apple TV 4K-based control systems",
+        "Professional-grade audio/video distribution",
+        "Seamless iOS and Android app integration"
+      ],
+      link: "https://community.savantlabs.io/c/savant-certification"
+    },
+    ic: {
+      title: "IC Realtime Security Certified",
+      description: "Professional security camera and surveillance system specialist, providing comprehensive property protection solutions.",
+      benefits: [
+        "Advanced video analytics and AI-powered detection",
+        "4K and thermal imaging camera systems",
+        "Cloud and local storage solutions",
+        "Mobile monitoring and alert systems"
+      ],
+      link: "https://www.icrealtime.com/"
+    },
+    rti: {
+      title: "RTI Integration Certified",
+      description: "Remote Technologies Inc. certified for advanced control system programming and integration across all home systems.",
+      benefits: [
+        "Sophisticated control system programming",
+        "Multi-room audio/video distribution",
+        "Custom user interface development",
+        "Integration with third-party systems"
+      ],
+      link: "https://www.rticorp.com/"
+    },
+    control4: {
+      title: "Control4 Designer Certified",
+      description: "Professional home automation design certification for Control4 systems, specializing in whole-home integration.",
+      benefits: [
+        "Comprehensive whole-home automation design",
+        "Seamless integration of lighting, audio, video, and climate",
+        "Professional system commissioning and support",
+        "Custom programming for unique home requirements"
+      ],
+      link: "https://www.control4.com/"
+    },
+    theater: {
+      title: "Home Theater Designer",
+      description: "Specialized expertise in designing and installing custom home theater and entertainment spaces for optimal audiovisual experiences.",
+      benefits: [
+        "Custom acoustical design and room treatment",
+        "High-end projector and display calibration",
+        "Immersive surround sound system design",
+        "Automated lighting and motorized seating integration"
+      ],
+      link: null
+    },
+    scripting: {
+      title: "Bespoke AI Scripting Expert",
+      description: "Custom artificial intelligence and automation scripting for unique home automation scenarios that standard systems cannot address.",
+      benefits: [
+        "One-of-a-kind automation solutions for complex requirements",
+        "Custom API integrations with any smart device or service",
+        "Predictive automation based on family lifestyle patterns",
+        "Advanced conditional logic for sophisticated home responses"
+      ],
+      link: null
+    }
+  };
 
   const slides = [
     // Slide 1: Hero Cover - TCL Tech Solutions
@@ -879,46 +994,351 @@ const BuilderDeck = () => {
               <div className="md:col-span-2 space-y-6">
                 <h4 className="text-lg font-semibold">Professional Certifications & Unique Expertise</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <div className="certification-badge">
-                    <ShieldCheck className="w-4 h-4 mr-2" />
-                    Military Intelligence (22 years)
-                  </div>
-                  <div className="certification-badge">
-                    <Brain className="w-4 h-4 mr-2" />
-                    AI Logic Integration Specialist
-                  </div>
-                  <div className="certification-badge">
-                    <Lightbulb className="w-4 h-4 mr-2" />
-                    Lutron RadioRA 3
-                  </div>
-                  <div className="certification-badge">
-                    <Volume2 className="w-4 h-4 mr-2" />
-                    URC HAP Dealer
-                  </div>
-                  <div className="certification-badge">
-                    <Home className="w-4 h-4 mr-2" />
-                    Savant Certified
-                  </div>
-                  <div className="certification-badge">
-                    <Camera className="w-4 h-4 mr-2" />
-                    IC Realtime Certified
-                  </div>
-                  <div className="certification-badge">
-                    <Zap className="w-4 h-4 mr-2" />
-                    RTI Certified
-                  </div>
-                  <div className="certification-badge">
-                    <Shield className="w-4 h-4 mr-2" />
-                    Control4 Designer
-                  </div>
-                  <div className="certification-badge">
-                    <Play className="w-4 h-4 mr-2" />
-                    Home Theater Designer
-                  </div>
-                  <div className="certification-badge">
-                    <Cog className="w-4 h-4 mr-2" />
-                    Bespoke AI Scripting
-                  </div>
+                  <Dialog open={certificationDialog === 'military'} onOpenChange={(open) => setCertificationDialog(open ? 'military' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <ShieldCheck className="w-4 h-4 mr-2" />
+                        Military Intelligence (22 years)
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.military.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.military.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.military.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'ai'} onOpenChange={(open) => setCertificationDialog(open ? 'ai' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Brain className="w-4 h-4 mr-2" />
+                        AI Logic Integration Specialist
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.ai.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.ai.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.ai.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'lutron'} onOpenChange={(open) => setCertificationDialog(open ? 'lutron' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Lightbulb className="w-4 h-4 mr-2" />
+                        Lutron RadioRA 3
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.lutron.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.lutron.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.lutron.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.lutron.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Learn more about Lutron Education Center
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'urc'} onOpenChange={(open) => setCertificationDialog(open ? 'urc' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Volume2 className="w-4 h-4 mr-2" />
+                        URC HAP Dealer
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.urc.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.urc.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.urc.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.urc.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Visit URC Automation
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'savant'} onOpenChange={(open) => setCertificationDialog(open ? 'savant' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Home className="w-4 h-4 mr-2" />
+                        Savant Certified
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.savant.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.savant.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.savant.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.savant.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Visit Savant Certification Community
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'ic'} onOpenChange={(open) => setCertificationDialog(open ? 'ic' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Camera className="w-4 h-4 mr-2" />
+                        IC Realtime Certified
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.ic.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.ic.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.ic.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.ic.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Visit IC Realtime
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'rti'} onOpenChange={(open) => setCertificationDialog(open ? 'rti' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Zap className="w-4 h-4 mr-2" />
+                        RTI Certified
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.rti.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.rti.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.rti.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.rti.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Visit RTI Corporation
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'control4'} onOpenChange={(open) => setCertificationDialog(open ? 'control4' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Shield className="w-4 h-4 mr-2" />
+                        Control4 Designer
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.control4.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.control4.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.control4.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 pt-4 border-t">
+                          <a 
+                            href={certificationData.control4.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:underline"
+                          >
+                            Visit Control4
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'theater'} onOpenChange={(open) => setCertificationDialog(open ? 'theater' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Play className="w-4 h-4 mr-2" />
+                        Home Theater Designer
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.theater.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.theater.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.theater.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'scripting'} onOpenChange={(open) => setCertificationDialog(open ? 'scripting' : null)}>
+                    <DialogTrigger asChild>
+                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Cog className="w-4 h-4 mr-2" />
+                        Bespoke AI Scripting
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.scripting.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.scripting.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.scripting.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             </div>
