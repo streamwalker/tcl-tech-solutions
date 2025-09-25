@@ -657,9 +657,19 @@ const BuilderDeck = () => {
                 <div className="grid grid-cols-3 gap-3">
                   <Dialog open={openDialog === 'av'} onOpenChange={(open) => setOpenDialog(open ? 'av' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        A/V Vendor
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              A/V Vendor
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -707,9 +717,19 @@ const BuilderDeck = () => {
 
                   <Dialog open={openDialog === 'network'} onOpenChange={(open) => setOpenDialog(open ? 'network' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        Network Tech
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              Network Tech
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -759,9 +779,19 @@ const BuilderDeck = () => {
 
                   <Dialog open={openDialog === 'security'} onOpenChange={(open) => setOpenDialog(open ? 'security' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        Security Co.
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              Security Co.
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -809,9 +839,19 @@ const BuilderDeck = () => {
 
                   <Dialog open={openDialog === 'lighting'} onOpenChange={(open) => setOpenDialog(open ? 'lighting' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        Lighting Pro
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              Lighting Pro
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -865,9 +905,19 @@ const BuilderDeck = () => {
 
                   <Dialog open={openDialog === 'shade'} onOpenChange={(open) => setOpenDialog(open ? 'shade' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        Shade Expert
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              Shade Expert
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -914,9 +964,19 @@ const BuilderDeck = () => {
 
                   <Dialog open={openDialog === 'auto'} onOpenChange={(open) => setOpenDialog(open ? 'auto' : null)}>
                     <DialogTrigger asChild>
-                      <button className="p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 transition-colors cursor-pointer">
-                        Auto Tech
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                              Auto Tech
+                              <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
