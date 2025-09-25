@@ -1539,20 +1539,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'lutron'} onOpenChange={(open) => setCertificationDialog(open ? 'lutron' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Lightbulb className="w-4 h-4 mr-2" />
-                             Lutron RadioRA 3
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Lightbulb className="w-4 h-4 mr-2" />
+                            Lutron RadioRA 3
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.lutron.title}</DialogTitle>
@@ -1586,20 +1586,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'urc'} onOpenChange={(open) => setCertificationDialog(open ? 'urc' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Volume2 className="w-4 h-4 mr-2" />
-                             URC HAP Dealer
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Volume2 className="w-4 h-4 mr-2" />
+                            URC HAP Dealer
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.urc.title}</DialogTitle>
@@ -1633,20 +1633,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'savant'} onOpenChange={(open) => setCertificationDialog(open ? 'savant' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Home className="w-4 h-4 mr-2" />
-                             Savant Certified
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Home className="w-4 h-4 mr-2" />
+                            Savant Certified
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.savant.title}</DialogTitle>
@@ -1680,20 +1680,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'ic'} onOpenChange={(open) => setCertificationDialog(open ? 'ic' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Camera className="w-4 h-4 mr-2" />
-                             IC Realtime Certified
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Camera className="w-4 h-4 mr-2" />
+                            IC Realtime Certified
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.ic.title}</DialogTitle>
@@ -1727,20 +1727,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'rti'} onOpenChange={(open) => setCertificationDialog(open ? 'rti' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Zap className="w-4 h-4 mr-2" />
-                             RTI Certified
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Zap className="w-4 h-4 mr-2" />
+                            RTI Certified
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.rti.title}</DialogTitle>
@@ -1774,20 +1774,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'control4'} onOpenChange={(open) => setCertificationDialog(open ? 'control4' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Shield className="w-4 h-4 mr-2" />
-                             Control4 Designer
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Shield className="w-4 h-4 mr-2" />
+                            Control4 Designer
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.control4.title}</DialogTitle>
@@ -1821,20 +1821,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'theater'} onOpenChange={(open) => setCertificationDialog(open ? 'theater' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Play className="w-4 h-4 mr-2" />
-                             Home Theater Designer
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Play className="w-4 h-4 mr-2" />
+                            Home Theater Designer
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.theater.title}</DialogTitle>
@@ -1857,20 +1857,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'scripting'} onOpenChange={(open) => setCertificationDialog(open ? 'scripting' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Cog className="w-4 h-4 mr-2" />
-                             Bespoke AI Scripting
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Cog className="w-4 h-4 mr-2" />
+                            Bespoke AI Scripting
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.scripting.title}</DialogTitle>
