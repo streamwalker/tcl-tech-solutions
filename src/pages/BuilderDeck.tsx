@@ -672,19 +672,19 @@ const BuilderDeck = () => {
                 <h3 className="text-xl font-semibold text-red-600">Current Challenge</h3>
                 <div className="grid grid-cols-3 gap-3">
                   <Dialog open={openDialog === 'av'} onOpenChange={(open) => setOpenDialog(open ? 'av' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             A/V Vendor
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            A/V Vendor
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -730,19 +730,19 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={openDialog === 'network'} onOpenChange={(open) => setOpenDialog(open ? 'network' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             Network Tech
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            Network Tech
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -790,19 +790,19 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={openDialog === 'security'} onOpenChange={(open) => setOpenDialog(open ? 'security' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             Security Co.
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            Security Co.
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -848,19 +848,19 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={openDialog === 'lighting'} onOpenChange={(open) => setOpenDialog(open ? 'lighting' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             Lighting Pro
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            Lighting Pro
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -912,19 +912,19 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={openDialog === 'shade'} onOpenChange={(open) => setOpenDialog(open ? 'shade' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             Shade Expert
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            Shade Expert
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -969,19 +969,19 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={openDialog === 'auto'} onOpenChange={(open) => setOpenDialog(open ? 'auto' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
-                             Auto Tech
-                             <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="relative p-3 bg-red-50 dark:bg-red-950 rounded-lg text-xs text-center hover:bg-red-100 dark:hover:bg-red-900 hover:scale-105 transition-all cursor-pointer group">
+                            Auto Tech
+                            <Info className="absolute top-1 right-1 w-3 h-3 text-red-500 animate-pulse opacity-70 group-hover:opacity-100" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -1441,20 +1441,20 @@ const BuilderDeck = () => {
                 <h4 className="text-lg font-semibold">Professional Certifications & Unique Expertise</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <Dialog open={certificationDialog === 'military'} onOpenChange={(open) => setCertificationDialog(open ? 'military' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <ShieldCheck className="w-4 h-4 mr-2" />
-                             Military Intelligence (22 years)
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <ShieldCheck className="w-4 h-4 mr-2" />
+                            Military Intelligence (22 years)
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.military.title}</DialogTitle>
@@ -1490,20 +1490,20 @@ const BuilderDeck = () => {
                   </Dialog>
 
                   <Dialog open={certificationDialog === 'ai'} onOpenChange={(open) => setCertificationDialog(open ? 'ai' : null)}>
-                    <DialogTrigger asChild>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button className="certification-badge interactive-element relative group">
-                             <Brain className="w-4 h-4 mr-2" />
-                             AI Logic Integration Specialist
-                             <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p>Click for certification details</p>
-                         </TooltipContent>
-                       </Tooltip>
-                    </DialogTrigger>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Brain className="w-4 h-4 mr-2" />
+                            AI Logic Integration Specialist
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
                         <DialogTitle>{certificationData.ai.title}</DialogTitle>
