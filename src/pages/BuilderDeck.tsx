@@ -62,6 +62,7 @@ const BuilderDeck = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [openDialog, setOpenDialog] = useState<string | null>(null);
   const [certificationDialog, setCertificationDialog] = useState<string | null>(null);
+  const [benefitDialog, setBenefitDialog] = useState<string | null>(null);
 
   const testimonials = [
     {
@@ -86,6 +87,145 @@ const BuilderDeck = () => {
       rating: 5
     }
   ];
+
+  const benefitDetails = {
+    "wholesale-pricing": {
+      title: "Builder-Exclusive Wholesale Pricing",
+      overview: "Access premium smart home technology at builder-exclusive rates with guaranteed margins.",
+      details: [
+        "30-50% below retail pricing on all smart home packages",
+        "Tiered pricing structure based on annual volume commitments",
+        "Protected margins ensuring profitable installations",
+        "Exclusive access to premium product lines not available to general contractors"
+      ],
+      industryContext: "Industry standard markup for builders is 15-25%. Our wholesale pricing allows for 40-60% margins while remaining competitive.",
+      examples: [
+        "Basic Smart Home Package: Retail $8,500 → Builder Cost $4,250",
+        "Premium Smart Home Package: Retail $15,000 → Builder Cost $7,500",
+        "Luxury Smart Home Package: Retail $25,000 → Builder Cost $12,500"
+      ],
+      valueProposition: "Average builder profit increase of $8,000-$15,000 per home with smart home integration."
+    },
+    "revenue-share": {
+      title: "Revenue Share Opportunities",
+      overview: "Earn ongoing revenue from smart home service subscriptions and maintenance contracts.",
+      details: [
+        "25% revenue share on all monthly monitoring subscriptions",
+        "20% commission on annual maintenance contracts",
+        "15% ongoing revenue from warranty extensions",
+        "Referral bonuses for additional service expansions"
+      ],
+      industryContext: "Smart home service market growing at 24% annually. Average homeowner spends $150/month on connected services.",
+      examples: [
+        "Monthly monitoring at $89/month = $267 annual revenue per home",
+        "Annual maintenance contracts at $450 = $90 annual commission",
+        "10 homes per year = $3,570 in recurring revenue stream"
+      ],
+      valueProposition: "Create passive income streams that continue generating revenue long after home completion."
+    },
+    "upsell-commission": {
+      title: "Upsell Commission Structure",
+      overview: "Earn additional commissions on premium upgrades and add-on services sold to homeowners.",
+      details: [
+        "15% commission on all premium package upgrades",
+        "10% commission on post-installation additions",
+        "Seasonal promotion bonuses up to 25%",
+        "Volume incentives for high-performing builders"
+      ],
+      industryContext: "68% of homeowners upgrade their smart home systems within 2 years. Average upgrade value: $3,500.",
+      examples: [
+        "Premium theater upgrade: $5,000 system = $750 commission",
+        "Advanced security package: $3,500 = $525 commission",
+        "Outdoor automation system: $4,200 = $630 commission"
+      ],
+      valueProposition: "Turn satisfied customers into ongoing revenue opportunities with natural upgrade paths."
+    },
+    "volume-pricing": {
+      title: "Volume Pricing Tiers",
+      overview: "Unlock additional savings and benefits as your smart home installations volume increases.",
+      details: [
+        "Tier 1 (5-10 homes/year): Base wholesale pricing",
+        "Tier 2 (11-25 homes/year): Additional 5% discount + priority scheduling",
+        "Tier 3 (26-50 homes/year): Additional 10% discount + dedicated support",
+        "Tier 4 (51+ homes/year): Additional 15% discount + custom solutions"
+      ],
+      industryContext: "Volume discounts in construction typically range 5-15%. Our tiered system rewards growth with industry-leading incentives.",
+      examples: [
+        "Builder installing 20 homes/year saves additional $8,500 annually",
+        "Builder installing 40 homes/year saves additional $22,000 annually",
+        "Priority scheduling reduces project delays by average of 3-5 days"
+      ],
+      valueProposition: "Scale your business profitably with pricing that improves as you grow."
+    },
+    "marketing-materials": {
+      title: "Co-Branded Marketing Materials",
+      overview: "Professional marketing assets that showcase smart home capabilities with your branding.",
+      details: [
+        "Custom brochures featuring your projects and TCL technology",
+        "Professional photography and video content for your listings",
+        "Social media templates and content calendar",
+        "Trade show displays and presentation materials"
+      ],
+      industryContext: "Professional marketing materials increase home sale prices by 3-7% and reduce time on market by 20%.",
+      examples: [
+        "Custom project showcase videos highlighting smart home features",
+        "Professional photography emphasizing technology integration",
+        "Branded brochures explaining smart home benefits to potential buyers"
+      ],
+      valueProposition: "Enhance your marketing presence and differentiate your homes with professional smart home marketing."
+    },
+    "showroom-support": {
+      title: "Showroom Support",
+      overview: "Transform your model homes and showrooms into interactive smart home experiences.",
+      details: [
+        "Interactive display systems showcasing smart home capabilities",
+        "Demonstration equipment for hands-on customer experiences",
+        "Trained staff support for showroom technology",
+        "Regular updates and maintenance of display systems"
+      ],
+      industryContext: "Interactive showrooms increase customer engagement by 65% and smart home upgrade rates by 45%.",
+      examples: [
+        "Touch-screen displays showing automation scenarios",
+        "Live demonstrations of lighting, climate, and security systems",
+        "Voice control showcases with Amazon Alexa and Google Assistant"
+      ],
+      valueProposition: "Convert more prospects into smart home buyers with engaging, hands-on experiences."
+    },
+    "sales-training": {
+      title: "Sales Team Training",
+      overview: "Comprehensive training programs that make your sales team smart home technology experts.",
+      details: [
+        "Monthly training sessions on new technologies and features",
+        "Certification programs for sales staff",
+        "Sales tools and presentation materials",
+        "Ongoing support and advanced training opportunities"
+      ],
+      industryContext: "Trained sales teams achieve 35% higher close rates on technology upgrades and 25% higher average sale values.",
+      examples: [
+        "Smart home benefits presentation training",
+        "ROI calculation tools for customer conversations",
+        "Hands-on technology demonstrations and practice sessions"
+      ],
+      valueProposition: "Empower your team to confidently sell smart home solutions and maximize upgrade rates."
+    },
+    "technical-support": {
+      title: "24/7 Technical Support",
+      overview: "Round-the-clock technical assistance ensuring smooth installations and satisfied customers.",
+      details: [
+        "24/7 phone and chat support for urgent issues",
+        "Remote diagnostics and troubleshooting capabilities",
+        "On-site emergency response within 4 hours",
+        "Proactive monitoring and maintenance alerts"
+      ],
+      industryContext: "Technical issues account for 85% of smart home customer complaints. 24/7 support reduces resolution time by 70%.",
+      examples: [
+        "Remote system diagnostics identify issues before customer calls",
+        "Emergency response for critical security or safety systems",
+        "Proactive maintenance prevents 90% of potential issues"
+      ],
+      valueProposition: "Protect your reputation with guaranteed technical support that keeps customers satisfied."
+    }
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -1817,22 +1957,205 @@ const BuilderDeck = () => {
                 Financial Benefits
               </h4>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <span>Builder-exclusive wholesale pricing</span>
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <span>Revenue share opportunities</span>
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <span>Upsell commission structure</span>
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <span>Volume pricing tiers</span>
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                </div>
+                <Dialog open={benefitDialog === "wholesale-pricing"} onOpenChange={(open) => setBenefitDialog(open ? "wholesale-pricing" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg cursor-pointer hover:bg-green-100 dark:hover:bg-green-900 transition-colors">
+                      <span>Builder-exclusive wholesale pricing</span>
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-green-600">
+                        {benefitDetails["wholesale-pricing"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["wholesale-pricing"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Key Details</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["wholesale-pricing"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Industry Context</h4>
+                        <p className="text-muted-foreground">{benefitDetails["wholesale-pricing"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Pricing Examples</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["wholesale-pricing"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                              <code className="text-sm">{example}</code>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["wholesale-pricing"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "revenue-share"} onOpenChange={(open) => setBenefitDialog(open ? "revenue-share" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg cursor-pointer hover:bg-green-100 dark:hover:bg-green-900 transition-colors">
+                      <span>Revenue share opportunities</span>
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-green-600">
+                        {benefitDetails["revenue-share"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["revenue-share"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Revenue Streams</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["revenue-share"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Market Growth</h4>
+                        <p className="text-muted-foreground">{benefitDetails["revenue-share"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Revenue Examples</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["revenue-share"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                              <code className="text-sm">{example}</code>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["revenue-share"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "upsell-commission"} onOpenChange={(open) => setBenefitDialog(open ? "upsell-commission" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg cursor-pointer hover:bg-green-100 dark:hover:bg-green-900 transition-colors">
+                      <span>Upsell commission structure</span>
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-green-600">
+                        {benefitDetails["upsell-commission"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["upsell-commission"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Commission Structure</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["upsell-commission"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Market Opportunity</h4>
+                        <p className="text-muted-foreground">{benefitDetails["upsell-commission"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Commission Examples</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["upsell-commission"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                              <code className="text-sm">{example}</code>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["upsell-commission"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "volume-pricing"} onOpenChange={(open) => setBenefitDialog(open ? "volume-pricing" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg cursor-pointer hover:bg-green-100 dark:hover:bg-green-900 transition-colors">
+                      <span>Volume pricing tiers</span>
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-green-600">
+                        {benefitDetails["volume-pricing"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["volume-pricing"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Tier Structure</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["volume-pricing"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Industry Standards</h4>
+                        <p className="text-muted-foreground">{benefitDetails["volume-pricing"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Savings Examples</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["volume-pricing"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                              <code className="text-sm">{example}</code>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["volume-pricing"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </Card>
 
@@ -1842,22 +2165,205 @@ const BuilderDeck = () => {
                 Support Benefits
               </h4>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <span>Co-branded marketing materials</span>
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <span>Showroom support</span>
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <span>Sales team training</span>
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
-                </div>
-                <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <span>24/7 technical support</span>
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
-                </div>
+                <Dialog open={benefitDialog === "marketing-materials"} onOpenChange={(open) => setBenefitDialog(open ? "marketing-materials" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
+                      <span>Co-branded marketing materials</span>
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-blue-600">
+                        {benefitDetails["marketing-materials"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["marketing-materials"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Marketing Assets</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["marketing-materials"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Marketing Impact</h4>
+                        <p className="text-muted-foreground">{benefitDetails["marketing-materials"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Available Materials</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["marketing-materials"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                              <span className="text-sm">{example}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["marketing-materials"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "showroom-support"} onOpenChange={(open) => setBenefitDialog(open ? "showroom-support" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
+                      <span>Showroom support</span>
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-blue-600">
+                        {benefitDetails["showroom-support"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["showroom-support"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Showroom Features</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["showroom-support"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Engagement Impact</h4>
+                        <p className="text-muted-foreground">{benefitDetails["showroom-support"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Interactive Elements</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["showroom-support"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                              <span className="text-sm">{example}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["showroom-support"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "sales-training"} onOpenChange={(open) => setBenefitDialog(open ? "sales-training" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
+                      <span>Sales team training</span>
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-blue-600">
+                        {benefitDetails["sales-training"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["sales-training"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Training Components</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["sales-training"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Performance Impact</h4>
+                        <p className="text-muted-foreground">{benefitDetails["sales-training"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Training Topics</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["sales-training"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                              <span className="text-sm">{example}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["sales-training"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={benefitDialog === "technical-support"} onOpenChange={(open) => setBenefitDialog(open ? "technical-support" : null)}>
+                  <DialogTrigger asChild>
+                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
+                      <span>24/7 technical support</span>
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-blue-600">
+                        {benefitDetails["technical-support"].title}
+                      </DialogTitle>
+                      <DialogDescription className="text-base">
+                        {benefitDetails["technical-support"].overview}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Support Features</h4>
+                        <ul className="space-y-2">
+                          {benefitDetails["technical-support"].details.map((detail, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Issue Resolution</h4>
+                        <p className="text-muted-foreground">{benefitDetails["technical-support"].industryContext}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-3">Support Services</h4>
+                        <div className="grid gap-3">
+                          {benefitDetails["technical-support"].examples.map((example, index) => (
+                            <div key={index} className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                              <span className="text-sm">{example}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg">
+                        <h4 className="font-semibold mb-2">Value Proposition</h4>
+                        <p>{benefitDetails["technical-support"].valueProposition}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </Card>
           </div>
