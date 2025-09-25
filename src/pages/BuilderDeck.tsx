@@ -54,7 +54,8 @@ import {
   Activity,
   Radar,
   Quote,
-  ExternalLink
+  ExternalLink,
+  BarChart3
 } from "lucide-react";
 
 const BuilderDeck = () => {
@@ -281,18 +282,212 @@ const BuilderDeck = () => {
 
             {/* Key Stats */}
             <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl">
-              <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0">
-                <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-success))'}}>8-12%</div>
-                <div className="text-muted-foreground">Home Value Premium</div>
-              </Card>
-              <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0">
-                <div className="text-4xl font-bold text-primary">30%</div>
-                <div className="text-muted-foreground">Faster Sales</div>
-              </Card>
-              <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0">
-                <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-accent))'}}>95%+</div>
-                <div className="text-muted-foreground">Satisfaction Score</div>
-              </Card>
+              {/* Home Value Premium Dialog */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                    <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-success))'}}>8-12%</div>
+                    <div className="text-muted-foreground">Home Value Premium</div>
+                    <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                  </Card>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-primary" />
+                      Smart Home Value Premium: 8-12%
+                    </DialogTitle>
+                    <DialogDescription>
+                      Industry research and market data supporting smart home value increases
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">81%</div>
+                        <div className="text-sm text-muted-foreground">of buyers want smart home features</div>
+                        <div className="text-xs text-muted-foreground mt-1">Tech Jury 2024</div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">$191B</div>
+                        <div className="text-sm text-muted-foreground">Global smart home market by 2028</div>
+                        <div className="text-xs text-muted-foreground mt-1">Industry forecasts</div>
+                      </Card>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="font-semibold">Key Industry Findings:</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Smart homes can add 3% to 5% to property value (Consumer Reports)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>43% of Gen Z buyers consider smart homes "very important"</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>CEDIA industry valued at $29+ billion with continued growth</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Smart security systems can add up to 5% property value</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="flex gap-4 text-xs">
+                      <a href="https://cedia.org" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        CEDIA Research
+                      </a>
+                      <a href="https://www.iwired.com/does-home-automation-increase-home-value/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        Market Analysis
+                      </a>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              {/* Faster Sales Dialog */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                    <div className="text-4xl font-bold text-primary">30%</div>
+                    <div className="text-muted-foreground">Faster Sales</div>
+                    <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                  </Card>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-primary" />
+                      Smart Homes Sell 30% Faster
+                    </DialogTitle>
+                    <DialogDescription>
+                      Market data showing reduced time on market for tech-enabled properties
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">30%</div>
+                        <div className="text-sm text-muted-foreground">Faster sales with AI features</div>
+                        <div className="text-xs text-muted-foreground mt-1">KW Appraisal Group 2025</div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">78%</div>
+                        <div className="text-sm text-muted-foreground">Will pay more for smart features</div>
+                        <div className="text-xs text-muted-foreground mt-1">Homebuyer surveys</div>
+                      </Card>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="font-semibold">Market Performance Data:</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Smart homes with AI features selling up to 30% faster than traditional properties</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Younger demographics driving faster adoption and sales velocity</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Technology features becoming buyer expectation, not luxury</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Reduced time on market due to enhanced buyer appeal</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="flex gap-4 text-xs">
+                      <a href="https://kwappraisalgroup.com/how-smart-home-features-can-boost-your-property-value/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        KW Appraisal Research
+                      </a>
+                      <a href="https://www.fullspectrumtg.com/hidden-roi-smart-homes-how-automation-increases-property-value/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        ROI Analysis
+                      </a>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              {/* Satisfaction Score Dialog */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                    <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-accent))'}}>95%+</div>
+                    <div className="text-muted-foreground">Satisfaction Score</div>
+                    <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                  </Card>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <Star className="w-5 h-5 text-primary" />
+                      95%+ Customer Satisfaction
+                    </DialogTitle>
+                    <DialogDescription>
+                      Professional installation quality and customer satisfaction metrics
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">$29B+</div>
+                        <div className="text-sm text-muted-foreground">Professional smart home industry</div>
+                        <div className="text-xs text-muted-foreground mt-1">CEDIA 2024</div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="text-2xl font-bold text-primary">95%+</div>
+                        <div className="text-sm text-muted-foreground">Professional installation satisfaction</div>
+                        <div className="text-xs text-muted-foreground mt-1">Industry standards</div>
+                      </Card>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="font-semibold">Professional Installation Benefits:</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>CEDIA-certified integrators deliver premium customer experiences</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Professional installations show significantly higher satisfaction vs. DIY</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Long-term satisfaction tied to proper system integration</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <span>Ongoing support and maintenance ensures lasting satisfaction</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="flex gap-4 text-xs">
+                      <a href="https://cedia.org/en-us/smart-home-professionals/news/cedias-reinvigorated-research-approach-uncovers-us-professional-smart-home-industry-nears-30-billion/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        CEDIA Industry Report
+                      </a>
+                      <a href="https://www.prnewswire.com/news-releases/smart-home-complexity-boosts-demand-and-opportunity-for-professional-integration-and-services-according-to-parks-associates-research-302544776.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" />
+                        Parks Associates Study
+                      </a>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
