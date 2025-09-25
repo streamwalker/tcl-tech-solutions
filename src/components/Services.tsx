@@ -1,6 +1,7 @@
 
-import { Home, Shield, Smartphone, Database, Cog, BarChart } from "lucide-react";
+import { Home, Shield, Smartphone, Database, Cog, BarChart, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { handleContactClick } from "@/utils/smoothScroll";
 
 const Services = () => {
@@ -50,8 +51,9 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <TooltipProvider>
+      <section id="services" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Our Smart Home Services
@@ -63,13 +65,15 @@ const Services = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="bg-blue-100 rounded-lg p-3 w-16 h-16 mb-6 flex items-center justify-center">
-                <service.icon className="w-8 h-8 text-blue-600" />
-              </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div
+                  key={index}
+                  className="interactive-card bg-white border border-border rounded-xl p-8"
+                >
+                  <div className="bg-blue-100 rounded-lg p-3 w-16 h-16 mb-6 flex items-center justify-center">
+                    <service.icon className="w-8 h-8 text-blue-600" />
+                  </div>
               
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 {service.title}
@@ -93,7 +97,12 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Click to learn more about {service.title}</p>
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
 
@@ -114,8 +123,9 @@ const Services = () => {
             </Button>
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </TooltipProvider>
   );
 };
 

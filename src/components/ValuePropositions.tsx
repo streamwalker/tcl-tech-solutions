@@ -45,7 +45,7 @@ const ValuePropositions = () => {
           {propositions.map((prop, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="interactive-card bg-card rounded-2xl p-8 shadow-lg"
             >
               <div className="flex items-start space-x-6">
                 <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-4 flex-shrink-0">

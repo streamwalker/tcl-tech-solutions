@@ -425,10 +425,11 @@ const BuilderDeck = () => {
               {/* Home Value Premium Dialog */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                  <Card className="interactive-stat card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 glow-on-hover">
                     <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-success))'}}>8-12%</div>
                     <div className="text-muted-foreground">Home Value Premium</div>
                     <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                    <div className="text-xs text-primary mt-1">→ Click for details</div>
                   </Card>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
@@ -494,10 +495,11 @@ const BuilderDeck = () => {
               {/* Faster Sales Dialog */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                  <Card className="interactive-stat card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 glow-on-hover">
                     <div className="text-4xl font-bold text-primary">30%</div>
                     <div className="text-muted-foreground">Faster Sales</div>
                     <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                    <div className="text-xs text-primary mt-1">→ Click for details</div>
                   </Card>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
@@ -563,10 +565,11 @@ const BuilderDeck = () => {
               {/* Satisfaction Score Dialog */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Card className="card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 cursor-pointer hover:bg-white/90 dark:hover:bg-black/50 transition-colors">
+                  <Card className="interactive-stat card-elevated p-6 bg-white/80 dark:bg-black/40 backdrop-blur-sm border-0 glow-on-hover">
                     <div className="text-4xl font-bold" style={{color: 'hsl(var(--tcl-accent))'}}>95%+</div>
                     <div className="text-muted-foreground">Satisfaction Score</div>
                     <BarChart3 className="w-4 h-4 mt-2 text-muted-foreground" />
+                    <div className="text-xs text-primary mt-1">→ Click for details</div>
                   </Card>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
@@ -1959,9 +1962,9 @@ const BuilderDeck = () => {
               <div className="space-y-3 text-sm">
                 <Dialog open={benefitDialog === "wholesale-pricing"} onOpenChange={(open) => setBenefitDialog(open ? "wholesale-pricing" : null)}>
                   <DialogTrigger asChild>
-                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg cursor-pointer hover:bg-green-100 dark:hover:bg-green-900 transition-colors">
+                    <div className="clickable-benefit flex justify-between items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg">
                       <span>Builder-exclusive wholesale pricing</span>
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4 text-green-600 expand-icon" />
                     </div>
                   </DialogTrigger>
                   <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">

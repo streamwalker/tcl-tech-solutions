@@ -60,7 +60,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:scale-105 animate-fade-in"
+              className="group relative p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 interactive-card animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${feature.gradient} mb-6`}>
