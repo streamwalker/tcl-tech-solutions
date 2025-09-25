@@ -1,13 +1,34 @@
 
 import { Star, Quote } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
       quote: "TCL Tech Solutions transformed our home with their innovative tech installation and Wireless upgrades. Their commitment to excellence is truly commendable!",
-      name: "Carlos Dukes",
+      name: "Carlos D.",
       serviceType: "Smart Home & Wireless Upgrades",
+      rating: 5
+    },
+    {
+      id: 2,
+      quote: "The home theater system TCL installed exceeded all my expectations. The sound quality is incredible and the automation makes everything so easy to use.",
+      name: "Earl W.",
+      serviceType: "Home Theater & Audio/Video Setup",
+      rating: 5
+    },
+    {
+      id: 3,
+      quote: "From design to installation, TCL's custom home theater work is outstanding. They really know how to create an amazing entertainment experience.",
+      name: "Brian M.",
+      serviceType: "Custom Home Theater Design & Installation",
       rating: 5
     }
   ];
@@ -35,53 +56,58 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-4xl mx-auto">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
-            >
-              {/* Quote icon */}
-              <div className="absolute -top-4 left-8">
-                <div className="bg-blue-600 rounded-full p-3">
-                  <Quote className="w-6 h-6 text-white" />
-                </div>
-              </div>
+        <div className="max-w-4xl mx-auto">
+          <Carousel className="w-full">
+            <CarouselContent>
+              {testimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id}>
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 relative">
+                    {/* Quote icon */}
+                    <div className="absolute -top-4 left-8">
+                      <div className="bg-blue-600 rounded-full p-3">
+                        <Quote className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
 
-              <div className="pt-6">
-                {/* Rating */}
-                <div className="flex items-center mb-4">
-                  {renderStars(testimonial.rating)}
-                </div>
+                    <div className="pt-6">
+                      {/* Rating */}
+                      <div className="flex items-center mb-4">
+                        {renderStars(testimonial.rating)}
+                      </div>
 
-                {/* Quote */}
-                <blockquote className="text-lg text-gray-800 mb-6 leading-relaxed italic">
-                  "{testimonial.quote}"
-                </blockquote>
+                      {/* Quote */}
+                      <blockquote className="text-lg text-gray-800 mb-6 leading-relaxed italic">
+                        "{testimonial.quote}"
+                      </blockquote>
 
-                {/* Customer info */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-1">
-                      {testimonial.name}
-                    </h4>
-                    <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {testimonial.serviceType}
+                      {/* Customer info */}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                            {testimonial.name}
+                          </h4>
+                          <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            {testimonial.serviceType}
+                          </div>
+                        </div>
+                        
+                        {/* Trust indicator */}
+                        <div className="text-right">
+                          <div className="text-sm text-gray-500 mb-1">Verified Customer</div>
+                          <div className="flex items-center text-green-600 text-sm">
+                            <div className="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
+                            Project Completed
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  
-                  {/* Trust indicator */}
-                  <div className="text-right">
-                    <div className="text-sm text-gray-500 mb-1">Verified Customer</div>
-                    <div className="flex items-center text-green-600 text-sm">
-                      <div className="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
-                      Project Completed
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
         </div>
 
         {/* Call to action */}

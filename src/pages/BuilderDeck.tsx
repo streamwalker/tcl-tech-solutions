@@ -11,6 +11,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -54,6 +61,41 @@ const BuilderDeck = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [openDialog, setOpenDialog] = useState<string | null>(null);
   const [certificationDialog, setCertificationDialog] = useState<string | null>(null);
+
+  const testimonials = [
+    {
+      id: 1,
+      quote: "TCL Tech Solutions transformed our home with their innovative tech installation and Wireless upgrades. Their commitment to excellence is truly commendable!",
+      name: "Carlos D.",
+      serviceType: "Smart Home & Wireless Upgrades",
+      rating: 5
+    },
+    {
+      id: 2,
+      quote: "The home theater system TCL installed exceeded all my expectations. The sound quality is incredible and the automation makes everything so easy to use.",
+      name: "Earl W.",
+      serviceType: "Home Theater & Audio/Video Setup",
+      rating: 5
+    },
+    {
+      id: 3,
+      quote: "From design to installation, TCL's custom home theater work is outstanding. They really know how to create an amazing entertainment experience.",
+      name: "Brian M.",
+      serviceType: "Custom Home Theater Design & Installation",
+      rating: 5
+    }
+  ];
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Star
+        key={index}
+        className={`w-4 h-4 ${
+          index < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
 
   const certificationData = {
     military: {
@@ -1686,6 +1728,48 @@ const BuilderDeck = () => {
                       <span>info@tcltechsolutions.com</span>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Customer Testimonials Carousel */}
+              <div className="pt-8 border-t border-primary/20">
+                <h3 className="text-xl font-semibold mb-6 text-center">What Our Builder Partners' Customers Say</h3>
+                <div className="max-w-3xl mx-auto">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {testimonials.map((testimonial) => (
+                        <CarouselItem key={testimonial.id}>
+                          <div className="bg-white/90 dark:bg-gray-800/90 rounded-xl p-6 shadow-lg">
+                            <div className="flex items-center mb-3">
+                              {renderStars(testimonial.rating)}
+                            </div>
+                            <blockquote className="text-gray-700 dark:text-gray-300 mb-4 italic">
+                              "{testimonial.quote}"
+                            </blockquote>
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <h4 className="font-semibold text-gray-900 dark:text-white">
+                                  {testimonial.name}
+                                </h4>
+                                <div className="inline-block bg-primary/10 text-primary px-2 py-1 rounded text-xs font-medium">
+                                  {testimonial.serviceType}
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-xs text-gray-500 mb-1">Verified Customer</div>
+                                <div className="flex items-center text-green-600 text-xs">
+                                  <div className="w-1.5 h-1.5 bg-green-600 rounded-full mr-1"></div>
+                                  Project Completed
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-4" />
+                    <CarouselNext className="right-4" />
+                  </Carousel>
                 </div>
               </div>
 
