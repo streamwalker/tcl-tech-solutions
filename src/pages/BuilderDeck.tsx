@@ -1745,14 +1745,34 @@ const BuilderDeck = () => {
             <Card className="p-6">
               <h4 className="font-semibold mb-4 flex items-center gap-2">
                 <Star className="text-yellow-500" />
-                Homeowner Testimonial
+                Customer Testimonials
               </h4>
-              <blockquote className="text-sm italic text-muted-foreground">
-                "TCL's AI system learns our daily routines and adjusts everything automatically. 
-                The predictive climate control and behavioral lighting feels like magic. 
-                No other company could deliver this level of intelligence."
-              </blockquote>
-              <div className="mt-3 text-sm font-medium">- Johnson Family, Stone Oak</div>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {testimonials.map((testimonial, index) => (
+                    <CarouselItem key={index}>
+                      <div className="p-1">
+                        <Card className="p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            {[...Array(testimonial.rating)].map((_, i) => (
+                              <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                            ))}
+                          </div>
+                          <blockquote className="text-sm italic text-muted-foreground mb-3">
+                            "{testimonial.quote}"
+                          </blockquote>
+                          <div className="text-sm">
+                            <div className="font-medium">{testimonial.name}</div>
+                            <div className="text-muted-foreground">{testimonial.serviceType}</div>
+                          </div>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             </Card>
 
             <Card className="p-6">
