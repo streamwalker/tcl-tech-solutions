@@ -242,24 +242,40 @@ const BuilderDeck = () => {
 
   const certificationData = {
     military: {
-      title: "Military Intelligence (22 years)",
-      description: "Extensive background in military intelligence operations providing unparalleled expertise in network security, threat assessment, and system design.",
+      title: "Military Intelligence Specialist (22 Years Service)",
+      description: "Distinguished 22-year career in military intelligence operations, providing enterprise-grade expertise in network security, threat assessment, and mission-critical system design for residential smart home applications.",
       benefits: [
-        "Advanced security protocols and threat mitigation",
-        "Precision-based network architecture design", 
-        "Proven ability to handle complex, mission-critical systems",
-        "Leadership experience managing large-scale technology deployments"
+        "Advanced cybersecurity protocols and threat mitigation strategies",
+        "Precision-based network architecture design and implementation", 
+        "Proven expertise in complex, mission-critical system deployments",
+        "Leadership experience managing large-scale technology infrastructure projects",
+        "Intelligence analysis skills applied to predictive home automation",
+        "Military-grade encryption and security implementation for civilian applications"
+      ],
+      achievements: [
+        "22 years of distinguished military service in intelligence operations",
+        "Expert in classified network design and security protocols",
+        "Leadership roles in high-stakes technology deployments",
+        "Specialized training in threat assessment and risk mitigation"
       ],
       link: null
     },
     ai: {
       title: "AI Logic Integration Specialist",
-      description: "Custom AI scripting and automation logic specialist, creating intelligent systems that learn and adapt to homeowner preferences.",
+      description: "Advanced artificial intelligence and machine learning specialist, creating proprietary automation systems that learn, adapt, and predict homeowner preferences with unprecedented sophistication.",
       benefits: [
-        "Bespoke AI automation scripts for unique home scenarios",
-        "Machine learning integration for predictive home management",
-        "Custom voice control and natural language processing",
-        "Intelligent scene creation based on behavior patterns"
+        "Proprietary AI automation scripts for unique home scenarios and family lifestyles",
+        "Advanced machine learning integration for predictive home management and optimization",
+        "Custom voice control and natural language processing with behavioral understanding",
+        "Intelligent scene creation based on deep pattern analysis and lifestyle recognition",
+        "Edge AI processing for instant response times and complete privacy protection",
+        "Behavioral learning algorithms that continuously improve automation performance"
+      ],
+      achievements: [
+        "Developed proprietary AI logic engine for residential automation",
+        "Created behavioral learning algorithms for predictive home management",
+        "Pioneer in edge AI processing for smart home applications",
+        "Expert in machine learning model optimization for home automation"
       ],
       link: null
     },
@@ -1446,17 +1462,30 @@ const BuilderDeck = () => {
                           {certificationData.military.description}
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="mt-6">
-                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
-                        <ul className="space-y-2">
-                          {certificationData.military.benefits.map((benefit, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
-                              <span className="text-sm">{benefit}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                       <div className="mt-6 space-y-6">
+                         <div>
+                           <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                           <ul className="space-y-2">
+                             {certificationData.military.benefits.map((benefit, index) => (
+                               <li key={index} className="flex items-start gap-2">
+                                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                                 <span className="text-sm">{benefit}</span>
+                               </li>
+                             ))}
+                           </ul>
+                         </div>
+                         <div className="bg-primary/5 p-4 rounded-lg">
+                           <h4 className="font-semibold mb-3">Service Achievements:</h4>
+                           <ul className="space-y-2">
+                             {certificationData.military.achievements.map((achievement, index) => (
+                               <li key={index} className="flex items-start gap-2">
+                                 <ShieldCheck className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                 <span className="text-sm">{achievement}</span>
+                               </li>
+                             ))}
+                           </ul>
+                         </div>
+                       </div>
                     </DialogContent>
                   </Dialog>
 
@@ -1482,17 +1511,30 @@ const BuilderDeck = () => {
                           {certificationData.ai.description}
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="mt-6">
-                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
-                        <ul className="space-y-2">
-                          {certificationData.ai.benefits.map((benefit, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
-                              <span className="text-sm">{benefit}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                       <div className="mt-6 space-y-6">
+                         <div>
+                           <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                           <ul className="space-y-2">
+                             {certificationData.ai.benefits.map((benefit, index) => (
+                               <li key={index} className="flex items-start gap-2">
+                                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                                 <span className="text-sm">{benefit}</span>
+                               </li>
+                             ))}
+                           </ul>
+                         </div>
+                         <div className="bg-primary/5 p-4 rounded-lg">
+                           <h4 className="font-semibold mb-3">Technical Achievements:</h4>
+                           <ul className="space-y-2">
+                             {certificationData.ai.achievements.map((achievement, index) => (
+                               <li key={index} className="flex items-start gap-2">
+                                 <Brain className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                 <span className="text-sm">{achievement}</span>
+                               </li>
+                             ))}
+                           </ul>
+                         </div>
+                       </div>
                     </DialogContent>
                   </Dialog>
 
