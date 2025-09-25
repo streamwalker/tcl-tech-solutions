@@ -55,8 +55,10 @@ import {
   Radar,
   Quote,
   ExternalLink,
-  BarChart3
+  BarChart3,
+  Info
 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const BuilderDeck = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -1376,10 +1378,20 @@ const BuilderDeck = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <Dialog open={certificationDialog === 'military'} onOpenChange={(open) => setCertificationDialog(open ? 'military' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <ShieldCheck className="w-4 h-4 mr-2" />
-                        Military Intelligence (22 years)
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <ShieldCheck className="w-4 h-4 mr-2" />
+                              Military Intelligence (22 years)
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1404,10 +1416,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'ai'} onOpenChange={(open) => setCertificationDialog(open ? 'ai' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Brain className="w-4 h-4 mr-2" />
-                        AI Logic Integration Specialist
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Brain className="w-4 h-4 mr-2" />
+                              AI Logic Integration Specialist
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1432,10 +1454,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'lutron'} onOpenChange={(open) => setCertificationDialog(open ? 'lutron' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Lightbulb className="w-4 h-4 mr-2" />
-                        Lutron RadioRA 3
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Lightbulb className="w-4 h-4 mr-2" />
+                              Lutron RadioRA 3
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1471,10 +1503,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'urc'} onOpenChange={(open) => setCertificationDialog(open ? 'urc' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Volume2 className="w-4 h-4 mr-2" />
-                        URC HAP Dealer
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Volume2 className="w-4 h-4 mr-2" />
+                              URC HAP Dealer
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1510,10 +1552,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'savant'} onOpenChange={(open) => setCertificationDialog(open ? 'savant' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Home className="w-4 h-4 mr-2" />
-                        Savant Certified
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Home className="w-4 h-4 mr-2" />
+                              Savant Certified
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1549,10 +1601,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'ic'} onOpenChange={(open) => setCertificationDialog(open ? 'ic' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Camera className="w-4 h-4 mr-2" />
-                        IC Realtime Certified
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Camera className="w-4 h-4 mr-2" />
+                              IC Realtime Certified
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1588,10 +1650,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'rti'} onOpenChange={(open) => setCertificationDialog(open ? 'rti' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Zap className="w-4 h-4 mr-2" />
-                        RTI Certified
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Zap className="w-4 h-4 mr-2" />
+                              RTI Certified
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1627,10 +1699,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'control4'} onOpenChange={(open) => setCertificationDialog(open ? 'control4' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Shield className="w-4 h-4 mr-2" />
-                        Control4 Designer
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Shield className="w-4 h-4 mr-2" />
+                              Control4 Designer
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1666,10 +1748,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'theater'} onOpenChange={(open) => setCertificationDialog(open ? 'theater' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Play className="w-4 h-4 mr-2" />
-                        Home Theater Designer
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Play className="w-4 h-4 mr-2" />
+                              Home Theater Designer
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1694,10 +1786,20 @@ const BuilderDeck = () => {
 
                   <Dialog open={certificationDialog === 'scripting'} onOpenChange={(open) => setCertificationDialog(open ? 'scripting' : null)}>
                     <DialogTrigger asChild>
-                      <button className="certification-badge hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Cog className="w-4 h-4 mr-2" />
-                        Bespoke AI Scripting
-                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="certification-badge interactive-element relative group">
+                              <Cog className="w-4 h-4 mr-2" />
+                              Bespoke AI Scripting
+                              <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click for certification details</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
@@ -1726,42 +1828,82 @@ const BuilderDeck = () => {
 
           {/* Brand Partners */}
           <div className="grid md:grid-cols-4 gap-6">
-            <a href="https://www.lutron.com/us/en" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
-              <Card className="card-elevated p-6 text-center cursor-pointer">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Lightbulb className="w-8 h-8 text-primary" />
-                </div>
-                <h4 className="font-semibold">Lutron</h4>
-                <p className="text-sm text-muted-foreground">Lighting Control</p>
-              </Card>
-            </a>
-            <a href="https://www.control4.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
-              <Card className="card-elevated p-6 text-center cursor-pointer">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Home className="w-8 h-8 text-primary" />
-                </div>
-                <h4 className="font-semibold">Control4</h4>
-                <p className="text-sm text-muted-foreground">Automation</p>
-              </Card>
-            </a>
-            <a href="https://www.savant.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
-              <Card className="card-elevated p-6 text-center cursor-pointer">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Volume2 className="w-8 h-8 text-primary" />
-                </div>
-                <h4 className="font-semibold">Savant</h4>
-                <p className="text-sm text-muted-foreground">Premium Systems</p>
-              </Card>
-            </a>
-            <a href="https://icrealtime.com/" target="_blank" rel="noopener noreferrer" className="block hover:scale-105 transition-transform duration-200">
-              <Card className="card-elevated p-6 text-center cursor-pointer">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Camera className="w-8 h-8 text-primary" />
-                </div>
-                <h4 className="font-semibold">IC Realtime</h4>
-                <p className="text-sm text-muted-foreground">Security Systems</p>
-              </Card>
-            </a>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://www.lutron.com/us/en" target="_blank" rel="noopener noreferrer" className="block interactive-element relative group">
+                    <Card className="card-elevated p-6 text-center cursor-pointer">
+                      <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Lightbulb className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="font-semibold">Lutron</h4>
+                      <p className="text-sm text-muted-foreground">Lighting Control</p>
+                      <ExternalLink className="w-3 h-3 absolute top-2 right-2 text-primary opacity-70" />
+                    </Card>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Visit Lutron website</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://www.control4.com/" target="_blank" rel="noopener noreferrer" className="block interactive-element relative group">
+                    <Card className="card-elevated p-6 text-center cursor-pointer">
+                      <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Home className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="font-semibold">Control4</h4>
+                      <p className="text-sm text-muted-foreground">Automation</p>
+                      <ExternalLink className="w-3 h-3 absolute top-2 right-2 text-primary opacity-70" />
+                    </Card>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Visit Control4 website</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://www.savant.com/" target="_blank" rel="noopener noreferrer" className="block interactive-element relative group">
+                    <Card className="card-elevated p-6 text-center cursor-pointer">
+                      <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Volume2 className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="font-semibold">Savant</h4>
+                      <p className="text-sm text-muted-foreground">Premium Systems</p>
+                      <ExternalLink className="w-3 h-3 absolute top-2 right-2 text-primary opacity-70" />
+                    </Card>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Visit Savant website</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://icrealtime.com/" target="_blank" rel="noopener noreferrer" className="block interactive-element relative group">
+                    <Card className="card-elevated p-6 text-center cursor-pointer">
+                      <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Camera className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="font-semibold">IC Realtime</h4>
+                      <p className="text-sm text-muted-foreground">Security Systems</p>
+                      <ExternalLink className="w-3 h-3 absolute top-2 right-2 text-primary opacity-70" />
+                    </Card>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Visit IC Realtime website</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           {/* Trust Indicators */}
