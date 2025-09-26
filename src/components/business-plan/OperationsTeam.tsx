@@ -119,21 +119,6 @@ const OperationsTeam = () => {
               ))}
             </TableBody>
           </Table>
-
-          <Card className="bg-blue-50">
-            <CardHeader>
-              <CardTitle className="text-blue-700">Advisory Structure</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div>
-                  <h4 className="font-semibold">Advisory Board / Partnership Oversight Committee</h4>
-                  <p className="text-sm text-gray-600">5 seats – 3 Streamwalkers, 2 TCL Tech</p>
-                </div>
-                <p>Seasoned founders/investors guiding milestones; transitions to Advisory Board post‑milestones.</p>
-              </div>
-            </CardContent>
-          </Card>
         </CardContent>
       </Card>
     </div>
