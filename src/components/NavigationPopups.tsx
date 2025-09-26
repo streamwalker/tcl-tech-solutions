@@ -4,6 +4,221 @@ import { handleContactClick } from "@/utils/smoothScroll";
 import { Users, Building, MapPin, FileText, MessageCircle, Star, Shield, Check, Clock, Cog, Home, Database, Smartphone, BarChart } from "lucide-react";
 
 export const CompanyPopups = {
+  AboutUsPopup: () => (
+    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2 text-2xl">
+          <Building className="h-6 w-6" />
+          About ConnectTek
+        </DialogTitle>
+      </DialogHeader>
+      
+      <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Our Mission</h3>
+            <p className="text-muted-foreground mb-4">
+              ConnectTek revolutionizes how businesses and homeowners interact with technology. 
+              We design, install, and maintain cutting-edge smart systems that enhance productivity, 
+              security, and quality of life.
+            </p>
+            
+            <h3 className="text-xl font-semibold mb-3">Core Values</h3>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary" />
+                Innovation-driven solutions
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary" />
+                Veteran-owned excellence
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary" />
+                24/7 dedicated support
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary" />
+                Security-first approach
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Why Choose ConnectTek?</h3>
+            <div className="space-y-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2">Veteran Leadership</h4>
+                <p className="text-sm text-muted-foreground">
+                  Led by military veterans with discipline, integrity, and commitment to excellence.
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2">Cutting-Edge Technology</h4>
+                <p className="text-sm text-muted-foreground">
+                  Proprietary AI systems and partnerships with industry leaders.
+                </p>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2">Comprehensive Solutions</h4>
+                <p className="text-sm text-muted-foreground">
+                  From design to installation to ongoing support - we handle it all.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t pt-6">
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">500+</div>
+              <div className="text-sm text-muted-foreground">Projects Completed</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">24/7</div>
+              <div className="text-sm text-muted-foreground">Support Available</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">98%</div>
+              <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-center pt-4">
+          <Button onClick={handleContactClick} size="lg">
+            Schedule Your Consultation
+          </Button>
+        </div>
+      </div>
+    </DialogContent>
+  ),
+
+  ContactPopup: () => (
+    <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2 text-2xl">
+          <MessageCircle className="h-6 w-6" />
+          Contact ConnectTek
+        </DialogTitle>
+      </DialogHeader>
+      
+      <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Get In Touch</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <MessageCircle className="h-5 w-5 text-primary" />
+                <div>
+                  <div className="font-semibold">(210) 555-TECH</div>
+                  <div className="text-sm text-muted-foreground">24/7 Support Line</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-primary" />
+                <div>
+                  <div className="font-semibold">info@connectek.com</div>
+                  <div className="text-sm text-muted-foreground">General Inquiries</div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-primary mt-1" />
+                <div>
+                  <div className="font-semibold">San Antonio, TX</div>
+                  <div className="text-sm text-muted-foreground">
+                    Serving Greater San Antonio<br/>
+                    & South Texas Region
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-6">
+              <h4 className="font-semibold mb-3">Business Hours</h4>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span>Monday - Friday:</span>
+                  <span>7:00 AM - 7:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Saturday:</span>
+                  <span>8:00 AM - 5:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Sunday:</span>
+                  <span>Emergency Service Only</span>
+                </div>
+                <div className="text-primary font-semibold mt-2">
+                  24/7 Emergency Support Available
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Quick Contact</h3>
+            <div className="space-y-4">
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Emergency Support
+                </h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  System down? We're here to help 24/7.
+                </p>
+                <Button variant="outline" size="sm" onClick={handleContactClick}>
+                  Call Emergency Line
+                </Button>
+              </div>
+              
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Free Consultation
+                </h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Schedule a free site assessment and quote.
+                </p>
+                <Button variant="outline" size="sm" onClick={handleContactClick}>
+                  Book Consultation
+                </Button>
+              </div>
+              
+              <div className="p-4 border rounded-lg">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Project Inquiry
+                </h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Ready to start your smart technology project?
+                </p>
+                <Button variant="outline" size="sm" onClick={handleContactClick}>
+                  Get Project Quote
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t pt-6">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold mb-4">Ready to Get Started?</h3>
+            <p className="text-muted-foreground mb-4">
+              Let's discuss how ConnectTek can transform your space with smart technology solutions.
+            </p>
+            <Button onClick={handleContactClick} size="lg">
+              Schedule Your Free Consultation
+            </Button>
+          </div>
+        </div>
+      </div>
+    </DialogContent>
+  ),
+
   TeamPopup: () => (
     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
       <DialogHeader>

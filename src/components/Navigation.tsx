@@ -94,13 +94,15 @@ const Navigation = () => {
                       <ChevronDown className="w-4 h-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
-                      <DropdownMenuItem 
-                        onClick={() => handleNavClick("/#about")}
-                        className="cursor-pointer hover:bg-blue-50"
-                      >
-                        <Building className="w-4 h-4 mr-2" />
-                        About Us
-                      </DropdownMenuItem>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Building className="w-4 h-4 mr-2" />
+                            About Us
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.AboutUsPopup />
+                      </Dialog>
                       <Dialog>
                         <DialogTrigger asChild>
                           <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
@@ -128,13 +130,15 @@ const Navigation = () => {
                         </DialogTrigger>
                         <CompanyPopups.BlogPopup />
                       </Dialog>
-                      <DropdownMenuItem 
-                        onClick={() => handleNavClick("/#contact")}
-                        className="cursor-pointer hover:bg-blue-50"
-                      >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Contact
-                      </DropdownMenuItem>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            Contact
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.ContactPopup />
+                      </Dialog>
                       <Dialog>
                         <DialogTrigger asChild>
                           <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
