@@ -2,10 +2,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, ChevronDown, Users, Building, MapPin, FileText, MessageCircle, Home, Shield, Smartphone, Database, Cog, BarChart } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { handleContactClick } from "@/utils/smoothScroll";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { CompanyPopups, ServicesPopups } from "./NavigationPopups";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,8 +84,145 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              item.href.startsWith("/#") ? (
+            {navItems.map((item) => {
+              // Special handling for Company dropdown
+              if (item.name === "About") {
+                return (
+                  <DropdownMenu key={item.name}>
+                    <DropdownMenuTrigger className="px-3 py-2 text-sm font-medium transition-colors text-gray-700 hover:text-blue-600 flex items-center gap-1">
+                      Company
+                      <ChevronDown className="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
+                      <DropdownMenuItem 
+                        onClick={() => handleNavClick("/#about")}
+                        className="cursor-pointer hover:bg-blue-50"
+                      >
+                        <Building className="w-4 h-4 mr-2" />
+                        About Us
+                      </DropdownMenuItem>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Users className="w-4 h-4 mr-2" />
+                            Our Team
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.TeamPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <FileText className="w-4 h-4 mr-2" />
+                            Case Studies
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.CaseStudiesPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            Blog
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.BlogPopup />
+                      </Dialog>
+                      <DropdownMenuItem 
+                        onClick={() => handleNavClick("/#contact")}
+                        className="cursor-pointer hover:bg-blue-50"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Contact
+                      </DropdownMenuItem>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <MapPin className="w-4 h-4 mr-2" />
+                            Service Areas
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <CompanyPopups.ServiceAreasPopup />
+                      </Dialog>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                );
+              }
+
+              // Special handling for Services dropdown
+              if (item.name === "Services") {
+                return (
+                  <DropdownMenu key={item.name}>
+                    <DropdownMenuTrigger className="px-3 py-2 text-sm font-medium transition-colors text-gray-700 hover:text-blue-600 flex items-center gap-1">
+                      Services
+                      <ChevronDown className="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Home className="w-4 h-4 mr-2" />
+                            Smart Home Automation
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.SmartHomePopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Shield className="w-4 h-4 mr-2" />
+                            Enterprise Networks
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.EnterpriseNetworksPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Database className="w-4 h-4 mr-2" />
+                            Home Theater Technology
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.HomeTheaterPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Smartphone className="w-4 h-4 mr-2" />
+                            AI Logic Integration
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.AILogicPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <Cog className="w-4 h-4 mr-2" />
+                            Managed Services
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.ManagedServicesPopup />
+                      </Dialog>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer hover:bg-blue-50">
+                            <BarChart className="w-4 h-4 mr-2" />
+                            Premium Installations
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <ServicesPopups.PremiumInstallationsPopup />
+                      </Dialog>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                );
+              }
+
+              // Regular navigation items (excluding "About" and "Services")
+              if (item.name === "About" || item.name === "Services") {
+                return null;
+              }
+
+              return item.href.startsWith("/#") ? (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
@@ -106,8 +246,8 @@ const Navigation = () => {
                 >
                   {item.name}
                 </Link>
-              )
-            ))}
+              );
+            })}
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link 
