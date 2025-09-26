@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { handleContactClick } from "@/utils/smoothScroll";
-import { Users, Building, MapPin, FileText, MessageCircle, Star, Shield, Check, Clock, Cog, Home, Database, Smartphone, BarChart } from "lucide-react";
+import { Users, Building, MapPin, FileText, MessageCircle, Star, Shield, Check, Clock, Cog, Home, Database, Smartphone, BarChart, Lightbulb, Layers, ArrowRightLeft, Wrench } from "lucide-react";
 
 export const CompanyPopups = {
   AboutUsPopup: () => (
@@ -1127,6 +1127,247 @@ export const ServicesPopups = {
             onClick={handleContactClick}
           >
             Schedule Consultation
+          </Button>
+        </div>
+      </div>
+    </DialogContent>
+  ),
+
+  NetworkingModelsPopup: () => (
+    <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-3 text-2xl">
+          <div className="bg-blue-100 rounded-lg p-2 w-12 h-12 flex items-center justify-center">
+            <Database className="w-6 h-6 text-blue-600" />
+          </div>
+          TCP/IP & OSI Network Models
+        </DialogTitle>
+        <DialogDescription className="text-lg text-gray-600 mt-4">
+          Understanding the fundamental networking models that power all modern communications - from your smart home devices to enterprise networks.
+        </DialogDescription>
+      </DialogHeader>
+
+      <div className="mt-6 space-y-8">
+        {/* Introduction */}
+        <div className="bg-blue-50 rounded-lg p-6">
+          <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+            <Lightbulb className="w-4 h-4" />
+            Why These Models Matter
+          </h4>
+          <p className="text-blue-800 text-sm">
+            These networking models provide the foundation for understanding how data travels from your smart thermostat to your phone, 
+            how enterprise networks maintain security, and how we troubleshoot connectivity issues in complex installations.
+          </p>
+        </div>
+
+        {/* TCP/IP Model */}
+        <div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-green-600" />
+            TCP/IP Model (4 Layers)
+          </h3>
+          
+          <div className="space-y-4">
+            {/* Layer 4 - Application */}
+            <div className="border border-gray-200 rounded-lg p-4 bg-green-50">
+              <h4 className="font-semibold text-green-900 mb-2">Layer 4: Application Layer</h4>
+              <p className="text-green-800 text-sm mb-2">Where users interact with network services</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-green-700 text-sm">Protocols:</p>
+                  <p className="text-green-600 text-sm">HTTP/HTTPS, FTP, SMTP, DNS, DHCP</p>
+                </div>
+                <div>
+                  <p className="font-medium text-green-700 text-sm">Smart Home Examples:</p>
+                  <p className="text-green-600 text-sm">Web interfaces, mobile apps, voice commands</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Layer 3 - Transport */}
+            <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
+              <h4 className="font-semibold text-blue-900 mb-2">Layer 3: Transport Layer</h4>
+              <p className="text-blue-800 text-sm mb-2">Ensures reliable data delivery between applications</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-blue-700 text-sm">Protocols:</p>
+                  <p className="text-blue-600 text-sm">TCP (reliable), UDP (fast)</p>
+                </div>
+                <div>
+                  <p className="font-medium text-blue-700 text-sm">Smart Home Examples:</p>
+                  <p className="text-blue-600 text-sm">Device control commands, streaming audio/video</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Layer 2 - Internet */}
+            <div className="border border-gray-200 rounded-lg p-4 bg-purple-50">
+              <h4 className="font-semibold text-purple-900 mb-2">Layer 2: Internet Layer</h4>
+              <p className="text-purple-800 text-sm mb-2">Routes data across different networks</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-purple-700 text-sm">Protocols:</p>
+                  <p className="text-purple-600 text-sm">IP (IPv4/IPv6), ICMP, ARP</p>
+                </div>
+                <div>
+                  <p className="font-medium text-purple-700 text-sm">Smart Home Examples:</p>
+                  <p className="text-purple-600 text-sm">Device IP addresses, network routing</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Layer 1 - Network Access */}
+            <div className="border border-gray-200 rounded-lg p-4 bg-orange-50">
+              <h4 className="font-semibold text-orange-900 mb-2">Layer 1: Network Access Layer</h4>
+              <p className="text-orange-800 text-sm mb-2">Physical transmission of data over network hardware</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-orange-700 text-sm">Protocols:</p>
+                  <p className="text-orange-600 text-sm">Ethernet, WiFi (802.11), Bluetooth</p>
+                </div>
+                <div>
+                  <p className="font-medium text-orange-700 text-sm">Smart Home Examples:</p>
+                  <p className="text-orange-600 text-sm">WiFi connections, Ethernet cables, Zigbee/Z-Wave</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* OSI Model */}
+        <div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Layers className="w-5 h-5 text-blue-600" />
+            OSI Model (7 Layers)
+          </h3>
+          
+          <div className="space-y-3">
+            {[
+              {
+                layer: "Layer 7: Application",
+                description: "Network services directly used by applications",
+                examples: "Web browsers, email clients, file transfer",
+                protocols: "HTTP/HTTPS, FTP, SMTP, POP3, IMAP",
+                color: "red"
+              },
+              {
+                layer: "Layer 6: Presentation", 
+                description: "Data encryption, compression, and translation",
+                examples: "SSL/TLS encryption, data compression",
+                protocols: "SSL/TLS, JPEG, ASCII, EBCDIC",
+                color: "orange"
+              },
+              {
+                layer: "Layer 5: Session",
+                description: "Establishes and manages connections between applications",
+                examples: "Login sessions, database connections",
+                protocols: "NetBIOS, RPC, SQL sessions",
+                color: "yellow"
+              },
+              {
+                layer: "Layer 4: Transport",
+                description: "Reliable data transfer and error correction",
+                examples: "End-to-end communication, flow control",
+                protocols: "TCP, UDP, SPX",
+                color: "green"
+              },
+              {
+                layer: "Layer 3: Network",
+                description: "Routing and logical addressing",
+                examples: "Path determination, IP addressing",
+                protocols: "IP, ICMP, IPX, BGP, OSPF",
+                color: "blue"
+              },
+              {
+                layer: "Layer 2: Data Link",
+                description: "Frame formatting and error detection",
+                examples: "Switch operations, MAC addressing",
+                protocols: "Ethernet, PPP, Frame Relay",
+                color: "indigo"
+              },
+              {
+                layer: "Layer 1: Physical",
+                description: "Electrical and physical transmission of raw bits",
+                examples: "Cables, hubs, voltage levels",
+                protocols: "Ethernet cables, fiber optic, wireless",
+                color: "purple"
+              }
+            ].map((item, idx) => (
+              <div key={idx} className={`border border-gray-200 rounded-lg p-3 bg-${item.color}-50`}>
+                <h4 className={`font-semibold text-${item.color}-900 mb-1 text-sm`}>{item.layer}</h4>
+                <p className={`text-${item.color}-800 text-xs mb-2`}>{item.description}</p>
+                <div className="grid md:grid-cols-2 gap-2">
+                  <div>
+                    <p className={`font-medium text-${item.color}-700 text-xs`}>Examples:</p>
+                    <p className={`text-${item.color}-600 text-xs`}>{item.examples}</p>
+                  </div>
+                  <div>
+                    <p className={`font-medium text-${item.color}-700 text-xs`}>Protocols:</p>
+                    <p className={`text-${item.color}-600 text-xs`}>{item.protocols}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Comparison & Practical Applications */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <ArrowRightLeft className="w-4 h-4 text-gray-600" />
+              TCP/IP vs OSI
+            </h4>
+            <div className="space-y-2 text-sm">
+              <p className="text-gray-700"><strong>TCP/IP:</strong> Practical, widely implemented model used in real networks</p>
+              <p className="text-gray-700"><strong>OSI:</strong> Theoretical reference model for understanding network functions</p>
+              <p className="text-gray-700"><strong>Mapping:</strong> OSI layers 5-7 map to TCP/IP Application layer</p>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <Wrench className="w-4 h-4 text-gray-600" />
+              Troubleshooting with Models
+            </h4>
+            <div className="space-y-2 text-sm">
+              <p className="text-gray-700"><strong>Physical issues:</strong> Check cables, power, WiFi signal</p>
+              <p className="text-gray-700"><strong>Network issues:</strong> Verify IP addresses, routing</p>
+              <p className="text-gray-700"><strong>Application issues:</strong> Test specific services, ports</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Real-World Applications */}
+        <div>
+          <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <Home className="w-4 h-4 text-blue-600" />
+            ConnectTek Applications
+          </h4>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h5 className="font-medium text-gray-900 mb-2">Smart Home Design</h5>
+              <p className="text-gray-700 text-sm">We design networks considering all layers - from physical WiFi coverage to application-level device communication protocols.</p>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h5 className="font-medium text-gray-900 mb-2">Enterprise Networks</h5>
+              <p className="text-gray-700 text-sm">Our enterprise solutions implement proper segmentation and security at each network layer for robust, scalable infrastructure.</p>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h5 className="font-medium text-gray-900 mb-2">Troubleshooting</h5>
+              <p className="text-gray-700 text-sm">When issues arise, we systematically diagnose problems using layer-by-layer analysis for efficient resolution.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 text-center">
+          <h4 className="font-semibold text-gray-900 mb-2">Need Network Expertise?</h4>
+          <p className="text-gray-600 mb-4 text-sm">Our team applies deep networking knowledge to design and troubleshoot your technology infrastructure.</p>
+          <Button 
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+            onClick={handleContactClick}
+          >
+            Consult Our Network Experts
           </Button>
         </div>
       </div>
