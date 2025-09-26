@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Network, Layers, Cloud, Shield, Cpu, Brain, Scale, BookOpen } from "lucide-react";
+import { Network, Layers, Cloud, Shield, Cpu, Brain, Scale, BookOpen, GraduationCap, Clock, Target, CheckCircle, Award, Users } from "lucide-react";
 
 const Education = () => {
   return (
@@ -28,7 +28,7 @@ const Education = () => {
       <section className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <Tabs defaultValue="networking" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="networking" className="flex items-center gap-2">
                 <Network className="h-4 w-4" />
                 Networking Models
@@ -40,6 +40,10 @@ const Education = () => {
               <TabsTrigger value="emerging" className="flex items-center gap-2">
                 <Cpu className="h-4 w-4" />
                 Emerging Tech
+              </TabsTrigger>
+              <TabsTrigger value="tcl-training" className="flex items-center gap-2">
+                <GraduationCap className="h-4 w-4" />
+                TCL Training
               </TabsTrigger>
             </TabsList>
 
@@ -979,6 +983,472 @@ const Education = () => {
                         <Badge variant="secondary">IoT Solutions</Badge>
                         <Badge variant="secondary">Security Implementation</Badge>
                         <Badge variant="secondary">Future-Ready Infrastructure</Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* TCL Training Tab */}
+            <TabsContent value="tcl-training" className="space-y-8">
+              <div className="grid gap-6">
+                {/* Program Overview */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <GraduationCap className="h-5 w-5" />
+                      TCL Technician Education Plan
+                    </CardTitle>
+                    <CardDescription>
+                      Pathway from Structured Cabling to Advanced Automation Architecture
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-lg">
+                      <h3 className="text-lg font-semibold mb-4">Program Overview</h3>
+                      <p className="text-muted-foreground mb-4">
+                        The TCL Technician Education Plan provides a structured pathway for technicians to develop the skills necessary to design, install, configure, and maintain residential and commercial smart networks. The program is divided into progressive phases, each building on the prior, and integrates hands-on labs, partner certifications, and TCL-specific service protocols.
+                      </p>
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="font-semibold mb-3 flex items-center gap-2">
+                            <Target className="h-4 w-4" />
+                            Outcomes for Graduates
+                          </h4>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <CheckCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                              Competency in structured wiring and physical network installation
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                              Mastery of network configuration and security for residential and commercial settings
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                              Proficiency in integrating and programming leading automation systems (URC, Lutron, Savant, RTI, etc.)
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                              Capability to design full-scale automation architectures for homes, businesses, and enterprise clients
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <Award className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                              Certification as a TCL Certified Technician
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-card p-4 rounded-lg border">
+                          <h4 className="font-semibold mb-3">Program Timeline</h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span>Total Duration:</span>
+                              <Badge variant="outline">24-30 weeks</Badge>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Hands-on Labs:</span>
+                              <Badge variant="outline">50+ hours</Badge>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Certification Levels:</span>
+                              <Badge variant="outline">3 tiers</Badge>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Partner Certifications:</span>
+                              <Badge variant="outline">6+ available</Badge>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Training Phases */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Layers className="h-5 w-5" />
+                      Training Phases
+                    </CardTitle>
+                    <CardDescription>
+                      Progressive skill development through 7 structured phases
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="phase1">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 1</Badge>
+                            <span>Foundations (Wiring & Physical Layer)</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              2-3 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Learn safe, code-compliant wiring practices</li>
+                                <li>• Understand cable types, termination, and testing</li>
+                                <li>• Build structured cabling skills for homes and SMB</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Electrical safety / NEC compliance</li>
+                                <li>• Cable standards: Cat5e, Cat6/6a, fiber, coax</li>
+                                <li>• Termination: RJ-45, keystone jacks, patch panels</li>
+                                <li>• Documentation & labeling standards</li>
+                                <li>• Testing with Fluke/certification tools</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Terminate a Cat6 cable and connect to a switch
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Build a patch panel with labeled drops
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase2">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 2</Badge>
+                            <span>Networking Essentials</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              3 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Master TCP/IP basics and core networking hardware</li>
+                                <li>• Learn IP addressing, routing, and wireless setup</li>
+                                <li>• Understand security fundamentals</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• TCP/IP model, IP addressing, subnetting, DNS, DHCP</li>
+                                <li>• Routers, switches, access points — functions & setup</li>
+                                <li>• VLANs and QoS basics</li>
+                                <li>• Wireless standards (Wi-Fi 5, 6, 6E, 7)</li>
+                                <li>• Firewalls, WPA3, MAC filtering</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Configure a router + switch + AP
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Create VLANs for Home, IoT, Guest
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase3">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 3</Badge>
+                            <span>Applied Network Configuration</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              4 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Apply networking knowledge to real-world home & commercial jobs</li>
+                                <li>• Optimize Wi-Fi, guest networks, and security policies</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Consumer vs. enterprise gear (Unifi, Cisco, Aruba, Ruckus)</li>
+                                <li>• Wi-Fi heat mapping & access point placement</li>
+                                <li>• Remote access (VPNs, remote monitoring tools)</li>
+                                <li>• Bandwidth management & traffic shaping</li>
+                                <li>• Backup power & surge protection</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Deploy a UniFi controller with VLANs
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Test Wi-Fi coverage with a heat map
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase4">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 4</Badge>
+                            <span>Home Automation Foundations</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              4 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Introduce automation devices, protocols, and integration basics</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Ecosystems: URC, Savant, Lutron, Crestron, Control4</li>
+                                <li>• Protocols: Zigbee, Z-Wave, Matter, Thread, BLE</li>
+                                <li>• Lighting, HVAC, AV, surveillance integration</li>
+                                <li>• IoT security (firmware updates, password policies)</li>
+                                <li>• TCL Service Validation Protocol (MAC address registration & service terms)</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Configure a Lutron RA-3 system with URC controller
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Integrate cameras, thermostats, and lighting
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase5">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 5</Badge>
+                            <span>System Architecture & Design</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              5 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Train technicians to design and present full automation solutions</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Site surveys & client needs assessments</li>
+                                <li>• CAD/Visio/Revit schematics for network + automation</li>
+                                <li>• BOM creation and project costing</li>
+                                <li>• Scalability, redundancy, failover planning</li>
+                                <li>• Energy efficiency and sustainability</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Design a 4,000 sq. ft. home automation layout
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Draft a boutique hotel automation architecture
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase6">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 6</Badge>
+                            <span>Advanced Configuration & Integration</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              6-8 weeks
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Achieve mastery in multi-system automation, advanced programming, and cybersecurity</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• URC Accelerator, Savant Studio, RTI APEX advanced programming</li>
+                                <li>• Unified dashboards & remote management portals</li>
+                                <li>• Multi-site management (hotels, campuses, theaters)</li>
+                                <li>• VLAN segregation for IoT, SIEM/log monitoring basics</li>
+                                <li>• AI-driven automation (voice AI, predictive routines)</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Hands-On Labs</h4>
+                              <div className="space-y-2">
+                                <div className="p-3 bg-primary/10 rounded border-l-4 border-primary">
+                                  <strong>Lab 1:</strong> Build TCL showroom demo: lights, blinds, AV, thermostat, cameras on one dashboard
+                                </div>
+                                <div className="p-3 bg-secondary/30 rounded border-l-4 border-secondary">
+                                  <strong>Lab 2:</strong> Secure the system with VLANs and firewall policies
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="phase7">
+                        <AccordionTrigger className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="default" className="text-xs">Phase 7</Badge>
+                            <span>Certification & Continuing Education</span>
+                            <Badge variant="outline" className="text-xs">
+                              <Clock className="h-3 w-3 mr-1" />
+                              Ongoing
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="font-semibold mb-3">Objectives</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Certify and standardize technician skill levels</li>
+                                <li>• Ensure knowledge stays current with industry advances</li>
+                              </ul>
+                              
+                              <h4 className="font-semibold mb-3 mt-4">Certification Pathway</h4>
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="secondary">TCL Certified Apprentice</Badge>
+                                  <span className="text-sm text-muted-foreground">after Phase 2</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="default">TCL Certified Technician</Badge>
+                                  <span className="text-sm text-muted-foreground">after Phase 4</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="destructive">TCL Master Integrator</Badge>
+                                  <span className="text-sm text-muted-foreground">after Phase 6</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-3">Continuing Education</h4>
+                              <ul className="space-y-1 text-sm">
+                                <li>• Annual CE requirement (Matter, Wi-Fi 7, cybersecurity, AI updates)</li>
+                                <li>• Partner certifications (Lutron RA-3, URC Dealer, Savant, IC Realtime, RTI)</li>
+                                <li>• CN Designer/Programmer certification</li>
+                                <li>• Home Theater Designer/Calibrator certification</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </CardContent>
+                </Card>
+
+                {/* Program Delivery */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      Program Delivery
+                    </CardTitle>
+                    <CardDescription>
+                      Blended learning approach with hands-on training and comprehensive support
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold mb-3">Format & Materials</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li>• <strong>Blended learning:</strong> Online video modules, TCL training manuals, live labs</li>
+                          <li>• <strong>Materials:</strong> CAD diagrams, BOM templates, wiring checklists, service SOPs</li>
+                          <li>• <strong>Showroom Training:</strong> Hands-on practice with TCL's live demo environment</li>
+                          <li>• <strong>Tracking:</strong> Technicians maintain a portfolio of completed labs & signed-off competencies</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-3">Program Benefits</h4>
+                        <div className="space-y-3">
+                          <div className="p-3 bg-primary/10 rounded">
+                            <strong>Professional Development</strong>
+                            <p className="text-sm text-muted-foreground">Industry-recognized certifications and career advancement</p>
+                          </div>
+                          <div className="p-3 bg-secondary/30 rounded">
+                            <strong>Technical Excellence</strong>
+                            <p className="text-sm text-muted-foreground">Hands-on experience with leading automation platforms</p>
+                          </div>
+                          <div className="p-3 bg-accent/30 rounded">
+                            <strong>Business Impact</strong>
+                            <p className="text-sm text-muted-foreground">Deliver enterprise-grade solutions with confidence</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Separator className="my-6" />
+                    
+                    <div className="text-center space-y-4">
+                      <h4 className="text-lg font-semibold">Conclusion</h4>
+                      <p className="text-muted-foreground max-w-3xl mx-auto">
+                        The TCL Technician Education Plan is designed not only to train skilled installers but to produce certified integration professionals capable of delivering enterprise-grade smart home and commercial solutions. This structured approach ensures TCL's team remains the most trusted and technically advanced partner for builders, businesses, and homeowners.
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Badge variant="outline">Professional Certification</Badge>
+                        <Badge variant="outline">Hands-on Training</Badge>
+                        <Badge variant="outline">Industry Partnerships</Badge>
+                        <Badge variant="outline">Career Development</Badge>
+                        <Badge variant="outline">Technical Excellence</Badge>
                       </div>
                     </div>
                   </CardContent>
