@@ -56,7 +56,8 @@ import {
   Quote,
   ExternalLink,
   BarChart3,
-  Info
+  Info,
+  Monitor
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -366,6 +367,19 @@ const BuilderDeck = () => {
         "Advanced conditional logic for sophisticated home responses"
       ],
       link: null
+    },
+    ava: {
+      title: "AVA Remote Certified Dealer",
+      description: "Certified dealer for AVA Remote's subscription-free premium control systems, offering professional-only access to cutting-edge control solutions.",
+      benefits: [
+        "Subscription-free premium control systems for cost-effective installations",
+        "Professional-only channel access with exclusive dealer pricing",
+        "Premium margins on high-quality control hardware and software",
+        "Custom installation support for unique automation requirements",
+        "Advanced remote control capabilities without ongoing subscription fees",
+        "Direct dealer relationship with AVA Remote for priority support"
+      ],
+      link: "https://www.ava.com/featured-partners"
     }
   };
 
@@ -1888,6 +1902,54 @@ const BuilderDeck = () => {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog open={certificationDialog === 'ava'} onOpenChange={(open) => setCertificationDialog(open ? 'ava' : null)}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                          <button type="button" className="certification-badge interactive-element relative group">
+                            <Monitor className="w-4 h-4 mr-2" />
+                            AVA Remote Certified
+                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
+                          </button>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Click for certification details</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>{certificationData.ava.title}</DialogTitle>
+                        <DialogDescription className="mt-4">
+                          {certificationData.ava.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
+                        <ul className="space-y-2">
+                          {certificationData.ava.benefits.map((benefit, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+                              <span className="text-sm">{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        {certificationData.ava.link && (
+                          <div className="mt-4">
+                            <a 
+                              href={certificationData.ava.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline flex items-center gap-1"
+                            >
+                              View Featured Partners <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </DialogContent>
                   </Dialog>
