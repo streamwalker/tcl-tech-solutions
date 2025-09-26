@@ -11,7 +11,7 @@ const OperationsTeam = () => {
     },
     {
       name: "Phillip Russell",
-      title: "Strategic Co‑Founder (Streamwalkers Corp)",
+      title: "Management Consultant, Investment Group Liaison",
       background: "SaaS & growth specialist; oversees investor relations, automations, and GTM"
     }
   ];
