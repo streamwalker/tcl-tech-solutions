@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import BuilderDeck from "./pages/BuilderDeck";
 import Auth from "./pages/Auth";
 import AuthGuard from "./components/AuthGuard";
+import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/business-plan" element={<BusinessPlan />} />
           <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
           <Route path="/builder-deck" element={<BuilderDeck />} />
+          <Route path="/education" element={<Education />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -43,6 +43,7 @@ const Navigation = () => {
     { name: "Services", href: "/#services" },
     { name: "About", href: "/#about" },
     { name: "Experience", href: "/#experience" },
+    { name: "Education", href: "/education" },
     { name: "Contact", href: "/#contact" },
     { name: "Business Plan", href: "/business-plan" },
     { name: "Builder Deck", href: "/builder-deck" },
