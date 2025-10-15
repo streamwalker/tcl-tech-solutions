@@ -46,6 +46,7 @@ const Navigation = () => {
     { name: "Education", href: "/education" },
     { name: "Contact", href: "/#contact" },
     { name: "Business Plan", href: "/business-plan" },
+    { name: "Investor White Paper", href: "/investor-white-paper" },
     { name: "Builder Deck", href: "/builder-deck" },
   ];
 

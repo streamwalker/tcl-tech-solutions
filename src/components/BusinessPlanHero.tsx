@@ -1,6 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const BusinessPlanHero = () => {
   return (
@@ -39,10 +41,31 @@ const BusinessPlanHero = () => {
           </Card>
         </div>
 
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3">
             Contact for Investor Packet
           </Button>
+          
+          <div className="mt-6">
+            <Card className="bg-white/90 backdrop-blur border-blue-200 max-w-2xl mx-auto">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <FileText className="w-6 h-6 text-blue-600" />
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Looking for Investor Materials?
+                  </h3>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  Access our condensed Investor White Paper with key highlights and PDF download option.
+                </p>
+                <Link to="/investor-white-paper">
+                  <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
+                    View Investor White Paper →
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
