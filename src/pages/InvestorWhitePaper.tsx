@@ -1,100 +1,154 @@
-import { useRef } from "react";
-import Navigation from "../components/Navigation";
+import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Download } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import jsPDF from "jspdf";
+import { Home, Download, ShieldAlert } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const sections = [
+  { id: "investment-overview", title: "Investment Overview" },
+  { id: "executive-summary", title: "Executive Summary" },
+  { id: "market-opportunity", title: "Market Opportunity" },
+  { id: "financial-projections", title: "Financial Projections" },
+  { id: "revenue-model", title: "Revenue Model" },
+  { id: "competitive-advantages", title: "Competitive Advantages" },
+  { id: "management-team", title: "Management Team" },
+  { id: "use-of-funds", title: "Use of Funds" },
+  { id: "cap-table", title: "Capitalization Table" },
+  { id: "exit-strategy", title: "Exit Strategy" },
+  { id: "contact", title: "Contact & Next Steps" },
+];
 
 const InvestorWhitePaper = () => {
-  const whitePaperRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState("investment-overview");
 
-  const generatePDF = async () => {
-    if (!whitePaperRef.current) return;
+  const handleDownloadPDF = () => {
+    window.print();
+  };
 
-    try {
-      toast({
-        title: "Generating PDF...",
-        description: "Please wait while we prepare your document.",
-      });
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; // Account for fixed header
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: 'a4',
-      });
-
-      await pdf.html(whitePaperRef.current, {
-        callback: (doc) => {
-          doc.setProperties({
-            title: 'TCL Tech Solutions - Investor White Paper',
-            subject: 'Investment Opportunity - $750K Seed Round',
-            author: 'TCL Tech Solutions',
-            keywords: 'smart home, automation, investment, seed funding, technology',
-            creator: 'TCL Tech Solutions',
-          });
-          doc.save('TCL-Investor-White-Paper.pdf');
-          
-          toast({
-            title: "PDF Downloaded Successfully",
-            description: "Your investor white paper has been downloaded.",
-          });
-        },
-        x: 15,
-        y: 15,
-        width: 180,
-        windowWidth: 650,
-      });
-    } catch (error) {
-      toast({
-        title: "Error Generating PDF",
-        description: "Please try again or contact support.",
-        variant: "destructive",
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
     }
   };
 
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      const element = document.getElementById(section.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-4">
-              <FileText className="w-12 h-12 mr-3" />
-              <h1 className="text-4xl md:text-5xl font-bold">
-                Investor White Paper
-              </h1>
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 right-0 bg-slate-800 text-white z-50 border-b border-slate-700">
+        <div className="flex items-center justify-between h-16 px-6">
+          <div className="flex items-center">
+            <div>
+              <h1 className="text-xl font-bold">TCL Tech Solutions</h1>
+              <p className="text-sm text-slate-300">Investor White Paper</p>
             </div>
-            <p className="text-xl text-blue-100 mb-6">
-              TCL Tech Solutions - Investment Opportunity
-            </p>
-            <p className="text-lg text-blue-50 mb-8">
-              Seeking $750,000 Seed Capital at $3.75M Post-Money Valuation
-            </p>
+          </div>
+          <div className="flex items-center gap-3">
             <Button 
-              onClick={generatePDF}
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50"
+              onClick={() => navigate('/')}
+              variant="ghost"
+              className="bg-slate-700 hover:bg-slate-600 text-white"
             >
-              <Download className="mr-2 h-5 w-5" />
-              Download White Paper PDF
+              <Home className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+            <Button 
+              onClick={handleDownloadPDF}
+              className="bg-cyan-500 hover:bg-cyan-600 text-white"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
             </Button>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* White Paper Content */}
-      <div ref={whitePaperRef} className="white-paper-content">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          
-          {/* Investment Opportunity Overview */}
-          <Card className="mb-8 print-section">
+      {/* Print-only Header */}
+      <div className="hidden print:block print-header">
+        <div className="text-center py-6 border-b-2 border-slate-800">
+          <h1 className="text-2xl font-bold text-slate-800">TCL Tech Solutions</h1>
+          <p className="text-sm text-slate-600">Investor White Paper - Confidential</p>
+        </div>
+      </div>
+
+      <div className="flex pt-16">
+        {/* Table of Contents Sidebar */}
+        <aside className="hidden lg:block fixed left-0 top-16 bottom-0 w-64 bg-gray-100 overflow-y-auto border-r border-gray-200 print:hidden">
+          <nav className="p-4">
+            <h2 className="text-lg font-bold text-gray-800 mb-4 px-3">Table of Contents</h2>
+            <ul className="space-y-1">
+              {sections.map((section) => (
+                <li key={section.id}>
+                  <button
+                    onClick={() => scrollToSection(section.id)}
+                    className={cn(
+                      "w-full text-left px-3 py-2 rounded text-sm transition-colors",
+                      activeSection === section.id
+                        ? "bg-slate-800 text-white font-medium"
+                        : "text-gray-700 hover:bg-gray-200"
+                    )}
+                  >
+                    {section.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 lg:ml-64">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 white-paper-content">
+            
+            {/* Confidential Banner */}
+            <div className="mb-8 bg-red-50 border-l-4 border-red-400 p-4 rounded print:border print:border-red-400 print:mb-6">
+              <div className="flex items-start">
+                <ShieldAlert className="h-5 w-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-red-800 font-semibold mb-1">Confidential Investment Document</h3>
+                  <p className="text-red-700 text-sm">
+                    This document contains proprietary and confidential information. Distribution or reproduction without written consent is prohibited.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Investment Opportunity Overview */}
+            <Card id="investment-overview" className="mb-8 print-section scroll-mt-20">
             <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
               <CardTitle className="text-3xl text-blue-700">Investment Opportunity Overview</CardTitle>
             </CardHeader>
@@ -129,7 +183,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Executive Summary */}
-          <Card className="mb-8 print-section">
+          <Card id="executive-summary" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Executive Summary</CardTitle>
             </CardHeader>
@@ -162,7 +216,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Market Opportunity */}
-          <Card className="mb-8 print-section">
+          <Card id="market-opportunity" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Market Opportunity</CardTitle>
             </CardHeader>
@@ -199,7 +253,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Financial Projections */}
-          <Card className="mb-8 print-section">
+          <Card id="financial-projections" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Financial Projections (3-Year)</CardTitle>
             </CardHeader>
@@ -265,7 +319,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Revenue Streams */}
-          <Card className="mb-8 print-section">
+          <Card id="revenue-model" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Revenue Model & Streams</CardTitle>
             </CardHeader>
@@ -318,7 +372,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Competitive Advantages */}
-          <Card className="mb-8 print-section">
+          <Card id="competitive-advantages" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Competitive Advantages</CardTitle>
             </CardHeader>
@@ -349,7 +403,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Management Team */}
-          <Card className="mb-8 print-section">
+          <Card id="management-team" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Management Team</CardTitle>
             </CardHeader>
@@ -373,7 +427,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Use of Funds */}
-          <Card className="mb-8 print-section">
+          <Card id="use-of-funds" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Use of Funds</CardTitle>
             </CardHeader>
@@ -433,7 +487,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Cap Table */}
-          <Card className="mb-8 print-section">
+          <Card id="cap-table" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Capitalization Table (Post-Money)</CardTitle>
             </CardHeader>
@@ -478,7 +532,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Exit Strategy */}
-          <Card className="mb-8 print-section">
+          <Card id="exit-strategy" className="mb-8 print-section scroll-mt-20">
             <CardHeader>
               <CardTitle className="text-2xl text-blue-600">Exit Strategy & Investor Returns</CardTitle>
             </CardHeader>
@@ -514,7 +568,7 @@ const InvestorWhitePaper = () => {
           </Card>
 
           {/* Contact & Next Steps */}
-          <Card className="print-section">
+          <Card id="contact" className="print-section scroll-mt-20">
             <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
               <CardTitle className="text-2xl">Contact & Next Steps</CardTitle>
             </CardHeader>
@@ -538,44 +592,83 @@ const InvestorWhitePaper = () => {
             </CardContent>
           </Card>
 
-        </div>
-      </div>
-
-      {/* Bottom Download Button */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 py-8">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Button 
-            onClick={generatePDF}
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            <Download className="mr-2 h-5 w-5" />
-            Download White Paper PDF
-          </Button>
-        </div>
+          </div>
+        </main>
       </div>
 
       <Footer />
 
       <style>{`
         @media print {
+          /* Hide navigation elements */
+          header:not(.print-header),
+          aside,
+          footer,
+          button,
+          .print\\:hidden {
+            display: none !important;
+          }
+          
+          /* Show print header */
+          .print-header {
+            display: block !important;
+          }
+          
+          /* Reset main content for print */
+          main {
+            margin-left: 0 !important;
+          }
+          
+          /* Optimize content layout */
           .white-paper-content {
+            max-width: 100% !important;
+            padding: 20px 40px !important;
             background: white !important;
           }
           
+          /* Page breaks */
           .print-section {
             page-break-inside: avoid;
             break-inside: avoid;
           }
           
-          nav, footer, button {
-            display: none !important;
+          h2, h3 {
+            page-break-after: avoid;
+          }
+          
+          /* Preserve colors and styling */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          
+          /* Table optimization */
+          table {
+            page-break-inside: avoid;
+          }
+          
+          /* Card styling for print */
+          .print-section {
+            margin-bottom: 1.5rem !important;
+            border: 1px solid #e5e7eb;
+            box-shadow: none !important;
           }
         }
         
+        /* Smooth scrolling */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Color preservation */
         .white-paper-content {
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
+        }
+        
+        /* Scroll margin for fixed header */
+        .scroll-mt-20 {
+          scroll-margin-top: 5rem;
         }
       `}</style>
     </div>
