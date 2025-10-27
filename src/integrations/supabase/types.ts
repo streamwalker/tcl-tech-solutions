@@ -508,6 +508,197 @@ export type Database = {
           },
         ]
       }
+      knowledge_contributions: {
+        Row: {
+          contribution_type: string
+          created_at: string
+          id: string
+          node_id: string | null
+          relationship_id: string | null
+          reputation_earned: number | null
+          user_id: string
+          validated: boolean | null
+          validated_at: string | null
+          validated_by: string | null
+        }
+        Insert: {
+          contribution_type: string
+          created_at?: string
+          id?: string
+          node_id?: string | null
+          relationship_id?: string | null
+          reputation_earned?: number | null
+          user_id: string
+          validated?: boolean | null
+          validated_at?: string | null
+          validated_by?: string | null
+        }
+        Update: {
+          contribution_type?: string
+          created_at?: string
+          id?: string
+          node_id?: string | null
+          relationship_id?: string | null
+          reputation_earned?: number | null
+          user_id?: string
+          validated?: boolean | null
+          validated_at?: string | null
+          validated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_contributions_node_id_fkey"
+            columns: ["node_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_nodes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "knowledge_contributions_relationship_id_fkey"
+            columns: ["relationship_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_relationships"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      knowledge_nodes: {
+        Row: {
+          category: string
+          confidence_score: number | null
+          content: Json | null
+          created_at: string
+          created_by: string | null
+          embedding: string | null
+          id: string
+          layer: number
+          source_urls: string[] | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          confidence_score?: number | null
+          content?: Json | null
+          created_at?: string
+          created_by?: string | null
+          embedding?: string | null
+          id?: string
+          layer: number
+          source_urls?: string[] | null
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          confidence_score?: number | null
+          content?: Json | null
+          created_at?: string
+          created_by?: string | null
+          embedding?: string | null
+          id?: string
+          layer?: number
+          source_urls?: string[] | null
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      knowledge_relationships: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          relationship_type: string
+          source_node_id: string
+          strength: number | null
+          target_node_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          relationship_type: string
+          source_node_id: string
+          strength?: number | null
+          target_node_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          relationship_type?: string
+          source_node_id?: string
+          strength?: number | null
+          target_node_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_relationships_source_node_id_fkey"
+            columns: ["source_node_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_nodes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "knowledge_relationships_target_node_id_fkey"
+            columns: ["target_node_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_nodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      knowledge_versions: {
+        Row: {
+          change_description: string | null
+          change_type: string
+          content: Json
+          contributor_id: string | null
+          created_at: string
+          id: string
+          node_id: string
+          version: number
+        }
+        Insert: {
+          change_description?: string | null
+          change_type: string
+          content: Json
+          contributor_id?: string | null
+          created_at?: string
+          id?: string
+          node_id: string
+          version: number
+        }
+        Update: {
+          change_description?: string | null
+          change_type?: string
+          content?: Json
+          contributor_id?: string | null
+          created_at?: string
+          id?: string
+          node_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_versions_node_id_fkey"
+            columns: ["node_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_nodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       performance_metrics: {
         Row: {
           created_at: string
@@ -1135,6 +1326,16 @@ export type Database = {
       check_email_whitelist_secure: {
         Args: { check_email: string }
         Returns: boolean
+      }
+      get_related_nodes: {
+        Args: { max_depth?: number; node_uuid: string }
+        Returns: {
+          depth: number
+          id: string
+          layer: number
+          relationship_path: string[]
+          title: string
+        }[]
       }
     }
     Enums: {

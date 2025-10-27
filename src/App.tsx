@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import AuthGuard from "./components/AuthGuard";
 import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
+import OmniCode from "./pages/OmniCode";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
           <Route path="/builder-deck" element={<BuilderDeck />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/omnicode" element={<OmniCode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

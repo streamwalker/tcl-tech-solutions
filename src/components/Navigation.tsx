@@ -44,6 +44,7 @@ const Navigation = () => {
     { name: "About", href: "/#about" },
     { name: "Experience", href: "/#experience" },
     { name: "Education", href: "/education" },
+    { name: "OmniCode", href: "/omnicode" },
     { name: "Contact", href: "/#contact" },
     { name: "Business Plan", href: "/business-plan" },
     { name: "Investor White Paper", href: "/investor-white-paper" },
