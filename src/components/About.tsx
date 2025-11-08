@@ -71,7 +71,7 @@ const About = () => {
         {/* Header Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            About TCL Tech Solutions
+            About The Connected Lifestyle
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Founded by Damon Jackson, a highly credentialed smart home and commercial automation expert 
@@ -104,7 +104,7 @@ const About = () => {
               <p className="text-base leading-relaxed text-muted-foreground">
                 Through his extensive certifications, Damon offers clients the confidence that every 
                 installation is backed by the highest standards of technical knowledge and craftsmanship. 
-                At TCL Tech Solutions, he combines technical expertise with a vision for innovation—transforming 
+                At The Connected Lifestyle, he combines technical expertise with a vision for innovation—transforming 
                 ordinary spaces into intelligent environments that enhance everyday living.
               </p>
             </div>
@@ -142,7 +142,7 @@ const About = () => {
             <h3 className="text-3xl font-bold mb-6">Company Overview</h3>
             
             <p className="text-lg mb-6 leading-relaxed">
-              Founded in 2024, TCL Tech Solutions is San Antonio's premier smart home integration 
+              Founded in 2024, The Connected Lifestyle is San Antonio's premier smart home integration 
               company. We specialize in transforming homes with intelligent automation systems, 
               integrating enterprise-grade networks, and custom theater systems enhanced by 
               proprietary AI logic.

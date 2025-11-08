@@ -27,8 +27,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      details: ["info@tcltechsolutions.com"],
-      link: "mailto:info@tcltechsolutions.com"
+      details: ["theconnectedlifestyletech@gmail.com"],
+      link: "mailto:theconnectedlifestyletech@gmail.com"
     },
     {
       icon: MapPin,
