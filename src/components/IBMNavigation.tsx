@@ -164,8 +164,8 @@ const IBMNavigation = () => {
         <div className="lg:hidden border-t border-border bg-white">
           <div className="px-4 py-6 space-y-6">
             <div className="space-y-4">
-              <Link to="/" className="block text-lg font-medium text-foreground">Services</Link>
-              <Link to="/business-plan" className="block text-lg font-medium text-foreground">Solutions</Link>
+              <Link to="/services" className="block text-lg font-medium text-foreground">Services</Link>
+              <Link to="/services" className="block text-lg font-medium text-foreground">Solutions</Link>
               <Link to="/business-plan" className="block text-lg font-medium text-foreground">About</Link>
               <Link to="#" className="block text-lg font-medium text-foreground">Support</Link>
               <Link to="/investor-white-paper" className="block text-lg font-medium text-primary">Investor 2026</Link>
