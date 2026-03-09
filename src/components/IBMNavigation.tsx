@@ -38,21 +38,27 @@ const IBMNavigation = () => {
                   <div className="grid gap-4">
                     <div>
                       <h3 className="font-semibold mb-2">Home Solutions</h3>
-                      <DropdownMenuItem className="flex flex-col items-start p-3">
-                        <div className="font-medium">Smart Home Automation</div>
-                        <div className="text-sm text-muted-foreground">Complete automation solutions</div>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="flex flex-col items-start p-3">
-                        <div className="font-medium">Home Entertainment</div>
-                        <div className="text-sm text-muted-foreground">Theater and media systems</div>
-                      </DropdownMenuItem>
+                      <Link to="/services#smart-home">
+                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                          <div className="font-medium">Smart Home Automation</div>
+                          <div className="text-sm text-muted-foreground">Complete automation solutions</div>
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link to="/services#home-theater">
+                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                          <div className="font-medium">Home Theater Technology</div>
+                          <div className="text-sm text-muted-foreground">Theater and media systems</div>
+                        </DropdownMenuItem>
+                      </Link>
                     </div>
                     <div>
                       <h3 className="font-semibold mb-2">Business Solutions</h3>
-                      <DropdownMenuItem className="flex flex-col items-start p-3">
-                        <div className="font-medium">IT Services</div>
-                        <div className="text-sm text-muted-foreground">Enterprise technology solutions</div>
-                      </DropdownMenuItem>
+                      <Link to="/services#enterprise-networks">
+                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                          <div className="font-medium">Enterprise Networks</div>
+                          <div className="text-sm text-muted-foreground">Enterprise technology solutions</div>
+                        </DropdownMenuItem>
+                      </Link>
                     </div>
                   </div>
                 </DropdownMenuContent>
@@ -158,8 +164,8 @@ const IBMNavigation = () => {
         <div className="lg:hidden border-t border-border bg-white">
           <div className="px-4 py-6 space-y-6">
             <div className="space-y-4">
-              <Link to="/" className="block text-lg font-medium text-foreground">Services</Link>
-              <Link to="/business-plan" className="block text-lg font-medium text-foreground">Solutions</Link>
+              <Link to="/services" className="block text-lg font-medium text-foreground">Services</Link>
+              <Link to="/services" className="block text-lg font-medium text-foreground">Solutions</Link>
               <Link to="/business-plan" className="block text-lg font-medium text-foreground">About</Link>
               <Link to="#" className="block text-lg font-medium text-foreground">Support</Link>
               <Link to="/investor-white-paper" className="block text-lg font-medium text-primary">Investor 2026</Link>
