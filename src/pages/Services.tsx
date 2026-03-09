@@ -84,6 +84,7 @@ const Services = () => {
               return (
                 <div
                   key={service.title}
+                  id={service.title.toLowerCase().replace(/\s+/g, '-')}
                   className="bg-background p-8 hover:bg-card transition-colors duration-200 group cursor-pointer"
                 >
                   <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded mb-4 ${badgeColors[service.badge] ?? "bg-muted text-muted-foreground"}`}>
