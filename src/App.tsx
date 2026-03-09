@@ -33,6 +33,7 @@ const App = () => (
           <Route path="/builder-deck" element={<BuilderDeck />} />
           <Route path="/education" element={<Education />} />
           <Route path="/omnicode" element={<OmniCode />} />
+          <Route path="/services" element={<Services />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
