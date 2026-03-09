@@ -11,6 +11,10 @@ import Dashboard from "./pages/Dashboard";
 import BuilderDeck from "./pages/BuilderDeck";
 import Auth from "./pages/Auth";
 import AuthGuard from "./components/AuthGuard";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import CompliancePage from "./pages/Compliance";
 import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
 import OmniCode from "./pages/OmniCode";
@@ -34,6 +38,10 @@ const App = () => (
           <Route path="/education" element={<Education />} />
           <Route path="/omnicode" element={<OmniCode />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
+          <Route path="/compliance" element={<CompliancePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
