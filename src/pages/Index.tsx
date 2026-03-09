@@ -61,6 +61,7 @@ const Index = () => {
       
       <Footer />
       <ChatBot />
+      <CookieConsent />
     </div>
   );
 };

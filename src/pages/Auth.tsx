@@ -171,10 +171,44 @@ const Auth = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full" disabled={loading}>
+              {!isLogin && (
+                <div className="flex items-start space-x-2">
+                  <Checkbox
+                    id="terms"
+                    checked={agreedToTerms}
+                    onCheckedChange={(checked) => setAgreedToTerms(checked === true)}
+                  />
+                  <label htmlFor="terms" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
+                    I agree to the{' '}
+                    <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                      Terms of Service & EULA
+                    </a>,{' '}
+                    <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                      Privacy Policy
+                    </a>, and{' '}
+                    <a href="/cookie-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                      Cookie Policy
+                    </a>.
+                  </label>
+                </div>
+              )}
+
+              <Button type="submit" className="w-full" disabled={loading || (!isLogin ? false : false) || (!isLogin && !agreedToTerms)}>
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isLogin ? 'Sign In' : 'Create Account'}
               </Button>
+
+              {isLogin && (
+                <p className="text-xs text-center text-muted-foreground">
+                  By signing in, you agree to our{' '}
+                  <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                    Terms of Service
+                  </a>{' '}and{' '}
+                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                    Privacy Policy
+                  </a>.
+                </p>
+              )}
             </form>
 
             <div className="text-center">
