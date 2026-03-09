@@ -14,6 +14,7 @@ import AuthGuard from "./components/AuthGuard";
 import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
 import OmniCode from "./pages/OmniCode";
+import Services from "./pages/Services";
 
 const queryClient = new QueryClient();
 
