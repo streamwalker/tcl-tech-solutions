@@ -7,70 +7,62 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 218 27% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 218 27% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 218 27% 8%;
 
-    --primary: 214 84% 56%;
-    --primary-foreground: 210 40% 98%;
+    /* IBM Blue */
+    --primary: 218 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 14% 96%;
+    --secondary-foreground: 218 27% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 14% 96%;
+    --muted-foreground: 218 16% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 14% 96%;
+    --accent-foreground: 218 27% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 218 12% 90%;
+    --input: 218 12% 90%;
+    --ring: 218 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 6px;
 
-    /* TCL Brand Colors */
-    --tcl-blue: 214 84% 56%;
-    --tcl-blue-light: 214 84% 70%;
-    --tcl-blue-dark: 214 84% 40%;
-    --tcl-accent: 195 100% 45%;
-    --tcl-success: 142 76% 36%;
-    --tcl-warning: 38 92% 50%;
-    --tcl-error: 0 84% 60%;
+    /* IBM Design System Colors */
+    --ibm-blue: 218 100% 50%;
+    --ibm-blue-light: 218 100% 70%;
+    --ibm-blue-dark: 218 100% 30%;
+    --ibm-gray-10: 210 14% 96%;
+    --ibm-gray-20: 210 11% 93%;
+    --ibm-gray-30: 212 10% 83%;
+    --ibm-gray-50: 214 9% 60%;
+    --ibm-gray-70: 216 12% 40%;
+    --ibm-gray-90: 218 27% 8%;
+    --ibm-gray-100: 216 100% 4%;
 
-    /* Professional gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--tcl-blue)), hsl(var(--tcl-accent)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
-    --gradient-success: linear-gradient(135deg, hsl(var(--tcl-success)), hsl(142 76% 50%));
-
-    /* Professional shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    /* Professional shadows - softer, more IBM-like */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
 
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-foreground: 218 27% 8%;
+    --sidebar-primary: 218 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 14% 96%;
+    --sidebar-accent-foreground: 218 27% 8%;
+    --sidebar-border: 218 12% 90%;
+    --sidebar-ring: 218 100% 50%;
   }
 
   .dark {
@@ -128,6 +120,12 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
   }
 }
 

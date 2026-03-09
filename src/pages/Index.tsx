@@ -1,8 +1,8 @@
-
-import Navigation from "../components/Navigation";
+import IBMNavigation from "../components/IBMNavigation";
+import IBMHero from "../components/IBMHero";
+import IBMRecommendations from "../components/IBMRecommendations";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
-import Hero from "../components/Hero";
 import Services from "../components/Services";
 import DealerPartners from "../components/DealerPartners";
 import ValuePropositions from "../components/ValuePropositions";
@@ -15,35 +15,49 @@ import ChatBot from "../components/ChatBot";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-      <Hero />
+    <div className="min-h-screen bg-background">
+      <IBMNavigation />
+      <IBMHero />
+      <IBMRecommendations />
       
-      {/* Workforce Management Platform Access */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Access Workforce Management Platform</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Transform your business operations with our comprehensive workforce intelligence and management platform.
-          </p>
-          <div className="space-x-4">
-            <Link to="/dashboard">
-              <Button size="lg">Access Platform</Button>
-            </Link>
-            <Link to="/auth">
-              <Button variant="outline" size="lg">Sign In to Get Started</Button>
-            </Link>
+      {/* Platform Access Section - IBM-style clean design */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+              Access our comprehensive platform
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Transform your business operations with our comprehensive workforce intelligence 
+              and management platform designed for modern enterprises.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+              <Link to="/dashboard">
+                <Button size="lg" className="px-8 font-medium">
+                  Access Platform
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button variant="outline" size="lg" className="px-8 font-medium">
+                  Sign In to Get Started
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
       
-      <Services />
-      <DealerPartners />
-      <ValuePropositions />
-      <Testimonials />
-      <About />
-      <Experience />
-      <Contact />
+      {/* Legacy Sections - Keep all existing content but with IBM-style spacing */}
+      <div className="space-y-0">
+        <Services />
+        <DealerPartners />
+        <ValuePropositions />
+        <Testimonials />
+        <About />
+        <Experience />
+        <Contact />
+      </div>
+      
       <Footer />
       <ChatBot />
     </div>
