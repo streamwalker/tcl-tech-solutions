@@ -7,21 +7,21 @@ const IBMHero = () => {
   const newsItems = [
     {
       type: "News",
-      title: "TCL and Partners Create Advanced Smart Home Solutions",
-      excerpt: "Revolutionary automation technology for modern living spaces...",
-      link: "/news/smart-home-solutions"
+      title: "TCL Launches Advanced Smart Home Automation in San Antonio",
+      excerpt: "Revolutionary Control4 and Savant automation technology for modern San Antonio homes...",
+      link: "/services#smart-home-automation"
     },
     {
       type: "Insights",
-      title: "The Future of Workforce Management in Tech Services",
-      excerpt: "How AI-powered analytics transform business operations...",
-      link: "/insights/workforce-management"
+      title: "AI-Powered Workforce Management for Texas Businesses",
+      excerpt: "How AI-powered analytics transform San Antonio business operations...",
+      link: "/dashboard"
     },
     {
       type: "Product",
-      title: "Introducing OmniCode Development Platform",
-      excerpt: "Next-generation tools for streamlined development workflows...",
-      link: "/products/omnicode"
+      title: "OmniCode Development Platform Now Available",
+      excerpt: "Next-generation development tools with AI assistance for modern teams...",
+      link: "/omnicode"
     }
   ];
 
