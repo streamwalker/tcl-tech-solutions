@@ -10,8 +10,8 @@ const IBMRecommendations = () => {
       badge: "Most Popular",
       badgeVariant: "default" as const,
       icon: Home,
-      title: "Complete Smart Home Automation",
-      description: "Transform your living space with integrated lighting, security, climate control, and entertainment systems.",
+      title: "Complete Smart Home Automation in San Antonio",
+      description: "Transform your San Antonio home with integrated Control4 and Savant lighting, security, climate control, and whole-home entertainment systems.",
       image: "/HomeTheater.jpg",
       link: "/services#automation",
       cta: "Explore automation"
