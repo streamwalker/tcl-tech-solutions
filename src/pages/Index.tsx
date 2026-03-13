@@ -18,8 +18,7 @@ import AdSidebar from "../components/AdSidebar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background xl:grid xl:grid-cols-[200px_1fr_200px]">
-      <AdSidebar side="left" />
+    <div className="min-h-screen bg-background xl:grid xl:grid-cols-[1fr_200px]">
       <div className="min-w-0">
       <IBMNavigation />
       <IBMHero />
