@@ -54,7 +54,7 @@ export default function OmniCode() {
   const loadNodes = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('knowledge_nodes')
         .select('*')
         .in('layer', selectedLayers)
