@@ -68,6 +68,8 @@ const Index = () => {
       <Footer />
       <ChatBot />
       <CookieConsent />
+      </div>
+      <AdSidebar side="right" />
     </div>
   );
 };
