@@ -19,8 +19,8 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      quote: "The home theater system TCL installed exceeded all my expectations. The sound quality is incredible and the automation makes everything so easy to use.",
-      name: "Earl W.",
+      quote: "The home theater system TCL installed in our Stone Oak home exceeded all my expectations. The Dolby Atmos sound quality is incredible and the Control4 automation makes everything so easy.",
+      name: "Earl W. — Stone Oak, San Antonio",
       serviceType: "Home Theater & Audio/Video Setup",
       rating: 5
     },
