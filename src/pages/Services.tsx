@@ -13,7 +13,7 @@ const services = [
   {
     icon: Shield,
     title: "Enterprise Networks",
-    description: "Secure, scalable network infrastructure designed for businesses of all sizes with 24/7 monitoring and support.",
+    description: "Secure, scalable network infrastructure for San Antonio businesses — structured cabling, Wi-Fi 6E/7, VLANs, VPNs, and 24/7 managed IT support.",
     badge: "Business",
   },
   {
