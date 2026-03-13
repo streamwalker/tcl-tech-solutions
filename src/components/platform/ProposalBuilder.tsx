@@ -8,9 +8,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, FileText, Eye, Loader2 } from "lucide-react";
+import { Plus, FileText, Eye, Loader2, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import ProposalPrintView from "./ProposalPrintView";
 
 interface ProposalItem {
   id: string;
@@ -148,9 +149,14 @@ export default function ProposalBuilder() {
             const t = calcTotal(viewing);
             return (
               <div className="space-y-4">
-                <div className="flex gap-4 text-sm">
+                <div className="flex gap-4 text-sm items-center">
                   <div><span className="text-muted-foreground">Client:</span> <span className="font-medium">{viewing.clients?.name || "—"}</span></div>
                   <Badge className={statusColors[viewing.status] || ""}>{viewing.status}</Badge>
+                  <div className="ml-auto">
+                    <Button variant="outline" size="sm" onClick={() => window.print()}>
+                      <Download className="h-4 w-4 mr-2" />Download PDF
+                    </Button>
+                  </div>
                 </div>
                 {(viewing.proposal_items || []).length > 0 && (
                   <Table>
@@ -173,6 +179,8 @@ export default function ProposalBuilder() {
           })()}
         </DialogContent>
       </Dialog>
+
+      {viewing && <ProposalPrintView proposal={viewing} />}
 
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
         <DialogContent className="max-w-lg">
