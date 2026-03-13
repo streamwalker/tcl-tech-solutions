@@ -33,12 +33,12 @@ const IBMHero = () => {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-tight">
-                Transform your connected lifestyle
+                Smart Home Automation & Technology Solutions in San Antonio
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                Master the evolving landscape of smart technology to turn complex challenges 
-                into your greatest operational successes with veteran-owned expertise and 
-                innovative solutions.
+                San Antonio's veteran-owned smart home automation, home theater installation, and 
+                enterprise IT company. Control4, Savant, and Lutron authorized dealer serving 
+                residential and commercial customers across South Texas.
               </p>
             </div>
             
