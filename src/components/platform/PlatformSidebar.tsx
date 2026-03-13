@@ -43,7 +43,7 @@ export function PlatformSidebar() {
         )}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup defaultOpen>
+        <SidebarGroup>
           <SidebarGroupLabel>Modules</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
