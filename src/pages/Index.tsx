@@ -14,10 +14,13 @@ import Footer from "../components/Footer";
 import ChatBot from "../components/ChatBot";
 import CookieConsent from "../components/CookieConsent";
 import SEOContent from "../components/SEOContent";
+import AdSidebar from "../components/AdSidebar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background xl:grid xl:grid-cols-[200px_1fr_200px]">
+      <AdSidebar side="left" />
+      <div className="min-w-0">
       <IBMNavigation />
       <IBMHero />
       <IBMRecommendations />
@@ -65,6 +68,8 @@ const Index = () => {
       <Footer />
       <ChatBot />
       <CookieConsent />
+      </div>
+      <AdSidebar side="right" />
     </div>
   );
 };
