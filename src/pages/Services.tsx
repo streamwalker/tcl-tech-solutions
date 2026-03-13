@@ -7,7 +7,7 @@ const services = [
   {
     icon: Home,
     title: "Smart Home Automation",
-    description: "Transform your living space with intelligent automation systems that learn your preferences and adapt to your lifestyle.",
+    description: "Transform your San Antonio living space with intelligent Control4 and Savant automation systems that learn your preferences — including smart lighting, motorized shades, climate control, and whole-home audio.",
     badge: "Most Popular",
   },
   {
