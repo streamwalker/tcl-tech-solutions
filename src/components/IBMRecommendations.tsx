@@ -65,8 +65,8 @@ const IBMRecommendations = () => {
       badge: "Veteran-Owned",
       badgeVariant: "default" as const,
       icon: Shield,
-      title: "Trusted Technology Partnership",
-      description: "Veteran-owned business delivering reliable, professional technology services with over 20 years combined experience.",
+      title: "Veteran-Owned Technology Company — San Antonio TX",
+      description: "Proud veteran-owned business delivering reliable smart home, home theater, and enterprise IT services with over 20 years combined experience in San Antonio.",
       image: "/VetOwnedLogo.jpg",
       link: "/business-plan",
       cta: "Our story"
