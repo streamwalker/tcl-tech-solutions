@@ -13,6 +13,7 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ChatBot from "../components/ChatBot";
 import CookieConsent from "../components/CookieConsent";
+import SEOContent from "../components/SEOContent";
 
 const Index = () => {
   return (
@@ -58,6 +59,8 @@ const Index = () => {
         <Experience />
         <Contact />
       </div>
+
+      <SEOContent />
       
       <Footer />
       <ChatBot />

@@ -10,8 +10,8 @@ const IBMRecommendations = () => {
       badge: "Most Popular",
       badgeVariant: "default" as const,
       icon: Home,
-      title: "Complete Smart Home Automation",
-      description: "Transform your living space with integrated lighting, security, climate control, and entertainment systems.",
+      title: "Complete Smart Home Automation in San Antonio",
+      description: "Transform your San Antonio home with integrated Control4 and Savant lighting, security, climate control, and whole-home entertainment systems.",
       image: "/HomeTheater.jpg",
       link: "/services#automation",
       cta: "Explore automation"
@@ -21,8 +21,8 @@ const IBMRecommendations = () => {
       badge: "Enterprise",
       badgeVariant: "secondary" as const,
       icon: Building2,
-      title: "Business IT Infrastructure",
-      description: "Comprehensive technology solutions for modern enterprises, including network setup, security, and maintenance.",
+      title: "Enterprise IT & Network Infrastructure",
+      description: "Comprehensive business technology solutions for San Antonio enterprises — structured cabling, Wi-Fi 6E, managed IT, and cybersecurity.",
       image: "/TCL Home Automation.jpg",
       link: "/services#business",
       cta: "View solutions"
@@ -43,8 +43,8 @@ const IBMRecommendations = () => {
       badge: "Premium",
       badgeVariant: "outline" as const,
       icon: Zap,
-      title: "Home Entertainment Systems",
-      description: "Professional theater installations with cutting-edge audio-visual technology for the ultimate experience.",
+      title: "Home Theater & Entertainment Systems San Antonio",
+      description: "Professional Dolby Atmos home theater installations with 4K/8K projection, JBL Synthesis, and AVA Cinema by certified San Antonio technicians.",
       image: "/HomeTheater.jpg",
       link: "/services#entertainment", 
       cta: "Learn more"
@@ -65,8 +65,8 @@ const IBMRecommendations = () => {
       badge: "Veteran-Owned",
       badgeVariant: "default" as const,
       icon: Shield,
-      title: "Trusted Technology Partnership",
-      description: "Veteran-owned business delivering reliable, professional technology services with over 20 years combined experience.",
+      title: "Veteran-Owned Technology Company — San Antonio TX",
+      description: "Proud veteran-owned business delivering reliable smart home, home theater, and enterprise IT services with over 20 years combined experience in San Antonio.",
       image: "/VetOwnedLogo.jpg",
       link: "/business-plan",
       cta: "Our story"
@@ -78,22 +78,23 @@ const IBMRecommendations = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-            Recommended for you
+            Top-Rated Smart Home & IT Solutions in San Antonio
           </h2>
           <p className="text-muted-foreground max-w-2xl">
-            Discover our comprehensive technology solutions designed to transform your home and business operations.
+            Discover our comprehensive smart home automation, home theater, and enterprise IT solutions 
+            designed for San Antonio homeowners and businesses. Authorized Control4, Savant, and Lutron dealer.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recommendations.map((item, index) => (
-            <Card key={index} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
+            <Card key={index} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden" aria-label={`${item.title} — ${item.description}`}>
               <Link to={item.link}>
                 <div className="aspect-video relative overflow-hidden bg-muted">
                   {item.image ? (
                     <img 
                       src={item.image} 
-                      alt={item.title}
+                      alt={`${item.title} — professional installation by The Connected Lifestyle, San Antonio TX`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (

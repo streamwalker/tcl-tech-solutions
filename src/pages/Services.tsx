@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import { ServicesPopups } from "@/components/NavigationPopups";
@@ -7,19 +8,19 @@ const services = [
   {
     icon: Home,
     title: "Smart Home Automation",
-    description: "Transform your living space with intelligent automation systems that learn your preferences and adapt to your lifestyle.",
+    description: "Transform your San Antonio living space with intelligent Control4 and Savant automation systems that learn your preferences — including smart lighting, motorized shades, climate control, and whole-home audio.",
     badge: "Most Popular",
   },
   {
     icon: Shield,
     title: "Enterprise Networks",
-    description: "Secure, scalable network infrastructure designed for businesses of all sizes with 24/7 monitoring and support.",
+    description: "Secure, scalable network infrastructure for San Antonio businesses — structured cabling, Wi-Fi 6E/7, VLANs, VPNs, and 24/7 managed IT support.",
     badge: "Business",
   },
   {
     icon: Database,
     title: "Home Theater Technology",
-    description: "Immersive cinematic experiences with premium audio-visual installations tailored to your space.",
+    description: "Immersive Dolby Atmos cinematic experiences with 4K/8K projection, JBL Synthesis, and AVA Cinema — professionally installed in your San Antonio home.",
     badge: "Premium",
   },
   {
@@ -103,6 +104,39 @@ const Services = () => {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* Service Areas */}
+        <section className="py-12 px-4 border-t border-border">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-semibold text-foreground mb-4">Smart Home & IT Service Areas — San Antonio & South Texas</h2>
+            <p className="text-muted-foreground text-sm mb-6">
+              The Connected Lifestyle serves homeowners and businesses throughout San Antonio and surrounding communities 
+              with professional smart home automation, home theater installation, enterprise networking, and managed IT services.
+            </p>
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              San Antonio • Helotes • Leon Springs • Alamo Ranch • Stone Oak • The Dominion • Boerne • New Braunfels • 
+              Schertz • Cibolo • Converse • Live Oak • Universal City • Selma • Garden Ridge • Fair Oaks Ranch • 
+              Shavano Park • Hollywood Park • Castle Hills — ZIP codes: 78254, 78253, 78245, 78256, 78258, 78260, 78249, 78250
+            </p>
+          </div>
+        </section>
+
+        {/* Internal Links */}
+        <section className="py-12 px-4 border-t border-border bg-muted/30">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-xl font-semibold text-foreground mb-6">Explore More from The Connected Lifestyle</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+              <Link to="/" className="text-primary hover:underline">Home — Smart Home Automation San Antonio</Link>
+              <Link to="/business-plan" className="text-primary hover:underline">About The Connected Lifestyle</Link>
+              <Link to="/investor-white-paper" className="text-primary hover:underline">Investor Relations 2026</Link>
+              <Link to="/education" className="text-primary hover:underline">Technology Education & Resources</Link>
+              <Link to="/dashboard" className="text-primary hover:underline">Workforce Management Platform</Link>
+              <Link to="/omnicode" className="text-primary hover:underline">OmniCode Development Platform</Link>
+              <Link to="/compliance" className="text-primary hover:underline">Security & Compliance (SOC 2, ISO 27001)</Link>
+              <Link to="/auth" className="text-primary hover:underline">Sign In to My TCL Account</Link>
+            </div>
           </div>
         </section>
       </main>

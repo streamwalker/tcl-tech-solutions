@@ -12,22 +12,22 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      quote: "TCL Tech Solutions transformed our home with their innovative tech installation and Wireless upgrades. Their commitment to excellence is truly commendable!",
-      name: "Carlos D.",
+      quote: "TCL Tech Solutions transformed our San Antonio home with their innovative smart home automation and wireless upgrades. Their commitment to excellence is truly commendable!",
+      name: "Carlos D. — San Antonio, TX",
       serviceType: "Smart Home & Wireless Upgrades",
       rating: 5
     },
     {
       id: 2,
-      quote: "The home theater system TCL installed exceeded all my expectations. The sound quality is incredible and the automation makes everything so easy to use.",
-      name: "Earl W.",
+      quote: "The home theater system TCL installed in our Stone Oak home exceeded all my expectations. The Dolby Atmos sound quality is incredible and the Control4 automation makes everything so easy.",
+      name: "Earl W. — Stone Oak, San Antonio",
       serviceType: "Home Theater & Audio/Video Setup",
       rating: 5
     },
     {
       id: 3,
-      quote: "From design to installation, TCL's custom home theater work is outstanding. They really know how to create an amazing entertainment experience.",
-      name: "Brian M.",
+      quote: "From design to installation, TCL's custom home theater work in our Alamo Ranch home is outstanding. They really know how to create an amazing 4K entertainment experience with Savant integration.",
+      name: "Brian M. — Alamo Ranch, San Antonio",
       serviceType: "Custom Home Theater Design & Installation",
       rating: 5
     }
@@ -49,10 +49,11 @@ const Testimonials = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            What Our Customers Say
+            What San Antonio Homeowners Say About Our Smart Home Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Real experiences from San Antonio homeowners who've transformed their homes with our smart technology solutions.
+            Real experiences from San Antonio homeowners who've transformed their homes with our smart home automation, 
+            home theater installation, and Control4 integration services.
           </p>
         </div>
 

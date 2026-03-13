@@ -7,21 +7,21 @@ const IBMHero = () => {
   const newsItems = [
     {
       type: "News",
-      title: "TCL and Partners Create Advanced Smart Home Solutions",
-      excerpt: "Revolutionary automation technology for modern living spaces...",
-      link: "/news/smart-home-solutions"
+      title: "TCL Launches Advanced Smart Home Automation in San Antonio",
+      excerpt: "Revolutionary Control4 and Savant automation technology for modern San Antonio homes...",
+      link: "/services#smart-home-automation"
     },
     {
       type: "Insights",
-      title: "The Future of Workforce Management in Tech Services",
-      excerpt: "How AI-powered analytics transform business operations...",
-      link: "/insights/workforce-management"
+      title: "AI-Powered Workforce Management for Texas Businesses",
+      excerpt: "How AI-powered analytics transform San Antonio business operations...",
+      link: "/dashboard"
     },
     {
       type: "Product",
-      title: "Introducing OmniCode Development Platform",
-      excerpt: "Next-generation tools for streamlined development workflows...",
-      link: "/products/omnicode"
+      title: "OmniCode Development Platform Now Available",
+      excerpt: "Next-generation development tools with AI assistance for modern teams...",
+      link: "/omnicode"
     }
   ];
 
@@ -33,12 +33,12 @@ const IBMHero = () => {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-tight">
-                Transform your connected lifestyle
+                Smart Home Automation & Technology Solutions in San Antonio
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                Master the evolving landscape of smart technology to turn complex challenges 
-                into your greatest operational successes with veteran-owned expertise and 
-                innovative solutions.
+                San Antonio's veteran-owned smart home automation, home theater installation, and 
+                enterprise IT company. Control4, Savant, and Lutron authorized dealer serving 
+                residential and commercial customers across South Texas.
               </p>
             </div>
             
@@ -73,7 +73,7 @@ const IBMHero = () => {
             <div className="relative">
               <img 
                 src="/TCL Home Automation.jpg" 
-                alt="Advanced home automation system" 
+                alt="Smart home automation installation by The Connected Lifestyle in San Antonio TX — Control4 and Savant whole-home systems" 
                 className="w-full h-80 lg:h-96 object-cover rounded-lg shadow-xl"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg"></div>
