@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, FileText, Eye, Loader2, Download } from "lucide-react";
+import { Plus, FileText, Eye, Loader2, Download, Search, Package, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ProposalPrintView from "./ProposalPrintView";
@@ -36,6 +36,15 @@ interface Proposal {
 
 interface ClientOption { id: string; name: string; }
 
+interface Product {
+  id: string;
+  name: string;
+  manufacturer: string;
+  model: string;
+  category: string;
+  msrp: number;
+}
+
 const statusColors: Record<string, string> = {
   Draft: "bg-muted text-muted-foreground",
   Sent: "bg-blue-100 text-blue-800",
@@ -53,6 +62,16 @@ export default function ProposalBuilder() {
   const [form, setForm] = useState({ title: "", clientId: "", laborHours: "0", laborRate: "150", notes: "" });
   const { toast } = useToast();
 
+  // Product search state
+  const [productSearch, setProductSearch] = useState("");
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [addingProduct, setAddingProduct] = useState<Product | null>(null);
+  const [addRoom, setAddRoom] = useState("");
+  const [addQty, setAddQty] = useState("1");
+  const [addPrice, setAddPrice] = useState("");
+  const [addingSaving, setAddingSaving] = useState(false);
+
   useEffect(() => { load(); }, []);
 
   const load = async () => {
@@ -64,6 +83,61 @@ export default function ProposalBuilder() {
     setProposals((p as Proposal[]) || []);
     setClientOptions((c as ClientOption[]) || []);
     setLoading(false);
+  };
+
+  const searchProducts = useCallback(async (query: string) => {
+    if (query.length < 2) { setSearchResults([]); return; }
+    setSearching(true);
+    const { data } = await supabase
+      .from("products")
+      .select("id, name, manufacturer, model, category, msrp")
+      .or(`name.ilike.%${query}%,manufacturer.ilike.%${query}%,model.ilike.%${query}%,category.ilike.%${query}%`)
+      .order("manufacturer")
+      .limit(10);
+    setSearchResults((data as Product[]) || []);
+    setSearching(false);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => searchProducts(productSearch), 300);
+    return () => clearTimeout(timer);
+  }, [productSearch, searchProducts]);
+
+  const handleAddProduct = async () => {
+    if (!viewing || !addingProduct) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    setAddingSaving(true);
+    const { error } = await supabase.from("proposal_items").insert({
+      proposal_id: viewing.id,
+      user_id: user.id,
+      product_name: `${addingProduct.manufacturer} ${addingProduct.name}`,
+      room: addRoom || null,
+      qty: parseInt(addQty) || 1,
+      unit_price: parseFloat(addPrice) || addingProduct.msrp,
+    });
+    setAddingSaving(false);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Product added to proposal" });
+    setAddingProduct(null);
+    setAddRoom("");
+    setAddQty("1");
+    setAddPrice("");
+    setProductSearch("");
+    setSearchResults([]);
+    // Refresh viewing proposal
+    const { data } = await supabase.from("proposals").select("*, clients(name), proposal_items(*)").eq("id", viewing.id).single();
+    if (data) setViewing(data as Proposal);
+    load();
+  };
+
+  const handleRemoveItem = async (itemId: string) => {
+    if (!viewing) return;
+    await supabase.from("proposal_items").delete().eq("id", itemId);
+    toast({ title: "Item removed" });
+    const { data } = await supabase.from("proposals").select("*, clients(name), proposal_items(*)").eq("id", viewing.id).single();
+    if (data) setViewing(data as Proposal);
+    load();
   };
 
   const handleCreate = async () => {
@@ -142,8 +216,9 @@ export default function ProposalBuilder() {
         </CardContent>
       </Card>
 
-      <Dialog open={!!viewing} onOpenChange={(o) => !o && setViewing(null)}>
-        <DialogContent className="max-w-2xl">
+      {/* Proposal Detail Dialog */}
+      <Dialog open={!!viewing} onOpenChange={(o) => { if (!o) { setViewing(null); setProductSearch(""); setSearchResults([]); setAddingProduct(null); } }}>
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="flex items-center gap-2"><FileText className="h-5 w-5" />{viewing?.title}</DialogTitle></DialogHeader>
           {viewing && (() => {
             const t = calcTotal(viewing);
@@ -158,16 +233,98 @@ export default function ProposalBuilder() {
                     </Button>
                   </div>
                 </div>
+
+                {/* Line Items */}
                 {(viewing.proposal_items || []).length > 0 && (
                   <Table>
-                    <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>Room</TableHead><TableHead className="text-right">Qty</TableHead><TableHead className="text-right">Unit Price</TableHead><TableHead className="text-right">Total</TableHead></TableRow></TableHeader>
+                    <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>Room</TableHead><TableHead className="text-right">Qty</TableHead><TableHead className="text-right">Unit Price</TableHead><TableHead className="text-right">Total</TableHead><TableHead></TableHead></TableRow></TableHeader>
                     <TableBody>
                       {(viewing.proposal_items || []).map((i) => (
-                        <TableRow key={i.id}><TableCell>{i.product_name}</TableCell><TableCell>{i.room}</TableCell><TableCell className="text-right">{i.qty}</TableCell><TableCell className="text-right">{fmt(Number(i.unit_price))}</TableCell><TableCell className="text-right font-medium">{fmt(i.qty * Number(i.unit_price))}</TableCell></TableRow>
+                        <TableRow key={i.id}>
+                          <TableCell>{i.product_name}</TableCell>
+                          <TableCell>{i.room || "—"}</TableCell>
+                          <TableCell className="text-right">{i.qty}</TableCell>
+                          <TableCell className="text-right">{fmt(Number(i.unit_price))}</TableCell>
+                          <TableCell className="text-right font-medium">{fmt(i.qty * Number(i.unit_price))}</TableCell>
+                          <TableCell><Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => handleRemoveItem(i.id)}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell>
+                        </TableRow>
                       ))}
                     </TableBody>
                   </Table>
                 )}
+
+                {/* Add Product from Library */}
+                <Card className="border-dashed">
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                      <Package className="h-4 w-4" />Add Product from Library
+                    </div>
+
+                    {!addingProduct ? (
+                      <div className="space-y-2">
+                        <div className="relative">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            className="pl-9"
+                            placeholder="Search by name, manufacturer, model, or category..."
+                            value={productSearch}
+                            onChange={(e) => setProductSearch(e.target.value)}
+                          />
+                          {searching && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />}
+                        </div>
+                        {searchResults.length > 0 && (
+                          <div className="border rounded-md divide-y max-h-48 overflow-y-auto">
+                            {searchResults.map((prod) => (
+                              <button
+                                key={prod.id}
+                                className="w-full text-left px-3 py-2 hover:bg-muted/50 transition-colors flex items-center justify-between text-sm"
+                                onClick={() => {
+                                  setAddingProduct(prod);
+                                  setAddPrice(prod.msrp.toString());
+                                  setProductSearch("");
+                                  setSearchResults([]);
+                                }}
+                              >
+                                <div>
+                                  <span className="font-medium">{prod.manufacturer} {prod.name}</span>
+                                  <span className="text-muted-foreground ml-2">({prod.model})</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <Badge variant="outline" className="text-xs">{prod.category}</Badge>
+                                  <span className="font-medium">{fmt(prod.msrp)}</span>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                        {productSearch.length >= 2 && searchResults.length === 0 && !searching && (
+                          <p className="text-sm text-muted-foreground text-center py-2">No products found</p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between p-2 bg-muted/50 rounded-md">
+                          <div>
+                            <p className="font-medium text-sm">{addingProduct.manufacturer} {addingProduct.name}</p>
+                            <p className="text-xs text-muted-foreground">{addingProduct.model} · MSRP {fmt(addingProduct.msrp)}</p>
+                          </div>
+                          <Button variant="ghost" size="sm" onClick={() => setAddingProduct(null)}>Cancel</Button>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div><Label className="text-xs">Room / Location</Label><Input value={addRoom} onChange={(e) => setAddRoom(e.target.value)} placeholder="e.g. Living Room" /></div>
+                          <div><Label className="text-xs">Quantity</Label><Input type="number" min="1" value={addQty} onChange={(e) => setAddQty(e.target.value)} /></div>
+                          <div><Label className="text-xs">Unit Price ($)</Label><Input type="number" value={addPrice} onChange={(e) => setAddPrice(e.target.value)} /></div>
+                        </div>
+                        <Button size="sm" onClick={handleAddProduct} disabled={addingSaving} className="w-full">
+                          {addingSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+                          Add to Proposal
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Totals */}
                 <div className="grid grid-cols-3 gap-4 p-4 bg-muted/50 rounded-lg">
                   <div><p className="text-xs text-muted-foreground">Products</p><p className="text-lg font-bold">{fmt(t.products)}</p></div>
                   <div><p className="text-xs text-muted-foreground">Labor ({viewing.labor_hours}h × {fmt(Number(viewing.labor_rate))}/h)</p><p className="text-lg font-bold">{fmt(t.labor)}</p></div>
@@ -182,6 +339,7 @@ export default function ProposalBuilder() {
 
       {viewing && <ProposalPrintView proposal={viewing} />}
 
+      {/* Create Proposal Dialog */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
         <DialogContent className="max-w-lg">
           <DialogHeader><DialogTitle>Create New Proposal</DialogTitle></DialogHeader>
