@@ -90,11 +90,12 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Get In Touch
+            Contact San Antonio's #1 Smart Home Installer
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Ready to transform your home with smart technology? Contact us for a free consultation 
-            and discover how we can automate your San Antonio home.
+            Ready to transform your San Antonio home with smart home automation, a professional home theater, 
+            or enterprise IT services? Contact The Connected Lifestyle for a free consultation. 
+            Veteran-owned. Control4 & Savant authorized dealer. Serving Helotes, Stone Oak, Alamo Ranch & all of South Texas.
           </p>
         </div>
 

@@ -88,13 +88,13 @@ const IBMRecommendations = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recommendations.map((item, index) => (
-            <Card key={index} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
+            <Card key={index} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden" aria-label={`${item.title} — ${item.description}`}>
               <Link to={item.link}>
                 <div className="aspect-video relative overflow-hidden bg-muted">
                   {item.image ? (
                     <img 
                       src={item.image} 
-                      alt={item.title}
+                      alt={`${item.title} — professional installation by The Connected Lifestyle, San Antonio TX`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (

@@ -59,6 +59,8 @@ const Index = () => {
         <Experience />
         <Contact />
       </div>
+
+      <SEOContent />
       
       <Footer />
       <ChatBot />

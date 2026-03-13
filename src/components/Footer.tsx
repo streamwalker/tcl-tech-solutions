@@ -1,92 +1,90 @@
 
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Link } from "react-router-dom";
 import { handleContactClick } from "@/utils/smoothScroll";
 
 const Footer = () => {
   const services = [
-    "Smart Home Automation",
-    "Enterprise Networks", 
-    "Home Theater Technology",
-    "AI Logic Integration",
-    "Managed Services",
-    "Premium Installations"
+    { label: "Smart Home Automation", to: "/services#smart-home-automation" },
+    { label: "Enterprise Networks", to: "/services#enterprise-networks" },
+    { label: "Home Theater Technology", to: "/services#home-theater-technology" },
+    { label: "AI Logic Integration", to: "/services#ai-logic-integration" },
+    { label: "Managed Services", to: "/services#managed-services" },
+    { label: "Premium Installations", to: "/services#premium-installations" },
+    { label: "TCP/IP & OSI Networking", to: "/services#tcp/ip-&-osi-models" },
   ];
 
   const company = [
-    "About Us",
-    "Our Team",
-    "Case Studies",
-    "Blog",
-    "Contact",
-    "Service Areas"
+    { label: "About Us", to: "/business-plan" },
+    { label: "Our Services", to: "/services" },
+    { label: "Investor Relations", to: "/investor-white-paper" },
+    { label: "Education & Resources", to: "/education" },
+    { label: "Builder Deck", to: "/builder-deck" },
+    { label: "Contact", to: "/#contact" },
+    { label: "Service Areas", to: "/#service-areas" },
+  ];
+
+  const platform = [
+    { label: "Workforce Dashboard", to: "/dashboard" },
+    { label: "OmniCode Platform", to: "/omnicode" },
+    { label: "Sign In / Create Account", to: "/auth" },
+  ];
+
+  const legal = [
+    { label: "Privacy Policy", to: "/privacy-policy" },
+    { label: "Terms of Service", to: "/terms-of-service" },
+    { label: "Cookie Policy", to: "/cookie-policy" },
+    { label: "Security & Compliance", to: "/compliance" },
   ];
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, redirect to contact form
     handleContactClick();
   };
 
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
-          <div>
-            <h3 className="text-2xl font-bold text-blue-400 mb-6">
+          <div className="lg:col-span-2">
+            <h3 className="text-2xl font-bold text-blue-400 mb-4">
               The Connected Lifestyle
             </h3>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              Smart home integration and automation services for San Antonio homeowners. 
-              Veteran-founded company specializing in AI-powered home technology solutions.
+            <p className="text-gray-300 mb-4 leading-relaxed text-sm">
+              San Antonio's premier veteran-owned smart home automation, home theater installation, 
+              and enterprise IT services company. Authorized Control4, Savant, and Lutron dealer 
+              serving residential and commercial customers across South Texas.
             </p>
-            <div className="space-y-3">
-              <button 
-                onClick={() => window.location.href = "tel:+12109958655"}
-                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
-              >
-                <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">(210) 995-8655</span>
-              </button>
-              <button 
-                onClick={() => window.location.href = "mailto:theconnectedlifestyletech@gmail.com"}
-                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
-              >
-                <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">theconnectedlifestyletech@gmail.com</span>
-              </button>
-              <button 
-                onClick={() => window.open("https://maps.google.com/?q=7634+Goldstrike+Drive+San+Antonio+TX+78254", "_blank")}
-                className="flex items-center space-x-3 hover:text-blue-400 transition-colors"
-              >
-                <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">7634 Goldstrike Drive, San Antonio, TX 78254</span>
-              </button>
+            <div className="space-y-2 mb-6">
+              <a href="tel:+12109958655" className="flex items-center space-x-3 hover:text-blue-400 transition-colors">
+                <Phone className="w-4 h-4 text-blue-400" />
+                <span className="text-gray-300 text-sm">(210) 995-8655</span>
+              </a>
+              <a href="mailto:theconnectedlifestyletech@gmail.com" className="flex items-center space-x-3 hover:text-blue-400 transition-colors">
+                <Mail className="w-4 h-4 text-blue-400" />
+                <span className="text-gray-300 text-sm">theconnectedlifestyletech@gmail.com</span>
+              </a>
+              <a href="https://maps.google.com/?q=7634+Goldstrike+Drive+San+Antonio+TX+78254" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-blue-400 transition-colors">
+                <MapPin className="w-4 h-4 text-blue-400" />
+                <span className="text-gray-300 text-sm">7634 Goldstrike Drive, San Antonio, TX 78254</span>
+              </a>
+            </div>
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-blue-400 transition-colors"><Linkedin className="w-5 h-5" /></a>
+              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-blue-400 transition-colors"><Twitter className="w-5 h-5" /></a>
+              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-blue-400 transition-colors"><Facebook className="w-5 h-5" /></a>
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Services</h4>
-            <ul className="space-y-3">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <button 
-                    onClick={() => {
-                      const element = document.getElementById('services');
-                      if (element) {
-                        const navHeight = 64;
-                        const elementPosition = element.offsetTop - navHeight;
-                        window.scrollTo({
-                          top: elementPosition,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }}
-                    className="text-gray-300 hover:text-blue-400 transition-colors text-left"
-                  >
-                    {service}
-                  </button>
+            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <ul className="space-y-2">
+              {services.map((s) => (
+                <li key={s.label}>
+                  <Link to={s.to} className="text-gray-300 hover:text-blue-400 transition-colors text-sm">{s.label}</Link>
                 </li>
               ))}
             </ul>
@@ -94,30 +92,19 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Company</h4>
-            <ul className="space-y-3">
-              {company.map((item, index) => (
-                <li key={index}>
-                  <button 
-                    onClick={() => {
-                      if (item === "Contact") {
-                        handleContactClick();
-                      } else {
-                        const element = document.getElementById('about');
-                        if (element) {
-                          const navHeight = 64;
-                          const elementPosition = element.offsetTop - navHeight;
-                          window.scrollTo({
-                            top: elementPosition,
-                            behavior: 'smooth'
-                          });
-                        }
-                      }
-                    }}
-                    className="text-gray-300 hover:text-blue-400 transition-colors text-left"
-                  >
-                    {item}
-                  </button>
+            <h4 className="text-lg font-semibold mb-4">Company</h4>
+            <ul className="space-y-2">
+              {company.map((item) => (
+                <li key={item.label}>
+                  <Link to={item.to} className="text-gray-300 hover:text-blue-400 transition-colors text-sm">{item.label}</Link>
+                </li>
+              ))}
+            </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-4">Platform</h4>
+            <ul className="space-y-2">
+              {platform.map((item) => (
+                <li key={item.label}>
+                  <Link to={item.to} className="text-gray-300 hover:text-blue-400 transition-colors text-sm">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -125,60 +112,45 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Stay Updated</h4>
-            <p className="text-gray-300 mb-4">
-              Subscribe to our newsletter for the latest smart home technology insights and updates.
+            <h4 className="text-lg font-semibold mb-4">Stay Updated</h4>
+            <p className="text-gray-300 mb-4 text-sm">
+              Subscribe for the latest smart home technology insights, San Antonio installation tips, and exclusive offers.
             </p>
-            <div className="space-y-4">
-              <form onSubmit={handleNewsletterSubmit} className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
-                  required
-                />
-                <button 
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
-              
-              {/* Social Links */}
-              <div className="flex space-x-4 pt-4">
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  <Linkedin className="w-6 h-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  <Twitter className="w-6 h-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  <Facebook className="w-6 h-6" />
-                </a>
-              </div>
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="flex">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm"
+                required
+              />
+              <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md transition-colors text-sm">
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
+        {/* Service Areas Bar */}
+        <div className="border-t border-gray-800 mt-10 pt-8">
+          <h4 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">Service Areas</h4>
+          <p className="text-gray-500 text-xs leading-relaxed">
+            San Antonio • Helotes • Leon Springs • Alamo Ranch • Stone Oak • The Dominion • Boerne • New Braunfels • 
+            Schertz • Cibolo • Converse • Live Oak • Universal City • Selma • Garden Ridge • Fair Oaks Ranch • 
+            Shavano Park • Hollywood Park • Castle Hills • Bexar County • Comal County • Guadalupe County
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2026 The Connected Lifestyle. All rights reserved.
+            © 2026 The Connected Lifestyle. All rights reserved. Veteran-Owned Business — San Antonio, TX.
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0">
-            <a href="/privacy-policy" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
-              Privacy Policy
-            </a>
-            <a href="/terms-of-service" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
-              Terms of Service
-            </a>
-            <a href="/cookie-policy" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
-              Cookie Policy
-            </a>
-            <a href="/compliance" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
-              Security & Compliance
-            </a>
+            {legal.map((item) => (
+              <Link key={item.label} to={item.to} className="text-gray-400 hover:text-blue-400 text-sm transition-colors">
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

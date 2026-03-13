@@ -107,20 +107,33 @@ const IBMNavigation = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-80 p-4">
                   <div className="grid gap-2">
-                    <DropdownMenuItem className="flex items-start space-x-3 p-3">
-                      <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
-                      <div>
-                        <div className="font-medium">Help Center</div>
-                        <div className="text-sm text-muted-foreground">Get answers to common questions</div>
-                      </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-start space-x-3 p-3">
-                      <MessageCircle className="h-5 w-5 text-primary mt-0.5" />
-                      <div>
-                        <div className="font-medium">Contact Support</div>
-                        <div className="text-sm text-muted-foreground">Speak with our experts</div>
-                      </div>
-                    </DropdownMenuItem>
+                    <Link to="/services">
+                      <DropdownMenuItem className="flex items-start space-x-3 p-3 cursor-pointer">
+                        <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <div className="font-medium">Help Center</div>
+                          <div className="text-sm text-muted-foreground">Get answers to common questions</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/#contact">
+                      <DropdownMenuItem className="flex items-start space-x-3 p-3 cursor-pointer">
+                        <MessageCircle className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <div className="font-medium">Contact Support</div>
+                          <div className="text-sm text-muted-foreground">Speak with our San Antonio experts</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/compliance">
+                      <DropdownMenuItem className="flex items-start space-x-3 p-3 cursor-pointer">
+                        <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <div className="font-medium">Security & Compliance</div>
+                          <div className="text-sm text-muted-foreground">SOC 2, ISO 27001, GDPR certifications</div>
+                        </div>
+                      </DropdownMenuItem>
+                    </Link>
                   </div>
                 </DropdownMenuContent>
               </DropdownMenu>

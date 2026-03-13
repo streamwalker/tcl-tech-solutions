@@ -49,10 +49,11 @@ const Testimonials = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            What Our Customers Say
+            What San Antonio Homeowners Say About Our Smart Home Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Real experiences from San Antonio homeowners who've transformed their homes with our smart technology solutions.
+            Real experiences from San Antonio homeowners who've transformed their homes with our smart home automation, 
+            home theater installation, and Control4 integration services.
           </p>
         </div>
 

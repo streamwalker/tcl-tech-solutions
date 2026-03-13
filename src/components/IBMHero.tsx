@@ -73,8 +73,9 @@ const IBMHero = () => {
             <div className="relative">
               <img 
                 src="/TCL Home Automation.jpg" 
-                alt="Advanced home automation system" 
+                alt="Smart home automation installation by The Connected Lifestyle in San Antonio TX — Control4 and Savant whole-home systems" 
                 className="w-full h-80 lg:h-96 object-cover rounded-lg shadow-xl"
+              />
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg"></div>
               <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-lg">
