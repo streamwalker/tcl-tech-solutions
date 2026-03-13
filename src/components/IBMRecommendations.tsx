@@ -78,10 +78,11 @@ const IBMRecommendations = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-            Recommended for you
+            Top-Rated Smart Home & IT Solutions in San Antonio
           </h2>
           <p className="text-muted-foreground max-w-2xl">
-            Discover our comprehensive technology solutions designed to transform your home and business operations.
+            Discover our comprehensive smart home automation, home theater, and enterprise IT solutions 
+            designed for San Antonio homeowners and businesses. Authorized Control4, Savant, and Lutron dealer.
           </p>
         </div>
 
