@@ -21,8 +21,8 @@ const IBMRecommendations = () => {
       badge: "Enterprise",
       badgeVariant: "secondary" as const,
       icon: Building2,
-      title: "Business IT Infrastructure",
-      description: "Comprehensive technology solutions for modern enterprises, including network setup, security, and maintenance.",
+      title: "Enterprise IT & Network Infrastructure",
+      description: "Comprehensive business technology solutions for San Antonio enterprises — structured cabling, Wi-Fi 6E, managed IT, and cybersecurity.",
       image: "/TCL Home Automation.jpg",
       link: "/services#business",
       cta: "View solutions"
