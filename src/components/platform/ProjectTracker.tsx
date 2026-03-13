@@ -1,63 +1,25 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, DollarSign, Clock, CheckCircle2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, DollarSign, CheckCircle2, Plus, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
+interface ProjectTask { id: string; name: string; done: boolean; }
 interface Project {
-  id: string;
-  title: string;
-  client: string;
-  status: "Planning" | "In Progress" | "Punch List" | "Complete";
-  budget: number;
-  spent: number;
-  startDate: string;
-  endDate: string;
-  progress: number;
-  tasks: { name: string; done: boolean }[];
+  id: string; title: string; status: string; budget: number; spent: number;
+  progress: number; start_date: string | null; end_date: string | null;
+  client_id: string | null; clients?: { name: string } | null;
+  project_tasks?: ProjectTask[];
 }
-
-const mockProjects: Project[] = [
-  {
-    id: "PRJ-001", title: "Johnson Whole-Home Automation", client: "Johnson Family", status: "In Progress",
-    budget: 52100, spent: 34200, startDate: "2026-02-20", endDate: "2026-04-15", progress: 65,
-    tasks: [
-      { name: "Pre-wire rough-in", done: true }, { name: "Equipment rack build", done: true },
-      { name: "Controller programming", done: false }, { name: "Trim-out & device install", done: false },
-      { name: "Client walkthrough", done: false },
-    ],
-  },
-  {
-    id: "PRJ-002", title: "TechCorp Conference AV", client: "TechCorp Inc.", status: "Planning",
-    budget: 78980, spent: 5200, startDate: "2026-03-15", endDate: "2026-05-01", progress: 10,
-    tasks: [
-      { name: "Site survey", done: true }, { name: "Engineering drawings", done: false },
-      { name: "Equipment procurement", done: false }, { name: "Installation", done: false },
-      { name: "Commissioning", done: false },
-    ],
-  },
-  {
-    id: "PRJ-003", title: "Chen Dental Office Network", client: "Dr. Robert Chen", status: "Punch List",
-    budget: 18500, spent: 17200, startDate: "2026-01-10", endDate: "2026-03-15", progress: 92,
-    tasks: [
-      { name: "Network design", done: true }, { name: "Cable runs", done: true },
-      { name: "Switch & AP install", done: true }, { name: "VLAN configuration", done: true },
-      { name: "Final testing", done: false },
-    ],
-  },
-  {
-    id: "PRJ-004", title: "Sunset Ridge Security Upgrade", client: "Sunset Ridge HOA", status: "Complete",
-    budget: 42000, spent: 39800, startDate: "2025-11-01", endDate: "2026-02-28", progress: 100,
-    tasks: [
-      { name: "Camera placement design", done: true }, { name: "Conduit & cable", done: true },
-      { name: "Camera install", done: true }, { name: "NVR setup", done: true },
-      { name: "Client training", done: true },
-    ],
-  },
-];
+interface ClientOption { id: string; name: string; }
 
 const statusColors: Record<string, string> = {
   Planning: "bg-yellow-100 text-yellow-800",
@@ -65,13 +27,52 @@ const statusColors: Record<string, string> = {
   "Punch List": "bg-orange-100 text-orange-800",
   Complete: "bg-green-100 text-green-800",
 };
-
 const phases = ["Planning", "In Progress", "Punch List", "Complete"] as const;
 
 export default function ProjectTracker() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [clientOptions, setClientOptions] = useState<ClientOption[]>([]);
+  const [loading, setLoading] = useState(true);
   const [view, setView] = useState<"board" | "list">("board");
   const [selected, setSelected] = useState<Project | null>(null);
-  const fmt = (n: number) => "$" + n.toLocaleString();
+  const [showCreate, setShowCreate] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({ title: "", clientId: "", budget: "0", status: "Planning", startDate: "", endDate: "" });
+  const { toast } = useToast();
+
+  useEffect(() => { load(); }, []);
+
+  const load = async () => {
+    setLoading(true);
+    const [{ data: p }, { data: c }] = await Promise.all([
+      supabase.from("projects").select("*, clients(name), project_tasks(*)").order("created_at", { ascending: false }),
+      supabase.from("clients").select("id, name").order("name"),
+    ]);
+    setProjects((p as Project[]) || []);
+    setClientOptions((c as ClientOption[]) || []);
+    setLoading(false);
+  };
+
+  const handleCreate = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    setSaving(true);
+    const { error } = await supabase.from("projects").insert({
+      user_id: user.id, title: form.title, client_id: form.clientId || null,
+      budget: parseFloat(form.budget) || 0, status: form.status,
+      start_date: form.startDate || null, end_date: form.endDate || null,
+    });
+    setSaving(false);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Project created" });
+    setShowCreate(false);
+    setForm({ title: "", clientId: "", budget: "0", status: "Planning", startDate: "", endDate: "" });
+    load();
+  };
+
+  const fmt = (n: number) => "$" + Number(n).toLocaleString();
+
+  if (loading) return <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin" /></div>;
 
   return (
     <div className="space-y-6">
@@ -80,9 +81,12 @@ export default function ProjectTracker() {
           <h1 className="text-2xl font-bold text-foreground">Project Tracker</h1>
           <p className="text-muted-foreground">Manage projects from planning to completion</p>
         </div>
-        <Tabs value={view} onValueChange={(v) => setView(v as "board" | "list")}>
-          <TabsList><TabsTrigger value="board">Board</TabsTrigger><TabsTrigger value="list">List</TabsTrigger></TabsList>
-        </Tabs>
+        <div className="flex gap-2">
+          <Button onClick={() => setShowCreate(true)}><Plus className="h-4 w-4 mr-2" />New Project</Button>
+          <Tabs value={view} onValueChange={(v) => setView(v as "board" | "list")}>
+            <TabsList><TabsTrigger value="board">Board</TabsTrigger><TabsTrigger value="list">List</TabsTrigger></TabsList>
+          </Tabs>
+        </div>
       </div>
 
       {view === "board" ? (
@@ -91,13 +95,13 @@ export default function ProjectTracker() {
             <div key={phase} className="space-y-3">
               <div className="flex items-center gap-2">
                 <Badge className={statusColors[phase]}>{phase}</Badge>
-                <span className="text-xs text-muted-foreground">({mockProjects.filter(p => p.status === phase).length})</span>
+                <span className="text-xs text-muted-foreground">({projects.filter(p => p.status === phase).length})</span>
               </div>
-              {mockProjects.filter((p) => p.status === phase).map((project) => (
+              {projects.filter((p) => p.status === phase).map((project) => (
                 <Card key={project.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelected(project)}>
                   <CardContent className="p-4 space-y-3">
                     <p className="font-medium text-sm">{project.title}</p>
-                    <p className="text-xs text-muted-foreground">{project.client}</p>
+                    <p className="text-xs text-muted-foreground">{project.clients?.name || "—"}</p>
                     <Progress value={project.progress} className="h-1.5" />
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>{project.progress}%</span>
@@ -106,20 +110,20 @@ export default function ProjectTracker() {
                   </CardContent>
                 </Card>
               ))}
+              {projects.filter(p => p.status === phase).length === 0 && (
+                <div className="text-center py-8 text-xs text-muted-foreground border border-dashed rounded-lg">No projects</div>
+              )}
             </div>
           ))}
         </div>
       ) : (
         <div className="space-y-3">
-          {mockProjects.map((p) => (
+          {projects.map((p) => (
             <Card key={p.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelected(p)}>
               <CardContent className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Badge className={statusColors[p.status]}>{p.status}</Badge>
-                  <div>
-                    <p className="font-medium">{p.title}</p>
-                    <p className="text-sm text-muted-foreground">{p.client}</p>
-                  </div>
+                  <Badge className={statusColors[p.status] || ""}>{p.status}</Badge>
+                  <div><p className="font-medium">{p.title}</p><p className="text-sm text-muted-foreground">{p.clients?.name || "—"}</p></div>
                 </div>
                 <div className="flex items-center gap-6 text-sm">
                   <div className="w-32"><Progress value={p.progress} className="h-1.5" /></div>
@@ -128,6 +132,7 @@ export default function ProjectTracker() {
               </CardContent>
             </Card>
           ))}
+          {projects.length === 0 && <div className="text-center py-12 text-muted-foreground">No projects yet</div>}
         </div>
       )}
 
@@ -137,36 +142,56 @@ export default function ProjectTracker() {
           {selected && (
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Badge className={statusColors[selected.status]}>{selected.status}</Badge>
-                <span className="text-sm text-muted-foreground">{selected.client}</span>
+                <Badge className={statusColors[selected.status] || ""}>{selected.status}</Badge>
+                <span className="text-sm text-muted-foreground">{selected.clients?.name || "—"}</span>
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-muted-foreground" />{selected.startDate} → {selected.endDate}</div>
+                <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-muted-foreground" />{selected.start_date || "TBD"} → {selected.end_date || "TBD"}</div>
                 <div className="flex items-center gap-2"><DollarSign className="h-4 w-4 text-muted-foreground" />{fmt(selected.spent)} / {fmt(selected.budget)}</div>
               </div>
-              <div>
-                <Progress value={selected.progress} className="h-2 mb-1" />
-                <p className="text-xs text-muted-foreground text-right">{selected.progress}% complete</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium mb-2">Tasks</p>
-                <div className="space-y-2">
-                  {selected.tasks.map((t, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className={`h-4 w-4 ${t.done ? "text-green-600" : "text-muted-foreground/30"}`} />
-                      <span className={t.done ? "line-through text-muted-foreground" : ""}>{t.name}</span>
-                    </div>
-                  ))}
+              <div><Progress value={selected.progress} className="h-2 mb-1" /><p className="text-xs text-muted-foreground text-right">{selected.progress}% complete</p></div>
+              {(selected.project_tasks || []).length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-2">Tasks</p>
+                  <div className="space-y-2">
+                    {(selected.project_tasks || []).map((t) => (
+                      <div key={t.id} className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className={`h-4 w-4 ${t.done ? "text-green-600" : "text-muted-foreground/30"}`} />
+                        <span className={t.done ? "line-through text-muted-foreground" : ""}>{t.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               {selected.budget > 0 && (
                 <div className="p-3 bg-muted/50 rounded-lg flex justify-between text-sm">
                   <span className="text-muted-foreground">Budget remaining</span>
-                  <span className={`font-bold ${selected.budget - selected.spent > 0 ? "text-green-600" : "text-destructive"}`}>{fmt(selected.budget - selected.spent)}</span>
+                  <span className={`font-bold ${Number(selected.budget) - Number(selected.spent) > 0 ? "text-green-600" : "text-destructive"}`}>{fmt(Number(selected.budget) - Number(selected.spent))}</span>
                 </div>
               )}
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showCreate} onOpenChange={setShowCreate}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Create New Project</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div><Label>Title</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Project title" /></div>
+            <div><Label>Client</Label>
+              <Select value={form.clientId} onValueChange={(v) => setForm({ ...form, clientId: v })}>
+                <SelectTrigger><SelectValue placeholder="Select client" /></SelectTrigger>
+                <SelectContent>{clientOptions.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><Label>Budget ($)</Label><Input type="number" value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })} /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Start Date</Label><Input type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} /></div>
+              <div><Label>End Date</Label><Input type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} /></div>
+            </div>
+            <Button className="w-full" onClick={handleCreate} disabled={saving || !form.title}>{saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}Create Project</Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

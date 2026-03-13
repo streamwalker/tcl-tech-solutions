@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,59 +8,63 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Wrench, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Plus, Wrench, Clock, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
+interface ChecklistItem { id: string; item: string; done: boolean; }
 interface ServiceOrder {
-  id: string;
-  title: string;
-  client: string;
-  priority: "Low" | "Medium" | "High" | "Urgent";
-  status: "Open" | "Assigned" | "In Progress" | "Resolved";
-  technician: string;
-  createdAt: string;
-  scheduledFor: string;
-  description: string;
-  timeSpent: number;
-  checklist: { item: string; done: boolean }[];
+  id: string; title: string; description: string; priority: string; status: string;
+  technician: string; scheduled_for: string | null; time_spent: number; created_at: string;
+  client_id: string | null; clients?: { name: string } | null;
+  service_order_checklist?: ChecklistItem[];
 }
-
-const mockOrders: ServiceOrder[] = [
-  {
-    id: "SO-001", title: "WiFi dead zones in master suite", client: "Johnson Family", priority: "High", status: "Assigned",
-    technician: "Mike Thompson", createdAt: "2026-03-12", scheduledFor: "2026-03-14",
-    description: "Client reports intermittent WiFi in master bedroom and bathroom. Suspect AP coverage gap.",
-    timeSpent: 0,
-    checklist: [{ item: "Site survey with WiFi analyzer", done: false }, { item: "Check AP firmware", done: false }, { item: "Add/relocate AP if needed", done: false }, { item: "Validate coverage", done: false }],
-  },
-  {
-    id: "SO-002", title: "Lutron dimmer not responding", client: "Dr. Robert Chen", priority: "Medium", status: "In Progress",
-    technician: "Sarah Davis", createdAt: "2026-03-10", scheduledFor: "2026-03-13",
-    description: "Front lobby dimmer switch unresponsive. Other switches on same circuit working fine.",
-    timeSpent: 1.5,
-    checklist: [{ item: "Check physical wiring", done: true }, { item: "Test dimmer module", done: true }, { item: "Replace if faulty", done: false }, { item: "Re-program scene", done: false }],
-  },
-  {
-    id: "SO-003", title: "Security camera offline - NE corner", client: "Sunset Ridge HOA", priority: "Urgent", status: "Open",
-    technician: "", createdAt: "2026-03-13", scheduledFor: "",
-    description: "Camera 7 (NE parking lot) offline since last night. No video feed on NVR.",
-    timeSpent: 0,
-    checklist: [{ item: "Check PoE port status", done: false }, { item: "Inspect cable run", done: false }, { item: "Test/replace camera", done: false }, { item: "Verify NVR recording", done: false }],
-  },
-  {
-    id: "SO-004", title: "Annual maintenance - AV system", client: "TechCorp Inc.", priority: "Low", status: "Resolved",
-    technician: "Mike Thompson", createdAt: "2026-03-01", scheduledFor: "2026-03-05",
-    description: "Scheduled annual maintenance for conference room AV systems. Firmware updates and cable inspection.",
-    timeSpent: 4,
-    checklist: [{ item: "Update firmware on all devices", done: true }, { item: "Clean display screens", done: true }, { item: "Test all inputs/outputs", done: true }, { item: "Document config changes", done: true }],
-  },
-];
+interface ClientOption { id: string; name: string; }
 
 const priorityColors: Record<string, string> = { Low: "bg-muted text-muted-foreground", Medium: "bg-yellow-100 text-yellow-800", High: "bg-orange-100 text-orange-800", Urgent: "bg-red-100 text-red-800" };
 const statusColors: Record<string, string> = { Open: "bg-red-100 text-red-800", Assigned: "bg-yellow-100 text-yellow-800", "In Progress": "bg-blue-100 text-blue-800", Resolved: "bg-green-100 text-green-800" };
 
 export default function ServiceOrders() {
+  const [orders, setOrders] = useState<ServiceOrder[]>([]);
+  const [clientOptions, setClientOptions] = useState<ClientOption[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<ServiceOrder | null>(null);
   const [showCreate, setShowCreate] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({ title: "", clientId: "", priority: "Medium", description: "", technician: "", scheduledFor: "" });
+  const { toast } = useToast();
+
+  useEffect(() => { load(); }, []);
+
+  const load = async () => {
+    setLoading(true);
+    const [{ data: o }, { data: c }] = await Promise.all([
+      supabase.from("service_orders").select("*, clients(name), service_order_checklist(*)").order("created_at", { ascending: false }),
+      supabase.from("clients").select("id, name").order("name"),
+    ]);
+    setOrders((o as ServiceOrder[]) || []);
+    setClientOptions((c as ClientOption[]) || []);
+    setLoading(false);
+  };
+
+  const handleCreate = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    setSaving(true);
+    const { error } = await supabase.from("service_orders").insert({
+      user_id: user.id, title: form.title, client_id: form.clientId || null,
+      priority: form.priority, description: form.description, technician: form.technician,
+      scheduled_for: form.scheduledFor || null,
+    });
+    setSaving(false);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Service order created" });
+    setShowCreate(false);
+    setForm({ title: "", clientId: "", priority: "Medium", description: "", technician: "", scheduledFor: "" });
+    load();
+  };
+
+  if (loading) return <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin" /></div>;
 
   return (
     <div className="space-y-6">
@@ -73,10 +77,10 @@ export default function ServiceOrders() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><AlertCircle className="h-3 w-3" />Open</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-red-600">{mockOrders.filter(o => o.status === "Open").length}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />In Progress</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-blue-600">{mockOrders.filter(o => o.status === "In Progress" || o.status === "Assigned").length}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><CheckCircle2 className="h-3 w-3" />Resolved</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{mockOrders.filter(o => o.status === "Resolved").length}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><Wrench className="h-3 w-3" />Total Hours</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{mockOrders.reduce((s, o) => s + o.timeSpent, 0)}h</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><AlertCircle className="h-3 w-3" />Open</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-red-600">{orders.filter(o => o.status === "Open").length}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />In Progress</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-blue-600">{orders.filter(o => o.status === "In Progress" || o.status === "Assigned").length}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><CheckCircle2 className="h-3 w-3" />Resolved</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{orders.filter(o => o.status === "Resolved").length}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1"><Wrench className="h-3 w-3" />Total Hours</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{orders.reduce((s, o) => s + Number(o.time_spent), 0)}h</p></CardContent></Card>
       </div>
 
       <Card>
@@ -84,27 +88,22 @@ export default function ServiceOrders() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Technician</TableHead>
-                <TableHead>Scheduled</TableHead>
+                <TableHead>Title</TableHead><TableHead>Client</TableHead><TableHead>Priority</TableHead>
+                <TableHead>Status</TableHead><TableHead>Technician</TableHead><TableHead>Scheduled</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockOrders.map((o) => (
+              {orders.map((o) => (
                 <TableRow key={o.id} className="cursor-pointer" onClick={() => setSelected(o)}>
-                  <TableCell className="font-mono text-xs">{o.id}</TableCell>
                   <TableCell className="font-medium">{o.title}</TableCell>
-                  <TableCell>{o.client}</TableCell>
-                  <TableCell><Badge className={priorityColors[o.priority]}>{o.priority}</Badge></TableCell>
-                  <TableCell><Badge className={statusColors[o.status]}>{o.status}</Badge></TableCell>
+                  <TableCell>{o.clients?.name || "—"}</TableCell>
+                  <TableCell><Badge className={priorityColors[o.priority] || ""}>{o.priority}</Badge></TableCell>
+                  <TableCell><Badge className={statusColors[o.status] || ""}>{o.status}</Badge></TableCell>
                   <TableCell>{o.technician || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>
-                  <TableCell>{o.scheduledFor || "—"}</TableCell>
+                  <TableCell>{o.scheduled_for || "—"}</TableCell>
                 </TableRow>
               ))}
+              {orders.length === 0 && <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No service orders</TableCell></TableRow>}
             </TableBody>
           </Table>
         </CardContent>
@@ -116,28 +115,30 @@ export default function ServiceOrders() {
           {selected && (
             <div className="space-y-4">
               <div className="flex gap-2">
-                <Badge className={priorityColors[selected.priority]}>{selected.priority}</Badge>
-                <Badge className={statusColors[selected.status]}>{selected.status}</Badge>
+                <Badge className={priorityColors[selected.priority] || ""}>{selected.priority}</Badge>
+                <Badge className={statusColors[selected.status] || ""}>{selected.status}</Badge>
               </div>
               <div className="text-sm space-y-1">
-                <p><span className="text-muted-foreground">Client:</span> {selected.client}</p>
+                <p><span className="text-muted-foreground">Client:</span> {selected.clients?.name || "—"}</p>
                 <p><span className="text-muted-foreground">Technician:</span> {selected.technician || "Unassigned"}</p>
-                <p><span className="text-muted-foreground">Created:</span> {selected.createdAt}</p>
-                <p><span className="text-muted-foreground">Scheduled:</span> {selected.scheduledFor || "Not scheduled"}</p>
-                <p><span className="text-muted-foreground">Time Spent:</span> {selected.timeSpent}h</p>
+                <p><span className="text-muted-foreground">Created:</span> {new Date(selected.created_at).toLocaleDateString()}</p>
+                <p><span className="text-muted-foreground">Scheduled:</span> {selected.scheduled_for || "Not scheduled"}</p>
+                <p><span className="text-muted-foreground">Time Spent:</span> {selected.time_spent}h</p>
               </div>
-              <p className="text-sm bg-muted/50 p-3 rounded-lg">{selected.description}</p>
-              <div>
-                <p className="text-sm font-medium mb-2">Checklist</p>
-                <div className="space-y-2">
-                  {selected.checklist.map((c, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className={`h-4 w-4 ${c.done ? "text-green-600" : "text-muted-foreground/30"}`} />
-                      <span className={c.done ? "line-through text-muted-foreground" : ""}>{c.item}</span>
-                    </div>
-                  ))}
+              {selected.description && <p className="text-sm bg-muted/50 p-3 rounded-lg">{selected.description}</p>}
+              {(selected.service_order_checklist || []).length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-2">Checklist</p>
+                  <div className="space-y-2">
+                    {(selected.service_order_checklist || []).map((c) => (
+                      <div key={c.id} className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className={`h-4 w-4 ${c.done ? "text-green-600" : "text-muted-foreground/30"}`} />
+                        <span className={c.done ? "line-through text-muted-foreground" : ""}>{c.item}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </DialogContent>
@@ -147,29 +148,28 @@ export default function ServiceOrders() {
         <DialogContent>
           <DialogHeader><DialogTitle>New Service Order</DialogTitle></DialogHeader>
           <div className="space-y-4">
-            <div><Label>Title</Label><Input placeholder="Brief description of issue" /></div>
+            <div><Label>Title</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Brief description" /></div>
             <div><Label>Client</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Select client" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Johnson Family">Johnson Family</SelectItem>
-                  <SelectItem value="TechCorp Inc.">TechCorp Inc.</SelectItem>
-                  <SelectItem value="Dr. Robert Chen">Dr. Robert Chen</SelectItem>
-                  <SelectItem value="Sunset Ridge HOA">Sunset Ridge HOA</SelectItem>
-                </SelectContent>
+              <Select value={form.clientId} onValueChange={(v) => setForm({ ...form, clientId: v })}>
+                <SelectTrigger><SelectValue placeholder="Select client" /></SelectTrigger>
+                <SelectContent>{clientOptions.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
               </Select>
             </div>
-            <div><Label>Priority</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Select priority" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Low">Low</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="High">High</SelectItem>
-                  <SelectItem value="Urgent">Urgent</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Priority</Label>
+                <Select value={form.priority} onValueChange={(v) => setForm({ ...form, priority: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Low">Low</SelectItem><SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="High">High</SelectItem><SelectItem value="Urgent">Urgent</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div><Label>Technician</Label><Input value={form.technician} onChange={(e) => setForm({ ...form, technician: e.target.value })} placeholder="Name" /></div>
             </div>
-            <div><Label>Description</Label><Textarea placeholder="Detailed description…" /></div>
-            <Button className="w-full">Create Service Order</Button>
+            <div><Label>Scheduled For</Label><Input type="date" value={form.scheduledFor} onChange={(e) => setForm({ ...form, scheduledFor: e.target.value })} /></div>
+            <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
+            <Button className="w-full" onClick={handleCreate} disabled={saving || !form.title}>{saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}Create Service Order</Button>
           </div>
         </DialogContent>
       </Dialog>
