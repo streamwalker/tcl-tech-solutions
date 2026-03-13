@@ -43,8 +43,8 @@ const IBMRecommendations = () => {
       badge: "Premium",
       badgeVariant: "outline" as const,
       icon: Zap,
-      title: "Home Entertainment Systems",
-      description: "Professional theater installations with cutting-edge audio-visual technology for the ultimate experience.",
+      title: "Home Theater & Entertainment Systems San Antonio",
+      description: "Professional Dolby Atmos home theater installations with 4K/8K projection, JBL Synthesis, and AVA Cinema by certified San Antonio technicians.",
       image: "/HomeTheater.jpg",
       link: "/services#entertainment", 
       cta: "Learn more"
