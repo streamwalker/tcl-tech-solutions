@@ -71,14 +71,24 @@ const IBMNavigation = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-80 p-4">
                   <div className="grid gap-4">
-                    <DropdownMenuItem className="flex flex-col items-start p-3">
-                      <div className="font-medium">Workforce Management</div>
-                      <div className="text-sm text-muted-foreground">AI-powered workforce analytics</div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex flex-col items-start p-3">
-                      <div className="font-medium">OmniCode Platform</div>
-                      <div className="text-sm text-muted-foreground">Advanced development tools</div>
-                    </DropdownMenuItem>
+                    <Link to="/dashboard">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">Workforce Management</div>
+                        <div className="text-sm text-muted-foreground">AI-powered workforce analytics</div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/omnicode">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">OmniCode Platform</div>
+                        <div className="text-sm text-muted-foreground">Advanced development tools</div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/education">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">Education & Resources</div>
+                        <div className="text-sm text-muted-foreground">Technology learning center</div>
+                      </DropdownMenuItem>
+                    </Link>
                   </div>
                 </DropdownMenuContent>
               </DropdownMenu>
