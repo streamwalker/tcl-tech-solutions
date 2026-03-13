@@ -19,6 +19,7 @@ import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
 import OmniCode from "./pages/OmniCode";
 import Services from "./pages/Services";
+import Platform from "./pages/Platform";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/business-plan" element={<BusinessPlan />} />
           <Route path="/investor-white-paper" element={<InvestorWhitePaper />} />
           <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+          <Route path="/platform/*" element={<AuthGuard><Platform /></AuthGuard>} />
           <Route path="/builder-deck" element={<BuilderDeck />} />
           <Route path="/education" element={<Education />} />
           <Route path="/omnicode" element={<OmniCode />} />

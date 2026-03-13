@@ -36,7 +36,7 @@ const Index = () => {
               and management platform designed for modern enterprises.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-              <Link to="/dashboard">
+              <Link to="/platform">
                 <Button size="lg" className="px-8 font-medium">
                   Access Platform
                 </Button>
