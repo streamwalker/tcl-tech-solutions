@@ -26,8 +26,8 @@ const Testimonials = () => {
     },
     {
       id: 3,
-      quote: "From design to installation, TCL's custom home theater work is outstanding. They really know how to create an amazing entertainment experience.",
-      name: "Brian M.",
+      quote: "From design to installation, TCL's custom home theater work in our Alamo Ranch home is outstanding. They really know how to create an amazing 4K entertainment experience with Savant integration.",
+      name: "Brian M. — Alamo Ranch, San Antonio",
       serviceType: "Custom Home Theater Design & Installation",
       rating: 5
     }
