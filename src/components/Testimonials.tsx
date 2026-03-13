@@ -12,8 +12,8 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      quote: "TCL Tech Solutions transformed our home with their innovative tech installation and Wireless upgrades. Their commitment to excellence is truly commendable!",
-      name: "Carlos D.",
+      quote: "TCL Tech Solutions transformed our San Antonio home with their innovative smart home automation and wireless upgrades. Their commitment to excellence is truly commendable!",
+      name: "Carlos D. — San Antonio, TX",
       serviceType: "Smart Home & Wireless Upgrades",
       rating: 5
     },
