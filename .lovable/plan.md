@@ -1,69 +1,80 @@
 
 
-## Plan: Monetize the Website
+# D-Tools Clone Platform for TCL
 
-Three revenue streams implemented in priority order — affiliate links are instant, AdSense is same-day, and Stripe service booking generates the most revenue per transaction.
+Build a comprehensive system integration management platform modeled after D-Tools SI, embedded in the TCL site as a new `/platform` route. This extends the existing Dashboard with the core D-Tools feature set tailored for low-voltage/AV system integrators.
 
-### 1. Replace Mock Ads with Real Affiliate Links
+## Core Modules
 
-**File: `src/components/AdSidebar.tsx`**
+### 1. Product Library
+A searchable catalog of AV/smart home products with dealer pricing, specs, and categories. Products can be added to proposals and projects.
 
-Replace all `href="#"` placeholders with real affiliate program URLs:
+- **Data**: Mock product catalog (Control4, Lutron, Sonos, Ubiquiti, etc.) with model, MSRP, dealer cost, category, manufacturer
+- **UI**: Searchable/filterable table with category sidebar, product detail cards
+- **File**: `src/components/platform/ProductLibrary.tsx`
 
-| Ad | Affiliate Link |
-|---|---|
-| Apple Watch Ultra 3 | Amazon Associates link (user provides their affiliate tag) |
-| Turo Cybertruck | Turo referral link (`https://turo.com/invite/...`) |
-| Avengers: Doomsday | Fandango affiliate link |
-| PicPoppit | App Store / Google Play referral |
-| Drip Slayer | Placeholder (user's own brand or affiliate) |
-| Codex Miraculorum | Placeholder (user's own brand or affiliate) |
-| EquiForge | Placeholder (user's own brand or affiliate) |
+### 2. Proposals & Sales
+Create client proposals with product selections, labor estimates, room/location breakdowns, and tiered pricing (good/better/best).
 
-Since we don't have the user's actual affiliate IDs yet, we'll add a config object at the top of AdSidebar.tsx with clearly labeled URL constants so they can be swapped in easily. We'll use generic program signup URLs as defaults with comments explaining where to get affiliate tags.
+- **Features**: Create proposal → add rooms/locations → add products from library → set labor hours → generate summary with totals → PDF-style preview
+- **UI**: Multi-step form wizard with live cost summary sidebar
+- **File**: `src/components/platform/ProposalBuilder.tsx`
 
-### 2. Add Google AdSense
+### 3. Project Management
+Track active projects from proposal-to-completion with phases, tasks, budgets, and status tracking. Extends the existing TaskManagement component patterns.
 
-**File: `index.html`** — Add the AdSense script tag in `<head>` (user provides their AdSense publisher ID, i.e. `ca-pub-XXXXX`)
+- **Features**: Project lifecycle (planning → in-progress → punch list → complete), budget vs. actual tracking, task assignment, change orders
+- **UI**: Kanban board + list view with project detail panels
+- **File**: `src/components/platform/ProjectTracker.tsx`
 
-**File: `src/components/GoogleAd.tsx`** (new) — Create a reusable AdSense display ad component using `<ins class="adsbygoogle">` with `useEffect` to call `adsbygoogle.push({})`.
+### 4. Client Management (CRM)
+Track leads, prospects, and clients with opportunity pipeline.
 
-**File: `src/pages/Index.tsx`** — Insert GoogleAd units in 2-3 strategic locations:
-- Between Services and DealerPartners sections
-- Between Testimonials and About sections
-- Above the Footer
+- **Features**: Client records with contact info, project history, lead source tracking, status (Lead → Prospect → Client)
+- **UI**: Table with status filters and client detail drawer
+- **File**: `src/components/platform/ClientManagement.tsx`
 
-### 3. Stripe Service Booking with Payment
+### 5. Service Orders
+Field service management for maintenance, repairs, and callbacks.
 
-Enable Stripe to create a service booking page where customers pay upfront for consultations or service packages.
+- **Features**: Create service tickets, assign technicians, track time, item tracking
+- **UI**: Service order list with status badges, detail view with checklist
+- **File**: `src/components/platform/ServiceOrders.tsx`
 
-**New page: `src/pages/BookService.tsx`** — A booking form where customers:
-- Select a service tier (Smart Home $2k-8k, Home Theater $8k-40k, etc.)
-- Pay a consultation deposit ($99-$299) via Stripe Checkout
-- Provide contact details and preferred date
+## Architecture
 
-**New route** added to App.tsx: `/book`
+### New Files
+| File | Purpose |
+|------|---------|
+| `src/pages/Platform.tsx` | Main platform page with tabbed navigation across all modules |
+| `src/components/platform/ProductLibrary.tsx` | Product catalog with search/filter |
+| `src/components/platform/ProposalBuilder.tsx` | Proposal creation wizard |
+| `src/components/platform/ProjectTracker.tsx` | Project management board |
+| `src/components/platform/ClientManagement.tsx` | CRM / client tracking |
+| `src/components/platform/ServiceOrders.tsx` | Field service tickets |
+| `src/components/platform/PlatformSidebar.tsx` | Sidebar navigation for the platform |
 
-**CTA integration** — Update the "Schedule Consultation" buttons across Services.tsx and Contact.tsx to link to `/book` instead of just scrolling.
+### Edited Files
+| File | Change |
+|------|--------|
+| `src/App.tsx` | Add `/platform` route wrapped in AuthGuard |
+| `src/pages/Index.tsx` | Update "Access Platform" button to link to `/platform` |
+| `src/pages/Dashboard.tsx` | Add link/redirect to new platform |
 
-This requires enabling Stripe via the Lovable Stripe integration tool before writing the code.
+### Data Approach
+All modules start with realistic mock data (matching TCL's smart home/AV/network services). The existing Supabase connection is ready for future persistence — tables can be added incrementally.
 
-### Files to Create
-- `src/components/GoogleAd.tsx`
-- `src/pages/BookService.tsx`
+### UI Pattern
+- Left sidebar navigation (like D-Tools desktop app)
+- Each module is a full-width content area
+- Reuses existing shadcn/ui components: Tables, Cards, Dialogs, Badges, Tabs, Progress bars
+- Consistent with the existing Dashboard styling
 
-### Files to Edit
-- `index.html` — AdSense script tag
-- `src/components/AdSidebar.tsx` — real affiliate URLs + config
-- `src/pages/Index.tsx` — insert GoogleAd units between sections
-- `src/App.tsx` — add `/book` route
-- `src/components/Services.tsx` — link consultation buttons to `/book`
-
-### What I Need From You
-1. **Google AdSense publisher ID** (`ca-pub-XXXXX`) — sign up at https://adsense.google.com if you haven't already
-2. **Amazon Associates affiliate tag** — sign up at https://affiliate-program.amazon.com
-3. **Turo referral link** — from your Turo account under "Refer a friend"
-4. **Stripe** — I'll enable it via the Lovable integration and walk you through connecting your account
-
-I can start building the code structure now with placeholder IDs, so everything is ready the moment you plug in your credentials. Want me to proceed?
+## Implementation Order
+1. Platform page shell with sidebar navigation
+2. Product Library (foundation for proposals)
+3. Client Management (foundation for proposals)
+4. Proposal Builder (ties products + clients together)
+5. Project Tracker (proposals become projects)
+6. Service Orders (post-install support)
 
