@@ -19,7 +19,7 @@ const services = [
   {
     icon: Database,
     title: "Home Theater Technology",
-    description: "Immersive cinematic experiences with premium audio-visual installations tailored to your space.",
+    description: "Immersive Dolby Atmos cinematic experiences with 4K/8K projection, JBL Synthesis, and AVA Cinema — professionally installed in your San Antonio home.",
     badge: "Premium",
   },
   {
