@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { PlatformSidebar } from "./PlatformSidebar";
 import { AgentPanel } from "./AgentPanel";
+import { AgentProvider } from "./AgentContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
