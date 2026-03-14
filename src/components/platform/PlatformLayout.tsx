@@ -49,5 +49,6 @@ export function PlatformLayout({ children }: PlatformLayoutProps) {
         </div>
       </div>
     </SidebarProvider>
+    </AgentProvider>
   );
 }
