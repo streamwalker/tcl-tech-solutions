@@ -1,4 +1,4 @@
-import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard } from "lucide-react";
+import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
 
@@ -22,7 +23,12 @@ const modules = [
   { title: "Service Orders", url: "/platform/service", icon: Wrench },
 ];
 
-export function PlatformSidebar() {
+interface PlatformSidebarProps {
+  onToggleAgent: () => void;
+  agentOpen: boolean;
+}
+
+export function PlatformSidebar({ onToggleAgent, agentOpen }: PlatformSidebarProps) {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const location = useLocation();
@@ -64,6 +70,16 @@ export function PlatformSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="border-t border-border p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={onToggleAgent} isActive={agentOpen}>
+              <Bot className="h-4 w-4" />
+              {!collapsed && <span>AI Agent</span>}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

@@ -1,1 +1,4 @@
 project_id = "earjplippbonusveefjh"
+
+[functions.platform-agent]
+verify_jwt = false
