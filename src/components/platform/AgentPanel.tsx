@@ -20,7 +20,7 @@ interface AgentPanelProps {
 }
 
 export function AgentPanel({ open, onClose }: AgentPanelProps) {
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const { messages, setMessages, clearMessages } = useAgentContext();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
