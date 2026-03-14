@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Bot, Send, X, Loader2, Sparkles } from "lucide-react";
+import { useRef, useEffect, useCallback, useState } from "react";
+import { Bot, Send, X, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
+import { useAgentContext } from "./AgentContext";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -19,7 +20,7 @@ interface AgentPanelProps {
 }
 
 export function AgentPanel({ open, onClose }: AgentPanelProps) {
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const { messages, setMessages, clearMessages } = useAgentContext();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -95,9 +96,16 @@ export function AgentPanel({ open, onClose }: AgentPanelProps) {
           <Bot className="h-4 w-4 text-primary" />
           <span className="text-sm font-semibold text-foreground">TCL Agent</span>
         </div>
-        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
-          <X className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-1">
+          {messages.length > 0 && (
+            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={clearMessages} title="Clear chat">
+              <Trash2 className="h-3.5 w-3.5" />
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Messages */}
