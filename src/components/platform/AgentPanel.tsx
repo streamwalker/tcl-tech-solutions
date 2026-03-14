@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Bot, Send, X, Loader2, Sparkles } from "lucide-react";
+import { useRef, useEffect, useCallback, useState } from "react";
+import { Bot, Send, X, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
+import { useAgentContext } from "./AgentContext";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
