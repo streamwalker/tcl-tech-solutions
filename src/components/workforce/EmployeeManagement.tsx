@@ -347,7 +347,7 @@ const EmployeeManagement = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
               <TabsTrigger value="overview">Team Overview</TabsTrigger>
               <TabsTrigger value="directory">Employee Directory</TabsTrigger>
               <TabsTrigger value="departments">Departments</TabsTrigger>
