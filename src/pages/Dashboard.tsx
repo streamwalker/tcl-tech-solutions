@@ -34,26 +34,26 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-5">
             <TabsTrigger value="overview" className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4" />
-              <span>Overview</span>
+              <span className="hidden sm:inline">Overview</span>
             </TabsTrigger>
             <TabsTrigger value="employees" className="flex items-center space-x-2">
               <Users className="h-4 w-4" />
-              <span>Employees</span>
+              <span className="hidden sm:inline">Employees</span>
             </TabsTrigger>
             <TabsTrigger value="schedule" className="flex items-center space-x-2">
               <Calendar className="h-4 w-4" />
-              <span>Schedule</span>
+              <span className="hidden sm:inline">Schedule</span>
             </TabsTrigger>
             <TabsTrigger value="tasks" className="flex items-center space-x-2">
               <ClipboardList className="h-4 w-4" />
-              <span>Tasks</span>
+              <span className="hidden sm:inline">Tasks</span>
             </TabsTrigger>
             <TabsTrigger value="analytics" className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4" />
-              <span>Analytics</span>
+              <span className="hidden sm:inline">Analytics</span>
             </TabsTrigger>
           </TabsList>
 
