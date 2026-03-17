@@ -311,7 +311,7 @@ const ScheduleManagement = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="today" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
               <TabsTrigger value="today">Today's Schedule</TabsTrigger>
               <TabsTrigger value="calendar">Calendar View</TabsTrigger>
               <TabsTrigger value="timetracking">Time Tracking</TabsTrigger>
