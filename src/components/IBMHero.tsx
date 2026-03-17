@@ -72,7 +72,7 @@ const IBMHero = () => {
           <div className="lg:col-span-4 relative">
             <div className="relative">
               <img 
-                src="/TCL Home Automation.jpg" 
+                src="/TCL%20Home%20Automation.jpg" 
                 alt="Smart home automation installation by The Connected Lifestyle in San Antonio TX — Control4 and Savant whole-home systems" 
                 className="w-full h-80 lg:h-96 object-cover rounded-lg shadow-xl"
               />

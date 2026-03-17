@@ -23,7 +23,7 @@ const IBMRecommendations = () => {
       icon: Building2,
       title: "Enterprise IT & Network Infrastructure",
       description: "Comprehensive business technology solutions for San Antonio enterprises — structured cabling, Wi-Fi 6E, managed IT, and cybersecurity.",
-      image: "/TCL Home Automation.jpg",
+      image: "/TCL%20Home%20Automation.jpg",
       link: "/services#business",
       cta: "View solutions"
     },
