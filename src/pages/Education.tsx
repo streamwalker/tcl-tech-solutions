@@ -30,7 +30,7 @@ const Education = () => {
       <section className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <Tabs defaultValue="networking" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
               <TabsTrigger value="networking" className="flex items-center gap-2">
                 <Network className="h-4 w-4" />
                 Networking Models
