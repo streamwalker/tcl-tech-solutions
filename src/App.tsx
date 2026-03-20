@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import OmniCode from "./pages/OmniCode";
 import Services from "./pages/Services";
 import Platform from "./pages/Platform";
+import JoshAiTutorial from "./pages/JoshAiTutorial";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/education" element={<Education />} />
           <Route path="/omnicode" element={<OmniCode />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/josh-ai-tutorial" element={<JoshAiTutorial />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
