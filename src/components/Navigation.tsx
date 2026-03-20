@@ -228,6 +228,12 @@ const Navigation = () => {
                         </DialogTrigger>
                         <ServicesPopups.NetworkingModelsPopup />
                       </Dialog>
+                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-50">
+                        <Link to="/josh-ai-tutorial">
+                          <Volume2 className="w-4 h-4 mr-2" />
+                          Josh.ai Tutorial
+                        </Link>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 );
