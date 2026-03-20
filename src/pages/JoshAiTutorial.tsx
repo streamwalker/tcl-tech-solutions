@@ -12,42 +12,55 @@ import {
   CheckCircle, Info, MessageSquare
 } from "lucide-react";
 
+import joshCoreImg from "@/assets/josh-core.jpg";
+import joshOneImg from "@/assets/josh-one.jpg";
+import joshMicroImg from "@/assets/josh-micro.jpg";
+import joshNanoImg from "@/assets/josh-nano.jpg";
+import joshTouchscreenImg from "@/assets/josh-touchscreen.jpg";
+import joshLifestyleHero from "@/assets/josh-lifestyle-hero.jpg";
+
 const products = [
   {
     name: "Josh Core",
     description: "The brain of your smart home. Processes all voice commands locally for maximum privacy and speed.",
     icon: Zap,
     tag: "Hub",
+    image: joshCoreImg,
   },
   {
     name: "Josh One",
     description: "Premium tabletop device with far-field microphones and rich speaker for room-filling sound.",
     icon: MonitorSpeaker,
     tag: "Voice Device",
+    image: joshOneImg,
   },
   {
     name: "Josh Micro",
     description: "Compact in-ceiling or in-wall microphone. Invisible design, always listening for your wake word.",
     icon: Mic,
     tag: "Microphone",
+    image: joshMicroImg,
   },
   {
     name: "Josh Nano",
     description: "Smallest Josh device — fits in tight spaces like closets, bathrooms, and hallways.",
     icon: Wifi,
     tag: "Compact Mic",
+    image: joshNanoImg,
   },
   {
     name: "Josh App",
     description: "Control your entire home from your phone. Create scenes, manage users, and monitor from anywhere.",
     icon: Smartphone,
     tag: "Mobile App",
+    image: null,
   },
   {
     name: "Josh Touchscreen",
     description: "Wall-mounted display for visual control of your home — lights, climate, cameras, and more.",
     icon: Eye,
     tag: "Display",
+    image: joshTouchscreenImg,
   },
 ];
 
@@ -111,11 +124,22 @@ const tips = [
   { title: "Privacy is Built In", description: "Josh processes your voice locally — your audio never goes to the cloud. A physical mute button lets you disable the mic anytime.", icon: Lock },
 ];
 
-const videos = [
+const gettingStartedVideos = [
   { title: "Getting Started with Josh.ai", id: "Jx5KkWbHqMc", description: "A complete overview of setting up and using your Josh system." },
   { title: "Voice Control Basics", id: "3cXIKCF9lJk", description: "Learn the most common voice commands for everyday use." },
   { title: "Creating Scenes", id: "IeyP4GZf1RI", description: "How to create and activate custom scenes for any occasion." },
   { title: "Josh App Walkthrough", id: "dRfAOOJF5rY", description: "Navigate the Josh App like a pro with this step-by-step tour." },
+  { title: "Josh Micro Overview", id: "QO04h2JYbEk", description: "Discover the in-ceiling Josh Micro — invisible voice control for every room." },
+  { title: "Josh One Product Tour", id: "r2TaTnHmYR4", description: "See the premium Josh One tabletop device in action with full demo." },
+];
+
+const advancedVideos = [
+  { title: "JoshGPT & AI Features", id: "5GktPnOgKQY", description: "Explore JoshGPT — generative AI integrated into your smart home." },
+  { title: "Multi-Room Audio Setup", id: "XkYqvCnXfXk", description: "Learn how to play music across multiple zones simultaneously." },
+  { title: "Josh + Lutron Integration", id: "8RK_ZjGkWQw", description: "See how Josh integrates with Lutron lighting systems seamlessly." },
+  { title: "Josh Touchscreen Demo", id: "9jYKvr8qDcM", description: "A walkthrough of the wall-mounted Josh Touchscreen interface." },
+  { title: "Privacy & Security Deep Dive", id: "cL9vAqnF2Jw", description: "How Josh.ai protects your data with local processing and physical mute." },
+  { title: "Josh for Whole-Home Control", id: "HdYMnFZjZkA", description: "Control lighting, shades, HVAC, security and more with one voice." },
 ];
 
 const JoshAiTutorial = () => {
@@ -123,9 +147,9 @@ const JoshAiTutorial = () => {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero */}
-      <section className="pt-24 pb-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      {/* Hero with lifestyle image */}
+      <section className="pt-24 pb-0 bg-slate-900 text-white relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10 pb-12">
           <Badge className="mb-4 bg-emerald-600/20 text-emerald-300 border-emerald-500/30 text-sm">
             Smart Home Guide
           </Badge>
@@ -141,6 +165,14 @@ const JoshAiTutorial = () => {
             <span className="flex items-center gap-1.5"><Smartphone className="w-4 h-4" /> App &amp; Touch</span>
             <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4" /> JoshGPT AI</span>
           </div>
+        </div>
+        <div className="w-full h-64 sm:h-80 lg:h-96 relative">
+          <img
+            src={joshLifestyleHero}
+            alt="Luxury smart home living room with automated lighting, motorized shades, and entertainment system"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-slate-900/60" />
         </div>
       </section>
 
@@ -169,7 +201,17 @@ const JoshAiTutorial = () => {
               </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {products.map((p) => (
-                  <Card key={p.name} className="border border-slate-200 hover:shadow-md transition-shadow">
+                  <Card key={p.name} className="border border-slate-200 hover:shadow-md transition-shadow overflow-hidden">
+                    {p.image && (
+                      <div className="h-48 overflow-hidden">
+                        <img
+                          src={p.image}
+                          alt={`${p.name} smart home device`}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <p.icon className="w-8 h-8 text-blue-600" />
@@ -402,14 +444,42 @@ const JoshAiTutorial = () => {
               </Accordion>
             </div>
 
-            {/* Video Tutorials */}
+            {/* Getting Started Videos */}
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Video Tutorials</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Getting Started Videos</h2>
               <p className="text-slate-600 mb-6 max-w-3xl">
-                Watch these official Josh.ai tutorials to see the system in action.
+                Watch these beginner-friendly Josh.ai tutorials to get comfortable with the basics.
               </p>
-              <div className="grid gap-6 sm:grid-cols-2">
-                {videos.map((v) => (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {gettingStartedVideos.map((v) => (
+                  <Card key={v.id} className="border border-slate-200 overflow-hidden">
+                    <div className="aspect-video">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${v.id}`}
+                        title={v.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                        loading="lazy"
+                      />
+                    </div>
+                    <CardContent className="pt-4">
+                      <h3 className="font-semibold text-slate-900 mb-1">{v.title}</h3>
+                      <p className="text-sm text-slate-600">{v.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Advanced Videos */}
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Advanced Features &amp; Integrations</h2>
+              <p className="text-slate-600 mb-6 max-w-3xl">
+                Ready for more? These videos cover advanced features like JoshGPT, multi-room audio, and third-party integrations.
+              </p>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {advancedVideos.map((v) => (
                   <Card key={v.id} className="border border-slate-200 overflow-hidden">
                     <div className="aspect-video">
                       <iframe
