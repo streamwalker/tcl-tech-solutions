@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut, ChevronDown, Users, Building, MapPin, FileText, MessageCircle, Home, Shield, Smartphone, Database, Cog, BarChart, Layers } from "lucide-react";
+import { Menu, X, LogOut, ChevronDown, Users, Building, MapPin, FileText, MessageCircle, Home, Shield, Smartphone, Database, Cog, BarChart, Layers, Volume2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { handleContactClick } from "@/utils/smoothScroll";
