@@ -1,24 +1,42 @@
 
 
-# Add Josh.ai Keynote 2026 Video + Transcript
+# Make OmniCode Subpage Go Live
 
-## Video Details
-- **Title**: Josh.ai Keynote 2026 Event
-- **ID**: `0gVKShqKTd4`
-- **Length**: 47:31
-- **Description**: "For years, Josh has been building toward something bigger."
-- **Published**: March 19, 2026
+## Problem
+The OmniCode page exists in the codebase and routing, but the `knowledge_nodes` database table it queries doesn't exist yet. The page will load but show 0 nodes and an empty graph.
 
-## Changes
+## Plan
 
-### 1. Add video to the tutorial page (`src/pages/JoshAiTutorial.tsx`)
-Add the Keynote as a **featured video** at the top of the Training tab — before the "Getting Started Videos" section — with a larger embed and prominent styling, since it's the latest major Josh.ai event.
+### 1. Create `knowledge_nodes` database table
+Run a migration to create the table with columns matching what the page expects:
+- `id` (uuid, primary key)
+- `title` (text, not null)
+- `summary` (text, nullable)
+- `layer` (integer, 1-7, not null)
+- `category` (text, not null)
+- `content` (jsonb, nullable)
+- `tags` (text[], nullable)
+- `confidence_score` (numeric, nullable)
+- `created_at` (timestamptz, default now())
 
-### 2. Transcript limitation
-YouTube does not expose video transcripts through standard web fetching. I cannot automatically download the transcript with the tools available. Options:
-- **You can manually copy** the transcript from YouTube (click "Show transcript" under the video) and I'll add it as a collapsible section on the page
-- Or I can generate a transcript by sending the video to an AI transcription service if you have one connected
+Enable RLS with a public read policy (this is a public-facing knowledge base).
 
-### File Modified
-- `src/pages/JoshAiTutorial.tsx` — add featured keynote video section in Training tab
+### 2. Seed initial knowledge nodes
+Insert starter data across all 7 layers so the graph has content on launch. Examples:
+- Layer 1 (Physical): Transistors, Circuit Boards, Fiber Optics
+- Layer 2 (Logical): Binary Logic, Operating Systems, Memory Management
+- Layer 3 (Network): TCP/IP, DNS, HTTP/HTTPS
+- Layer 4 (Application): Web Browsers, Databases, APIs
+- Layer 5 (Conceptual): Algorithms, Data Structures, Design Patterns
+- Layer 6 (Meta): Machine Learning, Neural Networks, NLP
+- Layer 7 (Philosophical): AI Ethics, Consciousness, Singularity
+
+~30-40 nodes total to populate a meaningful graph.
+
+### 3. Fix the Supabase query cast
+The page currently uses `(supabase as any)` to query `knowledge_nodes`. Once the table exists, the types will auto-regenerate, but if not, the `as any` cast keeps it working.
+
+### Files Modified
+- **Database migration**: Create `knowledge_nodes` table + seed data
+- **`src/pages/OmniCode.tsx`**: No changes needed — it already queries the table and renders correctly
 
