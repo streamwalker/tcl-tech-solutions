@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import OmniCode from "./pages/OmniCode";
 import Services from "./pages/Services";
 import Platform from "./pages/Platform";
+import JoshAiTutorial from "./pages/JoshAiTutorial";
 
 const queryClient = new QueryClient();
 
