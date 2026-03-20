@@ -1,49 +1,37 @@
 
 
-# Josh.ai Tutorial & Training Subpage
+# Add More Video Content & Product Photography to Josh.ai Tutorial
 
-## Overview
-Create a new `/josh-ai-tutorial` page with comprehensive, beginner-friendly Josh.ai tutorials and training content. Add it to the site navigation under the Services dropdown.
+## Current State
+The page has 4 YouTube videos and uses only Lucide icons for products — no product images or lifestyle photography.
 
-## Content Structure
+## Changes
 
-The page will have two main tabs: **Josh.ai Tutorial** and **Josh.ai Training**, covering:
+### 1. Expand video library (videos array, line 114)
+Add 8 more official Josh.ai YouTube videos covering topics like:
+- Josh Micro installation overview
+- Josh Touchscreen demo
+- JoshGPT capabilities
+- Multi-room audio
+- Josh + Lutron integration
+- Privacy & security features
+- Josh One product showcase
+- Josh App deep dive
 
-**Tutorial Tab:**
-- What is Josh.ai (overview, products: Josh Core, Josh One, Josh Micro, Josh Nano, Josh App, Josh Touchscreen)
-- Getting Started (wake phrases: "Ok Josh", "Ok Home", "Hey Micro", "Nikola"; changing voice gender/accent)
-- Voice Commands guide (Top 10 commands with examples: lights, TV, music, shades, scenes, weather, fan, Netflix, timers)
-- Using the Josh App (dashboards, scenes, remote control from anywhere)
-- JoshGPT (generative AI assistant features)
-- Privacy & Security info
-- Troubleshooting & FAQ
+Reorganize the video grid into two sections: "Getting Started" (beginner) and "Advanced Features" in the Training tab.
 
-**Training Tab:**
-- Step-by-step walkthroughs for common tasks (creating scenes, managing users, lighting control, entertainment)
-- Tips & Tricks for less tech-savvy users
-- Video embeds from Josh.ai's official YouTube tutorials
-- Quick reference card of common commands
+### 2. Add product photography section (Tutorial tab, after products grid ~line 186)
+Add a visual product gallery using high-quality images from Josh.ai's public website/CDN:
+- Josh Core, Josh One, Josh Micro, Josh Nano, Josh Touchscreen
+- Lifestyle shots of Josh in-situ (living rooms, kitchens)
+- Use `<img>` tags with josh.ai public image URLs, with fallback alt text and rounded styling
 
-## Visual Content
-- Embedded YouTube videos from Josh.ai's official channel (voice control tutorial, lighting control, user management, scenes)
-- Product images referenced from josh.ai CDN/public URLs
-- Custom icons and illustrations using Lucide icons
-- Step-by-step numbered cards with visual hierarchy
-- Color-coded command categories
+### 3. Add hero lifestyle image
+Add a lifestyle/product banner image in the hero section showing Josh devices in a smart home setting.
 
-## Technical Changes
+### 4. Add visual product cards with images
+Update the products array to include image URLs from josh.ai's public assets, and render them as image cards with photos above the text descriptions.
 
-### New File: `src/pages/JoshAiTutorial.tsx`
-- Full page with Navigation + Footer
-- Two-tab layout (Tutorial / Training) using existing Tabs component
-- Accordion sections for expandable content
-- Embedded YouTube iframes for video content
-- Responsive grid cards for products and commands
-- Badge components for difficulty levels (Beginner/Intermediate)
-
-### Modified: `src/components/Navigation.tsx`
-- Add "Josh.ai Tutorial" link to the Services dropdown menu
-
-### Modified: `src/App.tsx`
-- Add route: `/josh-ai-tutorial` pointing to new page
+### File Modified
+- `src/pages/JoshAiTutorial.tsx` — expand videos array, add product image URLs, add lifestyle imagery sections, restructure video tutorials into categorized groups
 
