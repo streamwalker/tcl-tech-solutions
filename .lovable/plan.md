@@ -1,37 +1,24 @@
 
 
-# Add More Video Content & Product Photography to Josh.ai Tutorial
+# Add Josh.ai Keynote 2026 Video + Transcript
 
-## Current State
-The page has 4 YouTube videos and uses only Lucide icons for products — no product images or lifestyle photography.
+## Video Details
+- **Title**: Josh.ai Keynote 2026 Event
+- **ID**: `0gVKShqKTd4`
+- **Length**: 47:31
+- **Description**: "For years, Josh has been building toward something bigger."
+- **Published**: March 19, 2026
 
 ## Changes
 
-### 1. Expand video library (videos array, line 114)
-Add 8 more official Josh.ai YouTube videos covering topics like:
-- Josh Micro installation overview
-- Josh Touchscreen demo
-- JoshGPT capabilities
-- Multi-room audio
-- Josh + Lutron integration
-- Privacy & security features
-- Josh One product showcase
-- Josh App deep dive
+### 1. Add video to the tutorial page (`src/pages/JoshAiTutorial.tsx`)
+Add the Keynote as a **featured video** at the top of the Training tab — before the "Getting Started Videos" section — with a larger embed and prominent styling, since it's the latest major Josh.ai event.
 
-Reorganize the video grid into two sections: "Getting Started" (beginner) and "Advanced Features" in the Training tab.
-
-### 2. Add product photography section (Tutorial tab, after products grid ~line 186)
-Add a visual product gallery using high-quality images from Josh.ai's public website/CDN:
-- Josh Core, Josh One, Josh Micro, Josh Nano, Josh Touchscreen
-- Lifestyle shots of Josh in-situ (living rooms, kitchens)
-- Use `<img>` tags with josh.ai public image URLs, with fallback alt text and rounded styling
-
-### 3. Add hero lifestyle image
-Add a lifestyle/product banner image in the hero section showing Josh devices in a smart home setting.
-
-### 4. Add visual product cards with images
-Update the products array to include image URLs from josh.ai's public assets, and render them as image cards with photos above the text descriptions.
+### 2. Transcript limitation
+YouTube does not expose video transcripts through standard web fetching. I cannot automatically download the transcript with the tools available. Options:
+- **You can manually copy** the transcript from YouTube (click "Show transcript" under the video) and I'll add it as a collapsible section on the page
+- Or I can generate a transcript by sending the video to an AI transcription service if you have one connected
 
 ### File Modified
-- `src/pages/JoshAiTutorial.tsx` — expand videos array, add product image URLs, add lifestyle imagery sections, restructure video tutorials into categorized groups
+- `src/pages/JoshAiTutorial.tsx` — add featured keynote video section in Training tab
 
