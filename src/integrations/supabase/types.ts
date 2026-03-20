@@ -62,6 +62,42 @@ export type Database = {
         }
         Relationships: []
       }
+      knowledge_nodes: {
+        Row: {
+          category: string
+          confidence_score: number | null
+          content: Json | null
+          created_at: string
+          id: string
+          layer: number
+          summary: string | null
+          tags: string[] | null
+          title: string
+        }
+        Insert: {
+          category: string
+          confidence_score?: number | null
+          content?: Json | null
+          created_at?: string
+          id?: string
+          layer: number
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+        }
+        Update: {
+          category?: string
+          confidence_score?: number | null
+          content?: Json | null
+          created_at?: string
+          id?: string
+          layer?: number
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string
