@@ -444,6 +444,32 @@ const JoshAiTutorial = () => {
               </Accordion>
             </div>
 
+            {/* Featured: Josh.ai Keynote 2026 */}
+            <div className="mb-12">
+              <Badge className="bg-amber-100 text-amber-800 border-amber-300 mb-3">Featured</Badge>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Josh.ai Keynote 2026</h2>
+              <p className="text-slate-600 mb-6 max-w-3xl">
+                The latest Josh.ai event — discover what's next for the platform. "For years, Josh has been building toward something bigger."
+              </p>
+              <div className="max-w-4xl">
+                <Card className="border border-slate-200 overflow-hidden shadow-lg">
+                  <div className="aspect-video">
+                    <iframe
+                      src="https://www.youtube.com/embed/0gVKShqKTd4"
+                      title="Josh.ai Keynote 2026 Event"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <CardContent className="p-4">
+                    <p className="font-semibold text-slate-900">Josh.ai Keynote 2026 Event</p>
+                    <p className="text-sm text-slate-500">47:31 · Published March 19, 2026</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
             {/* Getting Started Videos */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Getting Started Videos</h2>
