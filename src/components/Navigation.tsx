@@ -48,6 +48,7 @@ const Navigation = () => {
     { name: "Contact", href: "/#contact" },
     { name: "Business Plan", href: "/business-plan" },
     { name: "Investor White Paper", href: "/investor-white-paper" },
+    { name: "Capital Stack", href: "/capital-stack" },
     { name: "Builder Deck", href: "/builder-deck" },
   ];
 

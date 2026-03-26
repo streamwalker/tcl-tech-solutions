@@ -21,6 +21,7 @@ import OmniCode from "./pages/OmniCode";
 import Services from "./pages/Services";
 import Platform from "./pages/Platform";
 import JoshAiTutorial from "./pages/JoshAiTutorial";
+import CapitalStack from "./pages/CapitalStack";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/business-plan" element={<BusinessPlan />} />
           <Route path="/investor-white-paper" element={<InvestorWhitePaper />} />
+          <Route path="/capital-stack" element={<CapitalStack />} />
           <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
           <Route path="/platform/*" element={<AuthGuard><Platform /></AuthGuard>} />
           <Route path="/builder-deck" element={<BuilderDeck />} />
