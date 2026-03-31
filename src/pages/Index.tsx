@@ -333,12 +333,12 @@ function ProcessSection() {
 
 function PortfolioSection() {
   const projects = [
-    { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", color: "#2A1F3D" },
-    { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", color: "#1F2A3D" },
-    { title: "Smart Home Full Build", category: "Residential", desc: "Control4 automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", color: "#3D2A1F" },
-    { title: "New Construction Pre-Wire", category: "Builder", desc: "Complete pre-wire for a 52-home production community — structured wiring, AV, and security rough-in.", color: "#1F3D2A" },
-    { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", color: "#3D1F2A" },
-    { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", color: "#2A3D1F" },
+    { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", img: portfolioHomeTheater },
+    { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", img: portfolioRooftopAudio },
+    { title: "Smart Home Full Build", category: "Residential", desc: "Control4 automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", img: portfolioSmartHome },
+    { title: "New Construction Pre-Wire", category: "Builder", desc: "Complete pre-wire for a 52-home production community — structured wiring, AV, and security rough-in.", img: portfolioPrewire },
+    { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", img: portfolioRestaurantAv },
+    { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", img: portfolioOutdoor },
   ];
   return (
     <section id="portfolio" style={{ padding: "100px 0", background: "#0A0A0E" }}>
@@ -355,9 +355,8 @@ function PortfolioSection() {
               <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s", cursor: "default" }}
                 onMouseOver={e => { e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
                 onMouseOut={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ height: 200, background: `linear-gradient(135deg, ${p.color}, ${p.color}dd)`, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-                  <div style={{ position: "absolute", inset: 0, opacity: 0.15, backgroundImage: "radial-gradient(circle at 50% 50%, rgba(212,160,60,0.3), transparent 60%)" }} />
-                  <span style={{ fontSize: 14, fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "rgba(255,255,255,0.5)", letterSpacing: 2, textTransform: "uppercase" as const }}>Project Photo</span>
+                <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={544} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
                 <div style={{ padding: 24, background: "rgba(255,255,255,0.02)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
