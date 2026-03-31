@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
 import CookieConsent from "../components/CookieConsent";
