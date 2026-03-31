@@ -1,14 +1,16 @@
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
 import CookieConsent from "../components/CookieConsent";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
 import portfolioRooftopAudio from "../assets/portfolio-rooftop-audio.jpg";
 import portfolioSmartHome from "../assets/portfolio-smart-home.jpg";
 import portfolioPrewire from "../assets/portfolio-prewire.jpg";
 import portfolioRestaurantAv from "../assets/portfolio-restaurant-av.jpg";
 import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
+import heroBg from "../assets/hero-bg.jpg";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
