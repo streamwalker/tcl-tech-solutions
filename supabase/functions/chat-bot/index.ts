@@ -1,6 +1,6 @@
-
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -50,14 +50,13 @@ Your role:
 Always maintain a professional tone and focus on how TCL can help solve the visitor's technology challenges.`;
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Verify authentication
+  // Verify authentication - validate the JWT, not just check header presence
   const authHeader = req.headers.get('Authorization');
-  if (!authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return new Response(
       JSON.stringify({ 
         error: 'Authentication required',
@@ -71,10 +70,37 @@ serve(async (req) => {
     );
   }
 
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_ANON_KEY')!,
+    { global: { headers: { Authorization: authHeader } } }
+  );
+
+  const token = authHeader.replace('Bearer ', '');
+  const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
+  if (claimsError || !claimsData?.claims) {
+    return new Response(
+      JSON.stringify({ 
+        error: 'Invalid or expired token',
+        response: "Please sign in to use the chat feature.",
+        success: false 
+      }),
+      { 
+        status: 401, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    );
+  }
+
   try {
     const { message, conversationHistory = [] } = await req.json();
 
-    console.log('Received chat request:', { message, historyLength: conversationHistory.length });
+    if (!message || typeof message !== 'string' || message.trim().length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'Message is required', success: false }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -103,8 +129,6 @@ serve(async (req) => {
     const data = await response.json();
     const botResponse = data.choices[0].message.content;
 
-    console.log('Bot response generated successfully');
-
     return new Response(JSON.stringify({ 
       response: botResponse,
       success: true 
@@ -114,7 +138,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in chat-bot function:', error);
     return new Response(JSON.stringify({ 
-      error: error.message,
+      error: 'An error occurred',
       response: "I'm sorry, I'm having trouble responding right now. Please try again or contact us directly at +1 (202) 555-0123.",
       success: false 
     }), {
