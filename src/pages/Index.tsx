@@ -195,7 +195,7 @@ function HeroSection() {
   };
 
   return (
-    <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", background: "linear-gradient(180deg, #0A0A0E 0%, #12121A 50%, #0A0A0E 100%)" }}>
+    <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", background: `linear-gradient(180deg, rgba(10,10,14,0.85) 0%, rgba(18,18,26,0.8) 50%, rgba(10,10,14,0.95) 100%), url(${heroBg}) center/cover no-repeat` }}>
       <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(212,160,60,0.5) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
       <div style={{ position: "absolute", top: "10%", right: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(212,160,60,0.08), transparent 70%)", borderRadius: "50%", filter: "blur(60px)" }} />
       <div style={{ position: "absolute", bottom: "10%", left: "5%", width: 400, height: 400, background: "radial-gradient(circle, rgba(212,160,60,0.05), transparent 70%)", borderRadius: "50%", filter: "blur(80px)" }} />
