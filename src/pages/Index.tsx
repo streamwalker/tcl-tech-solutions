@@ -595,11 +595,12 @@ function ContactSection() {
                       rows={4} style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "12px 16px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#F5F0E8", outline: "none", boxSizing: "border-box" as const, resize: "vertical" as const }}
                       onFocus={e => e.target.style.borderColor = "rgba(212,160,60,0.4)"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"} />
                   </div>
-                  <button onClick={handleSubmit}
-                    style={{ width: "100%", background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "16px", borderRadius: 10, border: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, transition: "all 0.3s", boxShadow: "0 4px 24px rgba(212,160,60,0.3)" }}
-                    onMouseOver={e => { (e.target as HTMLElement).style.transform = "translateY(-1px)"; (e.target as HTMLElement).style.boxShadow = "0 8px 32px rgba(212,160,60,0.4)"; }}
+                  {error && <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#e74c3c", marginBottom: 12 }}>{error}</p>}
+                  <button onClick={handleSubmit} disabled={submitting}
+                    style={{ width: "100%", background: submitting ? "#8a7a3a" : "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "16px", borderRadius: 10, border: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 700, cursor: submitting ? "wait" : "pointer", letterSpacing: 0.5, transition: "all 0.3s", boxShadow: "0 4px 24px rgba(212,160,60,0.3)", opacity: submitting ? 0.7 : 1 }}
+                    onMouseOver={e => { if (!submitting) { (e.target as HTMLElement).style.transform = "translateY(-1px)"; (e.target as HTMLElement).style.boxShadow = "0 8px 32px rgba(212,160,60,0.4)"; } }}
                     onMouseOut={e => { (e.target as HTMLElement).style.transform = "translateY(0)"; (e.target as HTMLElement).style.boxShadow = "0 4px 24px rgba(212,160,60,0.3)"; }}>
-                    Submit Request →
+                    {submitting ? "Submitting..." : "Submit Request →"}
                   </button>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", textAlign: "center", marginTop: 12 }}>🔒 Your information is secure and never shared.</p>
                 </>
