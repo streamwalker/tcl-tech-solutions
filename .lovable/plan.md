@@ -1,38 +1,38 @@
 
 
-# TCL Capital Stack Strategy Subpage
+# Update Website with New TCL Design
 
 ## Overview
-Create a new `/capital-stack` page that presents TCL's full 6-layer capital stack strategy as a professional, investor-ready subpage. This converts the detailed funding roadmap into a structured, visually engaging page with navigation sidebar, timeline, and financial tables.
+Replace the current Index (homepage) with the uploaded design — a dark luxury theme (black/gold) single-page layout with inline styles, scroll animations, tabbed services, portfolio, FAQ accordion, and contact form. The uploaded file is a self-contained component with sections: Hero (countdown timer + stats), Services (Residential/Commercial/Builders tabs), How It Works, Portfolio, Reviews, About, FAQ, and Contact.
 
-## Content Structure
+## Approach
+Convert the uploaded JSX into a proper TypeScript React component that integrates with the existing project (React Router, Tailwind environment), replacing the current `Index.tsx` homepage while keeping all other routes and subpages intact.
 
-The page will have a sticky Table of Contents sidebar (matching the Investor White Paper pattern) and these sections:
+## Changes
 
-1. **Hero** — "TCL Capital Stack Strategy" with subtitle about building a $1.9M+ ecosystem without giving up equity
-2. **What TCL Actually Is** — Positioning as early-stage infrastructure company, not a startup
-3. **Layer 1: Immediate Liquidity (0-30 Days)** — Business credit stack, equipment financing ($50K-$150K)
-4. **Layer 2: Revenue-Backed Capital (30-90 Days)** — Revenue-based financing, contract collateral ($100K-$500K)
-5. **Layer 3: Non-Dilutive Funding** — SDVOSB certification, Texas grants, energy efficiency programs ($100K-$300K)
-6. **Layer 4: Contract Stacking** — SAM.gov registration, government positioning, subcontractor strategy ($250K-$2M)
-7. **Layer 5: Builder & Developer Stack** — Community-scale deals with Coventry/Lennar/Perry ($500K-$2M)
-8. **Layer 6: Recurring Revenue Engine** — Scaling managed services to $10K-$50K/month
-9. **Full Capital Stack Summary** — Table showing all layers totaling $1.9M+
-10. **Timeline to $1M+** — Visual timeline: 0-60 days, 3-6 months, 6-12 months
-11. **Next Steps** — Capability statement, builder pitch deck, grant pipeline, financing model
+### 1. Replace `src/pages/Index.tsx`
+Rewrite the homepage using the uploaded file's content:
+- All sections: Navbar, Hero (with countdown + stats), tabbed Services, Process, Portfolio, Reviews, About, FAQ, Contact form, Footer
+- Keep inline styles as-is (the design uses them intentionally for the luxury dark theme)
+- Convert to TypeScript (add proper types for props, refs, state)
+- Replace `<a href="#section">` anchor links with smooth scroll behavior
+- Keep the existing `Link` imports from react-router-dom for any cross-page navigation (e.g., nav links to `/business-plan`, `/capital-stack`, etc.)
+- Add Google Fonts import for Playfair Display, DM Sans, DM Mono
+- Retain existing `ChatBot` and `CookieConsent` components at the bottom
+- Include navigation links to existing subpages (Platform, Investor, Capital Stack, etc.) in the navbar and footer
 
-## Technical Details
+### 2. Remove unused homepage components
+The following components are no longer used by the new Index page (they may still be used by other pages, so only remove imports from Index):
+- `IBMNavigation`, `IBMHero`, `IBMRecommendations`
+- `Services` (component), `DealerPartners`, `ValuePropositions`, `Testimonials`, `About`, `Experience`, `Contact`
+- `Footer`, `SEOContent`, `AdSidebar`
 
-### New File: `src/pages/CapitalStack.tsx`
-- Follows the Investor White Paper pattern: sticky sidebar TOC, section-based scrolling, print-friendly
-- Uses existing Card, Table, Badge components
-- Visually distinct layer cards with color-coded badges (Layer 1 = blue, Layer 2 = green, etc.)
-- Progress bars or visual indicators for funding amounts per layer
-- Responsive layout with sidebar collapsing on mobile
+### 3. Update `index.html`
+Add Google Fonts link for Playfair Display, DM Sans, and DM Mono in the `<head>` to ensure fonts load before render.
 
-### Modified: `src/App.tsx`
-- Add route: `/capital-stack` → `CapitalStack`
-
-### Modified: `src/components/Navigation.tsx`
-- Add "Capital Stack Strategy" link to the nav items array (alongside Business Plan, Investor White Paper)
+### Key integration points
+- Navbar will include links to existing routes: `/business-plan`, `/capital-stack`, `/investor-white-paper`, `/platform`, `/services`, `/josh-ai-tutorial`
+- Contact form submission will be wired to the existing backend (insert into a contacts/leads table) rather than just local state
+- Mobile responsive CSS media query for hamburger menu
+- ChatBot and CookieConsent retained from current site
 
