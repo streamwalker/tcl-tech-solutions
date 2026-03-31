@@ -1,14 +1,16 @@
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
 import CookieConsent from "../components/CookieConsent";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
 import portfolioRooftopAudio from "../assets/portfolio-rooftop-audio.jpg";
 import portfolioSmartHome from "../assets/portfolio-smart-home.jpg";
 import portfolioPrewire from "../assets/portfolio-prewire.jpg";
 import portfolioRestaurantAv from "../assets/portfolio-restaurant-av.jpg";
 import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
+import heroBg from "../assets/hero-bg.jpg";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
@@ -193,7 +195,7 @@ function HeroSection() {
   };
 
   return (
-    <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", background: "linear-gradient(180deg, #0A0A0E 0%, #12121A 50%, #0A0A0E 100%)" }}>
+    <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", background: `linear-gradient(180deg, rgba(10,10,14,0.85) 0%, rgba(18,18,26,0.8) 50%, rgba(10,10,14,0.95) 100%), url(${heroBg}) center/cover no-repeat` }}>
       <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(212,160,60,0.5) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
       <div style={{ position: "absolute", top: "10%", right: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(212,160,60,0.08), transparent 70%)", borderRadius: "50%", filter: "blur(60px)" }} />
       <div style={{ position: "absolute", bottom: "10%", left: "5%", width: 400, height: 400, background: "radial-gradient(circle, rgba(212,160,60,0.05), transparent 70%)", borderRadius: "50%", filter: "blur(80px)" }} />
@@ -339,6 +341,9 @@ function ProcessSection() {
 }
 
 function PortfolioSection() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const filters = ["All", "Residential", "Commercial", "Builder"];
   const projects = [
     { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", img: portfolioHomeTheater },
     { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", img: portfolioRooftopAudio },
@@ -347,23 +352,62 @@ function PortfolioSection() {
     { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", img: portfolioRestaurantAv },
     { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", img: portfolioOutdoor },
   ];
+  const filtered = activeFilter === "All" ? projects : projects.filter(p => p.category === activeFilter);
+
+  const navigateLightbox = useCallback((dir: number) => {
+    if (selectedProject === null) return;
+    const newIdx = selectedProject + dir;
+    if (newIdx >= 0 && newIdx < filtered.length) setSelectedProject(newIdx);
+  }, [selectedProject, filtered.length]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (selectedProject === null) return;
+      if (e.key === "ArrowLeft") navigateLightbox(-1);
+      if (e.key === "ArrowRight") navigateLightbox(1);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedProject, navigateLightbox]);
+
   return (
     <section id="portfolio" style={{ padding: "100px 0", background: "#0A0A0E" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
             <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Our Work</div>
             <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 16 }}>Featured Projects</h2>
           </div>
         </AnimateIn>
+        {/* Category Filters */}
+        <AnimateIn delay={0.05}>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginBottom: 40, flexWrap: "wrap" }}>
+            {filters.map(f => (
+              <button key={f} onClick={() => { setActiveFilter(f); setSelectedProject(null); }} style={{
+                background: activeFilter === f ? "linear-gradient(135deg, #D4A03C, #C49030)" : "rgba(255,255,255,0.03)",
+                color: activeFilter === f ? "#0A0A0E" : "#9A9A9E",
+                border: activeFilter === f ? "none" : "1px solid rgba(255,255,255,0.08)",
+                padding: "10px 24px", borderRadius: 100, cursor: "pointer",
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: 0.5, transition: "all 0.3s",
+              }}
+                onMouseOver={e => { if (activeFilter !== f) (e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"); }}
+                onMouseOut={e => { if (activeFilter !== f) (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"); }}>
+                {f}
+              </button>
+            ))}
+          </div>
+        </AnimateIn>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
-          {projects.map((p, i) => (
-            <AnimateIn key={i} delay={i * 0.08}>
-              <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s", cursor: "default" }}
+          {filtered.map((p, i) => (
+            <AnimateIn key={p.title} delay={i * 0.08}>
+              <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s", cursor: "pointer" }}
+                onClick={() => setSelectedProject(i)}
                 onMouseOver={e => { e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
                 onMouseOut={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.transform = "translateY(0)"; }}>
                 <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={544} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={544} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s" }}
+                    onMouseOver={e => (e.currentTarget.style.transform = "scale(1.05)")}
+                    onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
                 </div>
                 <div style={{ padding: 24, background: "rgba(255,255,255,0.02)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -377,6 +421,35 @@ function PortfolioSection() {
           ))}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      <Dialog open={selectedProject !== null} onOpenChange={(open) => { if (!open) setSelectedProject(null); }}>
+        <DialogContent className="max-w-4xl p-0 border-none bg-transparent shadow-none [&>button]:text-white [&>button]:opacity-100 [&>button]:top-3 [&>button]:right-3 [&>button]:z-50 [&>button]:bg-black/60 [&>button]:rounded-full [&>button]:p-2 [&>button]:h-auto [&>button]:w-auto">
+          {selectedProject !== null && filtered[selectedProject] && (
+            <div style={{ borderRadius: 16, overflow: "hidden", background: "#12121A", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ position: "relative" }}>
+                <img src={filtered[selectedProject].img} alt={filtered[selectedProject].title} style={{ width: "100%", maxHeight: "60vh", objectFit: "cover" }} />
+                {/* Navigation arrows */}
+                {selectedProject > 0 && (
+                  <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", color: "#F5F0E8", fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    ←
+                  </button>
+                )}
+                {selectedProject < filtered.length - 1 && (
+                  <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", color: "#F5F0E8", fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    →
+                  </button>
+                )}
+              </div>
+              <div style={{ padding: "24px 28px" }}>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, color: "#D4A03C", letterSpacing: 1.5, textTransform: "uppercase" as const, background: "rgba(212,160,60,0.1)", padding: "4px 12px", borderRadius: 6 }}>{filtered[selectedProject].category}</span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, color: "#F5F0E8", fontWeight: 700, marginTop: 12, marginBottom: 8 }}>{filtered[selectedProject].title}</h3>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#7A7A80", lineHeight: 1.7 }}>{filtered[selectedProject].desc}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
