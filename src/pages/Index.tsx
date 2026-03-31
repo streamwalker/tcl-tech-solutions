@@ -495,8 +495,31 @@ function FAQSection() {
 function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", type: "residential", message: "" });
   const [submitted, setSubmitted] = useState(false);
-  const handleSubmit = () => {
-    if (form.name && form.email && form.phone) setSubmitted(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const handleSubmit = async () => {
+    if (!form.name.trim() || !form.email.trim() || !form.phone.trim()) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    setSubmitting(true);
+    setError("");
+    try {
+      const { error: dbError } = await supabase.from("contact_submissions").insert({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        project_type: form.type,
+        message: form.message.trim() || null,
+      });
+      if (dbError) throw dbError;
+      setSubmitted(true);
+    } catch (e: any) {
+      setError("Something went wrong. Please call us directly at (210) 995-8655.");
+      console.error("Contact form error:", e);
+    } finally {
+      setSubmitting(false);
+    }
   };
   return (
     <section id="contact" style={{ padding: "100px 0", background: "#0A0A0E", position: "relative" }}>
