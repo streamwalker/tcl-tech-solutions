@@ -551,6 +551,42 @@ function AboutSection() {
             </div>
           </AnimateIn>
         </div>
+
+        {/* Damon Jackson Profile Card */}
+        <AnimateIn delay={0.1}>
+          <div style={{ marginTop: 80, background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
+            <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
+              <div style={{ width: 100, height: 100, borderRadius: "50%", background: "rgba(212,160,60,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40, flexShrink: 0 }}>🎖️</div>
+              <div style={{ flex: 1, minWidth: 250 }}>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, fontWeight: 700, color: "#F5F0E8", marginBottom: 4 }}>Damon Jackson</h3>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 12 }}>Founder & CEO</div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
+                  22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, Control4, RTI, IC Realtime, and Home Theater Design & Calibration.
+                </p>
+              </div>
+            </div>
+          </div>
+        </AnimateIn>
+
+        {/* Founder's Keynote Speech */}
+        <AnimateIn delay={0.2}>
+          <div style={{ marginTop: 56, textAlign: "center" }}>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Featured</div>
+            <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(24px, 3vw, 36px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 32 }}>Founder's Keynote Speech</h3>
+            <div style={{ maxWidth: 800, margin: "0 auto", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(212,160,60,0.1)", background: "rgba(255,255,255,0.02)" }}>
+              <video controls preload="metadata" style={{ width: "100%", display: "block", aspectRatio: "16/9" }}>
+                <source src="/videos/TCL_CEO_Keynote_Speech.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div style={{ padding: "20px 24px", textAlign: "left" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
+                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and hands-on automation expertise.
+                </p>
+              </div>
+            </div>
+          </div>
+        </AnimateIn>
       </div>
     </section>
   );
