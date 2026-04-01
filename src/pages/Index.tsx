@@ -11,6 +11,7 @@ import portfolioPrewire from "../assets/portfolio-prewire.jpg";
 import portfolioRestaurantAv from "../assets/portfolio-restaurant-av.jpg";
 import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
 import heroBg from "../assets/hero-bg.jpg";
+import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
