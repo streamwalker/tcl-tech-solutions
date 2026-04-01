@@ -3,7 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Calendar, ClipboardList, BarChart3, ArrowLeft } from 'lucide-react';
+import { Users, Calendar, ClipboardList, BarChart3, ArrowLeft, Shield, Download, Trash2, Loader2 } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { supabase } from '@/integrations/supabase/client';
 import EmployeeManagement from '@/components/workforce/EmployeeManagement';
 import ScheduleManagement from '@/components/workforce/ScheduleManagement';
 import TaskManagement from '@/components/workforce/TaskManagement';
