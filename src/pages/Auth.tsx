@@ -39,7 +39,7 @@ const Auth = () => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -58,6 +58,13 @@ const Auth = () => {
           setError(error.message);
         }
       } else {
+        // Record terms acceptance in the database
+        if (data.user) {
+          await supabase.from('user_consents').insert({
+            user_id: data.user.id,
+            consent_type: 'terms_v1',
+          });
+        }
         setError('');
         alert('Check your email for the confirmation link!');
       }
