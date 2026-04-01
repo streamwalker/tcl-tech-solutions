@@ -137,6 +137,10 @@ function Navbar({ activeSection }: { activeSection: string }) {
                 {l.label}
               </a>
             ))}
+            <Link to="/press" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
+              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
+              Press
+            </Link>
             <Link to="/platform" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
               onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
               Platform
@@ -160,6 +164,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
               {l.label}
             </a>
           ))}
+          <Link to="/press" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            Press
+          </Link>
           <Link to="/platform" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
             Platform
           </Link>
@@ -738,6 +745,7 @@ function SiteFooter() {
               <a key={s.l} href={s.h} onClick={e => scrollTo(e, s.h.replace("#", ""))} style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8, transition: "color 0.3s" }}
                 onMouseOver={e => (e.target as HTMLElement).style.color = "#F5F0E8"} onMouseOut={e => (e.target as HTMLElement).style.color = "#7A7A80"}>{s.l}</a>
             ))}
+            <Link to="/press" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Press &amp; Media</Link>
             <Link to="/business-plan" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Business Plan</Link>
             <Link to="/capital-stack" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Capital Stack</Link>
             <Link to="/investor-white-paper" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Investor Paper</Link>
