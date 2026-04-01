@@ -3,6 +3,7 @@ import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import { ServicesPopups } from "@/components/NavigationPopups";
 import { Home, Shield, Database, Smartphone, Cog, BarChart, Layers } from "lucide-react";
+import paradeOfHomesLogo from "@/assets/parade-of-homes-2026-logo.png";
 
 const services = [
   {
@@ -74,6 +75,10 @@ const Services = () => {
             <p className="text-lg text-muted-foreground max-w-xl">
               From smart home automation to enterprise networks, we deliver integrated technology experiences backed by veteran expertise.
             </p>
+            <Link to="/press" className="inline-flex items-center gap-3 mt-6 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-colors">
+              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" className="h-8 rounded" />
+              <span className="text-sm font-semibold text-primary">Co-Chair, 2026 Parade of Homes</span>
+            </Link>
           </div>
         </section>
 

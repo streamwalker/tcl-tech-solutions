@@ -2,6 +2,7 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 import { handleContactClick } from "@/utils/smoothScroll";
+import paradeOfHomesLogo from "@/assets/parade-of-homes-2026-logo.png";
 
 const Footer = () => {
   const services = [
@@ -70,6 +71,14 @@ const Footer = () => {
                 <span className="text-gray-300 text-sm">7634 Goldstrike Drive, San Antonio, TX 78254</span>
               </a>
             </div>
+            {/* Parade of Homes Branding */}
+            <Link to="/press" className="flex items-center gap-3 mb-6 group">
+              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" className="h-10 rounded" />
+              <div>
+                <p className="text-xs font-semibold text-yellow-500">Co-Chair, 2026 Parade of Homes</p>
+                <p className="text-xs text-gray-400 group-hover:text-blue-400 transition-colors">Damon Jackson — Founder & CEO</p>
+              </div>
+            </Link>
             {/* Social Links */}
             <div className="flex space-x-4">
               <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-blue-400 transition-colors"><Linkedin className="w-5 h-5" /></a>
