@@ -2878,6 +2878,15 @@ const BuilderDeck = () => {
           </Button>
         </div>
       </div>
+
+      {/* Streamwalkers Attribution */}
+      <div className="absolute bottom-2 right-4 flex items-center gap-1.5 opacity-70 hover:opacity-100 transition-opacity">
+        <span className="text-[10px] text-primary-foreground/60">Built by</span>
+        <a href="https://streamwalkers.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 group">
+          <img src={streamwalkersLogo} alt="Streamwalkers" className="h-4 w-4" />
+          <span className="text-[10px] text-primary-foreground/60 group-hover:text-yellow-400 font-semibold transition-colors">Streamwalkers</span>
+        </a>
+      </div>
     </div>
   );
 };
