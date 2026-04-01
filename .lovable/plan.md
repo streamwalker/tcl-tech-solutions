@@ -1,22 +1,10 @@
 
+# Add CTA Button & Replace Emoji with Placeholder Avatar
 
-# Add Founder's Keynote Speech Video to About Page
+## Changes — `src/pages/Index.tsx`
 
-## Overview
-Copy the uploaded video to the project and embed it on the About page under a new "Founder's Keynote Speech" section.
+### 1. Replace emoji icon in Damon's profile card (line 559)
+Replace the `🎖️` emoji circle with a styled initials avatar ("DJ") using the same gold/dark color scheme.
 
-## Steps
-
-### 1. Copy video to public directory
-Copy `user-uploads://TCL_CEO_Keynote_Speech.mp4` → `public/videos/TCL_CEO_Keynote_Speech.mp4`
-
-Using `public/` because video files are best served as static assets (too large for bundling via `src/assets`).
-
-### 2. Edit `src/components/About.tsx`
-Add a new section between the Damon Jackson profile card and the Professional Certifications section:
-
-- **Section title**: "Founder's Keynote Speech"
-- **HTML5 `<video>` element** with `controls`, `poster` (optional), and responsive styling
-- Styled consistently with the existing card-based layout (rounded corners, shadow, dark card background)
-- Video source: `/videos/TCL_CEO_Keynote_Speech.mp4`
-
+### 2. Add CTA button below keynote video (after line 587)
+Insert a "View More Media Coverage →" link button styled consistently with the site's gold accent, linking to `/press`.
