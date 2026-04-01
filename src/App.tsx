@@ -23,6 +23,7 @@ import Services from "./pages/Services";
 import Platform from "./pages/Platform";
 import JoshAiTutorial from "./pages/JoshAiTutorial";
 import CapitalStack from "./pages/CapitalStack";
+import Press from "./pages/Press";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/compliance" element={<CompliancePage />} />
+          <Route path="/press" element={<Press />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
