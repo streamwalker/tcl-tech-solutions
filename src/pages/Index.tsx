@@ -12,6 +12,8 @@ import portfolioRestaurantAv from "../assets/portfolio-restaurant-av.jpg";
 import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
 import heroBg from "../assets/hero-bg.jpg";
 import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
+import damonHeadshot from "../assets/damon-jackson-headshot.png";
+import paradeOfHomesLogo2 from "../assets/parade-of-homes-2026-logo.png";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
@@ -556,12 +558,13 @@ function AboutSection() {
         <AnimateIn delay={0.1}>
           <div style={{ marginTop: 80, background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
-              <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(135deg, #D4A03C, #B8860B)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 36, fontWeight: 700, color: "#1A1A2E" }}>DJ</span>
-              </div>
+              <img src={damonHeadshot} alt="Damon Jackson, Founder & CEO of The Connected Lifestyle" style={{ width: 100, height: 100, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "3px solid #D4A03C" }} />
               <div style={{ flex: 1, minWidth: 250 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, fontWeight: 700, color: "#F5F0E8", marginBottom: 4 }}>Damon Jackson</h3>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 12 }}>Founder & CEO</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 8, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  Founder & CEO · Co-Chair, 2026 Parade of Homes
+                  <img src={paradeOfHomesLogo2} alt="2026 Parade of Homes" style={{ height: 28, borderRadius: 4 }} />
+                </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
                   22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, Control4, RTI, IC Realtime, and Home Theater Design & Calibration.
                 </p>
@@ -581,9 +584,9 @@ function AboutSection() {
                 Your browser does not support the video tag.
               </video>
               <div style={{ padding: "20px 24px", textAlign: "left" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions · Co-Chair, 2026 Parade of Homes</p>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
-                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and hands-on automation expertise.
+                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and his role as Co-Chair of the 2026 Parade of Homes.
                 </p>
               </div>
             </div>
