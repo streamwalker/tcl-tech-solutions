@@ -1,5 +1,5 @@
 
-import Navigation from "../components/Navigation";
+import IBMNavigation from "@/components/IBMNavigation";
 import BusinessPlanHero from "../components/BusinessPlanHero";
 import BusinessPlanContent from "../components/BusinessPlanContent";
 import Footer from "../components/Footer";
