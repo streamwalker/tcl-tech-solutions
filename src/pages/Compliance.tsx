@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield, Lock, Brain, CreditCard, Globe, Scale, Heart, FileCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Footer from "../components/Footer";
 
 const complianceFrameworks = [
   {
