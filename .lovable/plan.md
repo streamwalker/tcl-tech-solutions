@@ -1,38 +1,47 @@
 
 
-# Portfolio Lightbox, Category Filter, and Hero Background Image
+# Compliance Gaps — What's Done vs. What's Missing
 
-## Overview
-Three enhancements to the homepage: (1) clickable portfolio photos that open in a lightbox modal, (2) category filter buttons above the portfolio grid, and (3) a dramatic background image on the hero section similar to the Emily Russell Realty project.
+## Already Implemented
+- TermsOfService page with full EULA text
+- PrivacyPolicy page with GDPR language
+- CookiePolicy page
+- Compliance page (SOC 2, ISO 27001, ISO 42001, PCI-DSS overview)
+- Cookie consent banner (CookieConsent component, used on homepage)
+- Auth signup form with terms checkbox that blocks signup until checked
+- All routes registered in App.tsx
 
-## Changes — all in `src/pages/Index.tsx`
+## What's Missing
 
-### 1. Portfolio Lightbox Modal
-- Add state for `selectedProject` (index or null)
-- When a portfolio card is clicked, set `selectedProject` to open a full-screen modal overlay
-- Modal shows: large image, title, category badge, description, and a close button (X)
-- Left/right arrow navigation to cycle through projects
-- Click outside or press Escape to close
-- Dark overlay background matching the site theme (`rgba(0,0,0,0.9)`)
-- Uses existing Dialog component from `src/components/ui/dialog.tsx` for accessibility (focus trap, Escape key)
+### 1. Record terms acceptance in the database
+The signup checkbox exists but acceptance is never persisted. Create a `user_consents` table and record the timestamp + version when a user signs up.
 
-### 2. Portfolio Category Filter
-- Add state `activeFilter` with values: `"All"`, `"Residential"`, `"Commercial"`, `"Builder"`
-- Render filter buttons above the portfolio grid, styled as pill buttons matching the gold/dark theme
-- Active filter gets the gold highlight; others are muted
-- Filter the `projects` array before rendering — "All" shows everything
-- Smooth transition when filtering (existing AnimateIn handles re-render)
+**Migration**: Create `user_consents` table with columns: `id`, `user_id` (references auth.users, ON DELETE CASCADE), `consent_type` (text — e.g. "terms_v1"), `accepted_at` (timestamptz), with RLS so users can insert their own and read their own.
 
-### 3. Hero Background Image
-- Replace the solid gradient background on the hero section with an Unsplash image + dark gradient overlay
-- Pattern from Emily Russell project: `background: linear-gradient(overlay) url(unsplash-image) center/cover no-repeat`
-- Use a smart home / luxury interior image (e.g., modern living room with ambient lighting or home theater)
-- Keep the existing dot pattern and radial glow effects layered on top
-- The gradient overlay ensures text remains readable against the dark theme
+**Edit `src/pages/Auth.tsx`**: After successful `signUp`, insert a row into `user_consents` with the authenticated user's ID and current timestamp.
 
-### Technical Details
-- Only `src/pages/Index.tsx` is modified
-- Dialog import added from `@/components/ui/dialog`
-- Two new `useState` hooks in `PortfolioSection`: `activeFilter` and `selectedProject`
-- Hero section's `style.background` property updated to include the Unsplash URL with a dark gradient overlay
+### 2. Add Content Security Policy meta tag
+**Edit `index.html`**: Add a `<meta http-equiv="Content-Security-Policy">` tag in `<head>` with a policy that allows self, inline styles (needed for the dark theme inline styles), Google Fonts, Google AdSense, Supabase API, and Unsplash images. This hardens against XSS.
+
+### 3. GDPR data rights on Dashboard
+**Edit `src/pages/Dashboard.tsx`**: Add an "Account & Privacy" tab with:
+- **Download My Data** button — fetches all user data (clients, proposals, projects, service orders, products) from the database and exports as a JSON file download
+- **Delete My Account** button — confirmation dialog, then calls `supabase.rpc` or edge function to delete all user data + auth account (right to erasure)
+
+### 4. CookieConsent on all pages (not just Index)
+**Edit `src/App.tsx`**: Move `<CookieConsent />` into the App-level layout so it appears on every page, not just the homepage.
+
+### 5. Edge function for account deletion
+**Create `supabase/functions/delete-account/index.ts`**: Securely deletes all user data across tables and then calls `supabase.auth.admin.deleteUser()` using the service role key. Validates the JWT to ensure users can only delete themselves.
+
+## Files to Create/Edit
+
+| File | Action |
+|------|--------|
+| Migration SQL | Create `user_consents` table with RLS |
+| `src/pages/Auth.tsx` | Insert consent record after signup |
+| `index.html` | Add CSP meta tag |
+| `src/pages/Dashboard.tsx` | Add Account & Privacy tab with data export + deletion |
+| `src/App.tsx` | Move CookieConsent to app level |
+| `supabase/functions/delete-account/index.ts` | Create edge function for account deletion |
 
