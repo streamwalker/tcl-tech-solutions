@@ -164,6 +164,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
               {l.label}
             </a>
           ))}
+          <Link to="/press" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            Press
+          </Link>
           <Link to="/platform" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
             Platform
           </Link>
