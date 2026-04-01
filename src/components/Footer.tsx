@@ -162,6 +162,15 @@ const Footer = () => {
             ))}
           </div>
         </div>
+
+        {/* Powered by Streamwalkers */}
+        <div className="border-t border-gray-800 mt-6 pt-6 flex justify-center items-center gap-2">
+          <span className="text-gray-500 text-xs">Built & maintained by</span>
+          <a href="https://streamwalkers.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 group">
+            <img src={streamwalkersLogo} alt="Streamwalkers" className="h-5 w-5" />
+            <span className="text-gray-400 group-hover:text-yellow-500 text-xs font-semibold transition-colors">Streamwalkers</span>
+          </a>
+        </div>
       </div>
     </footer>
   );
