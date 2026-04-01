@@ -1,5 +1,5 @@
 
-import Navigation from "@/components/Navigation";
+import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -145,7 +145,7 @@ const advancedVideos = [
 const JoshAiTutorial = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
+      <IBMNavigation />
 
       {/* Hero with lifestyle image */}
       <section className="pt-24 pb-0 bg-slate-900 text-white relative overflow-hidden">
