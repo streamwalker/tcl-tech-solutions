@@ -23,6 +23,7 @@ import Services from "./pages/Services";
 import Platform from "./pages/Platform";
 import JoshAiTutorial from "./pages/JoshAiTutorial";
 import CapitalStack from "./pages/CapitalStack";
+import Press from "./pages/Press";
 
 const queryClient = new QueryClient();
 
