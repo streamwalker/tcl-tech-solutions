@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { KnowledgeGraph } from "@/components/omnicode/KnowledgeGraph";
 import { LayerFilter } from "@/components/omnicode/LayerFilter";
 import { NodeDetail } from "@/components/omnicode/NodeDetail";
+import Footer from "../components/Footer";
 
 interface KnowledgeNode {
   id: string;
