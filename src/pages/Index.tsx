@@ -137,6 +137,10 @@ function Navbar({ activeSection }: { activeSection: string }) {
                 {l.label}
               </a>
             ))}
+            <Link to="/press" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
+              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
+              Press
+            </Link>
             <Link to="/platform" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
               onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
               Platform
