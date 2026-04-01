@@ -558,12 +558,13 @@ function AboutSection() {
         <AnimateIn delay={0.1}>
           <div style={{ marginTop: 80, background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
-              <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(135deg, #D4A03C, #B8860B)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 36, fontWeight: 700, color: "#1A1A2E" }}>DJ</span>
-              </div>
+              <img src={damonHeadshot} alt="Damon Jackson, Founder & CEO of The Connected Lifestyle" style={{ width: 100, height: 100, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "3px solid #D4A03C" }} />
               <div style={{ flex: 1, minWidth: 250 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, fontWeight: 700, color: "#F5F0E8", marginBottom: 4 }}>Damon Jackson</h3>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 12 }}>Founder & CEO</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 8, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  Founder & CEO · Co-Chair, 2026 Parade of Homes
+                  <img src={paradeOfHomesLogo2} alt="2026 Parade of Homes" style={{ height: 28, borderRadius: 4 }} />
+                </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
                   22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, Control4, RTI, IC Realtime, and Home Theater Design & Calibration.
                 </p>
