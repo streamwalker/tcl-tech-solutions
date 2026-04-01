@@ -1,25 +1,33 @@
 
 
-# Add Headshot & Parade of Homes Branding
+# Add Streamwalkers Footer to All Pages
 
-## Steps
+## Problem
+The shared `Footer` component (which contains the Streamwalkers "Built & maintained by" badge) is only used on 5 pages: BusinessPlan, Services, InvestorWhitePaper, CapitalStack, JoshAiTutorial. Many pages either have custom footers or no footer at all.
 
-### 1. Copy uploaded assets to project
-- Copy `user-uploads://Image_4-1-26_at_09.50.png` → `src/assets/damon-jackson-headshot.png`
-- Copy `user-uploads://IMG_3479-2.png` → `src/assets/parade-of-homes-2026-logo.png` (the second Parade logo image — check if it differs from existing `parade-of-homes-2026.png`)
+## Pages needing the Footer added
 
-### 2. Replace placeholder avatar with headshot (`src/pages/Index.tsx`, ~line 559)
-- Import the headshot image
-- Replace the "DJ" initials circle with an `<img>` tag using the headshot, styled as a circular 100×100 avatar with `object-fit: cover`
+| Page | Current state | Action |
+|------|--------------|--------|
+| **Index.tsx** | Custom `SiteFooter` inline component | Replace with shared `Footer` component (or append Streamwalkers badge to existing) |
+| **Press.tsx** | Custom inline `<footer>` | Replace with shared `Footer` component |
+| **Education.tsx** | No footer | Add `Footer` |
+| **Auth.tsx** | No footer | Add `Footer` |
+| **PrivacyPolicy.tsx** | No footer | Add `Footer` |
+| **TermsOfService.tsx** | No footer | Add `Footer` |
+| **CookiePolicy.tsx** | No footer | Add `Footer` |
+| **Compliance.tsx** | No footer | Add `Footer` |
+| **Dashboard.tsx** | No footer | Add `Footer` |
+| **Platform.tsx** | Uses `PlatformLayout` — no footer | Add `Footer` inside PlatformLayout |
+| **OmniCode.tsx** | No footer | Add `Footer` |
+| **NotFound.tsx** | No footer | Add `Footer` |
+| **BuilderDeck.tsx** | Slide deck (already has subtle badge) | Skip — full footer not appropriate for slide deck |
 
-### 3. Add Co-Chair / Parade of Homes branding to profile card (~line 564)
-- Update the subtitle from "Founder & CEO" to "Founder & CEO · Co-Chair, 2026 Parade of Homes"
-- Optionally add the Parade of Homes logo as a small badge next to or below his title
+## Approach
+1. For **Index.tsx**: Replace the custom `SiteFooter` with the shared `Footer` component to get consistent branding including the Streamwalkers badge.
+2. For **Press.tsx**: Replace the custom inline footer with the shared `Footer` component.
+3. For all other pages listed above (except BuilderDeck and Platform): Import and add `<Footer />` at the bottom of each page.
+4. For **Platform.tsx**: Add `<Footer />` inside the `PlatformLayout` component after the main content area.
 
-### 4. Add Parade of Homes branding to keynote video caption (~line 584-587)
-- Mention his Co-Chair role in the video description text
-
-### 5. Evaluate other appropriate placements
-- The hero section already has a Parade of Homes banner (line 219-227) — no changes needed there
-- The Press page already features the Parade of Homes prominently — no changes needed
+This ensures the Streamwalkers "Built & maintained by" badge appears on every page consistently.
 
