@@ -73,6 +73,7 @@ const pressReleases = [
 ];
 
 export default function Press() {
+  useOgMeta();
   return (
     <div style={{ minHeight: "100vh", background: "#0A0A0E", color: "#F5F0E8" }}>
       {/* Header */}
