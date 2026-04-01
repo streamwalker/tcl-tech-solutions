@@ -220,8 +220,8 @@ function HeroSection() {
         <AnimateIn delay={0.05}>
           <Link to="/press#parade-of-homes-2026" style={{ textDecoration: "none", display: "block", background: "linear-gradient(135deg, rgba(212,160,60,0.12), rgba(212,160,60,0.04))", border: "1px solid rgba(212,160,60,0.3)", borderRadius: 16, padding: "20px 28px", maxWidth: 620, margin: "0 auto 32px", backdropFilter: "blur(12px)", cursor: "pointer", transition: "all 0.3s" }}
             onMouseOver={e => (e.currentTarget.style.borderColor = "rgba(212,160,60,0.6)")} onMouseOut={e => (e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)")}>
-            <div style={{ display: "flex", alignItems: "center", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" style={{ height: 64, width: "auto", flexShrink: 0 }} />
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
+              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" style={{ height: 160, width: "auto", flexShrink: 0 }} />
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, color: "#D4A03C", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 4 }}>PRESS RELEASE</div>
                 <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 16, fontWeight: 600, color: "#F5F0E8", lineHeight: 1.4, margin: 0 }}>
