@@ -1,29 +1,33 @@
 
 
-# Fix Navigation Logo Overlap
+# Fix Navigation Inconsistency on Education (and Other) Pages
 
 ## Problem
-The large `text-2xl` "The Connected Lifestyle" text in the Navigation component overlaps with the "Home" and "Services" menu links on certain viewport sizes.
+The Education, BusinessPlan, and JoshAiTutorial pages use the old white `Navigation` component which shows a cropped VetOwnedLogo.jpg next to "TCL" — this looks unprofessional and doesn't match the site's dark luxury branding used on the homepage and Services page.
 
 ## Solution
-Replace the large text with the existing `VetOwnedLogo.jpg` image + a shorter "TCL" text label (matching the pattern already used in `IBMNavigation.tsx`), keeping it compact so it doesn't overlap navigation items.
+Replace the old `Navigation` component with `IBMNavigation` on all pages that still use it, and adjust padding accordingly.
 
 ## Changes
 
-### `src/components/Navigation.tsx` (~lines 82-86)
-Replace the current logo link:
+| File | Change |
+|------|--------|
+| `src/pages/Education.tsx` | Replace `Navigation` import with `IBMNavigation`, update wrapper classes (remove `pt-16`, use dark theme background) |
+| `src/pages/BusinessPlan.tsx` | Replace `Navigation` with `IBMNavigation`, adjust `pt-16` to `pt-12` |
+| `src/pages/JoshAiTutorial.tsx` | Replace `Navigation` with `IBMNavigation`, adjust wrapper styles |
+
+Each page will switch from:
 ```tsx
-<Link to="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700">
-  The Connected Lifestyle
-</Link>
+import Navigation from "../components/Navigation";
+// ...
+<Navigation />
 ```
-With a compact logo + abbreviated name:
+To:
 ```tsx
-<Link to="/" className="flex items-center space-x-2">
-  <img src="/VetOwnedLogo.jpg" alt="TCL" className="h-8 w-8 rounded-sm object-cover" />
-  <span className="text-lg font-semibold text-blue-600 hover:text-blue-700">TCL</span>
-</Link>
+import IBMNavigation from "@/components/IBMNavigation";
+// ...
+<IBMNavigation />
 ```
 
-This matches the `IBMNavigation` style and eliminates the overlap completely.
+This gives every page the same dark branded navigation with "THE CONNECTED LIFESTYLE" logo that the homepage and Services page use.
 
