@@ -782,7 +782,7 @@ const Index = () => {
       <ContactSection />
       <SiteFooter />
       <ChatBot />
-      <CookieConsent />
+      
     </div>
   );
 };

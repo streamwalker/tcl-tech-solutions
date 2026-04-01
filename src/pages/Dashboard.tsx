@@ -3,7 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Calendar, ClipboardList, BarChart3, ArrowLeft } from 'lucide-react';
+import { Users, Calendar, ClipboardList, BarChart3, ArrowLeft, Shield, Download, Trash2, Loader2 } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { supabase } from '@/integrations/supabase/client';
 import EmployeeManagement from '@/components/workforce/EmployeeManagement';
 import ScheduleManagement from '@/components/workforce/ScheduleManagement';
 import TaskManagement from '@/components/workforce/TaskManagement';
@@ -12,8 +25,63 @@ import Analytics from '@/components/workforce/Analytics';
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const [exportLoading, setExportLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [privacyMessage, setPrivacyMessage] = useState('');
+
   const handleBackToHome = () => {
     navigate('/');
+  };
+
+  const handleExportData = async () => {
+    setExportLoading(true);
+    setPrivacyMessage('');
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const tables = ['clients', 'proposals', 'proposal_items', 'projects', 'project_tasks', 'products', 'service_orders', 'service_order_checklist', 'user_consents'] as const;
+      const exportData: Record<string, unknown> = { exported_at: new Date().toISOString(), email: session.user.email };
+
+      for (const table of tables) {
+        const { data } = await supabase.from(table).select('*');
+        exportData[table] = data || [];
+      }
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `my-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setPrivacyMessage('Your data has been exported successfully.');
+    } catch {
+      setPrivacyMessage('Failed to export data. Please try again.');
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    setPrivacyMessage('');
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const { error } = await supabase.functions.invoke('delete-account', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+
+      if (error) throw error;
+
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch {
+      setPrivacyMessage('Failed to delete account. Please try again.');
+      setDeleteLoading(false);
+    }
   };
 
   return (
@@ -34,7 +102,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-5">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-6">
             <TabsTrigger value="overview" className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Overview</span>
@@ -54,6 +122,10 @@ const Dashboard = () => {
             <TabsTrigger value="analytics" className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Analytics</span>
+            </TabsTrigger>
+            <TabsTrigger value="privacy" className="flex items-center space-x-2">
+              <Shield className="h-4 w-4" />
+              <span className="hidden sm:inline">Privacy</span>
             </TabsTrigger>
           </TabsList>
 
@@ -242,6 +314,75 @@ const Dashboard = () => {
 
           <TabsContent value="analytics">
             <Analytics />
+          </TabsContent>
+
+          <TabsContent value="privacy">
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5" />
+                    Account & Privacy
+                  </CardTitle>
+                  <CardDescription>
+                    Manage your data and privacy settings. Under GDPR and applicable privacy laws, you have the right to access, export, and delete your personal data.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {privacyMessage && (
+                    <Alert>
+                      <AlertDescription>{privacyMessage}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  {/* Data Export */}
+                  <div className="flex items-start justify-between p-4 border border-border rounded-lg">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold text-foreground">Download My Data</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Export all your data (clients, proposals, projects, products, service orders) as a JSON file.
+                      </p>
+                    </div>
+                    <Button variant="outline" onClick={handleExportData} disabled={exportLoading}>
+                      {exportLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Download className="h-4 w-4 mr-2" />}
+                      Export
+                    </Button>
+                  </div>
+
+                  {/* Account Deletion */}
+                  <div className="flex items-start justify-between p-4 border border-destructive/30 rounded-lg bg-destructive/5">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold text-foreground">Delete My Account</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Permanently delete your account and all associated data. This action cannot be undone.
+                      </p>
+                    </div>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" disabled={deleteLoading}>
+                          {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Trash2 className="h-4 w-4 mr-2" />}
+                          Delete
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete your account and remove all your data from our servers. This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleDeleteAccount} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                            Yes, delete my account
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </main>
