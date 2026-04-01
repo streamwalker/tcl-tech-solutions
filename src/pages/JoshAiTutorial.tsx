@@ -146,7 +146,6 @@ const JoshAiTutorial = () => {
   return (
     <div className="min-h-screen bg-white">
       <IBMNavigation />
-      <Navigation />
 
       {/* Hero with lifestyle image */}
       <section className="pt-24 pb-0 bg-slate-900 text-white relative overflow-hidden">
