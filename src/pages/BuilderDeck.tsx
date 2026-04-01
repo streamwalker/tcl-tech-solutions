@@ -18,6 +18,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import streamwalkersLogo from "@/assets/streamwalkers-logo.png";
 import { 
   ChevronLeft, 
   ChevronRight, 
