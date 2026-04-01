@@ -10,8 +10,8 @@ import { Network, Layers, Cloud, Shield, Cpu, Brain, Scale, BookOpen, Graduation
 
 const Education = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 pt-16">
-      <Navigation />
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+      <IBMNavigation />
       {/* Hero Section */}
       <section className="pt-8 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">

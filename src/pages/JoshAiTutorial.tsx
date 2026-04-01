@@ -145,6 +145,7 @@ const advancedVideos = [
 const JoshAiTutorial = () => {
   return (
     <div className="min-h-screen bg-white">
+      <IBMNavigation />
       <Navigation />
 
       {/* Hero with lifestyle image */}

@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 
 const BusinessPlan = () => {
   return (
-    <div className="min-h-screen bg-white pt-16">
-      <Navigation />
+    <div className="min-h-screen bg-white">
+      <IBMNavigation />
       <BusinessPlanHero />
       <BusinessPlanContent />
       <Footer />
