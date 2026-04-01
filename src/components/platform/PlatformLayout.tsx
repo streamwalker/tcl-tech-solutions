@@ -6,6 +6,7 @@ import { AgentProvider } from "./AgentContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 interface PlatformLayoutProps {
   children: React.ReactNode;
