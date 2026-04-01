@@ -10,10 +10,10 @@ import { Network, Layers, Cloud, Shield, Cpu, Brain, Scale, BookOpen, Graduation
 
 const Education = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 pt-16">
       <Navigation />
       {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-8 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <BookOpen className="h-16 w-16 text-primary" />
