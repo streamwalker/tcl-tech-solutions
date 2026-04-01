@@ -587,6 +587,9 @@ function AboutSection() {
                 </p>
               </div>
             </div>
+            <a href="/press" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 28, padding: "12px 28px", background: "linear-gradient(135deg, #D4A03C, #B8860B)", color: "#1A1A2E", fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, borderRadius: 10, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")} onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
+              View More Media Coverage →
+            </a>
           </div>
         </AnimateIn>
       </div>
