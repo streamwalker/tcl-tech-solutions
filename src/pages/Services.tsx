@@ -79,6 +79,7 @@ const Services = () => {
               <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" className="h-8 rounded" />
               <span className="text-sm font-semibold text-primary">Co-Chair, 2026 Parade of Homes</span>
             </Link>
+          </div>
         </section>
 
         {/* Services Grid */}
