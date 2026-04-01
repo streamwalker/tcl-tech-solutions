@@ -200,6 +200,7 @@ const Compliance = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -42,11 +42,14 @@ export function PlatformLayout({ children }: PlatformLayoutProps) {
                 </Button>
               </div>
             </header>
-            <div className="flex-1 flex overflow-hidden">
-              <main className="flex-1 p-6 overflow-auto">
-                {children}
-              </main>
-              <AgentPanel open={agentOpen} onClose={() => setAgentOpen(false)} />
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex-1 flex overflow-hidden">
+                <main className="flex-1 p-6 overflow-auto">
+                  {children}
+                </main>
+                <AgentPanel open={agentOpen} onClose={() => setAgentOpen(false)} />
+              </div>
+              <Footer />
             </div>
           </div>
         </div>

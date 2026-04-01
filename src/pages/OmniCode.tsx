@@ -228,6 +228,7 @@ export default function OmniCode() {
           </Button>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 }

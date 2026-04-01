@@ -240,6 +240,7 @@ const Auth = () => {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 };

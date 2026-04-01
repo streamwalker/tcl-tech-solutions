@@ -1461,6 +1461,7 @@ const Education = () => {
           </Tabs>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

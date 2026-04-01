@@ -168,12 +168,7 @@ export default function Press() {
         ))}
       </section>
 
-      {/* Footer */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "32px 24px", textAlign: "center" }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80" }}>
-          © {new Date().getFullYear()} TCL Tech Solutions. All rights reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

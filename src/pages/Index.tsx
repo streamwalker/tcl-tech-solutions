@@ -849,7 +849,7 @@ const Index = () => {
       <AboutSection />
       <FAQSection />
       <ContactSection />
-      <SiteFooter />
+      <Footer />
       <ChatBot />
       
     </div>
