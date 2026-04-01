@@ -2,6 +2,7 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 import { handleContactClick } from "@/utils/smoothScroll";
+import paradeOfHomesLogo from "@/assets/parade-of-homes-2026-logo.png";
 
 const Footer = () => {
   const services = [
