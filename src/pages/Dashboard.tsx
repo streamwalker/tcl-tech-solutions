@@ -25,8 +25,63 @@ import Analytics from '@/components/workforce/Analytics';
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const [exportLoading, setExportLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [privacyMessage, setPrivacyMessage] = useState('');
+
   const handleBackToHome = () => {
     navigate('/');
+  };
+
+  const handleExportData = async () => {
+    setExportLoading(true);
+    setPrivacyMessage('');
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const tables = ['clients', 'proposals', 'proposal_items', 'projects', 'project_tasks', 'products', 'service_orders', 'service_order_checklist', 'user_consents'] as const;
+      const exportData: Record<string, unknown> = { exported_at: new Date().toISOString(), email: session.user.email };
+
+      for (const table of tables) {
+        const { data } = await supabase.from(table).select('*');
+        exportData[table] = data || [];
+      }
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `my-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setPrivacyMessage('Your data has been exported successfully.');
+    } catch {
+      setPrivacyMessage('Failed to export data. Please try again.');
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    setPrivacyMessage('');
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const { error } = await supabase.functions.invoke('delete-account', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+
+      if (error) throw error;
+
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch {
+      setPrivacyMessage('Failed to delete account. Please try again.');
+      setDeleteLoading(false);
+    }
   };
 
   return (
