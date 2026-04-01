@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
 import EmployeeManagement from '@/components/workforce/EmployeeManagement';
+import Footer from '../components/Footer';
 import ScheduleManagement from '@/components/workforce/ScheduleManagement';
 import TaskManagement from '@/components/workforce/TaskManagement';
 import Analytics from '@/components/workforce/Analytics';
@@ -386,6 +387,7 @@ const Dashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+      <Footer />
     </div>
   );
 };

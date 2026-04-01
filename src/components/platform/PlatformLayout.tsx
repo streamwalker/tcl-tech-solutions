@@ -6,6 +6,7 @@ import { AgentProvider } from "./AgentContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 interface PlatformLayoutProps {
   children: React.ReactNode;
@@ -41,11 +42,14 @@ export function PlatformLayout({ children }: PlatformLayoutProps) {
                 </Button>
               </div>
             </header>
-            <div className="flex-1 flex overflow-hidden">
-              <main className="flex-1 p-6 overflow-auto">
-                {children}
-              </main>
-              <AgentPanel open={agentOpen} onClose={() => setAgentOpen(false)} />
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex-1 flex overflow-hidden">
+                <main className="flex-1 p-6 overflow-auto">
+                  {children}
+                </main>
+                <AgentPanel open={agentOpen} onClose={() => setAgentOpen(false)} />
+              </div>
+              <Footer />
             </div>
           </div>
         </div>
