@@ -123,6 +123,14 @@ const About = () => {
               <source src="/videos/TCL_CEO_Keynote_Speech.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            <div className="p-6">
+              <p className="text-lg font-semibold mb-2">Damon Jackson — CEO, TCL Tech Solutions</p>
+              <p className="text-muted-foreground leading-relaxed">
+                In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, 
+                drawing on over two decades of military leadership and hands-on automation expertise to outline 
+                how The Connected Lifestyle is redefining modern living through innovation, precision, and service.
+              </p>
+            </div>
           </div>
         </div>
 
