@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Navigation from "../components/Navigation";
+import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "../components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
