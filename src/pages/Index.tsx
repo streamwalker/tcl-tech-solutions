@@ -11,6 +11,7 @@ import portfolioPrewire from "../assets/portfolio-prewire.jpg";
 import portfolioRestaurantAv from "../assets/portfolio-restaurant-av.jpg";
 import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
 import heroBg from "../assets/hero-bg.jpg";
+import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
@@ -201,9 +202,22 @@ function HeroSection() {
       <div style={{ position: "absolute", bottom: "10%", left: "5%", width: 400, height: 400, background: "radial-gradient(circle, rgba(212,160,60,0.05), transparent 70%)", borderRadius: "50%", filter: "blur(80px)" }} />
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "120px 24px 80px", textAlign: "center", position: "relative", zIndex: 1 }}>
         <AnimateIn>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,160,60,0.1)", border: "1px solid rgba(212,160,60,0.2)", borderRadius: 100, padding: "8px 20px", marginBottom: 32 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,160,60,0.1)", border: "1px solid rgba(212,160,60,0.2)", borderRadius: 100, padding: "8px 20px", marginBottom: 20 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D4A03C", display: "inline-block", animation: "pulse 2s infinite" }} />
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, color: "#D4A03C", letterSpacing: 1 }}>VETERAN-OWNED &amp; OPERATED · SAN ANTONIO, TX</span>
+          </div>
+        </AnimateIn>
+        <AnimateIn delay={0.05}>
+          <div style={{ background: "linear-gradient(135deg, rgba(212,160,60,0.12), rgba(212,160,60,0.04))", border: "1px solid rgba(212,160,60,0.3)", borderRadius: 16, padding: "20px 28px", marginBottom: 32, maxWidth: 620, margin: "0 auto 32px", backdropFilter: "blur(12px)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
+              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" style={{ height: 64, width: "auto", flexShrink: 0 }} />
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, color: "#D4A03C", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 4 }}>PRESS RELEASE</div>
+                <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 16, fontWeight: 600, color: "#F5F0E8", lineHeight: 1.4, margin: 0 }}>
+                  Damon Jackson, Founder of TCL Tech Solutions, Named <span style={{ color: "#D4A03C" }}>Co-Chair</span> of the 2026 Parade of Homes
+                </p>
+              </div>
+            </div>
           </div>
         </AnimateIn>
         <AnimateIn delay={0.1}>
