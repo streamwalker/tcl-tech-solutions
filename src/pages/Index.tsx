@@ -745,6 +745,7 @@ function SiteFooter() {
               <a key={s.l} href={s.h} onClick={e => scrollTo(e, s.h.replace("#", ""))} style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8, transition: "color 0.3s" }}
                 onMouseOver={e => (e.target as HTMLElement).style.color = "#F5F0E8"} onMouseOut={e => (e.target as HTMLElement).style.color = "#7A7A80"}>{s.l}</a>
             ))}
+            <Link to="/press" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Press &amp; Media</Link>
             <Link to="/business-plan" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Business Plan</Link>
             <Link to="/capital-stack" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Capital Stack</Link>
             <Link to="/investor-white-paper" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Investor Paper</Link>

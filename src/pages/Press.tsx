@@ -107,6 +107,22 @@ export default function Press() {
                 </div>
               ))}
 
+              {/* Social Sharing */}
+              <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, color: "#7A7A80" }}>Share:</span>
+                {[
+                  { label: "LinkedIn", color: "#0A66C2", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://tcl-tech-solutions.lovable.app/press#" + pr.id)}` },
+                  { label: "X", color: "#F5F0E8", url: `https://x.com/intent/tweet?text=${encodeURIComponent(pr.title)}&url=${encodeURIComponent("https://tcl-tech-solutions.lovable.app/press#" + pr.id)}` },
+                  { label: "Facebook", color: "#1877F2", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://tcl-tech-solutions.lovable.app/press#" + pr.id)}` },
+                ].map(s => (
+                  <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
+                    style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, color: s.color, textDecoration: "none", padding: "6px 16px", borderRadius: 8, border: `1px solid ${s.color}33`, background: `${s.color}0D`, transition: "all 0.3s" }}
+                    onMouseOver={e => (e.currentTarget.style.background = `${s.color}1A`)} onMouseOut={e => (e.currentTarget.style.background = `${s.color}0D`)}>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+
               {/* Media Contact */}
               <div style={{ marginTop: 40, padding: "24px 28px", background: "rgba(212,160,60,0.06)", border: "1px solid rgba(212,160,60,0.12)", borderRadius: 12 }}>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#D4A03C", letterSpacing: 1, marginBottom: 8 }}>MEDIA CONTACT</div>
