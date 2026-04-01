@@ -315,6 +315,75 @@ const Dashboard = () => {
           <TabsContent value="analytics">
             <Analytics />
           </TabsContent>
+
+          <TabsContent value="privacy">
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5" />
+                    Account & Privacy
+                  </CardTitle>
+                  <CardDescription>
+                    Manage your data and privacy settings. Under GDPR and applicable privacy laws, you have the right to access, export, and delete your personal data.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {privacyMessage && (
+                    <Alert>
+                      <AlertDescription>{privacyMessage}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  {/* Data Export */}
+                  <div className="flex items-start justify-between p-4 border border-border rounded-lg">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold text-foreground">Download My Data</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Export all your data (clients, proposals, projects, products, service orders) as a JSON file.
+                      </p>
+                    </div>
+                    <Button variant="outline" onClick={handleExportData} disabled={exportLoading}>
+                      {exportLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Download className="h-4 w-4 mr-2" />}
+                      Export
+                    </Button>
+                  </div>
+
+                  {/* Account Deletion */}
+                  <div className="flex items-start justify-between p-4 border border-destructive/30 rounded-lg bg-destructive/5">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold text-foreground">Delete My Account</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Permanently delete your account and all associated data. This action cannot be undone.
+                      </p>
+                    </div>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" disabled={deleteLoading}>
+                          {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Trash2 className="h-4 w-4 mr-2" />}
+                          Delete
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete your account and remove all your data from our servers. This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleDeleteAccount} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                            Yes, delete my account
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
         </Tabs>
       </main>
     </div>
