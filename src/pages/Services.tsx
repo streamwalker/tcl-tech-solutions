@@ -3,6 +3,7 @@ import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import { ServicesPopups } from "@/components/NavigationPopups";
 import { Home, Shield, Database, Smartphone, Cog, BarChart, Layers } from "lucide-react";
+import paradeOfHomesLogo from "@/assets/parade-of-homes-2026-logo.png";
 
 const services = [
   {
