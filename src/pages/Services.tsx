@@ -75,7 +75,10 @@ const Services = () => {
             <p className="text-lg text-muted-foreground max-w-xl">
               From smart home automation to enterprise networks, we deliver integrated technology experiences backed by veteran expertise.
             </p>
-          </div>
+            <Link to="/press" className="inline-flex items-center gap-3 mt-6 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-colors">
+              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" className="h-8 rounded" />
+              <span className="text-sm font-semibold text-primary">Co-Chair, 2026 Parade of Homes</span>
+            </Link>
         </section>
 
         {/* Services Grid */}
