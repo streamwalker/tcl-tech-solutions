@@ -1,5 +1,34 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
+
+const OG_TAGS = [
+  { property: "og:title", content: "Damon Jackson Named Co-Chair of the 2026 Parade of Homes — The Connected Lifestyle" },
+  { property: "og:description", content: "TCL Tech Solutions founder appointed to lead San Antonio's premier residential showcase event." },
+  { property: "og:image", content: "https://tcl-tech-solutions.lovable.app/parade-of-homes-2026.png" },
+  { property: "og:url", content: "https://tcl-tech-solutions.lovable.app/press" },
+  { property: "og:type", content: "article" },
+  { name: "twitter:card", content: "summary_large_image" },
+  { name: "twitter:title", content: "Damon Jackson Named Co-Chair of the 2026 Parade of Homes" },
+  { name: "twitter:description", content: "TCL Tech Solutions founder appointed to lead San Antonio's premier residential showcase event." },
+  { name: "twitter:image", content: "https://tcl-tech-solutions.lovable.app/parade-of-homes-2026.png" },
+];
+
+function useOgMeta() {
+  useEffect(() => {
+    const tags: HTMLMetaElement[] = [];
+    OG_TAGS.forEach(({ property, name, content }) => {
+      const meta = document.createElement("meta");
+      if (property) meta.setAttribute("property", property);
+      if (name) meta.setAttribute("name", name);
+      meta.setAttribute("content", content);
+      document.head.appendChild(meta);
+      tags.push(meta);
+    });
+    document.title = "Press — The Connected Lifestyle";
+    return () => { tags.forEach(t => t.remove()); };
+  }, []);
+}
 
 const pressReleases = [
   {
@@ -44,6 +73,7 @@ const pressReleases = [
 ];
 
 export default function Press() {
+  useOgMeta();
   return (
     <div style={{ minHeight: "100vh", background: "#0A0A0E", color: "#F5F0E8" }}>
       {/* Header */}
