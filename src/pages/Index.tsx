@@ -584,9 +584,9 @@ function AboutSection() {
                 Your browser does not support the video tag.
               </video>
               <div style={{ padding: "20px 24px", textAlign: "left" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions · Co-Chair, 2026 Parade of Homes</p>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
-                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and hands-on automation expertise.
+                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and his role as Co-Chair of the 2026 Parade of Homes.
                 </p>
               </div>
             </div>
