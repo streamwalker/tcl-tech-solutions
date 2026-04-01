@@ -556,7 +556,9 @@ function AboutSection() {
         <AnimateIn delay={0.1}>
           <div style={{ marginTop: 80, background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
-              <div style={{ width: 100, height: 100, borderRadius: "50%", background: "rgba(212,160,60,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40, flexShrink: 0 }}>🎖️</div>
+              <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(135deg, #D4A03C, #B8860B)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 36, fontWeight: 700, color: "#1A1A2E" }}>DJ</span>
+              </div>
               <div style={{ flex: 1, minWidth: 250 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, fontWeight: 700, color: "#F5F0E8", marginBottom: 4 }}>Damon Jackson</h3>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 12 }}>Founder & CEO</div>
