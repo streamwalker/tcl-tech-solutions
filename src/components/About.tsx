@@ -111,6 +111,21 @@ const About = () => {
           </div>
         </div>
 
+        {/* Founder's Keynote Speech */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-center mb-8">Founder's Keynote Speech</h3>
+          <div className="bg-card rounded-2xl overflow-hidden shadow-lg max-w-4xl mx-auto">
+            <video
+              controls
+              className="w-full aspect-video"
+              preload="metadata"
+            >
+              <source src="/videos/TCL_CEO_Keynote_Speech.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
         {/* Professional Certifications */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center mb-12">Professional Certifications</h3>
