@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
+import Footer from "../components/Footer";
 
 const OG_TAGS = [
   { property: "og:title", content: "Damon Jackson Named Co-Chair of the 2026 Parade of Homes — The Connected Lifestyle" },
