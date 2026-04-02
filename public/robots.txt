@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://tcltechsolutions.com/sitemap.xml
+Sitemap: https://tcl-streamwalkers.lovable.app/sitemap.xml
