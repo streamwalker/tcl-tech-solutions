@@ -1,4 +1,4 @@
-import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot } from "lucide-react";
+import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -21,6 +21,7 @@ const modules = [
   { title: "Proposals", url: "/platform/proposals", icon: FileText },
   { title: "Projects", url: "/platform/projects", icon: FolderKanban },
   { title: "Service Orders", url: "/platform/service", icon: Wrench },
+  { title: "Profit Analysis", url: "/platform/profit-analysis", icon: TrendingUp },
 ];
 
 interface PlatformSidebarProps {
