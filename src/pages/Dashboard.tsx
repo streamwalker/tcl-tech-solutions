@@ -8,6 +8,7 @@ import PaymentsView from '@/components/dashboard/PaymentsView';
 import SalesView from '@/components/dashboard/SalesView';
 import JobCostingView from '@/components/dashboard/JobCostingView';
 import BillOfMaterialsView from '@/components/dashboard/BillOfMaterialsView';
+import ProfitAnalysisView from '@/components/dashboard/ProfitAnalysisView';
 import { TopBar, TCLCard, navItems } from '@/components/dashboard/shared';
 
 const views: Record<string, { component: React.ComponentType<{ onBack?: () => void }>; title: string | null; topbar: boolean }> = {
@@ -18,6 +19,7 @@ const views: Record<string, { component: React.ComponentType<{ onBack?: () => vo
   reports: { component: SalesView, title: "Sales Results", topbar: true },
   service: { component: JobCostingView, title: null, topbar: false },
   catalog: { component: BillOfMaterialsView, title: null, topbar: false },
+  profitanalysis: { component: ProfitAnalysisView, title: null, topbar: false },
 };
 
 const Dashboard = () => {
