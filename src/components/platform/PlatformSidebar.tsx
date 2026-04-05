@@ -21,6 +21,7 @@ const modules = [
   { title: "Proposals", url: "/platform/proposals", icon: FileText },
   { title: "Projects", url: "/platform/projects", icon: FolderKanban },
   { title: "Service Orders", url: "/platform/service", icon: Wrench },
+  { title: "Profit Analysis", url: "/platform/profit-analysis", icon: TrendingUp },
 ];
 
 interface PlatformSidebarProps {
