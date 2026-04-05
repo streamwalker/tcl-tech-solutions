@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { PlatformLayout } from "@/components/platform/PlatformLayout";
 import PlatformDashboard from "@/components/platform/PlatformDashboard";
 import ProductLibrary from "@/components/platform/ProductLibrary";
