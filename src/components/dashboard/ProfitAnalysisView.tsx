@@ -88,6 +88,38 @@ const WALL_RESIDENCE_DEFAULTS = {
     { title: "Negative-margin items reduce shared profit pool", color: "border-yellow-500 bg-yellow-50", icon: "⚠️", detail: "7 product categories totaling $448.68 are sold below dealer cost. These losses compress the Profit Pool that Streamwalkers participates in." },
     { title: "Sales tax dilutes the margin percentage", color: "border-yellow-500 bg-yellow-50", icon: "⚠️", detail: "The $117,059.46 Contract Value includes ~$7,034 in sales tax. Including it reduces apparent margin from 27.93% to 26.26%." },
   ],
+  amendment_text: `AMENDMENT 1-A — PROFIT DISTRIBUTION AGREEMENT
+
+This Amendment 1-A ("Amendment") is entered into as an addendum to the original Operating Agreement of TCL (the "Company"), by and between the Members listed herein.
+
+PURPOSE: To establish a transparent, equitable profit-sharing framework that accounts for the true cost of labor, product margins, and operational overhead, ensuring that all Members receive compensation proportional to their contribution.
+
+SECTION 1 — DEFINITIONS
+• "Contract Value" means the total amount billed to the customer, inclusive of sales tax.
+• "Pre-Tax Revenue" means Contract Value less sales tax collected.
+• "Product Dealer Cost" means the wholesale cost of goods purchased for the project.
+• "Product Markup Revenue" means the difference between customer price and dealer cost for products.
+• "Schedule A Labor" means labor costs as stated in the project Schedule A document.
+• "Profit Pool" means Pre-Tax Revenue less Product Dealer Cost less true labor cost.
+• "True Labor Cost" means the actual hourly cost of labor (estimated at $35/hr unless otherwise agreed).
+
+SECTION 2 — PROFIT POOL CALCULATION
+The Profit Pool shall be calculated as follows:
+  Profit Pool = Pre-Tax Revenue − Product Dealer Cost − True Labor Cost
+
+SECTION 3 — DISTRIBUTION
+Streamwalkers shall receive 49% of the Profit Pool. TCL shall retain 51% of the Profit Pool.
+
+SECTION 4 — LABOR PROFIT RECOGNITION
+Any difference between Schedule A Labor and True Labor Cost shall be recognized as labor profit and included in the Profit Pool before distribution. This ensures labor profit is not buried inside "costs."
+
+SECTION 5 — BELOW-COST ITEMS
+Items sold below dealer cost reduce the Profit Pool. Both parties acknowledge that minimizing below-cost sales is in their mutual interest.
+
+SECTION 6 — REPORTING
+TCL shall provide Streamwalkers with a detailed profit analysis for each project within 30 days of project completion, including revenue waterfall, margin audit, and below-cost item report.
+
+IN WITNESS WHEREOF, the parties have executed this Amendment as of the date of the associated project completion.`,
 };
 
 function MetricCard({ label, value, sub, accent }: { label: string; value: string; sub?: string; accent?: string }) {
