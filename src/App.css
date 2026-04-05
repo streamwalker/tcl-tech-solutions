@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Print styles for Profit Analysis PDF export */
+@media print {
+  body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  nav, .print\\:hidden, [class*="DashboardSidebar"], button { display: none !important; }
+  .ml-16 { margin-left: 0 !important; }
+  #profit-analysis-print { max-width: 100% !important; }
+  section { break-inside: avoid; }
+  .recharts-wrapper { break-inside: avoid; }
+  @page { margin: 0.75in; size: letter; }
+}
