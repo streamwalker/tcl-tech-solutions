@@ -1,80 +1,28 @@
 
 
-# Connect Profit Analysis to Database + Add PDF Export
+# Fix Profit Analysis: Auto-Seed Wall Residence Data
 
-## Summary
-Store profit analysis data in the database so multiple projects can be tracked and compared over time, and add a PDF export button using browser print with dedicated print styles.
+## Problem
+The Profit Analysis view fetches from the `profit_analyses` database table, which is empty. The Wall Residence data constants exist in the code but are never inserted into the database, so users see "No Profit Analyses Yet" instead of the full analysis.
 
-## Database Changes
+## Solution
+Auto-seed the Wall Residence data on first load when no analyses exist for the current user. When the component detects zero rows, it will automatically insert the `WALL_RESIDENCE_DEFAULTS` (already defined in the file) into the database for the logged-in user, then reload. This means the user immediately sees the full profit analysis without any manual data entry.
 
-### New table: `profit_analyses`
-Stores per-project profit analysis snapshots with all the financial data needed to render the view.
+## Changes
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid PK | |
-| user_id | uuid | RLS owner |
-| project_title | text | e.g. "Wall Residence P-1" |
-| contract_value | numeric | |
-| sales_tax | numeric | |
-| product_cost | numeric | |
-| labor_billed | numeric | |
-| schedule_a_labor | numeric | |
-| product_markup | numeric | |
-| total_hours | numeric | |
-| schedule_a_profit | numeric | |
-| sw_share_pct | numeric | default 0.49 |
-| labor_breakdown | jsonb | Array of {category, hours, rate, total} |
-| margin_distribution | jsonb | Array of {range, count} |
-| high_margin_items | jsonb | Array of {name, margin, cost, sell} |
-| below_cost_items | jsonb | Array of {name, qty, cost, sell, loss} |
-| findings | jsonb | Array of {title, color, detail} |
-| amendment_text | text | nullable, full amendment content |
-| created_at | timestamptz | |
-| updated_at | timestamptz | |
+### 1. Update `ProfitAnalysisView.tsx` — auto-seed logic
+In the `fetchAnalyses` function, after the query returns zero rows:
+- Get the current user
+- Insert a row using `WALL_RESIDENCE_DEFAULTS` (including all JSONB fields: labor_breakdown, margin_distribution, high_margin_items, below_cost_items, findings, and the amendment_text)
+- Re-fetch to display the seeded data immediately
 
-RLS: standard owner-only CRUD policies (same pattern as other tables).
+This is a small change (~15 lines) inside the existing `fetchAnalyses` function where `data.length === 0`.
 
-### Migration: seed Wall Residence data
-Insert the current hardcoded Wall Residence data as the first row so there's no data loss.
+### 2. Add `amendment_text` to defaults
+The `WALL_RESIDENCE_DEFAULTS` object is missing the `amendment_text` field. Add the full Amendment 1-A legal text so it gets seeded along with everything else.
 
-## Code Changes
-
-### 1. Update `ProfitAnalysisView.tsx`
-- Accept a `projectId` prop (optional; defaults to first/latest analysis)
-- Fetch analysis data from `profit_analyses` table via Supabase client
-- Add a **project selector dropdown** at the top to switch between saved analyses
-- Add a **"New Analysis"** button that opens a form to create a new project analysis entry
-- Add a **"Export PDF"** button in the header that triggers `window.print()`
-- Replace all hardcoded constants with data from the database row
-- The sensitivity slider continues to compute derived values client-side from the stored base figures
-- Loading and empty states
-
-### 2. Add print styles
-- Add a `@media print` block (either in the component or `App.css`) that:
-  - Hides sidebar, top navigation, and the export button itself
-  - Forces white background, removes shadows/borders for clean output
-  - Sets appropriate page margins and prevents chart/section breaks mid-element
-  - Shows the full report title and date in the printed header
-
-### 3. Update `Dashboard.tsx`
-- Pass selected project context to ProfitAnalysisView if needed
-
-### 4. Update `shared.tsx`
-- No changes needed (nav item already exists)
-
-## Files Modified
-
+### Files Modified
 | File | Action |
 |------|--------|
-| `src/components/dashboard/ProfitAnalysisView.tsx` | Major rewrite — database-driven + PDF export |
-| `src/pages/Dashboard.tsx` | Minor — pass any needed props |
-| `src/App.css` or inline | Add `@media print` styles |
-| Migration SQL | New `profit_analyses` table + seed data |
-
-## What stays the same
-- All other dashboard views unchanged
-- Amendment 1-A text still rendered inline
-- Sensitivity slider still fully interactive (client-side math)
-- Auth guard and routing unchanged
+| `src/components/dashboard/ProfitAnalysisView.tsx` | Edit — add amendment_text to defaults, add auto-seed in fetchAnalyses |
 
