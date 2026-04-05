@@ -137,6 +137,7 @@ export const navItems = [
   { id: "billing", label: "Billing", icon: "💲" },
   { id: "time", label: "Time Entries", icon: "⏱" },
   { id: "reports", label: "Reports", icon: "📊" },
+  { id: "profitanalysis", label: "Profit Analysis", icon: "📈" },
   { id: "todos", label: "To Dos", icon: "☑" },
   { id: "settings", label: "Settings", icon: "⚙" },
 ];
