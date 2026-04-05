@@ -9,6 +9,7 @@ import ServiceOrders from "@/components/platform/ServiceOrders";
 import ProfitAnalysisView from "@/components/dashboard/ProfitAnalysisView";
 
 export default function Platform() {
+  const navigate = useNavigate();
   return (
     <PlatformLayout>
       <Routes>
