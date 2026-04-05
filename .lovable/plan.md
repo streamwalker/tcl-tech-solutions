@@ -1,53 +1,80 @@
 
 
-# Add Revenue Waterfall & Profit Analysis to TCL Platform
+# Connect Profit Analysis to Database + Add PDF Export
 
 ## Summary
-Add a new "Profit Analysis" module to the `/dashboard` platform sidebar that replicates the full TCL Profit Analysis & Amendment 1-A document as an interactive view. This includes a revenue waterfall chart, labor cost sensitivity slider, item-level margin audit, below-cost item analysis, and the proposed Amendment 1-A text.
+Store profit analysis data in the database so multiple projects can be tracked and compared over time, and add a PDF export button using browser print with dedicated print styles.
 
-## What Changes
+## Database Changes
 
-### 1. Add new sidebar nav item
-Add a "Profit Analysis" entry (icon: 📈 or similar) to the `navItems` array in `shared.tsx` with id `"profitanalysis"`.
+### New table: `profit_analyses`
+Stores per-project profit analysis snapshots with all the financial data needed to render the view.
 
-### 2. Create `ProfitAnalysisView.tsx` component
-A new view component with 8 sections matching the uploaded HTML analysis:
+| Column | Type | Notes |
+|--------|------|-------|
+| id | uuid PK | |
+| user_id | uuid | RLS owner |
+| project_title | text | e.g. "Wall Residence P-1" |
+| contract_value | numeric | |
+| sales_tax | numeric | |
+| product_cost | numeric | |
+| labor_billed | numeric | |
+| schedule_a_labor | numeric | |
+| product_markup | numeric | |
+| total_hours | numeric | |
+| schedule_a_profit | numeric | |
+| sw_share_pct | numeric | default 0.49 |
+| labor_breakdown | jsonb | Array of {category, hours, rate, total} |
+| margin_distribution | jsonb | Array of {range, count} |
+| high_margin_items | jsonb | Array of {name, margin, cost, sell} |
+| below_cost_items | jsonb | Array of {name, qty, cost, sell, loss} |
+| findings | jsonb | Array of {title, color, detail} |
+| amendment_text | text | nullable, full amendment content |
+| created_at | timestamptz | |
+| updated_at | timestamptz | |
 
-| Section | Content |
-|---------|---------|
-| **Executive Summary** | 4 metric cards: Schedule A Margin (26.26%), Estimated True Margin (~34-35%), SW Potential Shortfall ($3,600-$5,300), Labor Data Gap ($2,775). Core issue callout card. |
-| **Revenue Waterfall** | Bar chart (using recharts, already in project) showing Contract Value → Sales Tax → Pre-Tax Revenue → Product Cost → Labor Billed → Product Markup → Schedule A Profit → Hidden Labor Profit. Data table below with all layers. |
-| **Labor Cost Sensitivity** | Interactive slider ($20-$65/hr) that recalculates: True Labor Cost, Hidden Labor Profit, True Project Margin, SW 49% Should Be. Line chart showing SW 49% share vs Schedule A baseline ($15,057). D-Tools labor rate breakdown table (Family 23.5hrs@$125, Installation 111hrs@$150, Programming 34.5hrs@$150). |
-| **Item-Level Margin Audit** | Bar chart showing margin distribution across ranges (Below 0% through 60%+). Table of high-margin items (Maestro screen 62.57%, URC HDA-8100 57.62%, etc.). |
-| **Below-Cost Items** | Horizontal bar chart of 7 items sold below dealer cost. Table with qty, cost, sell price, loss amount. Impact callout: ~$219.85 reduced SW distribution. |
-| **Sales Tax Treatment** | 3 metric cards: Margin on Gross (26.26%), Margin on Pre-Tax (27.93%), Dilution (-1.67%). |
-| **Summary of Findings** | 5 finding cards (color-coded: green for verified, red for critical, gold for advisory). |
-| **Amendment 1-A Text** | Full legal text of the proposed definitional clarification amendment, styled as a legal document section with clause numbering. |
+RLS: standard owner-only CRUD policies (same pattern as other tables).
 
-### 3. Wire into Dashboard page
-- Add `profitanalysis` to the `views` record in `Dashboard.tsx` pointing to the new component
-- Uses `ProjectTopBar` since this analysis is specific to the Wall Residence project
+### Migration: seed Wall Residence data
+Insert the current hardcoded Wall Residence data as the first row so there's no data loss.
 
-### 4. All data hardcoded
-Every number from the analysis is hardcoded (matching the uploaded HTML exactly). The labor sensitivity slider uses the same formula: `trueCost = 169 * rate`, `trueProfit = 110025.28 - 64342.41 - trueCost`, `swShare = trueProfit * 0.49`.
+## Code Changes
 
-### Technical Details
+### 1. Update `ProfitAnalysisView.tsx`
+- Accept a `projectId` prop (optional; defaults to first/latest analysis)
+- Fetch analysis data from `profit_analyses` table via Supabase client
+- Add a **project selector dropdown** at the top to switch between saved analyses
+- Add a **"New Analysis"** button that opens a form to create a new project analysis entry
+- Add a **"Export PDF"** button in the header that triggers `window.print()`
+- Replace all hardcoded constants with data from the database row
+- The sensitivity slider continues to compute derived values client-side from the stored base figures
+- Loading and empty states
 
-**Charts**: Use recharts (already a project dependency) for:
-- Waterfall: `BarChart` with positive/negative values and color-coded bars
-- Labor sensitivity: `LineChart` with two datasets
-- Margin distribution: `BarChart` 
-- Below-cost items: Horizontal `BarChart`
+### 2. Add print styles
+- Add a `@media print` block (either in the component or `App.css`) that:
+  - Hides sidebar, top navigation, and the export button itself
+  - Forces white background, removes shadows/borders for clean output
+  - Sets appropriate page margins and prevents chart/section breaks mid-element
+  - Shows the full report title and date in the printed header
 
-**Styling**: Follows existing TCL Platform conventions — `TCLCard` wrappers, Tailwind classes, DM Sans font, red (#C42020) accent. Color-coded alert cards using red/green/gold borders matching the analysis document.
+### 3. Update `Dashboard.tsx`
+- Pass selected project context to ProfitAnalysisView if needed
 
-**Slider**: React `useState` with an HTML range input, recalculating 4 derived metrics on change.
+### 4. Update `shared.tsx`
+- No changes needed (nav item already exists)
 
-### Files
+## Files Modified
 
 | File | Action |
 |------|--------|
-| `src/components/dashboard/ProfitAnalysisView.tsx` | **New** — full profit analysis view (~500 lines) |
-| `src/components/dashboard/shared.tsx` | **Edit** — add `profitanalysis` nav item |
-| `src/pages/Dashboard.tsx` | **Edit** — add `profitanalysis` to views record, import component |
+| `src/components/dashboard/ProfitAnalysisView.tsx` | Major rewrite — database-driven + PDF export |
+| `src/pages/Dashboard.tsx` | Minor — pass any needed props |
+| `src/App.css` or inline | Add `@media print` styles |
+| Migration SQL | New `profit_analyses` table + seed data |
+
+## What stays the same
+- All other dashboard views unchanged
+- Amendment 1-A text still rendered inline
+- Sensitivity slider still fully interactive (client-side math)
+- Auth guard and routing unchanged
 
