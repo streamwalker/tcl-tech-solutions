@@ -371,6 +371,20 @@ export default function ProfitAnalysisView({ onBack }: { onBack?: () => void }) 
   return (
     <div>
       <ProjectTopBar onBack={onBack} />
+      {/* Breadcrumb */}
+      <nav className="px-7 pt-4 pb-0 print:hidden">
+        <ol className="flex items-center gap-1 text-sm text-muted-foreground">
+          <li>
+            <button onClick={onBack} className="hover:text-foreground transition-colors bg-transparent border-none cursor-pointer p-0">Platform</button>
+          </li>
+          <li className="text-muted-foreground/50">&gt;</li>
+          <li>
+            <button onClick={onBack} className="hover:text-foreground transition-colors bg-transparent border-none cursor-pointer p-0">Profit Analysis</button>
+          </li>
+          <li className="text-muted-foreground/50">&gt;</li>
+          <li className="text-foreground font-medium">{data.project_title}</li>
+        </ol>
+      </nav>
       <div className="p-7 space-y-8 max-w-[1200px]" id="profit-analysis-print">
         {/* Header + Controls */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
