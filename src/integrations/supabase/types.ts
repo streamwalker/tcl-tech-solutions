@@ -170,6 +170,75 @@ export type Database = {
         }
         Relationships: []
       }
+      profit_analyses: {
+        Row: {
+          amendment_text: string | null
+          below_cost_items: Json | null
+          contract_value: number
+          created_at: string
+          findings: Json | null
+          high_margin_items: Json | null
+          id: string
+          labor_billed: number
+          labor_breakdown: Json | null
+          margin_distribution: Json | null
+          product_cost: number
+          product_markup: number
+          project_title: string
+          sales_tax: number
+          schedule_a_labor: number
+          schedule_a_profit: number
+          sw_share_pct: number
+          total_hours: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amendment_text?: string | null
+          below_cost_items?: Json | null
+          contract_value?: number
+          created_at?: string
+          findings?: Json | null
+          high_margin_items?: Json | null
+          id?: string
+          labor_billed?: number
+          labor_breakdown?: Json | null
+          margin_distribution?: Json | null
+          product_cost?: number
+          product_markup?: number
+          project_title: string
+          sales_tax?: number
+          schedule_a_labor?: number
+          schedule_a_profit?: number
+          sw_share_pct?: number
+          total_hours?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amendment_text?: string | null
+          below_cost_items?: Json | null
+          contract_value?: number
+          created_at?: string
+          findings?: Json | null
+          high_margin_items?: Json | null
+          id?: string
+          labor_billed?: number
+          labor_breakdown?: Json | null
+          margin_distribution?: Json | null
+          product_cost?: number
+          product_markup?: number
+          project_title?: string
+          sales_tax?: number
+          schedule_a_labor?: number
+          schedule_a_profit?: number
+          sw_share_pct?: number
+          total_hours?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       project_tasks: {
         Row: {
           created_at: string
