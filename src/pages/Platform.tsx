@@ -19,7 +19,7 @@ export default function Platform() {
         <Route path="proposals" element={<ProposalBuilder />} />
         <Route path="projects" element={<ProjectTracker />} />
         <Route path="service" element={<ServiceOrders />} />
-        <Route path="profit-analysis" element={<ProfitAnalysisView />} />
+        <Route path="profit-analysis" element={<ProfitAnalysisView onBack={() => navigate("/platform")} />} />
       </Routes>
     </PlatformLayout>
   );
