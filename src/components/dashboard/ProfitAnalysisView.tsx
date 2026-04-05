@@ -278,7 +278,32 @@ export default function ProfitAnalysisView({ onBack }: { onBack?: () => void }) 
       setAnalyses(mapped);
       if (!selectedId || !mapped.find(m => m.id === selectedId)) setSelectedId(mapped[0].id);
     } else {
-      setAnalyses([]);
+      // Auto-seed Wall Residence data for first-time users
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { error: seedError } = await supabase.from("profit_analyses").insert({
+          ...WALL_RESIDENCE_DEFAULTS,
+          user_id: user.id,
+        });
+        if (!seedError) {
+          setLoading(true);
+          const { data: seeded } = await supabase.from("profit_analyses").select("*").order("created_at", { ascending: false });
+          if (seeded && seeded.length > 0) {
+            const mapped = seeded.map(d => ({
+              ...d,
+              labor_breakdown: (d.labor_breakdown || []) as unknown as LaborBreakdownItem[],
+              margin_distribution: (d.margin_distribution || []) as unknown as MarginDistItem[],
+              high_margin_items: (d.high_margin_items || []) as unknown as HighMarginItem[],
+              below_cost_items: (d.below_cost_items || []) as unknown as BelowCostItem[],
+              findings: (d.findings || []) as unknown as FindingItem[],
+            }));
+            setAnalyses(mapped);
+            setSelectedId(mapped[0].id);
+          }
+        }
+      } else {
+        setAnalyses([]);
+      }
     }
     setLoading(false);
   };
