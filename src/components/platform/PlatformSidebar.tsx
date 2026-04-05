@@ -1,4 +1,4 @@
-import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot } from "lucide-react";
+import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
