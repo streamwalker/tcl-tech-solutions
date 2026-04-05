@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { PlatformLayout } from "@/components/platform/PlatformLayout";
 import PlatformDashboard from "@/components/platform/PlatformDashboard";
 import ProductLibrary from "@/components/platform/ProductLibrary";
@@ -9,6 +9,7 @@ import ServiceOrders from "@/components/platform/ServiceOrders";
 import ProfitAnalysisView from "@/components/dashboard/ProfitAnalysisView";
 
 export default function Platform() {
+  const navigate = useNavigate();
   return (
     <PlatformLayout>
       <Routes>
@@ -18,7 +19,7 @@ export default function Platform() {
         <Route path="proposals" element={<ProposalBuilder />} />
         <Route path="projects" element={<ProjectTracker />} />
         <Route path="service" element={<ServiceOrders />} />
-        <Route path="profit-analysis" element={<ProfitAnalysisView />} />
+        <Route path="profit-analysis" element={<ProfitAnalysisView onBack={() => navigate("/platform")} />} />
       </Routes>
     </PlatformLayout>
   );
