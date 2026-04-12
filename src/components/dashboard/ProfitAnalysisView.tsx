@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
-import { Printer, Plus, Loader2 } from "lucide-react";
+import { Printer, Plus, Loader2, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface LaborBreakdownItem { category: string; hours: number; rate: number; total: number }
@@ -377,11 +377,15 @@ export default function ProfitAnalysisView({ onBack }: { onBack?: () => void }) 
           <li>
             <button onClick={onBack} className="hover:text-foreground transition-colors bg-transparent border-none cursor-pointer p-0">Platform</button>
           </li>
-          <li className="text-muted-foreground/50">&gt;</li>
+          <li className="text-muted-foreground/50 flex items-center">
+            <ChevronRight className="h-4 w-4" />
+          </li>
           <li>
             <button onClick={onBack} className="hover:text-foreground transition-colors bg-transparent border-none cursor-pointer p-0">Profit Analysis</button>
           </li>
-          <li className="text-muted-foreground/50">&gt;</li>
+          <li className="text-muted-foreground/50 flex items-center">
+            <ChevronRight className="h-4 w-4" />
+          </li>
           <li className="text-foreground font-medium">{data.project_title}</li>
         </ol>
       </nav>
