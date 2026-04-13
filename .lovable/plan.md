@@ -1,28 +1,46 @@
 
 
-# Fix Profit Analysis: Auto-Seed Wall Residence Data
+# Full AEO + SEO Optimization
 
-## Problem
-The Profit Analysis view fetches from the `profit_analyses` database table, which is empty. The Wall Residence data constants exist in the code but are never inserted into the database, so users see "No Profit Analyses Yet" instead of the full analysis.
+## What is AEO?
+Answer Engine Optimization targets AI-powered search tools (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot) that extract direct answers from web content. AEO requires clear, concise, well-structured content that AI can parse — structured data, semantic HTML, and authoritative "snippet-ready" answers.
 
-## Solution
-Auto-seed the Wall Residence data on first load when no analyses exist for the current user. When the component detects zero rows, it will automatically insert the `WALL_RESIDENCE_DEFAULTS` (already defined in the file) into the database for the logged-in user, then reload. This means the user immediately sees the full profit analysis without any manual data entry.
+## Current State
+- SEO is strong: JSON-LD (LocalBusiness, FAQPage, BreadcrumbList), meta tags, sitemap, robots.txt all in place
+- `SEOContent.tsx` component exists but is **never used** — it's not imported on any page
+- FAQ section on the Index page uses inline styles without semantic `<article>` or schema markup
+- No `speakable` schema, no `HowTo` schema, no `Organization` knowledge panel schema
+- Missing `meta robots` directives for AI crawlers (GPTBot, PerplexityBot, etc.)
 
 ## Changes
 
-### 1. Update `ProfitAnalysisView.tsx` — auto-seed logic
-In the `fetchAnalyses` function, after the query returns zero rows:
-- Get the current user
-- Insert a row using `WALL_RESIDENCE_DEFAULTS` (including all JSONB fields: labor_breakdown, margin_distribution, high_margin_items, below_cost_items, findings, and the amendment_text)
-- Re-fetch to display the seeded data immediately
+### 1. `robots.txt` — Allow AI crawlers explicitly
+Add explicit rules for GPTBot, ChatGPT-User, PerplexityBot, Anthropic, and Google-Extended to signal AEO friendliness.
 
-This is a small change (~15 lines) inside the existing `fetchAnalyses` function where `data.length === 0`.
+### 2. `index.html` — Add AEO-focused structured data
+- **Organization schema** with `sameAs` links for knowledge graph authority
+- **Speakable schema** marking key sections AI assistants should read aloud
+- **HowTo schema** for "How to get started with smart home automation" — a high-intent query AI engines love to surface
+- Add all 10 FAQs from `SEOContent.tsx` to the existing FAQPage JSON-LD (currently only 5)
+- Add `meta` tag for AI snippet eligibility: `<meta name="robots" content="max-snippet:-1, max-image-preview:large">`
 
-### 2. Add `amendment_text` to defaults
-The `WALL_RESIDENCE_DEFAULTS` object is missing the `amendment_text` field. Add the full Amendment 1-A legal text so it gets seeded along with everything else.
+### 3. `src/pages/Index.tsx` — Import and render `SEOContent`
+Add `<SEOContent />` before the footer so the FAQ accordion, service areas, ZIP codes, brand keywords, and internal link hub are all rendered and crawlable. This is the biggest AEO win — it puts concise, direct answers on the page.
 
-### Files Modified
-| File | Action |
+### 4. `src/components/SEOContent.tsx` — Add AEO enhancements
+- Wrap the FAQ section with `itemScope`/`itemType` microdata attributes mirroring the JSON-LD for redundancy (belt-and-suspenders approach AI crawlers prefer)
+- Add a new "Quick Answers" block at the top with short, direct 1-2 sentence answers to top queries (e.g., "The Connected Lifestyle is a veteran-owned smart home company in San Antonio, TX. Call (210) 995-8655 for a free consultation.") — these are optimized for AI snippet extraction
+- Add `id` anchors to each section for deep-linking and speakable targeting
+
+### 5. `src/pages/Services.tsx` — Add per-service semantic content
+Add a brief "About this service" paragraph under each service card using `<article>` tags with clear question-answer format that AI engines can extract.
+
+## Files Modified
+| File | Change |
 |------|--------|
-| `src/components/dashboard/ProfitAnalysisView.tsx` | Edit — add amendment_text to defaults, add auto-seed in fetchAnalyses |
+| `public/robots.txt` | Add AI crawler rules |
+| `index.html` | Organization + Speakable + HowTo schemas, expand FAQ schema to 10 items, add max-snippet meta |
+| `src/pages/Index.tsx` | Import and render `SEOContent` |
+| `src/components/SEOContent.tsx` | Add Quick Answers block, microdata attributes, section anchors |
+| `src/pages/Services.tsx` | Add semantic `<article>` wrappers with AEO-friendly content |
 
