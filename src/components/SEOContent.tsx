@@ -5,8 +5,29 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, Phone, Mail, Clock } from "lucide-react";
 
+/* ── Quick Answers (AEO snippet extraction targets) ── */
+const quickAnswers = [
+  {
+    question: "What is The Connected Lifestyle?",
+    answer: "The Connected Lifestyle is a veteran-owned smart home automation and IT services company based in San Antonio, Texas. We specialize in Control4, Savant, and Lutron smart home installations, Dolby Atmos home theaters, enterprise networking, and managed IT services.",
+  },
+  {
+    question: "How do I contact The Connected Lifestyle?",
+    answer: "Call (210) 995-8655 for a free consultation or email theconnectedlifestyletech@gmail.com. We serve all of San Antonio and surrounding communities including Helotes, Stone Oak, Alamo Ranch, and Boerne.",
+  },
+  {
+    question: "What does smart home automation cost in San Antonio?",
+    answer: "Smart home automation in San Antonio ranges from $1,500 for basic setups to $25,000+ for whole-home Control4 or Savant systems. The Connected Lifestyle provides free on-site consultations with transparent pricing.",
+  },
+  {
+    question: "Does The Connected Lifestyle serve my area?",
+    answer: "Yes — we serve all of greater San Antonio including Helotes, Leon Springs, Alamo Ranch, Stone Oak, The Dominion, Boerne, New Braunfels, Schertz, Cibolo, and surrounding Bexar County communities.",
+  },
+];
+
+/* ── FAQ Data ── */
 const faqs = [
   {
     q: "How much does smart home automation cost in San Antonio?",
@@ -95,8 +116,49 @@ const SEOContent = () => {
   return (
     <section className="py-20 bg-muted/20 border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {/* FAQ Section */}
-        <div>
+
+        {/* ── Quick Answers (AEO snippet block) ── */}
+        <div id="quick-answers">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">
+            Quick Answers — The Connected Lifestyle
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-3xl">
+            Get instant answers about our veteran-owned smart home and IT services in San Antonio, Texas.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {quickAnswers.map((qa, i) => (
+              <article
+                key={i}
+                className="bg-background border border-border rounded-lg p-6"
+                itemScope
+                itemType="https://schema.org/Question"
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-2" itemProp="name">
+                  {qa.question}
+                </h3>
+                <div itemScope itemType="https://schema.org/Answer" itemProp="acceptedAnswer">
+                  <p className="text-muted-foreground text-sm leading-relaxed" itemProp="text">
+                    {qa.answer}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
+            <a href="tel:+12109958655" className="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
+              <Phone className="h-4 w-4" /> (210) 995-8655
+            </a>
+            <a href="mailto:theconnectedlifestyletech@gmail.com" className="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
+              <Mail className="h-4 w-4" /> Email Us
+            </a>
+            <span className="inline-flex items-center gap-2 text-muted-foreground">
+              <Clock className="h-4 w-4" /> Mon–Fri 8am–6pm, Sat 9am–2pm
+            </span>
+          </div>
+        </div>
+
+        {/* ── FAQ Section ── */}
+        <div id="seo-faq" itemScope itemType="https://schema.org/FAQPage">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">
             Frequently Asked Questions — Smart Home & IT Services in San Antonio
           </h2>
@@ -106,20 +168,33 @@ const SEOContent = () => {
           </p>
           <Accordion type="single" collapsible className="space-y-2">
             {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-lg px-6">
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="bg-background border border-border rounded-lg px-6"
+                itemScope
+                itemProp="mainEntity"
+                itemType="https://schema.org/Question"
+              >
                 <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary">
-                  {faq.q}
+                  <span itemProp="name">{faq.q}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  {faq.a}
+                <AccordionContent
+                  itemScope
+                  itemProp="acceptedAnswer"
+                  itemType="https://schema.org/Answer"
+                >
+                  <span className="text-muted-foreground leading-relaxed" itemProp="text">
+                    {faq.a}
+                  </span>
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </div>
 
-        {/* Service Areas */}
-        <div>
+        {/* ── Service Areas ── */}
+        <div id="service-areas">
           <div className="flex items-center gap-3 mb-6">
             <MapPin className="h-7 w-7 text-primary" />
             <h2 className="text-3xl font-bold text-foreground">
@@ -150,8 +225,8 @@ const SEOContent = () => {
           </div>
         </div>
 
-        {/* Internal Link Hub */}
-        <div>
+        {/* ── Internal Link Hub ── */}
+        <div id="explore">
           <h2 className="text-3xl font-bold text-foreground mb-3">
             Explore The Connected Lifestyle
           </h2>
@@ -177,8 +252,8 @@ const SEOContent = () => {
           </div>
         </div>
 
-        {/* Brand Keywords */}
-        <div>
+        {/* ── Brand Keywords ── */}
+        <div id="brands">
           <h2 className="text-2xl font-bold text-foreground mb-3">
             Authorized Dealer & Certified Installer — Premium Technology Brands
           </h2>

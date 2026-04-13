@@ -88,25 +88,27 @@ const Services = () => {
             {services.map((service) => {
               const Icon = service.icon;
               return (
-                <div
+                <article
                   key={service.title}
                   id={service.title.toLowerCase().replace(/\s+/g, '-')}
                   className="bg-background p-8 hover:bg-card transition-colors duration-200 group cursor-pointer"
+                  itemScope
+                  itemType="https://schema.org/Service"
                 >
                   <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded mb-4 ${badgeColors[service.badge] ?? "bg-muted text-muted-foreground"}`}>
                     {service.badge}
                   </span>
                   <Icon className="w-8 h-8 text-primary mb-4" />
-                  <h2 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h2 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors" itemProp="name">
                     {service.title}
                   </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed" itemProp="description">
                     {service.description}
                   </p>
                   <div className="mt-6 text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
                     Learn more <span>→</span>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>

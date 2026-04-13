@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
 import Footer from "../components/Footer";
+import SEOContent from "../components/SEOContent";
 import CookieConsent from "../components/CookieConsent";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
@@ -849,6 +850,7 @@ const Index = () => {
       <AboutSection />
       <FAQSection />
       <ContactSection />
+      <SEOContent />
       <Footer />
       <ChatBot />
       
