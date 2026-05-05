@@ -285,7 +285,11 @@ function HeroSection() {
 }
 
 function VideoSection() {
-  const shareUrl = typeof window !== "undefined" ? window.location.origin + "/#video" : "https://tcl.streamwalkers.com/#video";
+  const shareUrl = (() => {
+    const base = typeof window !== "undefined" ? window.location.origin + window.location.pathname : "https://tcl.streamwalkers.com/";
+    const clean = base.endsWith("/") ? base : base + "/";
+    return clean.replace(/#.*$/, "") + "#video";
+  })();
   const videoUrl = "https://www.youtube.com/watch?v=0gVKShqKTd4";
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -294,11 +298,14 @@ function VideoSection() {
     return () => clearTimeout(t);
   }, [loaded]);
   const copyLink = async () => {
+    const linkToCopy = shareUrl.includes("#video") ? shareUrl : `${shareUrl}#video`;
     try {
-      await navigator.clipboard.writeText(shareUrl);
-      toast.success("Link copied to clipboard");
+      await navigator.clipboard.writeText(linkToCopy);
+      toast.success("Link copied — jumps to the video", {
+        description: linkToCopy,
+      });
     } catch {
-      toast.error("Could not copy link");
+      toast.error("Could not copy link", { description: linkToCopy });
     }
   };
   return (
