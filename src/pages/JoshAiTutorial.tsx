@@ -1,6 +1,7 @@
 
 import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
+import { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,7 @@ import joshMicroImg from "@/assets/josh-micro.jpg";
 import joshNanoImg from "@/assets/josh-nano.jpg";
 import joshTouchscreenImg from "@/assets/josh-touchscreen.jpg";
 import joshLifestyleHero from "@/assets/josh-lifestyle-hero.jpg";
+import joshProtocolOg from "@/assets/josh-ai-protocol-og.jpg";
 
 const products = [
   {
@@ -143,6 +145,65 @@ const advancedVideos = [
 ];
 
 const JoshAiTutorial = () => {
+  // Per-page SEO + custom favicon: brand this route as the
+  // "TCL Tech Solutions — Josh.ai AI Integration Protocol".
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = "Josh.ai AI Integration Protocol | TCL Tech Solutions";
+
+    const setMeta = (selector: string, attr: string, value: string, create?: () => HTMLElement) => {
+      let el = document.head.querySelector<HTMLElement>(selector);
+      const created = !el;
+      if (!el && create) {
+        el = create();
+        document.head.appendChild(el);
+      }
+      if (el) el.setAttribute(attr, value);
+      return { el, created };
+    };
+
+    const ogUrl = window.location.origin + joshProtocolOg;
+    const tags = [
+      setMeta('meta[name="description"]', "content",
+        "TCL Tech Solutions' official AI Integration Protocol for Josh.ai voice control — installation tutorial, training, and luxury smart-home command guide.",
+        () => Object.assign(document.createElement("meta"), { name: "description" })),
+      setMeta('meta[property="og:title"]', "content", "Josh.ai AI Integration Protocol | TCL Tech Solutions",
+        () => { const m = document.createElement("meta"); m.setAttribute("property", "og:title"); return m; }),
+      setMeta('meta[property="og:description"]', "content",
+        "A TCL Tech Solutions AI Integration Protocol — luxury voice-controlled smart home tutorial & training.",
+        () => { const m = document.createElement("meta"); m.setAttribute("property", "og:description"); return m; }),
+      setMeta('meta[property="og:image"]', "content", ogUrl,
+        () => { const m = document.createElement("meta"); m.setAttribute("property", "og:image"); return m; }),
+      setMeta('meta[name="twitter:title"]', "content", "Josh.ai AI Integration Protocol | TCL Tech Solutions",
+        () => Object.assign(document.createElement("meta"), { name: "twitter:title" })),
+      setMeta('meta[name="twitter:image"]', "content", ogUrl,
+        () => Object.assign(document.createElement("meta"), { name: "twitter:image" })),
+      setMeta('meta[name="twitter:description"]', "content",
+        "A TCL Tech Solutions AI Integration Protocol — luxury voice-controlled smart home tutorial & training.",
+        () => Object.assign(document.createElement("meta"), { name: "twitter:description" })),
+    ];
+
+    // Swap favicon to the branded protocol mark
+    const existingIcons = Array.from(document.head.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]'));
+    const prevIconHrefs = existingIcons.map((l) => ({ el: l, href: l.href, type: l.type }));
+    existingIcons.forEach((l) => { l.href = "/josh-ai-protocol-favicon.png"; l.type = "image/png"; });
+    let injectedIcon: HTMLLinkElement | null = null;
+    if (existingIcons.length === 0) {
+      injectedIcon = document.createElement("link");
+      injectedIcon.rel = "icon";
+      injectedIcon.type = "image/png";
+      injectedIcon.href = "/josh-ai-protocol-favicon.png";
+      document.head.appendChild(injectedIcon);
+    }
+
+    return () => {
+      document.title = prevTitle;
+      tags.forEach((t) => { if (t.created && t.el) t.el.remove(); });
+      prevIconHrefs.forEach(({ el, href, type }) => { el.href = href; if (type) el.type = type; });
+      if (injectedIcon) injectedIcon.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <IBMNavigation />
@@ -150,15 +211,24 @@ const JoshAiTutorial = () => {
       {/* Hero with lifestyle image */}
       <section className="pt-24 pb-0 bg-slate-900 text-white relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10 pb-12">
-          <Badge className="mb-4 bg-emerald-600/20 text-emerald-300 border-emerald-500/30 text-sm">
-            Smart Home Guide
-          </Badge>
+          <div className="mb-5 flex flex-wrap justify-center gap-2">
+            <Badge className="bg-amber-500/15 text-amber-300 border border-amber-400/40 text-[11px] tracking-[0.2em] uppercase px-3 py-1">
+              TCL Tech Solutions
+            </Badge>
+            <Badge className="bg-emerald-600/20 text-emerald-300 border border-emerald-500/30 text-[11px] tracking-[0.2em] uppercase px-3 py-1">
+              AI Integration Protocol
+            </Badge>
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4" style={{ lineHeight: 1.1 }}>
             Josh.ai Tutorial &amp; Training
           </h1>
           <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8" style={{ textWrap: "balance" as any }}>
             Your complete guide to mastering voice-controlled living. Written for everyone — no tech experience required.
           </p>
+          <div className="mx-auto mb-8 max-w-3xl rounded-xl border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5 px-5 py-4 text-xs sm:text-sm text-amber-200/90">
+            <span className="font-mono tracking-wider text-amber-400">PROTOCOL · TCL-AI-001 //</span>{" "}
+            Officially deployed and supported by The Connected Lifestyle — a veteran-owned San Antonio integrator and authorized Josh.ai dealer.
+          </div>
           <div className="flex flex-wrap justify-center gap-3 text-sm text-slate-400">
             <span className="flex items-center gap-1.5"><Mic className="w-4 h-4" /> Voice Control</span>
             <span className="flex items-center gap-1.5"><Shield className="w-4 h-4" /> Private &amp; Secure</span>
