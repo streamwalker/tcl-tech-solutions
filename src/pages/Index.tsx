@@ -308,7 +308,7 @@ function VideoSection() {
         <AnimateIn delay={0.1}>
           <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,160,60,0.15)", background: "#000" }}>
             <iframe
-              src="https://www.youtube.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
+              src="https://www.youtube-nocookie.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
               title="The Connected Lifestyle — Featured Video"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
