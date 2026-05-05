@@ -286,6 +286,13 @@ function HeroSection() {
 
 function VideoSection() {
   const shareUrl = typeof window !== "undefined" ? window.location.origin + "/" : "https://tcl.streamwalkers.com/";
+  const videoUrl = "https://www.youtube.com/watch?v=0gVKShqKTd4";
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => { if (!loaded) setFailed(true); }, 5000);
+    return () => clearTimeout(t);
+  }, [loaded]);
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -307,15 +314,37 @@ function VideoSection() {
         </AnimateIn>
         <AnimateIn delay={0.1}>
           <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,160,60,0.15)", background: "#000" }}>
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
-              title="The Connected Lifestyle — Featured Video"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
-            />
+            {!failed && (
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
+                title="The Connected Lifestyle — Featured Video"
+                loading="lazy"
+                onLoad={() => setLoaded(true)}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+              />
+            )}
+            {failed && (
+              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 32, background: "linear-gradient(135deg, #12121A, #0A0A0E)", color: "#F5F0E8", fontFamily: "'DM Sans', sans-serif", gap: 16 }}>
+                <div style={{ fontSize: 44 }}>🎬</div>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", margin: 0, color: "#D4A03C" }}>
+                  The video player couldn't load
+                </h3>
+                <p style={{ margin: 0, maxWidth: 520, color: "rgba(245,240,232,0.75)", fontSize: 14, lineHeight: 1.6 }}>
+                  Your browser, an extension, or your network may be blocking embedded YouTube content. You can still watch it directly on YouTube.
+                </p>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
+                  <a href={videoUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "12px 22px", borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: "none", boxShadow: "0 8px 24px rgba(212,160,60,0.25)" }}>
+                    ▶ Watch on YouTube
+                  </a>
+                  <button onClick={() => { setFailed(false); setLoaded(false); }} style={{ background: "transparent", color: "#F5F0E8", border: "1px solid rgba(212,160,60,0.4)", padding: "12px 22px", borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
+                    Try again
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </AnimateIn>
         <AnimateIn delay={0.15}>
