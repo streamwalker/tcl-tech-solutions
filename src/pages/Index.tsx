@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import SEOContent from "../components/SEOContent";
 import CookieConsent from "../components/CookieConsent";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { toast } from "sonner";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
 import portfolioRooftopAudio from "../assets/portfolio-rooftop-audio.jpg";
 import portfolioSmartHome from "../assets/portfolio-smart-home.jpg";
@@ -843,6 +844,7 @@ const Index = () => {
       `}</style>
       <Navbar activeSection={activeSection} />
       <HeroSection />
+      <VideoSection />
       <ServicesSection />
       <ProcessSection />
       <PortfolioSection />
