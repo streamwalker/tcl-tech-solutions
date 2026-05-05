@@ -183,7 +183,6 @@ function Navbar({ activeSection }: { activeSection: string }) {
 
 function HeroSection() {
   const [days, setDays] = useState(0);
-  const [days, setDays] = useState(0);
   const [hrs, setHrs] = useState(0);
   const [mins, setMins] = useState(0);
   const [secs, setSecs] = useState(0);
