@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import SEOContent from "../components/SEOContent";
 import CookieConsent from "../components/CookieConsent";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { toast } from "sonner";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
 import portfolioRooftopAudio from "../assets/portfolio-rooftop-audio.jpg";
 import portfolioSmartHome from "../assets/portfolio-smart-home.jpg";
@@ -181,6 +182,7 @@ function Navbar({ activeSection }: { activeSection: string }) {
 }
 
 function HeroSection() {
+  // placeholder marker
   const [days, setDays] = useState(0);
   const [hrs, setHrs] = useState(0);
   const [mins, setMins] = useState(0);
@@ -275,6 +277,55 @@ function HeroSection() {
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 1.5, marginTop: 4, textTransform: "uppercase" as const }}>{s.label}</div>
               </div>
             ))}
+          </div>
+        </AnimateIn>
+      </div>
+    </section>
+  );
+}
+
+function VideoSection() {
+  const shareUrl = typeof window !== "undefined" ? window.location.origin + "/" : "https://tcl.streamwalkers.com/";
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success("Link copied to clipboard");
+    } catch {
+      toast.error("Could not copy link");
+    }
+  };
+  return (
+    <section id="video" style={{ background: "linear-gradient(180deg, #0A0A0E 0%, #12121A 100%)", padding: "100px 24px", borderTop: "1px solid rgba(212,160,60,0.1)", borderBottom: "1px solid rgba(212,160,60,0.1)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <AnimateIn>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#D4A03C", letterSpacing: 4, fontWeight: 600, marginBottom: 12 }}>FEATURED VIDEO</div>
+            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(32px, 5vw, 52px)", color: "#F5F0E8", margin: 0, fontWeight: 700, letterSpacing: -1 }}>
+              See The Connected Lifestyle in Action
+            </h2>
+          </div>
+        </AnimateIn>
+        <AnimateIn delay={0.1}>
+          <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,160,60,0.15)", background: "#000" }}>
+            <iframe
+              src="https://www.youtube.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
+              title="The Connected Lifestyle — Featured Video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+            />
+          </div>
+        </AnimateIn>
+        <AnimateIn delay={0.15}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
+            <button
+              onClick={copyLink}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", border: "none", padding: "14px 28px", borderRadius: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 0.5, cursor: "pointer", boxShadow: "0 8px 24px rgba(212,160,60,0.25)" }}
+            >
+              🔗 Share This Video
+            </button>
           </div>
         </AnimateIn>
       </div>
@@ -843,6 +894,7 @@ const Index = () => {
       `}</style>
       <Navbar activeSection={activeSection} />
       <HeroSection />
+      <VideoSection />
       <ServicesSection />
       <ProcessSection />
       <PortfolioSection />
