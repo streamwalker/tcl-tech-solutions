@@ -327,23 +327,69 @@ function VideoSection() {
               />
             )}
             {failed && (
-              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 32, background: "linear-gradient(135deg, #12121A, #0A0A0E)", color: "#F5F0E8", fontFamily: "'DM Sans', sans-serif", gap: 16 }}>
-                <div style={{ fontSize: 44 }}>🎬</div>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", margin: 0, color: "#D4A03C" }}>
-                  The video player couldn't load
-                </h3>
-                <p style={{ margin: 0, maxWidth: 520, color: "rgba(245,240,232,0.75)", fontSize: 14, lineHeight: 1.6 }}>
-                  Your browser, an extension, or your network may be blocking embedded YouTube content. You can still watch it directly on YouTube.
-                </p>
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
-                  <a href={videoUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "12px 22px", borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: "none", boxShadow: "0 8px 24px rgba(212,160,60,0.25)" }}>
-                    ▶ Watch on YouTube
-                  </a>
-                  <button onClick={() => { setFailed(false); setLoaded(false); }} style={{ background: "transparent", color: "#F5F0E8", border: "1px solid rgba(212,160,60,0.4)", padding: "12px 22px", borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
-                    Try again
+              <a
+                href={videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Watch The Connected Lifestyle on YouTube"
+                style={{
+                  position: "absolute", inset: 0, display: "block", textDecoration: "none", color: "#F5F0E8",
+                  backgroundImage:
+                    "linear-gradient(135deg, rgba(10,10,14,0.82) 0%, rgba(18,18,26,0.55) 50%, rgba(10,10,14,0.9) 100%), url('https://i.ytimg.com/vi/0gVKShqKTd4/maxresdefault.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  boxShadow: "inset 0 0 0 1px rgba(212,160,60,0.25)",
+                  fontFamily: "'DM Sans', sans-serif",
+                }}
+              >
+                {/* Top eyebrow */}
+                <div style={{ position: "absolute", top: 20, left: 22, display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: 3, color: "#D4A03C", textTransform: "uppercase" }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D4A03C", boxShadow: "0 0 12px #D4A03C" }} />
+                  Featured · TCL Tech Solutions
+                </div>
+
+                {/* Centered play button */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{
+                    width: "clamp(64px, 12vw, 96px)", height: "clamp(64px, 12vw, 96px)", borderRadius: "50%",
+                    background: "linear-gradient(135deg, #D4A03C, #C49030)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    boxShadow: "0 20px 60px rgba(212,160,60,0.45), 0 0 0 8px rgba(212,160,60,0.12)",
+                  }}>
+                    <div style={{
+                      width: 0, height: 0,
+                      borderTop: "16px solid transparent",
+                      borderBottom: "16px solid transparent",
+                      borderLeft: "24px solid #0A0A0E",
+                      marginLeft: 6,
+                    }} />
+                  </div>
+                </div>
+
+                {/* Bottom info row */}
+                <div style={{ position: "absolute", left: 22, right: 22, bottom: 20, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-end", justifyContent: "space-between" }}>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(18px, 2.4vw, 26px)", color: "#F5F0E8", fontWeight: 700, lineHeight: 1.2 }}>
+                      See The Connected Lifestyle in Action
+                    </div>
+                    <div style={{ marginTop: 6, fontSize: 12, color: "rgba(245,240,232,0.65)", letterSpacing: 0.5 }}>
+                      Tap to watch on YouTube
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFailed(false); setLoaded(false); }}
+                    style={{
+                      background: "rgba(10,10,14,0.55)", color: "#F5F0E8",
+                      border: "1px solid rgba(212,160,60,0.4)",
+                      padding: "9px 16px", borderRadius: 8, fontWeight: 600, fontSize: 12, cursor: "pointer",
+                      backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+                      letterSpacing: 0.4,
+                    }}
+                  >
+                    Try embedded player
                   </button>
                 </div>
-              </div>
+              </a>
             )}
           </div>
         </AnimateIn>

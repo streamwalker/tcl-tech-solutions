@@ -1,37 +1,46 @@
-## Problem
+## Goal
 
-The "This content is blocked" message is coming from the browser, not YouTube. Your site's Content Security Policy (CSP) in `index.html` only allows iframes from Google ad domains:
+Replace the bland "video player couldn't load" fallback with a premium, on-brand placeholder that looks like an intentional video poster — not an error.
 
-```
-frame-src 'self' https://*.googlesyndication.com https://tpc.googlesyndication.com;
-```
+## Design
 
-YouTube isn't in that list, so the browser refuses to render the player and shows the sad-page icon. The video itself is fine and embeddable.
+A full-bleed cinematic poster card filling the same 16:9 frame:
 
-## Fix
-
-**1. `index.html` (line 359)** — extend `frame-src` to allow YouTube:
-
-```
-frame-src 'self' https://*.googlesyndication.com https://tpc.googlesyndication.com https://www.youtube.com https://www.youtube-nocookie.com;
-```
-
-Also add YouTube's image CDN to `img-src` so thumbnails/posters load:
-
-```
-img-src ... https://i.ytimg.com
-```
-
-**2. `src/pages/Index.tsx` (line 311)** — switch the embed URL to the privacy-enhanced domain (no cookies until play, friendlier with our cookie-consent banner):
-
-```
-https://www.youtube-nocookie.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU
+```text
++-------------------------------------------------------------+
+|  [YouTube maxres thumbnail, darkened with gold vignette]    |
+|                                                             |
+|        FEATURED · TCL TECH SOLUTIONS                        |
+|                                                             |
+|              ( ▶ )   <- large gold play button              |
+|                                                             |
+|        See The Connected Lifestyle in Action                |
+|        Tap to watch on YouTube · 2 min                      |
+|                                                             |
+|                                  [ Try embedded player ]    |
++-------------------------------------------------------------+
 ```
 
-## Verify
+- Background: `https://i.ytimg.com/vi/0gVKShqKTd4/maxresdefault.jpg` with a dark gradient overlay (`linear-gradient(135deg, rgba(10,10,14,0.85), rgba(18,18,26,0.6))`) and subtle gold inner border.
+- Centered 88px circular gold play button (`#D4A03C` → `#C49030` gradient, soft shadow, white triangle). The whole card is a clickable `<a>` opening `videoUrl` in a new tab.
+- Top-left chip: small gold `FEATURED` eyebrow with TCL wordmark in DM Mono.
+- Bottom-left text block: title + supporting line "Tap to watch on YouTube".
+- Bottom-right small ghost button: "Try embedded player" (resets `failed`/`loaded` so the iframe re-attempts) — replaces the current "Try again".
+- Mobile: stacks the bottom row, scales play button to 64px, keeps the poster background.
 
-- Hard refresh the homepage — the player should render in 16:9.
-- Click play; video streams.
-- "Share This Video" still copies the homepage URL.
+No clapperboard emoji, no "couldn't load" headline — the failure is reframed as a polished poster.
 
-No new dependencies, no component restructuring.
+## Implementation
+
+Single edit to `VideoSection` in `src/pages/Index.tsx` (lines ~329–347): replace the current fallback `<div>` with the new poster markup. Keep state, timeout logic, and `videoUrl` unchanged.
+
+## CSP
+
+`i.ytimg.com` is already in `img-src` (added previously), so the thumbnail will load even when the iframe is blocked. No `index.html` changes needed.
+
+## Verification
+
+- With iframe blocked (or after the 5s timeout), the poster appears with the real YouTube thumbnail, gold play button, and TCL branding.
+- Clicking the card opens the video on YouTube in a new tab.
+- "Try embedded player" re-attempts the iframe.
+- Looks intentional on both desktop and 440px mobile.
