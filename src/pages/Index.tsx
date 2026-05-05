@@ -285,7 +285,7 @@ function HeroSection() {
 }
 
 function VideoSection() {
-  const shareUrl = typeof window !== "undefined" ? window.location.origin + "/" : "https://tcl.streamwalkers.com/";
+  const shareUrl = typeof window !== "undefined" ? window.location.origin + "/#video" : "https://tcl.streamwalkers.com/#video";
   const videoUrl = "https://www.youtube.com/watch?v=0gVKShqKTd4";
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
