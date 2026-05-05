@@ -182,6 +182,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
 }
 
 function HeroSection() {
+  return _HeroSection_placeholder();
+}
+function _HeroSection_placeholder() { return null; }
   const [days, setDays] = useState(0);
   const [hrs, setHrs] = useState(0);
   const [mins, setMins] = useState(0);
