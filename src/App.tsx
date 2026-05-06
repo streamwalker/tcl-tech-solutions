@@ -24,6 +24,11 @@ import Platform from "./pages/Platform";
 import JoshAiTutorial from "./pages/JoshAiTutorial";
 import CapitalStack from "./pages/CapitalStack";
 import Press from "./pages/Press";
+import Knowledge from "./pages/Knowledge";
+import Glossary from "./pages/Glossary";
+import { KnowledgeProvider } from "./contexts/KnowledgeContext";
+import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
+import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +38,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <KnowledgeProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
@@ -51,10 +57,15 @@ const App = () => (
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/compliance" element={<CompliancePage />} />
           <Route path="/press" element={<Press />} />
+          <Route path="/knowledge" element={<Knowledge />} />
+          <Route path="/glossary" element={<Glossary />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieConsent />
+        <GlossaryDrawer />
+        <AIExplainerWidget />
+        </KnowledgeProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
