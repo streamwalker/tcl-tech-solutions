@@ -962,6 +962,26 @@ const Index = () => {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash !== "#video") return;
+    let cancelled = false;
+    const scrollToVideo = () => {
+      const el = document.getElementById("video");
+      if (!el) return false;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.setAttribute("tabindex", "-1");
+      (el as HTMLElement).focus({ preventScroll: true });
+      return true;
+    };
+    // Defer until layout/images settle so the target offset is correct.
+    const tries = [50, 200, 500, 1000];
+    tries.forEach((ms) => {
+      setTimeout(() => { if (!cancelled) scrollToVideo(); }, ms);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <div style={{ background: "#0A0A0E", minHeight: "100vh", color: "#F5F0E8" }}>
       <style>{`
