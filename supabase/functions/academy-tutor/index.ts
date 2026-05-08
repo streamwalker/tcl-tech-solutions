@@ -18,7 +18,12 @@ Lesson: ${lessonTitle}
 LESSON CONTENT:
 ${(lessonBody ?? "").slice(0, 4000)}
 
-Help the student understand this lesson. Re-explain concepts in plain English, walk through worked examples step by step, and generate practice problems on request. Keep replies focused on this lesson. Use markdown formatting.`;
+Tutoring rules:
+- Ground every answer in the LESSON CONTENT above. If the student asks something outside this lesson, briefly answer then steer back.
+- Default to STEP-BY-STEP explanations: number each step ("Step 1:", "Step 2:", ...), show the reasoning, and end with a 1-sentence "Takeaway".
+- For calculations, show the formula, substitute values, then compute. Use fenced code blocks for math/code.
+- Re-explain in plain English when asked, generate practice problems on request, and offer a follow-up question at the end.
+- Use markdown: headings, **bold** key terms, bullet lists, and tables when comparing.`;
 
     const messages = [
       { role: "system", content: system },
@@ -39,7 +44,10 @@ Help the student understand this lesson. Re-explain concepts in plain English, w
     });
     if (!resp.ok) {
       const text = await resp.text();
-      return new Response(JSON.stringify({ error: text }), { status: resp.status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      let friendly = text;
+      if (resp.status === 429) friendly = "Tutor is rate-limited right now. Please try again in a moment.";
+      if (resp.status === 402) friendly = "AI credits are exhausted. Please add credits in Lovable Cloud → Workspace → Usage.";
+      return new Response(JSON.stringify({ error: friendly }), { status: resp.status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
     const data = await resp.json();
     const reply = data.choices?.[0]?.message?.content ?? "(no reply)";
