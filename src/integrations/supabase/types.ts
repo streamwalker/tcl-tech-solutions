@@ -14,6 +14,150 @@ export type Database = {
   }
   public: {
     Tables: {
+      academy_certificates: {
+        Row: {
+          certificate_no: string
+          course_slug: string
+          final_score: number
+          id: string
+          issued_at: string
+          user_id: string
+        }
+        Insert: {
+          certificate_no?: string
+          course_slug: string
+          final_score: number
+          id?: string
+          issued_at?: string
+          user_id: string
+        }
+        Update: {
+          certificate_no?: string
+          course_slug?: string
+          final_score?: number
+          id?: string
+          issued_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academy_enrollments: {
+        Row: {
+          completed_at: string | null
+          course_slug: string
+          enrolled_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_slug: string
+          enrolled_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_slug?: string
+          enrolled_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academy_exam_attempts: {
+        Row: {
+          answers: Json
+          course_slug: string
+          id: string
+          passed: boolean
+          score_pct: number
+          started_at: string
+          submitted_at: string | null
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          course_slug: string
+          id?: string
+          passed?: boolean
+          score_pct?: number
+          started_at?: string
+          submitted_at?: string | null
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          course_slug?: string
+          id?: string
+          passed?: boolean
+          score_pct?: number
+          started_at?: string
+          submitted_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academy_progress: {
+        Row: {
+          chapter_slug: string
+          course_slug: string
+          id: string
+          last_viewed_at: string
+          lesson_slug: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          chapter_slug: string
+          course_slug: string
+          id?: string
+          last_viewed_at?: string
+          lesson_slug: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          chapter_slug?: string
+          course_slug?: string
+          id?: string
+          last_viewed_at?: string
+          lesson_slug?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academy_quiz_attempts: {
+        Row: {
+          answers: Json
+          attempted_at: string
+          chapter_slug: string
+          course_slug: string
+          id: string
+          score_pct: number
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          attempted_at?: string
+          chapter_slug: string
+          course_slug: string
+          id?: string
+          score_pct?: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          attempted_at?: string
+          chapter_slug?: string
+          course_slug?: string
+          id?: string
+          score_pct?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           address: string | null
