@@ -26,6 +26,7 @@ import CapitalStack from "./pages/CapitalStack";
 import Press from "./pages/Press";
 import Knowledge from "./pages/Knowledge";
 import Glossary from "./pages/Glossary";
+import AcademyCatalog from "./pages/AcademyCatalog";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -59,6 +60,7 @@ const App = () => (
           <Route path="/press" element={<Press />} />
           <Route path="/knowledge" element={<Knowledge />} />
           <Route path="/glossary" element={<Glossary />} />
+          <Route path="/education/academy" element={<AcademyCatalog />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
