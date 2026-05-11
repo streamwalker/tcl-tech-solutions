@@ -1,0 +1,3379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TCL Tech Solutions — Client Dossier</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root, [data-theme="dark"] {
+    --bg-0: #08090c;
+    --bg-1: #0f1117;
+    --bg-2: #161922;
+    --bg-3: #1f232f;
+    --line: #262b38;
+    --text: #e7eaf1;
+    --text-dim: #9aa3b6;
+    --text-faint: #6b7384;
+    --accent: #d4a24b;
+    --accent-2: #e9c47a;
+    --accent-soft: rgba(212, 162, 75, 0.12);
+    --basic: #6ea8ff;
+    --mid: #b69bff;
+    --ultra: #d4a24b;
+    --ok: #4ad29a;
+    --warn: #f4b860;
+    --danger: #ff8585;
+    --info: #6ea8ff;
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.35);
+    --radius: 14px;
+    --bg-page: radial-gradient(1200px 800px at 80% -10%, #1a1f2c 0%, var(--bg-0) 60%);
+    --highlight-bg: rgba(212, 162, 75, 0.14);
+    --highlight-border: rgba(212, 162, 75, 0.45);
+  }
+
+  [data-theme="light"] {
+    --bg-0: #f6f7fb;
+    --bg-1: #ffffff;
+    --bg-2: #f1f3f8;
+    --bg-3: #e7eaf1;
+    --line: #d8dde6;
+    --text: #1a1d24;
+    --text-dim: #525968;
+    --text-faint: #7c8494;
+    --accent: #b8862c;
+    --accent-2: #8a5d1f;
+    --accent-soft: rgba(184, 134, 44, 0.12);
+    --basic: #3068d4;
+    --mid: #7a5dd6;
+    --ultra: #b8862c;
+    --ok: #1f9d6b;
+    --warn: #c87a14;
+    --danger: #c84141;
+    --info: #3068d4;
+    --shadow: 0 20px 60px rgba(20, 24, 40, 0.12);
+    --shadow-sm: 0 6px 20px rgba(20, 24, 40, 0.08);
+    --bg-page: radial-gradient(1200px 800px at 80% -10%, #eef1f8 0%, #f6f7fb 60%);
+    --highlight-bg: rgba(184, 134, 44, 0.13);
+    --highlight-border: rgba(184, 134, 44, 0.45);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-page);
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.25s ease;
+  }
+
+  /* Header */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(8, 9, 12, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent) 0%, #8a5d1f 100%);
+    display: grid;
+    place-items: center;
+    color: #1a130a;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(212, 162, 75, 0.35);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-text small { color: var(--text-faint); font-weight: 400; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; }
+
+  .client-chip {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-2);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .client-chip .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 10px var(--ok);
+  }
+
+  /* Hero */
+  .hero {
+    max-width: 1320px;
+    margin: 36px auto 12px;
+    padding: 0 28px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 8px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p {
+    margin: 0;
+    color: var(--text-dim);
+    max-width: 760px;
+    line-height: 1.6;
+  }
+
+  /* Layout */
+  .layout {
+    max-width: 1320px;
+    margin: 28px auto 80px;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: 240px 1fr 360px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* Room nav */
+  nav.rooms {
+    position: sticky;
+    top: 96px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  nav.rooms h3 {
+    margin: 6px 8px 12px;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  .room-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-dim);
+    padding: 11px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    text-align: left;
+    transition: all 0.15s ease;
+  }
+  .room-btn:hover { background: var(--bg-2); color: var(--text); }
+  .room-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent-2);
+    border-color: rgba(212, 162, 75, 0.35);
+  }
+  .room-btn .icon { font-size: 18px; }
+  .room-btn .name { flex: 1; }
+  .room-btn .check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: grid; place-items: center;
+    font-size: 11px;
+    color: var(--bg-0);
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .room-btn.has-selection .check {
+    background: var(--ok);
+    border-color: var(--ok);
+    color: #052015;
+  }
+
+  /* Main */
+  main.content { min-width: 0; }
+
+  .room-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .room-header h2 {
+    font-size: 26px;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .room-header .sub { color: var(--text-faint); font-size: 13px; }
+
+  /* Tier cards */
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .tier {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--tier-color, var(--accent));
+    opacity: 0.6;
+  }
+  .tier:hover {
+    transform: translateY(-3px);
+    border-color: var(--tier-color, var(--accent));
+    box-shadow: var(--shadow);
+  }
+  .tier.selected {
+    border-color: var(--tier-color, var(--accent));
+    background: linear-gradient(180deg, rgba(212, 162, 75, 0.06), var(--bg-1) 60%);
+    box-shadow: 0 0 0 1px var(--tier-color, var(--accent)) inset, var(--shadow);
+  }
+  .tier-tag {
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--tier-color, var(--accent));
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .tier-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .tier-pitch {
+    color: var(--text-faint);
+    font-size: 12.5px;
+    margin: 0 0 14px;
+    line-height: 1.55;
+    min-height: 38px;
+  }
+  .tier-price {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    margin-bottom: 14px;
+  }
+  .tier-price small {
+    color: var(--text-faint);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .tier ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+    flex: 1;
+  }
+  .tier li {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 6px 0 6px 22px;
+    position: relative;
+    color: var(--text);
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .tier li:last-child { border-bottom: none; }
+  .tier li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 12px;
+    width: 10px; height: 10px;
+    border-left: 2px solid var(--tier-color, var(--accent));
+    border-bottom: 2px solid var(--tier-color, var(--accent));
+    transform: rotate(-45deg);
+  }
+  .tier-action {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .tier-action:hover { border-color: var(--tier-color, var(--accent)); color: var(--tier-color, var(--accent)); }
+  .tier.selected .tier-action {
+    background: var(--tier-color, var(--accent));
+    color: #1a130a;
+    border-color: var(--tier-color, var(--accent));
+  }
+
+  /* Summary panel */
+  aside.summary {
+    position: sticky;
+    top: 96px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  aside.summary h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  aside.summary .sub {
+    color: var(--text-faint);
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  .summary-list { display: flex; flex-direction: column; gap: 10px; }
+  .summary-item {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .summary-item .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .summary-item .room-name {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .summary-item .tier-name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .summary-item .tier-name .tier-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .summary-item .price {
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .summary-item .details {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    display: none;
+  }
+  .summary-item.expanded .details { display: block; }
+  .summary-item .details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .summary-item .details li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+  .summary-item .details li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 9px;
+    width: 7px; height: 7px;
+    border-left: 2px solid var(--tier-color, var(--accent));
+    border-bottom: 2px solid var(--tier-color, var(--accent));
+    transform: rotate(-45deg);
+  }
+  .summary-item .details .item-price {
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    justify-content: space-between;
+  }
+  .toggle-details {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: var(--bg-2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .toggle-details:hover { border-color: var(--accent); color: var(--accent-2); }
+  .toggle-details .chevron {
+    display: inline-block;
+    transition: transform 0.2s;
+    font-size: 10px;
+  }
+  .toggle-details.expanded .chevron { transform: rotate(180deg); }
+
+  .summary-item .remove {
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 0;
+    text-align: left;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .summary-item .remove:hover { color: #ff8585; }
+
+  .summary-empty {
+    text-align: center;
+    color: var(--text-faint);
+    padding: 30px 14px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .totals {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .total-row.grand {
+    font-size: 18px;
+    color: var(--text);
+    font-weight: 600;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+  .total-row .val { font-variant-numeric: tabular-nums; }
+  .grand .val { color: var(--accent-2); }
+
+  .summary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .btn {
+    flex: 1 1 90px;
+    padding: 11px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .btn:disabled { opacity: 0.6; cursor: wait; }
+  .btn:hover { border-color: var(--accent); color: var(--accent-2); }
+  .btn.primary {
+    background: linear-gradient(180deg, var(--accent), #b8862c);
+    color: #1a130a;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .btn.primary:hover { color: #1a130a; filter: brightness(1.07); }
+
+  /* Disclosure */
+  .disclosure {
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 11px;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 200px 1fr; }
+    aside.summary {
+      grid-column: 1 / -1;
+      position: static;
+    }
+  }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.rooms {
+      position: static;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px;
+    }
+    nav.rooms h3 { display: none; }
+    .room-btn { flex: 0 0 auto; padding: 8px 12px; font-size: 13px; }
+    .tiers { grid-template-columns: 1fr; }
+    .site-inner { padding: 14px 18px; }
+    .hero, .layout { padding-left: 18px; padding-right: 18px; }
+  }
+
+  /* Animations */
+  .fade-in { animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================================
+     KNOWLEDGE LAYER — Context & Explanation System
+     ============================================================ */
+
+  /* Top-bar additions (theme/plain-english/glossary buttons) */
+  .top-tools { display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    transition: all 0.15s;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+  .pill-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-2);
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pill-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+  .pill-btn.active {
+    background: var(--accent-soft);
+    border-color: var(--highlight-border);
+    color: var(--accent-2);
+  }
+  .pill-btn .switch {
+    width: 26px; height: 14px;
+    background: var(--bg-3);
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .pill-btn .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    transition: all 0.2s;
+  }
+  .pill-btn.active .switch { background: var(--accent); }
+  .pill-btn.active .switch::after { left: 14px; background: #1a130a; }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    max-width: 1320px;
+    margin: 14px auto 0;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-faint);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: var(--text-dim);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .breadcrumb a:hover { color: var(--accent-2); }
+  .breadcrumb .sep { color: var(--text-faint); opacity: 0.5; }
+  .breadcrumb .current { color: var(--text); }
+
+  /* Highlighted term (inline) */
+  .term {
+    color: var(--text);
+    background-image: linear-gradient(transparent 60%, var(--highlight-bg) 60%);
+    border-bottom: 1px dashed var(--highlight-border);
+    cursor: help;
+    padding: 0 2px;
+    border-radius: 2px;
+    transition: background-color 0.15s, color 0.15s;
+    font-weight: 500;
+  }
+  .term:hover, .term:focus {
+    background-color: var(--accent-soft);
+    color: var(--accent-2);
+    outline: none;
+  }
+  .term[data-component="popover"] { border-bottom-style: solid; }
+  .term[data-component="hovercard"]::after {
+    content: "▸";
+    margin-left: 3px;
+    font-size: 9px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* Tooltip (lightweight) */
+  .knl-tooltip {
+    position: fixed;
+    z-index: 200;
+    background: var(--bg-3);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    font-size: 12.5px;
+    line-height: 1.45;
+    max-width: 280px;
+    box-shadow: var(--shadow-sm);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .knl-tooltip.visible { opacity: 1; transform: translateY(0); }
+
+  /* Popover (rich, click-to-pin) */
+  .knl-popover {
+    position: fixed;
+    z-index: 210;
+    width: min(360px, calc(100vw - 32px));
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .knl-popover.visible { opacity: 1; transform: translateY(0); }
+  .knl-popover h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: var(--text); }
+  .knl-popover .cat { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .knl-popover p { margin: 8px 0; font-size: 13px; line-height: 1.55; color: var(--text-dim); }
+  .knl-popover ul { padding-left: 18px; margin: 6px 0; font-size: 12.5px; color: var(--text-dim); }
+  .knl-popover .actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .knl-popover .link {
+    font-size: 12px;
+    color: var(--accent-2);
+    cursor: pointer;
+    text-decoration: none;
+    background: none; border: none; padding: 0;
+    font-family: inherit;
+  }
+  .knl-popover .link:hover { text-decoration: underline; }
+  .knl-popover .close-x {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .knl-popover .close-x:hover { color: var(--text); }
+
+  /* Hover Card (premium) */
+  .knl-hovercard {
+    position: fixed;
+    z-index: 210;
+    width: min(340px, calc(100vw - 32px));
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .knl-hovercard.visible { opacity: 1; transform: translateY(0) scale(1); }
+  .knl-hovercard .hc-banner {
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: grid; place-items: center;
+    font-size: 32px;
+    color: #1a130a;
+  }
+  .knl-hovercard .hc-body { padding: 14px 16px 16px; }
+  .knl-hovercard .hc-cat { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .knl-hovercard h4 { margin: 4px 0 6px; font-size: 16px; font-weight: 600; }
+  .knl-hovercard p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.55; color: var(--text-dim); }
+  .knl-hovercard .hc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .knl-hovercard .hc-tag {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    background: var(--bg-2);
+  }
+  .knl-hovercard .hc-action {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    color: var(--accent-2);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .knl-hovercard .hc-action:hover { background: var(--accent-soft); }
+
+  /* Side Drawer */
+  .knl-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 300;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+  }
+  .knl-drawer-backdrop.visible { opacity: 1; visibility: visible; }
+  .knl-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(440px, 100vw);
+    background: var(--bg-1);
+    border-left: 1px solid var(--line);
+    z-index: 310;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: -20px 0 60px rgba(0,0,0,0.4);
+  }
+  .knl-drawer.visible { transform: translateX(0); }
+  .knl-drawer header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .knl-drawer header .badge {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent-2);
+    display: grid; place-items: center;
+    font-size: 22px;
+  }
+  .knl-drawer header h3 { margin: 0; font-size: 16px; }
+  .knl-drawer header .cat { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .knl-drawer .body {
+    flex: 1; overflow-y: auto;
+    padding: 18px 22px;
+  }
+  .knl-drawer .body section { margin-bottom: 22px; }
+  .knl-drawer .body h5 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .knl-drawer .body p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+  .knl-drawer .body p.dim { color: var(--text-dim); }
+  .knl-drawer .body .quote {
+    background: var(--bg-2);
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .knl-drawer .body .related-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .knl-drawer .body .related-tag {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-2);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .knl-drawer .body .related-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent-2);
+  }
+  .knl-drawer .footer {
+    padding: 14px 22px;
+    border-top: 1px solid var(--line);
+    display: flex; gap: 8px;
+  }
+
+  /* Sections (knowledge center) */
+  .knl-section {
+    max-width: 1320px;
+    margin: 32px auto;
+    padding: 0 28px;
+  }
+  .knl-section > h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.3px;
+  }
+  .knl-section > .lead {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin-bottom: 20px;
+    max-width: 720px;
+    line-height: 1.6;
+  }
+  .knl-divider {
+    max-width: 1320px;
+    margin: 60px auto 0;
+    padding: 0 28px;
+  }
+  .knl-divider .inner {
+    border-top: 1px solid var(--line);
+    padding-top: 36px;
+  }
+  .knl-divider .eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .knl-divider h2 {
+    font-size: clamp(24px, 3.4vw, 34px);
+    margin: 0 0 8px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+  }
+  .knl-divider p {
+    color: var(--text-dim);
+    max-width: 760px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Reading panel (rich prose with terms) */
+  .reading-panel {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    line-height: 1.75;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .reading-panel p { margin: 0 0 14px; }
+
+  /* Callout boxes */
+  .callout {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: start;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cb-color, var(--accent));
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 16px 0;
+  }
+  .callout .cb-icon {
+    width: 36px; height: 36px;
+    background: var(--cb-soft, var(--accent-soft));
+    color: var(--cb-color, var(--accent));
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 16px;
+  }
+  .callout h6 {
+    margin: 0 0 4px;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--cb-color, var(--accent));
+    font-weight: 700;
+  }
+  .callout p { margin: 0; font-size: 13.5px; color: var(--text-dim); line-height: 1.55; }
+
+  /* Concept Cards */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .concept-card {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .concept-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+  .concept-card .cc-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent-2);
+    display: grid; place-items: center;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .concept-card .cc-cat { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .concept-card h4 { margin: 0; font-size: 15px; font-weight: 600; }
+  .concept-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--text-dim); }
+  .concept-card .learn { font-size: 11.5px; color: var(--accent-2); margin-top: 6px; }
+
+  /* Comparison Table */
+  .compare-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-1);
+    font-size: 13px;
+  }
+  .compare th, .compare td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare th {
+    background: var(--bg-2);
+    color: var(--text-faint);
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .compare tbody tr:last-child td { border-bottom: none; }
+  .compare td:first-child { font-weight: 600; color: var(--text); }
+  .compare td.muted { color: var(--text-dim); }
+
+  /* Annotated Image */
+  .annotated {
+    position: relative;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .annotated svg.canvas { display: block; width: 100%; height: auto; background: var(--bg-2); }
+  .marker {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #1a130a;
+    font-weight: 700;
+    font-size: 13px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    border: 2px solid var(--bg-1);
+    box-shadow: 0 0 0 2px var(--accent), 0 4px 12px rgba(0,0,0,0.4);
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s;
+    z-index: 2;
+  }
+  .marker:hover { transform: translate(-50%, -50%) scale(1.1); }
+  .marker.active { background: var(--accent-2); }
+  .marker-card {
+    position: absolute;
+    width: 240px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+    z-index: 3;
+    transform: translate(-50%, calc(-100% - 18px));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .marker-card.visible { opacity: 1; pointer-events: auto; }
+  .marker-card h6 { margin: 0 0 4px; font-size: 13px; }
+  .marker-card p { margin: 0; font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Interactive Diagram */
+  .diagram {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    overflow-x: auto;
+  }
+  .diagram svg { display: block; width: 100%; min-width: 600px; height: auto; }
+  .diagram .node-bg { fill: var(--bg-2); stroke: var(--line); }
+  .diagram .node-bg.active { stroke: var(--accent); stroke-width: 2; fill: var(--accent-soft); }
+  .diagram .node-label { fill: var(--text); font-size: 13px; font-weight: 500; }
+  .diagram .node-sub { fill: var(--text-dim); font-size: 11px; }
+  .diagram .edge { stroke: var(--line); stroke-width: 1.5; fill: none; }
+  .diagram .node { cursor: pointer; }
+  .diagram-info {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    min-height: 64px;
+  }
+  .diagram-info .placeholder { color: var(--text-faint); font-size: 13px; }
+  .diagram-info h5 { margin: 0 0 4px; font-size: 14px; }
+  .diagram-info p { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--line);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .timeline-item:hover { border-color: var(--accent); transform: translateX(2px); }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -22px; top: 18px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-0);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-item .phase { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .timeline-item h5 { margin: 4px 0 6px; font-size: 14px; font-weight: 600; }
+  .timeline-item .summary { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+  .timeline-item .extra {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    font-size: 12.5px; color: var(--text-dim);
+    line-height: 1.55;
+    display: none;
+  }
+  .timeline-item.expanded .extra { display: block; }
+
+  /* Accordions */
+  .accordion {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .accordion summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary::after {
+    content: "+";
+    font-size: 18px;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+  .accordion[open] summary::after { content: "−"; }
+  .accordion .ac-body {
+    padding: 0 18px 16px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+  .accordion .ac-body p:first-child { margin-top: 0; }
+
+  /* Read More */
+  .readmore { background: var(--bg-1); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .readmore .preview { font-size: 13.5px; color: var(--text); line-height: 1.65; margin: 0; }
+  .readmore .more { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; margin: 10px 0 0; display: none; }
+  .readmore.expanded .more { display: block; }
+  .readmore button {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: var(--accent-2);
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .readmore button:hover { text-decoration: underline; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+  /* Footnotes */
+  .fn-ref {
+    color: var(--accent);
+    font-size: 0.75em;
+    vertical-align: super;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0 1px;
+    font-weight: 600;
+  }
+  .fn-ref:hover { color: var(--accent-2); }
+  .footnotes {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+  .footnotes ol { padding-left: 18px; margin: 0; }
+  .footnotes li { margin-bottom: 8px; }
+  .footnotes .back {
+    color: var(--accent);
+    cursor: pointer;
+    margin-left: 6px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .footnotes .back:hover { color: var(--accent-2); }
+  .fn-flash { animation: flashHighlight 1.6s ease; }
+  @keyframes flashHighlight {
+    0% { background-color: var(--accent-soft); }
+    100% { background-color: transparent; }
+  }
+
+  /* Why It Matters */
+  .why-panel {
+    background: linear-gradient(135deg, var(--accent-soft), transparent);
+    border: 1px solid var(--highlight-border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .why-panel .label { font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .why-panel h3 { margin: 0 0 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+  .why-panel p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--text); }
+
+  /* Video Explainer */
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .video-wrap iframe, .video-wrap .placeholder {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .video-wrap .placeholder {
+    display: grid; place-items: center;
+    color: var(--text-faint);
+    background: linear-gradient(135deg, var(--bg-2), var(--bg-1));
+    cursor: pointer;
+    flex-direction: column;
+  }
+  .video-wrap .placeholder .play {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #1a130a;
+    display: grid; place-items: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Pronunciation */
+  .pron-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pron-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+  .pron-btn .speaker { font-size: 13px; }
+
+  /* Glossary (searchable) */
+  .glossary-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+  .glossary-search {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-1);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .glossary-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .glossary-filters {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+  }
+  .glossary-chip {
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-2);
+    color: var(--text-dim);
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .glossary-chip:hover { border-color: var(--accent); color: var(--accent-2); }
+  .glossary-chip.active { background: var(--accent-soft); border-color: var(--highlight-border); color: var(--accent-2); }
+  .glossary-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .glossary-entry {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .glossary-entry:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .glossary-entry .ge-cat { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .glossary-entry h4 { margin: 4px 0 6px; font-size: 15px; }
+  .glossary-entry p { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+  .glossary-empty { text-align: center; color: var(--text-faint); padding: 36px; font-size: 13px; }
+
+  /* AI Widget */
+  .ai-launch {
+    position: fixed;
+    right: 22px; bottom: 22px;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #8a5d1f);
+    color: #1a130a;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,162,75,0.5);
+    font-size: 22px;
+    display: grid; place-items: center;
+    z-index: 290;
+    transition: transform 0.2s;
+  }
+  .ai-launch:hover { transform: scale(1.05); }
+  .ai-panel {
+    position: fixed;
+    right: 22px; bottom: 90px;
+    width: min(380px, calc(100vw - 32px));
+    max-height: min(560px, calc(100vh - 120px));
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    z-index: 290;
+    display: flex; flex-direction: column;
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .ai-panel.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .ai-panel header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ai-panel header .av {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), #8a5d1f);
+    color: #1a130a;
+    display: grid; place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .ai-panel header .name { flex: 1; }
+  .ai-panel header h5 { margin: 0; font-size: 14px; }
+  .ai-panel header .status { font-size: 10.5px; color: var(--ok); }
+  .ai-msgs {
+    flex: 1; overflow-y: auto;
+    padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .ai-msg { max-width: 85%; padding: 9px 13px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+  .ai-msg.bot { background: var(--bg-2); color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .ai-msg.user { background: var(--accent); color: #1a130a; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .ai-suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 8px; }
+  .ai-suggestions button {
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--text-dim);
+    border-radius: 999px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 11.5px;
+    font-family: inherit;
+  }
+  .ai-suggestions button:hover { border-color: var(--accent); color: var(--accent-2); }
+  .ai-input-wrap {
+    border-top: 1px solid var(--line);
+    padding: 10px 12px;
+    display: flex; gap: 8px;
+  }
+  .ai-input-wrap input {
+    flex: 1;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .ai-input-wrap input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .ai-input-wrap button {
+    background: var(--accent);
+    color: #1a130a;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* FAQ Block */
+  .faq summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "▾"; color: var(--accent); transition: transform 0.2s; }
+  .faq[open] summary::after { transform: rotate(180deg); }
+  .faq[open] summary { border-radius: 10px 10px 0 0; }
+  .faq .ac-body {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    background: var(--bg-1);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  /* Plain English mode visual cue */
+  body[data-plain="on"] .term {
+    background-image: linear-gradient(transparent 60%, rgba(74, 210, 154, 0.18) 60%);
+    border-bottom-color: rgba(74, 210, 154, 0.5);
+  }
+  body[data-plain="on"] .plain-only { display: inline; }
+  body[data-plain="on"] .standard-only { display: none; }
+  .plain-only { display: none; }
+
+  /* Mobile adjustments */
+  @media (max-width: 640px) {
+    .knl-section { padding: 0 18px; }
+    .breadcrumb { padding: 0 18px; }
+    .knl-drawer { width: 100vw; }
+    .ai-launch { right: 14px; bottom: 14px; }
+    .ai-panel { right: 8px; left: 8px; width: auto; bottom: 80px; }
+    .top-tools .label-text { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div class="brand-text">
+        <span>TCL Tech Solutions</span>
+        <small>Client Dossier</small>
+      </div>
+    </div>
+    <div class="top-tools" style="margin-left:auto;">
+      <button class="pill-btn" id="plainEngBtn" aria-pressed="false" title="Toggle Plain English mode">
+        <span class="switch" aria-hidden="true"></span>
+        <span class="label-text">Plain English</span>
+      </button>
+      <button class="icon-btn" id="glossaryBtn" title="Open glossary" aria-label="Open glossary">📖</button>
+      <button class="icon-btn" id="themeBtn" title="Toggle light/dark theme" aria-label="Toggle theme">☾</button>
+    </div>
+    <div class="client-chip">
+      <span class="dot"></span>
+      <span>Welcome, <strong style="color:var(--text)">Sample Client</strong></span>
+    </div>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="#dossier">TCL Tech</a>
+  <span class="sep">›</span>
+  <a href="#dossier">Client Portal</a>
+  <span class="sep">›</span>
+  <span class="current">Dossier &amp; Knowledge Center</span>
+</nav>
+
+<section class="hero">
+  <h1>Design your <span class="accent">smart home experience</span>.</h1>
+  <p>Select a package tier for each room. Mix and match freely — choose a foundational setup in one space and a flagship installation in another. Your selections and an estimated investment total update in real time.</p>
+</section>
+
+<div class="layout">
+  <nav class="rooms" id="roomNav">
+    <h3>Rooms</h3>
+    <!-- room buttons injected by JS -->
+  </nav>
+
+  <main class="content" id="content">
+    <!-- room content injected by JS -->
+  </main>
+
+  <aside class="summary" id="summary">
+    <h3>Your Selections</h3>
+    <div class="sub">Estimated investment summary</div>
+    <div id="summaryList" class="summary-list"></div>
+    <button class="toggle-details" id="toggleDetailsBtn" style="display:none;">
+      <span class="label">Show full details</span>
+      <span class="chevron">▼</span>
+    </button>
+    <div class="totals" id="totals" style="display:none;">
+      <div class="total-row"><span>Subtotal</span><span class="val" id="subtotal">$0</span></div>
+      <div class="total-row"><span>Design &amp; Installation (15%)</span><span class="val" id="install">$0</span></div>
+      <div class="total-row grand"><span>Estimated Total</span><span class="val" id="grand">$0</span></div>
+    </div>
+    <div class="summary-actions">
+      <button class="btn" id="resetBtn">Reset</button>
+      <button class="btn" id="exportBtn">Request Quote</button>
+      <button class="btn primary" id="pdfBtn">Save as PDF</button>
+    </div>
+    <div class="disclosure">
+      Pricing reflects approximate ranges. A formal proposal with itemized costs follows your design consultation.
+    </div>
+  </aside>
+</div>
+
+<!-- ============================================================
+     KNOWLEDGE CENTER — interactive context & explanation system
+     ============================================================ -->
+
+<div class="knl-divider" id="knowledge">
+  <div class="inner">
+    <div class="eyebrow">Knowledge Center</div>
+    <h2>Understand every term, before you commit.</h2>
+    <p>Hover, tap, or click any highlighted term to open a quick definition. Open a full dossier in the side panel, search the glossary, or ask the AI assistant anything about your build.</p>
+  </div>
+</div>
+
+<!-- 1. Reading panel: Highlighted Terms (tooltip / popover / hover card variants) -->
+<section class="knl-section" aria-labelledby="kc-reading">
+  <h2 id="kc-reading">Reading Room</h2>
+  <p class="lead">Three flavors of inline explanation: lightweight tooltips, richer popovers, and visual hover cards.</p>
+  <div class="reading-panel">
+    <p>
+      A modern smart home is built around a single
+      <span class="term" data-term="control4" data-component="popover">whole-home automation system</span>
+      that ties every subsystem together. In the living room, your
+      <span class="term" data-term="atmos" data-component="hovercard">Dolby Atmos</span>
+      sound stage works in concert with smart lighting and motorized shades to create scenes you can summon by voice.
+      <a class="fn-ref" href="#fn-1" id="fnref-1">[1]</a>
+    </p>
+    <p>
+      For dedicated cinema rooms, displays such as the
+      <span class="term" data-term="oled" data-component="tooltip">OLED</span>
+      and
+      <span class="term" data-term="qled" data-component="tooltip">QLED</span>
+      panels offer different trade-offs in contrast, brightness, and burn-in resistance. For a true private theater, a
+      <span class="term" data-term="laser-projector" data-component="popover">laser projector</span>
+      paired with an
+      <span class="term" data-term="anamorphic" data-component="hovercard">anamorphic lens</span>
+      and a
+      <span class="term" data-term="kaleidescape" data-component="hovercard">Kaleidescape server</span>
+      delivers reference-grade picture and audio.
+      <a class="fn-ref" href="#fn-2" id="fnref-2">[2]</a>
+    </p>
+    <p>
+      Behind the scenes, a properly engineered installation begins with
+      <span class="term" data-term="rough-in" data-component="popover">low-voltage rough-in</span>
+      during construction, followed by professional
+      <span class="term" data-term="isf" data-component="tooltip">ISF calibration</span>
+      and integration into a unified
+      <span class="term" data-term="multi-zone-audio" data-component="popover">multi-zone audio</span>
+      system.
+    </p>
+  </div>
+</section>
+
+<!-- 2. Concept Cards -->
+<section class="knl-section" aria-labelledby="kc-concepts">
+  <h2 id="kc-concepts">Concept Cards</h2>
+  <p class="lead">Bite-sized explanations of the ideas you'll encounter most often.</p>
+  <div class="concept-grid" id="conceptGrid"></div>
+</section>
+
+<!-- 3. Callout Boxes -->
+<section class="knl-section" aria-labelledby="kc-callouts">
+  <h2 id="kc-callouts">Callout Boxes</h2>
+  <p class="lead">Reusable explainer blocks for context, lore, warnings, and examples.</p>
+
+  <div class="callout" style="--cb-color: var(--info); --cb-soft: rgba(110,168,255,0.14);">
+    <div class="cb-icon">i</div>
+    <div>
+      <h6>In Simple Terms</h6>
+      <p>An automation system is the brain of your home. Instead of opening five apps to control TVs, lights, blinds, locks, and music, you use one — or simply ask out loud.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--accent); --cb-soft: var(--accent-soft);">
+    <div class="cb-icon">★</div>
+    <div>
+      <h6>Why This Matters</h6>
+      <p>Mixing brands without a unifying control layer creates orphaned devices, app fatigue, and reliability problems. Choosing the right hub up front is a decision that compounds for years.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--mid); --cb-soft: rgba(182,155,255,0.14);">
+    <div class="cb-icon">◆</div>
+    <div>
+      <h6>Important Context</h6>
+      <p>Most reference-grade integrations require new construction or significant retrofit. Plan AV decisions alongside your architect, not after drywall is closed.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--warn); --cb-soft: rgba(244,184,96,0.14);">
+    <div class="cb-icon">!</div>
+    <div>
+      <h6>Warning</h6>
+      <p>DIY mounting of a flagship 85" television above a stone fireplace can void manufacturer warranties and damage drywall. We recommend professional installation with documented anchor specifications.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--ok); --cb-soft: rgba(74,210,154,0.14);">
+    <div class="cb-icon">▸</div>
+    <div>
+      <h6>Example</h6>
+      <p>A "Movie Night" scene dims the living-room lights to 10%, lowers the shades, switches the TV input to streaming, and pushes a notification to silence the doorbell — all from one button.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--basic); --cb-soft: rgba(110,168,255,0.14);">
+    <div class="cb-icon">⚙</div>
+    <div>
+      <h6>Technical Note</h6>
+      <p>Reference-grade systems use Cat6a or fiber for backbone, dedicated 20A circuits for AV racks, and a low-voltage panel separate from electrical distribution.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="--cb-color: var(--ultra); --cb-soft: var(--accent-soft);">
+    <div class="cb-icon">✎</div>
+    <div>
+      <h6>Behind the Concept</h6>
+      <p>The "scene" abstraction comes from theatrical lighting design — a single cue that recalls dozens of individual settings simultaneously, replacing manual stagehands with software.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Comparison Table -->
+<section class="knl-section" aria-labelledby="kc-compare">
+  <h2 id="kc-compare">Comparison Table</h2>
+  <p class="lead">For terms that are easily confused.</p>
+  <div class="compare-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Meaning</th>
+          <th>Plain English</th>
+          <th>Related</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>OLED</td>
+          <td class="muted">Self-emissive panel; each pixel produces its own light.</td>
+          <td class="muted">Perfect blacks, premium picture, risk of long-term burn-in.</td>
+          <td class="muted"><span class="term" data-term="qled" data-component="tooltip">QLED</span>, <span class="term" data-term="hdr" data-component="tooltip">HDR</span></td>
+          <td class="muted">Best for cinema rooms with controlled lighting.</td>
+        </tr>
+        <tr>
+          <td>QLED</td>
+          <td class="muted">LED-backlit LCD with quantum-dot color enhancement.</td>
+          <td class="muted">Very bright, vivid color, less expensive than OLED.</td>
+          <td class="muted"><span class="term" data-term="oled" data-component="tooltip">OLED</span>, <span class="term" data-term="hdr" data-component="tooltip">HDR</span></td>
+          <td class="muted">Better for sun-lit living rooms and outdoor patios.</td>
+        </tr>
+        <tr>
+          <td>Mini-LED</td>
+          <td class="muted">QLED with thousands of dimming zones for deeper contrast.</td>
+          <td class="muted">A QLED that gets closer to OLED-level black depth.</td>
+          <td class="muted">QLED, OLED</td>
+          <td class="muted">Compromise option for mixed-use rooms.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 5. Annotated Image -->
+<section class="knl-section" aria-labelledby="kc-annotated">
+  <h2 id="kc-annotated">Annotated Image</h2>
+  <p class="lead">Tap any marker to learn what each component is and why it's placed where it is.</p>
+  <div class="annotated" id="annotated">
+    <svg class="canvas" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Floor -->
+      <rect x="0" y="0" width="800" height="460" fill="#161922"/>
+      <rect x="40" y="40" width="720" height="380" fill="#0f1117" stroke="#262b38" stroke-width="2" rx="6"/>
+      <!-- Screen -->
+      <rect x="180" y="60" width="440" height="40" fill="#08090c" stroke="#d4a24b" stroke-width="2"/>
+      <text x="400" y="86" text-anchor="middle" fill="#9aa3b6" font-size="13" font-family="Inter">120" Screen</text>
+      <!-- Seating tier 1 -->
+      <rect x="200" y="240" width="400" height="40" fill="#1f232f" stroke="#262b38" rx="4"/>
+      <text x="400" y="265" text-anchor="middle" fill="#6b7384" font-size="11" font-family="Inter">Front Row</text>
+      <!-- Seating tier 2 (riser) -->
+      <rect x="200" y="320" width="400" height="40" fill="#262b38" stroke="#1f232f" rx="4"/>
+      <text x="400" y="345" text-anchor="middle" fill="#6b7384" font-size="11" font-family="Inter">Riser Row</text>
+      <!-- Speaker positions (decorative) -->
+      <circle cx="120" cy="80" r="6" fill="#d4a24b" opacity="0.6"/>
+      <circle cx="680" cy="80" r="6" fill="#d4a24b" opacity="0.6"/>
+      <circle cx="120" cy="380" r="6" fill="#d4a24b" opacity="0.6"/>
+      <circle cx="680" cy="380" r="6" fill="#d4a24b" opacity="0.6"/>
+    </svg>
+    <!-- Markers placed via percentage of container -->
+    <button class="marker" style="left:50%;top:18%" data-marker="screen" aria-label="Marker 1">1</button>
+    <button class="marker" style="left:14%;top:18%" data-marker="speakers" aria-label="Marker 2">2</button>
+    <button class="marker" style="left:50%;top:55%" data-marker="seating" aria-label="Marker 3">3</button>
+    <button class="marker" style="left:50%;top:75%" data-marker="riser" aria-label="Marker 4">4</button>
+    <button class="marker" style="left:86%;top:18%" data-marker="atmos" aria-label="Marker 5">5</button>
+  </div>
+</section>
+
+<!-- 6. Interactive Diagram -->
+<section class="knl-section" aria-labelledby="kc-diagram">
+  <h2 id="kc-diagram">Interactive Diagram</h2>
+  <p class="lead">Click any node in the smart-home ecosystem to see its role.</p>
+  <div class="diagram" id="diagram">
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Edges -->
+      <path class="edge" d="M 350 60 L 130 160"/>
+      <path class="edge" d="M 350 60 L 350 160"/>
+      <path class="edge" d="M 350 60 L 570 160"/>
+      <path class="edge" d="M 130 160 L 130 250"/>
+      <path class="edge" d="M 350 160 L 350 250"/>
+      <path class="edge" d="M 570 160 L 570 250"/>
+      <!-- Nodes -->
+      <g class="node" data-node="hub" tabindex="0" role="button" aria-label="Automation Hub">
+        <rect class="node-bg" x="270" y="20" width="160" height="56" rx="10"/>
+        <text class="node-label" x="350" y="46" text-anchor="middle">Automation Hub</text>
+        <text class="node-sub" x="350" y="62" text-anchor="middle">Brain of the system</text>
+      </g>
+      <g class="node" data-node="audio" tabindex="0" role="button" aria-label="Audio">
+        <rect class="node-bg" x="50" y="135" width="160" height="50" rx="10"/>
+        <text class="node-label" x="130" y="158" text-anchor="middle">Audio</text>
+        <text class="node-sub" x="130" y="174" text-anchor="middle">Multi-zone sound</text>
+      </g>
+      <g class="node" data-node="video" tabindex="0" role="button" aria-label="Video">
+        <rect class="node-bg" x="270" y="135" width="160" height="50" rx="10"/>
+        <text class="node-label" x="350" y="158" text-anchor="middle">Video</text>
+        <text class="node-sub" x="350" y="174" text-anchor="middle">Displays &amp; sources</text>
+      </g>
+      <g class="node" data-node="ambient" tabindex="0" role="button" aria-label="Ambient">
+        <rect class="node-bg" x="490" y="135" width="160" height="50" rx="10"/>
+        <text class="node-label" x="570" y="158" text-anchor="middle">Ambient</text>
+        <text class="node-sub" x="570" y="174" text-anchor="middle">Light · Shade · Climate</text>
+      </g>
+      <g class="node" data-node="sonos" tabindex="0" role="button" aria-label="Sonos">
+        <rect class="node-bg" x="50" y="240" width="160" height="50" rx="10"/>
+        <text class="node-label" x="130" y="263" text-anchor="middle">Sonos / Speakers</text>
+        <text class="node-sub" x="130" y="279" text-anchor="middle">In-ceiling, in-wall</text>
+      </g>
+      <g class="node" data-node="atmos-node" tabindex="0" role="button" aria-label="Atmos and projector">
+        <rect class="node-bg" x="270" y="240" width="160" height="50" rx="10"/>
+        <text class="node-label" x="350" y="263" text-anchor="middle">Atmos / Projector</text>
+        <text class="node-sub" x="350" y="279" text-anchor="middle">Theater room</text>
+      </g>
+      <g class="node" data-node="lighting" tabindex="0" role="button" aria-label="Lighting and shades">
+        <rect class="node-bg" x="490" y="240" width="160" height="50" rx="10"/>
+        <text class="node-label" x="570" y="263" text-anchor="middle">Lighting / Shades</text>
+        <text class="node-sub" x="570" y="279" text-anchor="middle">Scenes &amp; circadian</text>
+      </g>
+    </svg>
+    <div class="diagram-info" id="diagramInfo">
+      <div class="placeholder">Click any node to see its description.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Timeline -->
+<section class="knl-section" aria-labelledby="kc-timeline">
+  <h2 id="kc-timeline">Timeline</h2>
+  <p class="lead">A typical TCL Tech Solutions installation, end to end.</p>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- 8. Accordions + Read More -->
+<section class="knl-section" aria-labelledby="kc-deeper">
+  <h2 id="kc-deeper">Deeper Explanations</h2>
+  <p class="lead">Optional reading for clients who want the full technical picture.</p>
+
+  <details class="accordion">
+    <summary>What is the difference between integration and automation?</summary>
+    <div class="ac-body">
+      <p><em>Integration</em> connects devices so they can speak to one another. <em>Automation</em> defines what should happen when one of them speaks. A doorbell that lights up the foyer at night is integration <em>plus</em> automation; a doorbell that simply rings is neither.</p>
+    </div>
+  </details>
+
+  <details class="accordion">
+    <summary>Why does cabling matter so much?</summary>
+    <div class="ac-body">
+      <p>Cabling decisions made before drywall determine what your home can do for the next 20 years. Cat6a, conduit, and pre-pulled fiber are inexpensive during construction, expensive afterward, and impossible in some retrofit situations.</p>
+    </div>
+  </details>
+
+  <details class="accordion">
+    <summary>What is professional calibration?</summary>
+    <div class="ac-body">
+      <p>Calibration tunes a display or sound system to industry-reference standards using meters, microphones, and test patterns. An ISF-certified technician adjusts grayscale, gamma, color points, and white balance so what you see matches the director's intent.</p>
+    </div>
+  </details>
+
+  <div class="readmore" id="readmore">
+    <p class="preview">Most luxury home AV projects fail not because of bad equipment, but because of poor coordination between trades. The single largest predictor of a successful installation is whether the AV integrator was at the table during architectural design.</p>
+    <p class="more">When AV is designed alongside HVAC and electrical, conduits, ventilation, and acoustic treatment fall into place naturally. When AV is consulted last, the system gets retrofitted into spaces it was never meant to occupy — speakers go where wires can reach instead of where physics says they should be, equipment racks end up in poorly ventilated closets, and remote controls overlap because zones were never properly demarcated. The cost of fixing these decisions later is typically 3–5x the cost of having designed them correctly the first time.</p>
+    <button id="readmoreBtn">Read more</button>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section class="knl-section" aria-labelledby="kc-faq">
+  <h2 id="kc-faq">Frequently Asked Questions</h2>
+  <p class="lead">Quick answers for clients new to home AV integration.</p>
+  <div class="faq-list">
+    <details class="faq">
+      <summary>How long does a typical installation take?</summary>
+      <div class="ac-body"><p>A Foundation-tier room can be completed in a single day. A full Reference theater room with new construction typically requires 3–6 weeks, coordinated with the general contractor.</p></div>
+    </details>
+    <details class="faq">
+      <summary>Do I have to choose Control4? Can I use other systems?</summary>
+      <div class="ac-body"><p>No. We work across major automation platforms including Control4, Crestron, Savant, and Lutron. Your needs and existing infrastructure inform the choice.</p></div>
+    </details>
+    <details class="faq">
+      <summary>What ongoing support is included?</summary>
+      <div class="ac-body"><p>All installations include a 12-month warranty plus optional service plans with remote monitoring, on-call response, and quarterly tune-ups.</p></div>
+    </details>
+    <details class="faq">
+      <summary>Will my system still work if my internet goes down?</summary>
+      <div class="ac-body"><p>Local control (lights, shades, climate, scenes) continues to function. Remote access and streaming services require internet, but the home itself remains responsive.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- 10. Video Explainer + Pronunciation -->
+<section class="knl-section" aria-labelledby="kc-media">
+  <h2 id="kc-media">Video &amp; Pronunciation</h2>
+  <p class="lead">Short explanations and audio for terms that are easy to mispronounce.</p>
+  <div class="video-wrap">
+    <div class="placeholder" id="videoPlaceholder" role="button" tabindex="0" aria-label="Play explainer video">
+      <div class="play">▶</div>
+      <div style="font-size:13px;">Watch: A Tour of the Reference Theater</div>
+      <div style="font-size:11px;margin-top:4px;color:var(--text-faint);">Embed your YouTube, Vimeo, or Loom URL here</div>
+    </div>
+  </div>
+  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;">
+    <button class="pron-btn" data-pron="Crestron" data-phon="KRES-trahn"><span class="speaker">🔊</span> Crestron <span style="color:var(--text-faint);">/KRES-trahn/</span></button>
+    <button class="pron-btn" data-pron="Kaleidescape" data-phon="kuh-LIDE-uh-scape"><span class="speaker">🔊</span> Kaleidescape</button>
+    <button class="pron-btn" data-pron="Anamorphic" data-phon="an-uh-MOR-fik"><span class="speaker">🔊</span> Anamorphic</button>
+    <button class="pron-btn" data-pron="Sonos" data-phon="SOH-nos"><span class="speaker">🔊</span> Sonos</button>
+  </div>
+</section>
+
+<!-- 11. Why It Matters -->
+<section class="knl-section" aria-labelledby="kc-why">
+  <h2 id="kc-why">Why It Matters</h2>
+  <p class="lead">A connecting panel that ties definitions back to your goals.</p>
+  <div class="why-panel">
+    <div class="label">Why this matters to you</div>
+    <h3>The system you choose now decides what your home can do for the next two decades.</h3>
+    <p>Equipment depreciates. The wires inside your walls do not. Investing in the right control architecture and infrastructure during design is the difference between a home that gracefully absorbs new technology and one that needs to be re-cut into every few years.</p>
+  </div>
+</section>
+
+<!-- 12. Footnotes -->
+<section class="knl-section" aria-labelledby="kc-fn">
+  <h2 id="kc-fn">Footnotes</h2>
+  <p class="lead">Citations and deeper context for the reading panel above.</p>
+  <div class="footnotes">
+    <ol>
+      <li id="fn-1">Dolby Atmos uses object-based audio mixing rather than channel-based, allowing sound to be placed precisely in 3D space. <a class="back" href="#fnref-1">↩</a></li>
+      <li id="fn-2">Kaleidescape is the only legal source of bit-perfect 4K Blu-ray downloads with Dolby Vision and full lossless audio. <a class="back" href="#fnref-2">↩</a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 13. Searchable Glossary -->
+<section class="knl-section" aria-labelledby="kc-glossary">
+  <h2 id="kc-glossary">Glossary</h2>
+  <p class="lead">Searchable, filterable, and the single source of truth for every term in this dossier.</p>
+  <div class="glossary-controls">
+    <input type="search" id="glossarySearch" class="glossary-search" placeholder="Search terms…" aria-label="Search glossary"/>
+  </div>
+  <div class="glossary-filters" id="glossaryFilters"></div>
+  <div class="glossary-list" id="glossaryList"></div>
+</section>
+
+<!-- ============================================================
+     GLOBAL UI: drawer, AI widget, tooltip, popover, hovercard
+     ============================================================ -->
+<div class="knl-drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="knl-drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTerm" aria-hidden="true">
+  <header>
+    <div class="badge" id="drawerIcon">📖</div>
+    <div style="flex:1;">
+      <div class="cat" id="drawerCat">CATEGORY</div>
+      <h3 id="drawerTerm">Term</h3>
+    </div>
+    <button class="icon-btn" id="drawerClose" aria-label="Close panel">✕</button>
+  </header>
+  <div class="body" id="drawerBody"></div>
+  <div class="footer">
+    <button class="btn" id="drawerPron">🔊 Pronounce</button>
+    <button class="btn primary" id="drawerOpenGlossary">View in Glossary</button>
+  </div>
+</aside>
+
+<button class="ai-launch" id="aiLaunch" aria-label="Open AI assistant">✦</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="AI explainer assistant">
+  <header>
+    <div class="av">AI</div>
+    <div class="name">
+      <h5>Dossier Assistant</h5>
+      <div class="status">● Online · Sample responses</div>
+    </div>
+    <button class="icon-btn" id="aiClose" aria-label="Close assistant">✕</button>
+  </header>
+  <div class="ai-msgs" id="aiMsgs"></div>
+  <div class="ai-suggestions" id="aiSuggestions"></div>
+  <div class="ai-input-wrap">
+    <input id="aiInput" placeholder="Ask about any term…" autocomplete="off"/>
+    <button id="aiSend">Send</button>
+  </div>
+</div>
+
+<!-- Floating popover/tooltip/hovercard hosts (positioned via JS) -->
+<div class="knl-tooltip" id="tooltip" role="tooltip" aria-hidden="true"></div>
+<div class="knl-popover" id="popover" role="dialog" aria-hidden="true"></div>
+<div class="knl-hovercard" id="hovercard" role="dialog" aria-hidden="true"></div>
+
+<script>
+  // ---------- Data ----------
+  const TIER_META = {
+    basic: { tag: "Foundation",   color: "#6ea8ff", label: "Foundation" },
+    mid:   { tag: "Signature",    color: "#b69bff", label: "Signature" },
+    ultra: { tag: "Reference",    color: "#d4a24b", label: "Reference" }
+  };
+
+  const ROOMS = [
+    {
+      id: "living",
+      name: "Living Room",
+      icon: "▣",
+      description: "The heart of the home — where everyday viewing meets weekend gatherings.",
+      tiers: {
+        basic: {
+          pitch: "A clean, reliable entertainment hub for everyday viewing.",
+          price: 2200,
+          items: [
+            "55\" 4K HDR TV with tilting wall mount",
+            "2.1 channel soundbar with wireless subwoofer",
+            "In-wall cable concealment kit",
+            "Wi-Fi streaming device + universal remote",
+            "Single-zone audio configuration"
+          ]
+        },
+        mid: {
+          pitch: "Cinematic feel with smart-home integration for the main living space.",
+          price: 6500,
+          items: [
+            "75\" QLED 4K TV with articulating mount",
+            "5.1 surround sound with in-ceiling speakers",
+            "Sonos or equivalent multi-room audio system",
+            "Smart lighting scenes (8 fixtures)",
+            "Home automation system with voice control",
+            "Concealed wiring with low-voltage rough-in"
+          ]
+        },
+        ultra: {
+          pitch: "Flagship cinema and automation built into the architecture.",
+          price: 22000,
+          items: [
+            "85\" 8K Mini-LED TV with motorized mount",
+            "7.2.4 Dolby Atmos in-wall + in-ceiling system",
+            "Whole-home automation system",
+            "Motorized shades and circadian lighting",
+            "Hidden equipment rack with ventilated closet",
+            "Bespoke programming and white-glove onboarding"
+          ]
+        }
+      }
+    },
+    {
+      id: "master",
+      name: "Master Bedroom",
+      icon: "☾",
+      description: "A private retreat with integrated comfort and ambiance controls.",
+      tiers: {
+        basic: {
+          pitch: "Comfortable, reliable bedroom AV — quiet and clean.",
+          price: 2000,
+          items: [
+            "50\" 4K TV with low-profile wall mount",
+            "Compact 2.0 soundbar",
+            "Smart bulb starter set (4 bulbs)",
+            "Streaming device + bedside remote"
+          ]
+        },
+        mid: {
+          pitch: "Concealed tech with automated lighting and shade scenes.",
+          price: 4200,
+          items: [
+            "65\" OLED TV with motorized lift cabinet",
+            "3.1 sound bar with rear surround pucks",
+            "Smart lighting + dimmable scenes (6 fixtures)",
+            "Motorized smart blinds (2 windows)",
+            "Wake / Goodnight scene programming"
+          ]
+        },
+        ultra: {
+          pitch: "Full automation suite — a serene, voice-driven sanctuary.",
+          price: 14500,
+          items: [
+            "Concealed TV in motorized rising cabinet",
+            "In-ceiling 5.1 with dedicated bedside subwoofer",
+            "Automated drapery and blackout shades",
+            "Smart climate + air quality monitoring",
+            "Biometric / voice scene activation",
+            "Custom millwork integration consultation"
+          ]
+        }
+      }
+    },
+    {
+      id: "theater",
+      name: "Theater Room",
+      icon: "▶",
+      description: "Dedicated cinema — engineered acoustics, calibrated picture, immersive sound.",
+      tiers: {
+        basic: {
+          pitch: "An entry-level dedicated theater with solid bones.",
+          price: 7500,
+          items: [
+            "4K projector (3000 lumens)",
+            "100\" fixed-frame screen",
+            "5.1 receiver and bookshelf speaker package",
+            "Riser wiring for two rows of seating",
+            "Universal remote and basic light dimming"
+          ]
+        },
+        mid: {
+          pitch: "True home cinema with Atmos, laser projection, and dedicated server.",
+          price: 22500,
+          items: [
+            "Laser 4K projector (4500 lumens, motorized lens)",
+            "120\" acoustically transparent screen",
+            "7.1.4 Dolby Atmos with subwoofer pair",
+            "Tiered seating wiring (riser + step lighting)",
+            "Dedicated movie streaming server (Plex / Kaleidescape Compact)",
+            "Acoustic panel package and basic room calibration"
+          ]
+        },
+        ultra: {
+          pitch: "Reference-grade, THX-certified private cinema.",
+          price: 75000,
+          items: [
+            "Reference 8K-capable projector with anamorphic lens",
+            "150\" anamorphic acoustically transparent screen",
+            "9.4.6 Dolby Atmos / DTS:X / IMAX Enhanced",
+            "Dedicated isolated room construction guidance (new construction)",
+            "Kaleidescape Strato-C movie server",
+            "Motorized masking, curtains, and starfield ceiling",
+            "Professional ISF picture + acoustic calibration"
+          ]
+        }
+      }
+    },
+    {
+      id: "office",
+      name: "Home Office",
+      icon: "■",
+      description: "A productivity command center — broadcast-ready when you need it.",
+      tiers: {
+        basic: {
+          pitch: "A clean, dependable desk setup for daily work.",
+          price: 1500,
+          items: [
+            "Dual 27\" 4K monitor configuration",
+            "Adjustable monitor arms with cable management",
+            "Quality 1080p webcam and USB microphone",
+            "Smart UPS and surge protection",
+            "Mesh Wi-Fi access point"
+          ]
+        },
+        mid: {
+          pitch: "Studio-quality video calls and serious multi-display productivity.",
+          price: 5400,
+          items: [
+            "Triple-display setup with KVM (or 49\" ultrawide)",
+            "Broadcast-quality camera + studio microphone",
+            "Adjustable key + fill lighting kit",
+            "Acoustic treatment for clean audio capture",
+            "Sit/stand smart desk integration",
+            "Dedicated mesh node with wired backhaul"
+          ]
+        },
+        ultra: {
+          pitch: "Full broadcast studio for executives, creators, and high-stakes meetings.",
+          price: 22000,
+          items: [
+            "Multi-camera setup with teleprompter and ATEM switcher",
+            "Reference-grade displays with hardware calibration",
+            "Professional acoustic treatment and isolation",
+            "Studio lighting grid with DMX control",
+            "Dedicated 10Gb network drop with redundant ISP",
+            "Full Crestron / control system integration"
+          ]
+        }
+      }
+    },
+    {
+      id: "outside",
+      name: "Outside / Patio / Pool",
+      icon: "☀",
+      description: "Weather-rated entertainment that turns the backyard into a destination.",
+      tiers: {
+        basic: {
+          pitch: "Weatherproof basics for the patio or covered deck.",
+          price: 2500,
+          items: [
+            "43\" weatherproof outdoor TV",
+            "Outdoor-rated soundbar with subwoofer",
+            "Weatherproof outlet and Wi-Fi extension",
+            "Waterproof streaming device with remote",
+            "TV cover and basic mounting hardware"
+          ]
+        },
+        mid: {
+          pitch: "Multi-zone outdoor audio with integrated lighting scenes.",
+          price: 8500,
+          items: [
+            "65\" full-sun outdoor TV",
+            "4-zone landscape and patio audio",
+            "Smart outdoor lighting scenes (10 fixtures)",
+            "Weatherproof outdoor streaming and AV rack",
+            "App-based control from anywhere",
+            "Buried low-voltage cabling and conduit"
+          ]
+        },
+        ultra: {
+          pitch: "Resort-grade outdoor entertainment for the pool, patio, and grounds.",
+          price: 38000,
+          items: [
+            "86\" all-weather full-sun display",
+            "8-zone landscape audio with in-ground subs",
+            "Automated retractable shade or pergola integration",
+            "Pool-edge waterproof control panel",
+            "Full Control4 outdoor zone with voice control",
+            "Architectural lighting design (50+ fixtures)",
+            "Custom outdoor AV cabinet with climate control"
+          ]
+        }
+      }
+    }
+  ];
+
+  const TIER_ORDER = ["basic", "mid", "ultra"];
+  const INSTALL_RATE = 0.15;
+
+  // ---------- State ----------
+  const state = {
+    activeRoom: ROOMS[0].id,
+    selections: {}, // roomId -> tierKey
+    detailsExpanded: false
+  };
+
+  // ---------- Helpers ----------
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const fmt = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  const roomById = (id) => ROOMS.find(r => r.id === id);
+
+  // ---------- Renderers ----------
+  function renderNav() {
+    const nav = $("#roomNav");
+    const buttons = ROOMS.map(r => {
+      const selected = state.selections[r.id];
+      return `
+        <button class="room-btn ${state.activeRoom === r.id ? "active" : ""} ${selected ? "has-selection" : ""}" data-room="${r.id}">
+          <span class="icon">${r.icon}</span>
+          <span class="name">${r.name}</span>
+          <span class="check">${selected ? "✓" : ""}</span>
+        </button>
+      `;
+    }).join("");
+    nav.innerHTML = `<h3>Rooms</h3>${buttons}`;
+    $$(".room-btn", nav).forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.activeRoom = btn.dataset.room;
+        renderNav();
+        renderRoom();
+      });
+    });
+  }
+
+  function renderRoom() {
+    const room = roomById(state.activeRoom);
+    const selected = state.selections[room.id];
+
+    const tierCards = TIER_ORDER.map(key => {
+      const tier = room.tiers[key];
+      const meta = TIER_META[key];
+      const isSelected = selected === key;
+      const items = tier.items.map(i => `<li>${i}</li>`).join("");
+      return `
+        <article class="tier ${isSelected ? "selected" : ""}" data-tier="${key}" style="--tier-color:${meta.color}">
+          <div class="tier-tag">${meta.tag}</div>
+          <h3 class="tier-name">${meta.label} Package</h3>
+          <p class="tier-pitch">${tier.pitch}</p>
+          <div class="tier-price">${fmt(tier.price)}<small>est.</small></div>
+          <ul>${items}</ul>
+          <button class="tier-action">${isSelected ? "✓ Selected" : "Select this tier"}</button>
+        </article>
+      `;
+    }).join("");
+
+    const main = $("#content");
+    main.innerHTML = `
+      <div class="fade-in">
+        <div class="room-header">
+          <div>
+            <h2>${room.name}</h2>
+            <div class="sub">${room.description}</div>
+          </div>
+          <div class="sub">3 tier options</div>
+        </div>
+        <div class="tiers">${tierCards}</div>
+      </div>
+    `;
+
+    $$(".tier", main).forEach(card => {
+      card.addEventListener("click", () => selectTier(room.id, card.dataset.tier));
+    });
+  }
+
+  function selectTier(roomId, tierKey) {
+    if (state.selections[roomId] === tierKey) {
+      delete state.selections[roomId]; // toggle off
+    } else {
+      state.selections[roomId] = tierKey;
+    }
+    renderNav();
+    renderRoom();
+    renderSummary();
+  }
+
+  function renderSummary() {
+    const list = $("#summaryList");
+    const totals = $("#totals");
+    const toggleBtn = $("#toggleDetailsBtn");
+    const entries = Object.entries(state.selections);
+
+    if (!entries.length) {
+      list.innerHTML = `<div class="summary-empty">No selections yet.<br/>Choose a tier in any room to begin.</div>`;
+      totals.style.display = "none";
+      toggleBtn.style.display = "none";
+      return;
+    }
+
+    let subtotal = 0;
+    list.innerHTML = entries.map(([roomId, tierKey]) => {
+      const room = roomById(roomId);
+      const tier = room.tiers[tierKey];
+      const meta = TIER_META[tierKey];
+      subtotal += tier.price;
+      const detailItems = tier.items.map(i => `<li>${i}</li>`).join("");
+      return `
+        <div class="summary-item ${state.detailsExpanded ? "expanded" : ""}" style="--tier-color:${meta.color}">
+          <div class="row">
+            <span class="room-name">${room.name}</span>
+            <span class="price">${fmt(tier.price)}</span>
+          </div>
+          <div class="row">
+            <span class="tier-name">
+              <span class="tier-dot" style="background:${meta.color}"></span>${meta.label}
+            </span>
+          </div>
+          <div class="details">
+            <ul>${detailItems}</ul>
+            <div class="item-price">
+              <span>${meta.label} package estimate</span>
+              <span>${fmt(tier.price)}</span>
+            </div>
+          </div>
+          <button class="remove" data-room="${roomId}">Remove</button>
+        </div>
+      `;
+    }).join("");
+
+    toggleBtn.style.display = "flex";
+    toggleBtn.classList.toggle("expanded", state.detailsExpanded);
+    $(".label", toggleBtn).textContent = state.detailsExpanded ? "Hide full details" : "Show full details";
+
+    $$(".remove", list).forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        delete state.selections[btn.dataset.room];
+        renderNav();
+        renderRoom();
+        renderSummary();
+      });
+    });
+
+    const install = subtotal * INSTALL_RATE;
+    const grand = subtotal + install;
+    $("#subtotal").textContent = fmt(subtotal);
+    $("#install").textContent = fmt(install);
+    $("#grand").textContent = fmt(grand);
+    totals.style.display = "block";
+  }
+
+  // ---------- Actions ----------
+  $("#toggleDetailsBtn").addEventListener("click", () => {
+    state.detailsExpanded = !state.detailsExpanded;
+    renderSummary();
+  });
+
+  $("#resetBtn").addEventListener("click", () => {
+    if (!Object.keys(state.selections).length) return;
+    if (confirm("Clear all selections?")) {
+      state.selections = {};
+      renderNav();
+      renderRoom();
+      renderSummary();
+    }
+  });
+
+  $("#exportBtn").addEventListener("click", () => {
+    const entries = Object.entries(state.selections);
+    if (!entries.length) {
+      alert("Please select at least one package before requesting a quote.");
+      return;
+    }
+    let subtotal = 0;
+    const lines = entries.map(([roomId, tierKey]) => {
+      const room = roomById(roomId);
+      const tier = room.tiers[tierKey];
+      subtotal += tier.price;
+      return `${room.name} — ${TIER_META[tierKey].label}: ${fmt(tier.price)}`;
+    });
+    const install = subtotal * INSTALL_RATE;
+    const grand = subtotal + install;
+    const summary = [
+      "TCL Tech Solutions — Selection Summary",
+      "",
+      ...lines,
+      "",
+      `Subtotal: ${fmt(subtotal)}`,
+      `Design & Installation (15%): ${fmt(install)}`,
+      `Estimated Total: ${fmt(grand)}`
+    ].join("\n");
+    alert(summary + "\n\nA TCL Tech Solutions consultant will contact you to schedule your design consultation.");
+  });
+
+  // ---------- PDF export ----------
+  function buildPdfReport() {
+    const entries = Object.entries(state.selections);
+    let subtotal = 0;
+
+    const cards = entries.map(([roomId, tierKey]) => {
+      const room = roomById(roomId);
+      const tier = room.tiers[tierKey];
+      const meta = TIER_META[tierKey];
+      subtotal += tier.price;
+      const items = tier.items.map(i => `
+        <li style="position:relative;padding:7px 0 7px 22px;font-size:13px;line-height:1.5;color:#e7eaf1;border-bottom:1px dashed rgba(255,255,255,0.05);">
+          <span style="position:absolute;left:4px;top:11px;width:9px;height:9px;border-left:2px solid ${meta.color};border-bottom:2px solid ${meta.color};transform:rotate(-45deg);display:inline-block;"></span>${i}
+        </li>
+      `).join("");
+      return `
+        <div style="background:#0f1117;border:1px solid #262b38;border-radius:14px;padding:22px 22px 18px;margin-bottom:16px;page-break-inside:avoid;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;right:0;top:0;height:3px;background:${meta.color};opacity:0.7;"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+            <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9aa3b6;">${room.name}</div>
+            <div style="font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:${meta.color};font-weight:700;">${meta.tag}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+            <div style="font-size:19px;font-weight:600;color:#e7eaf1;">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${meta.color};margin-right:10px;vertical-align:middle;"></span>${meta.label} Package
+            </div>
+            <div style="font-size:20px;font-weight:600;color:#e9c47a;letter-spacing:-0.3px;">${fmt(tier.price)}</div>
+          </div>
+          <div style="color:#9aa3b6;font-size:12.5px;margin-bottom:12px;line-height:1.5;">${tier.pitch}</div>
+          <ul style="list-style:none;padding:0;margin:0;">${items}</ul>
+        </div>
+      `;
+    }).join("");
+
+    const install = subtotal * INSTALL_RATE;
+    const grand = subtotal + install;
+    const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+    const totalsBlock = `
+      <div style="background:#0f1117;border:1px solid #262b38;border-radius:14px;padding:22px;margin-top:8px;page-break-inside:avoid;">
+        <div style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#6b7384;font-weight:600;margin-bottom:14px;">Investment Summary</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#9aa3b6;margin-bottom:8px;">
+          <span>Subtotal</span><span style="color:#e7eaf1;font-variant-numeric:tabular-nums;">${fmt(subtotal)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#9aa3b6;margin-bottom:14px;">
+          <span>Design &amp; Installation (15%)</span><span style="color:#e7eaf1;font-variant-numeric:tabular-nums;">${fmt(install)}</span>
+        </div>
+        <div style="border-top:1px dashed #262b38;padding-top:14px;display:flex;justify-content:space-between;align-items:baseline;">
+          <span style="font-size:16px;font-weight:600;color:#e7eaf1;">Estimated Total</span>
+          <span style="font-size:22px;font-weight:600;color:#e9c47a;font-variant-numeric:tabular-nums;letter-spacing:-0.4px;">${fmt(grand)}</span>
+        </div>
+      </div>
+      <div style="text-align:center;color:#6b7384;font-size:10.5px;margin-top:16px;line-height:1.5;">
+        Pricing reflects approximate ranges. A formal proposal with itemized costs follows your design consultation.
+      </div>
+    `;
+
+    return `
+      <div style="
+        background:#08090c;
+        background-image:radial-gradient(900px 600px at 80% -10%, #1a1f2c 0%, #08090c 60%);
+        color:#e7eaf1;
+        font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+        -webkit-font-smoothing:antialiased;
+        padding:40px 36px 36px;
+        width:780px;
+        box-sizing:border-box;
+      ">
+        <div style="display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid #262b38;margin-bottom:24px;">
+          <div style="width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#d4a24b 0%,#8a5d1f 100%);display:flex;align-items:center;justify-content:center;color:#1a130a;font-weight:800;font-size:20px;">T</div>
+          <div style="flex:1;line-height:1.15;">
+            <div style="font-weight:600;font-size:16px;letter-spacing:0.4px;color:#e7eaf1;">TCL Tech Solutions</div>
+            <div style="font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:#6b7384;">Client Dossier</div>
+          </div>
+          <div style="text-align:right;font-size:11px;color:#6b7384;letter-spacing:0.5px;">
+            <div>${dateStr}</div>
+            <div style="margin-top:2px;color:#9aa3b6;">Sample Client</div>
+          </div>
+        </div>
+        <div style="margin-bottom:22px;">
+          <div style="font-size:24px;font-weight:600;letter-spacing:-0.4px;margin-bottom:6px;">
+            Your <span style="color:#d4a24b;">smart home experience</span>.
+          </div>
+          <div style="color:#9aa3b6;font-size:12.5px;line-height:1.55;">
+            A summary of your selected packages across ${entries.length} ${entries.length === 1 ? "room" : "rooms"}, with full feature breakdown and estimated investment.
+          </div>
+        </div>
+        ${cards}
+        ${totalsBlock}
+      </div>
+    `;
+  }
+
+  $("#pdfBtn").addEventListener("click", async () => {
+    const entries = Object.entries(state.selections);
+    if (!entries.length) {
+      alert("Please select at least one package before saving the dossier.");
+      return;
+    }
+    if (typeof html2pdf === "undefined") {
+      alert("PDF library failed to load. Please ensure you have an internet connection and try again.");
+      return;
+    }
+
+    const btn = $("#pdfBtn");
+    const originalText = btn.textContent;
+    btn.textContent = "Generating…";
+    btn.disabled = true;
+
+    // Build offscreen report. Use absolute (not fixed) positioning so html2canvas
+    // captures only the wrapper bounds, not surrounding page content.
+    const wrap = document.createElement("div");
+    wrap.style.cssText = [
+      "position:absolute",
+      "top:0",
+      "left:-10000px",
+      "width:780px",
+      "background:#08090c",
+      "color:#e7eaf1",
+      "z-index:-1",
+      "overflow:hidden"
+    ].join(";");
+    wrap.innerHTML = buildPdfReport();
+    document.body.appendChild(wrap);
+    const reportEl = wrap.firstElementChild;
+
+    try {
+      // Wait two frames so layout and fonts are settled before capture
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+      const filename = `TCL-Tech-Dossier-${new Date().toISOString().slice(0,10)}.pdf`;
+
+      // Use html2pdf chain — it bundles html2canvas and jsPDF internally,
+      // so we don't depend on those names being exposed on window.
+      // Critical: NO `pagebreak.avoid: "div"` — that caused blank first pages.
+      await html2pdf()
+        .set({
+          margin: [18, 18, 18, 18],
+          filename: filename,
+          image: { type: "jpeg", quality: 0.95 },
+          html2canvas: {
+            scale: 2,
+            backgroundColor: "#08090c",
+            useCORS: true,
+            logging: false,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: reportEl.scrollWidth || 780
+          },
+          jsPDF: {
+            unit: "pt",
+            format: "letter",
+            orientation: "portrait",
+            compress: true
+          },
+          pagebreak: { mode: ["css", "legacy"] }
+        })
+        .from(reportEl)
+        .save();
+    } catch (err) {
+      console.error(err);
+      alert("Unable to generate PDF: " + (err && err.message ? err.message : err));
+    } finally {
+      if (wrap.parentNode) wrap.parentNode.removeChild(wrap);
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  });
+
+  // ---------- Initial render ----------
+  renderNav();
+  renderRoom();
+  renderSummary();
+</script>
+
+<script>
+/* ============================================================
+   KNOWLEDGE LAYER — Context & Explanation System logic
+   ============================================================ */
+(function () {
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  // -----------------------------------------------------------
+  // Centralized glossary
+  // -----------------------------------------------------------
+  const GLOSSARY = {
+    "control4": {
+      term: "Control4",
+      category: "Brands",
+      icon: "🧠",
+      pronunciation: "kuhn-TROHL FOR",
+      short: "A whole-home automation system platform.",
+      full: "Control4 is a manufacturer of home-automation systems that lets a single application or remote control unify televisions, audio zones, lighting, climate, locks, and security cameras under one interface. It supports thousands of third-party devices and is one of the dominant platforms used by certified custom installers.",
+      plain: "Think of Control4 as the brain that lets one app — or your voice — run your TV, lights, locks, music, and cameras at the same time.",
+      example: "We installed a Control4 hub in the equipment closet so a single Goodnight scene locks the doors, dims every light to 5%, lowers the bedroom shade, and arms the alarm.",
+      whyItMatters: "Without an automation hub, smart-home devices stay siloed in their own apps. The hub is what turns a collection of products into a coherent system.",
+      related: ["crestron", "savant", "lutron"]
+    },
+    "crestron": {
+      term: "Crestron",
+      category: "Brands",
+      icon: "⚙",
+      pronunciation: "KRES-trahn",
+      short: "Premium commercial-grade automation system.",
+      full: "Crestron is a long-standing manufacturer of automation control systems used in luxury homes, corporate boardrooms, and broadcast studios. Crestron systems are programmable to a deeper level than most consumer alternatives and require certified dealers for setup.",
+      plain: "Crestron is the high-end, fully customizable cousin of Control4 — usually found in commercial buildings and luxury homes.",
+      example: "The boardroom uses a Crestron touch panel to start the projector, drop the screen, dim the lights, and dial in to Zoom — all from one button.",
+      whyItMatters: "When clients need multi-room broadcast-grade reliability and deep custom programming, Crestron is the standard.",
+      related: ["control4", "savant"]
+    },
+    "savant": {
+      term: "Savant",
+      category: "Brands",
+      icon: "✦",
+      short: "Apple-focused luxury home automation system.",
+      full: "Savant is a luxury home-control platform known for tight integration with Apple ecosystems and refined industrial design. It targets the high-end residential market.",
+      plain: "Savant is the Apple-flavored take on whole-home control — sleek hardware, polished apps.",
+      example: "Savant's Pro app lets the homeowner control all subsystems from an iPad or Apple Watch.",
+      whyItMatters: "For Apple-first households, Savant integrates more naturally than most competitors.",
+      related: ["control4", "crestron"]
+    },
+    "lutron": {
+      term: "Lutron",
+      category: "Brands",
+      icon: "💡",
+      short: "Industry standard for lighting and shade control.",
+      full: "Lutron Electronics manufactures high-end lighting controls, dimmers, keypads, and motorized window treatments. Lutron's RadioRA 3 and HomeWorks systems are de-facto standards in luxury residential lighting design.",
+      plain: "When you want lights and shades that feel premium and behave reliably, Lutron is what installers reach for.",
+      example: "Every keypad in the home is a Lutron Palladiom — engraved buttons mapped to scenes like Welcome, Dinner, and Goodnight.",
+      whyItMatters: "Lighting is the most-used subsystem in any smart home. Cheap dimmers feel cheap every day.",
+      related: ["control4", "crestron", "smart-lighting"]
+    },
+    "atmos": {
+      term: "Dolby Atmos",
+      category: "Standards",
+      icon: "♪",
+      short: "Object-based 3D surround sound.",
+      full: "Dolby Atmos is an audio format that places individual sounds as objects in three-dimensional space, including overhead. It requires speakers above the listener (in-ceiling or upward-firing) and an Atmos-capable receiver to decode.",
+      plain: "Surround sound that includes the ceiling — so a helicopter genuinely flies overhead.",
+      example: "The 7.2.4 Atmos system in the theater room uses four ceiling speakers to place sounds above the audience.",
+      whyItMatters: "It is the largest leap in immersive audio since stereo went to 5.1 surround.",
+      related: ["thx", "kaleidescape"]
+    },
+    "thx": {
+      term: "THX Certification",
+      category: "Standards",
+      icon: "✓",
+      short: "Reference performance certification for cinema-grade rooms.",
+      full: "THX is a quality-assurance standard originating at Lucasfilm. THX-certified rooms meet specific criteria for screen size relative to seating, speaker placement, ambient noise, and acoustic treatment.",
+      plain: "A stamp meaning 'this room sounds and looks the way the director intended.'",
+      example: "Reference theaters that meet THX Select II standards have measured background noise below NC-25.",
+      whyItMatters: "Certification provides an objective benchmark in a field full of subjective claims.",
+      related: ["isf", "atmos"]
+    },
+    "isf": {
+      term: "ISF Calibration",
+      category: "Standards",
+      icon: "◉",
+      short: "Imaging Science Foundation display tuning.",
+      full: "ISF (Imaging Science Foundation) is the certification body whose technicians calibrate displays to industry-reference grayscale, gamma, and color targets. ISF calibration uses meters and pattern generators to align a screen with broadcast standards.",
+      plain: "A trained technician uses meters to tune your TV so colors look the way the director made them.",
+      example: "After ISF calibration, our reference projector measures within 1.5 dE2000 across the grayscale ramp.",
+      whyItMatters: "An uncalibrated $50,000 projector underperforms a calibrated $5,000 one.",
+      related: ["thx"]
+    },
+    "hdr": {
+      term: "HDR",
+      category: "Standards",
+      icon: "✦",
+      short: "High Dynamic Range — wider contrast and color.",
+      full: "HDR (High Dynamic Range) describes a class of video technologies that allow a wider range of brightness and color than standard video. Common HDR formats include HDR10, Dolby Vision, and HLG.",
+      plain: "Brighter highlights, deeper shadows, more colors — pictures that look closer to real life.",
+      example: "Our reference projectors support HDR10 and Dolby Vision via Kaleidescape.",
+      whyItMatters: "HDR is the single largest perceived picture-quality jump since 4K.",
+      related: ["oled", "qled"]
+    },
+    "oled": {
+      term: "OLED",
+      category: "Technologies",
+      icon: "▣",
+      short: "Self-emissive panel where each pixel produces its own light.",
+      full: "OLED (Organic Light-Emitting Diode) panels emit light at the pixel level, allowing perfect blacks and infinite contrast. Modern OLED panels achieve high peak brightness as well, though they remain susceptible to image retention with extreme static content.",
+      plain: "A TV where every tiny pixel is its own little lightbulb — so blacks are truly black.",
+      example: "The 65\" OLED in the master bedroom sits behind a motorized lift cabinet.",
+      whyItMatters: "OLED produces the most cinematic picture quality available — particularly in dim rooms.",
+      related: ["qled", "hdr"]
+    },
+    "qled": {
+      term: "QLED",
+      category: "Technologies",
+      icon: "◆",
+      short: "LED-LCD with quantum dot color enhancement.",
+      full: "QLED is a marketing term for LED-backlit LCD televisions enhanced with a quantum-dot film for richer, more accurate color. QLED achieves much higher peak brightness than OLED and avoids burn-in concerns.",
+      plain: "A super-bright, vivid TV that's tough enough for sunny living rooms.",
+      example: "The Signature living-room package uses a 75\" QLED — bright enough for daytime viewing.",
+      whyItMatters: "QLED is usually the right choice for sunlit and outdoor spaces.",
+      related: ["oled", "hdr"]
+    },
+    "kaleidescape": {
+      term: "Kaleidescape",
+      category: "Brands",
+      icon: "🎬",
+      pronunciation: "kuh-LIDE-uh-scape",
+      short: "Reference-grade movie download server.",
+      full: "Kaleidescape is the only legal source of bit-perfect 4K Blu-ray-quality movie downloads with full Dolby Atmos, Dolby Vision, and lossless audio. Their server hardware is purpose-built for cinema-grade playback.",
+      plain: "Like Netflix, but movies download in full Blu-ray quality with cinema sound — and your collection is genuinely yours.",
+      example: "The Reference theater package includes a Kaleidescape Strato C server with 18 TB of curated 4K HDR titles.",
+      whyItMatters: "Streaming services compress audio and video heavily. Kaleidescape does not.",
+      related: ["atmos", "hdr"]
+    },
+    "anamorphic": {
+      term: "Anamorphic Lens",
+      category: "Technologies",
+      icon: "◐",
+      pronunciation: "an-uh-MOR-fik",
+      short: "An optical attachment that fills a wide cinema screen edge-to-edge.",
+      full: "An anamorphic lens stretches a 16:9 projector image horizontally to fill a 2.40:1 cinema-aspect screen, eliminating black bars and using the full panel resolution.",
+      plain: "A special lens that lets your projector use your whole wide screen for movies — no black bars.",
+      example: "The Reference theater pairs a 4K laser projector with a motorized anamorphic lens that swings into place automatically for cinema content.",
+      whyItMatters: "It is the difference between watching a movie and feeling immersed in one.",
+      related: ["laser-projector"]
+    },
+    "laser-projector": {
+      term: "Laser Projector",
+      category: "Technologies",
+      icon: "☀",
+      short: "A projector that uses laser light sources instead of bulbs.",
+      full: "Laser projectors replace traditional UHP lamps with red-green-blue lasers or laser-phosphor light engines. They produce more accurate color, far longer light-source life (20,000+ hours), and instant on/off.",
+      plain: "A projector that runs on lasers instead of a bulb — brighter, more accurate, lasts about 20 years.",
+      example: "Our Signature package uses a 4500-lumen laser projector with motorized lens shift and zoom memory.",
+      whyItMatters: "Bulb projectors require lamp replacements that cost hundreds of dollars annually.",
+      related: ["anamorphic", "hdr"]
+    },
+    "sonos": {
+      term: "Sonos",
+      category: "Brands",
+      icon: "♫",
+      pronunciation: "SOH-nos",
+      short: "Wireless multi-room audio system.",
+      full: "Sonos is the leading wireless multi-room audio platform. Speakers communicate over Wi-Fi, can be grouped or played independently, and support every major streaming service through a unified app.",
+      plain: "Speakers around the house that all play the same song — or different songs in different rooms — controlled from one app.",
+      example: "Each Signature-tier room includes a Sonos zone, so the same playlist follows you between the kitchen, master bedroom, and patio.",
+      whyItMatters: "Multi-room audio is one of the most-used features of a smart home — clients use it daily.",
+      related: ["multi-zone-audio"]
+    },
+    "multi-zone-audio": {
+      term: "Multi-Zone Audio",
+      category: "Concepts",
+      icon: "♪",
+      short: "Independent audio control across multiple rooms.",
+      full: "Multi-zone audio refers to the architectural practice of distributing audio across logical zones (rooms, areas, outdoor regions) where each zone can play independently or be grouped with others. Modern systems are software-defined; older systems use a multi-zone amplifier with selector switches.",
+      plain: "The ability to play different music in every room — or the same song in all of them — without running a thousand wires.",
+      example: "Our reference outdoor package divides the property into eight zones: pool, patio, dining, BBQ, garden path, fire pit, driveway, and master deck.",
+      whyItMatters: "Done correctly, this is the highest-utility feature of a smart home.",
+      related: ["sonos"]
+    },
+    "smart-lighting": {
+      term: "Smart Lighting",
+      category: "Concepts",
+      icon: "💡",
+      short: "Programmable lighting with scenes, schedules, and dimming.",
+      full: "Smart lighting replaces standard switches and dimmers with controllable equivalents that can be programmed into scenes, scheduled, dimmed remotely, and integrated with sensors and voice control.",
+      plain: "Lights you can program to do what you want, when you want, without touching the switch.",
+      example: "A Welcome scene at dusk turns on the foyer chandelier to 80%, the path lights to 100%, and the kitchen pendants to 60%.",
+      whyItMatters: "Lighting is the most personal subsystem in a home; well-programmed scenes feel magical, poorly programmed ones feel broken.",
+      related: ["lutron", "rough-in"]
+    },
+    "rough-in": {
+      term: "Low-Voltage Rough-In",
+      category: "Concepts",
+      icon: "⚡",
+      short: "Pre-construction wiring for AV and automation.",
+      full: "Low-voltage rough-in is the stage of construction during which speaker, HDMI, network, and control cabling is run inside walls before drywall is installed. It is the single most consequential AV decision in a new home, because retrofitting hidden wiring afterward is expensive and disruptive.",
+      plain: "The wiring step done before the drywall goes up — it decides what your home will be capable of for the next 20 years.",
+      example: "We pull Cat6a, RG6 quad-shield, fiber, and 14/4 speaker wire to every potential AV location during rough-in.",
+      whyItMatters: "Wires you don't pull during rough-in cost 10–50x to add later.",
+      related: ["smart-lighting", "multi-zone-audio"]
+    },
+    "scene": {
+      term: "Scene",
+      category: "Concepts",
+      icon: "▶",
+      short: "A single command that changes many devices at once.",
+      full: "A scene is a programmed state that, when invoked, drives multiple devices to specified values simultaneously — for example, lights to 30%, blinds down, TV on, AV input set to streaming.",
+      plain: "One button that changes dozens of things at the same time.",
+      example: "Movie Night dims the lights to 10%, lowers the shades, switches the TV input, and silences the doorbell.",
+      whyItMatters: "Scenes are the user-facing language of automation. Done right, they replace dozens of daily decisions.",
+      related: ["smart-lighting", "control4"]
+    },
+    "acoustic-treatment": {
+      term: "Acoustic Treatment",
+      category: "Concepts",
+      icon: "▒",
+      short: "Materials that absorb or diffuse sound for a controlled listening environment.",
+      full: "Acoustic treatment uses absorption panels, diffusers, and bass traps to control reflections and standing waves in a listening room. It is essential for theater rooms and high-end stereo listening.",
+      plain: "Panels on the walls and ceiling that stop sound from bouncing around — making everything sound clear instead of muddy.",
+      example: "The Reference theater uses fabric-wrapped absorption panels at first reflection points and skyline diffusers on the back wall.",
+      whyItMatters: "A bad room ruins good speakers. The room is half the system.",
+      related: ["thx"]
+    },
+    "theater-room": {
+      term: "Theater Room",
+      category: "Spaces",
+      icon: "▶",
+      short: "A dedicated space optimized for cinema viewing.",
+      full: "A dedicated theater room is a purpose-built space with controlled lighting, acoustic treatment, tiered seating, and a calibrated audio-video system. It is distinct from a media room, which is a multi-purpose living space.",
+      plain: "A room designed only for movies — dark, quiet, and built for sound.",
+      example: "The TCL Tech Reference theater includes 9.4.6 Atmos, anamorphic lens, and isolated construction.",
+      whyItMatters: "A great theater room is the single highest-quality entertainment experience available in a home.",
+      related: ["atmos", "anamorphic", "acoustic-treatment"]
+    },
+    "patio-zone": {
+      term: "Patio Zone",
+      category: "Spaces",
+      icon: "☀",
+      short: "An outdoor entertainment area with weather-rated AV.",
+      full: "An outdoor entertainment zone integrates weather-rated displays, audio, lighting, and climate elements (heaters, fans, mist systems) under a unified control system. Built correctly, it is as functional in February as in July.",
+      plain: "An outdoor space turned into a real entertainment room — TV, sound, lights, the works.",
+      example: "Our Reference outdoor package extends Atmos audio to eight zones across the property.",
+      whyItMatters: "It dramatically expands the usable square footage of your home.",
+      related: ["multi-zone-audio"]
+    },
+    "circadian": {
+      term: "Circadian Lighting",
+      category: "Concepts",
+      icon: "☼",
+      short: "Lighting that shifts color temperature throughout the day.",
+      full: "Circadian (or tunable-white) lighting automatically adjusts the color temperature of your home's lights to match natural daylight cycles — cooler and brighter at midday, warmer and softer at night — to support healthy circadian rhythms.",
+      plain: "Lights that change color temperature with the sun — cool and energizing in the morning, warm and calming at night.",
+      example: "Reference packages include circadian programming so the home's lighting tracks dawn, midday, and sunset automatically.",
+      whyItMatters: "There is mounting research connecting circadian-aligned light exposure to sleep quality and overall wellbeing.",
+      related: ["smart-lighting", "lutron"]
+    }
+  };
+
+  const CATEGORY_COLORS = {
+    "Brands":       "#6ea8ff",
+    "Standards":    "#b69bff",
+    "Technologies": "#4ad29a",
+    "Concepts":     "#d4a24b",
+    "Spaces":       "#f4b860",
+    "Roles":        "#ff8585"
+  };
+
+  // -----------------------------------------------------------
+  // Tooltip / Popover / HoverCard system
+  // -----------------------------------------------------------
+  const tooltip  = $("#tooltip");
+  const popover  = $("#popover");
+  const hovercard = $("#hovercard");
+  let activePopover = null;
+  let activeHovercard = null;
+
+  function positionFloating(el, anchor, placement) {
+    const r = anchor.getBoundingClientRect();
+    el.style.visibility = "hidden";
+    el.classList.add("visible");
+    const er = el.getBoundingClientRect();
+    el.classList.remove("visible");
+    el.style.visibility = "";
+    const margin = 10;
+    let top = r.bottom + 8;
+    let left = r.left + (r.width - er.width) / 2;
+    if (top + er.height + margin > window.innerHeight) top = r.top - er.height - 8;
+    if (left + er.width + margin > window.innerWidth) left = window.innerWidth - er.width - margin;
+    if (left < margin) left = margin;
+    if (top < margin) top = margin;
+    el.style.left = left + "px";
+    el.style.top  = top + "px";
+  }
+
+  function showTooltip(anchor, entry) {
+    if (!entry) return;
+    tooltip.textContent = isPlain() ? entry.plain : entry.short;
+    tooltip.setAttribute("aria-hidden", "false");
+    positionFloating(tooltip, anchor);
+    tooltip.classList.add("visible");
+  }
+  function hideTooltip() {
+    tooltip.classList.remove("visible");
+    tooltip.setAttribute("aria-hidden", "true");
+  }
+
+  function showPopover(anchor, entry) {
+    if (!entry) return;
+    const text = isPlain() ? entry.plain : entry.full;
+    popover.innerHTML = `
+      <button class="close-x" aria-label="Close">✕</button>
+      <div class="cat">${entry.category}</div>
+      <h4>${entry.term}</h4>
+      <p>${text}</p>
+      ${entry.example ? `<p style="border-left:2px solid var(--accent);padding-left:10px;color:var(--text-dim);font-style:italic;">${entry.example}</p>` : ""}
+      <div class="actions">
+        <button class="link" data-act="open-drawer">Open full dossier →</button>
+      </div>
+    `;
+    popover.setAttribute("aria-hidden", "false");
+    positionFloating(popover, anchor);
+    popover.classList.add("visible");
+    activePopover = { anchor, entry };
+    popover.querySelector(".close-x").onclick = hidePopover;
+    popover.querySelector('[data-act="open-drawer"]').onclick = () => {
+      hidePopover();
+      openDrawer(entry);
+    };
+  }
+  function hidePopover() {
+    popover.classList.remove("visible");
+    popover.setAttribute("aria-hidden", "true");
+    activePopover = null;
+  }
+
+  function showHovercard(anchor, entry) {
+    if (!entry) return;
+    const text = isPlain() ? entry.plain : entry.short;
+    const tags = (entry.related || []).map(id => GLOSSARY[id] ? GLOSSARY[id].term : id).slice(0, 3)
+                 .map(t => `<span class="hc-tag">${t}</span>`).join("");
+    hovercard.innerHTML = `
+      <div class="hc-banner">${entry.icon || "◇"}</div>
+      <div class="hc-body">
+        <div class="hc-cat">${entry.category}</div>
+        <h4>${entry.term}</h4>
+        <p>${text}</p>
+        ${tags ? `<div class="hc-tags">${tags}</div>` : ""}
+      </div>
+      <button class="hc-action" data-act="open-drawer">Open full dossier →</button>
+    `;
+    hovercard.setAttribute("aria-hidden", "false");
+    positionFloating(hovercard, anchor);
+    hovercard.classList.add("visible");
+    activeHovercard = { anchor, entry };
+    hovercard.querySelector('[data-act="open-drawer"]').onclick = () => {
+      hideHovercard();
+      openDrawer(entry);
+    };
+  }
+  function hideHovercard() {
+    hovercard.classList.remove("visible");
+    hovercard.setAttribute("aria-hidden", "true");
+    activeHovercard = null;
+  }
+
+  // Wire all .term elements
+  let hoverTimer = null;
+  function wireTerms(root = document) {
+    $$(".term", root).forEach(el => {
+      if (el._knlWired) return;
+      el._knlWired = true;
+      const id = el.dataset.term;
+      const entry = GLOSSARY[id];
+      if (!entry) return;
+      el.setAttribute("role", "button");
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("aria-label", entry.term + " — open definition");
+      const component = el.dataset.component || "tooltip";
+
+      const onEnter = () => {
+        clearTimeout(hoverTimer);
+        if (component === "popover") showTooltip(el, entry);
+        else if (component === "hovercard") showHovercard(el, entry);
+        else showTooltip(el, entry);
+      };
+      const onLeave = () => {
+        hoverTimer = setTimeout(() => {
+          if (component === "hovercard") hideHovercard();
+          hideTooltip();
+        }, 100);
+      };
+      const onClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideTooltip();
+        if (component === "tooltip") openDrawer(entry);
+        else if (component === "popover") showPopover(el, entry);
+        else openDrawer(entry);
+      };
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mouseleave", onLeave);
+      el.addEventListener("focus", onEnter);
+      el.addEventListener("blur", onLeave);
+      el.addEventListener("click", onClick);
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") onClick(e);
+      });
+    });
+  }
+
+  // Click outside closes popover/hovercard
+  document.addEventListener("click", (e) => {
+    if (activePopover && !popover.contains(e.target) && !e.target.classList.contains("term")) hidePopover();
+    if (activeHovercard && !hovercard.contains(e.target) && !e.target.classList.contains("term")) hideHovercard();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { hidePopover(); hideHovercard(); closeDrawer(); closeAi(); }
+  });
+
+  // -----------------------------------------------------------
+  // Drawer (full term dossier)
+  // -----------------------------------------------------------
+  const drawer = $("#drawer");
+  const drawerBackdrop = $("#drawerBackdrop");
+  const drawerBody = $("#drawerBody");
+
+  function openDrawer(entry) {
+    if (typeof entry === "string") entry = GLOSSARY[entry];
+    if (!entry) return;
+    $("#drawerIcon").textContent = entry.icon || "◇";
+    $("#drawerTerm").textContent = entry.term;
+    $("#drawerCat").textContent = entry.category.toUpperCase();
+    $("#drawerCat").style.color = CATEGORY_COLORS[entry.category] || "var(--accent)";
+
+    const text = isPlain() ? entry.plain : entry.full;
+    const related = (entry.related || []).map(id => {
+      const r = GLOSSARY[id];
+      if (!r) return "";
+      return `<span class="related-tag" data-rel="${id}">${r.term}</span>`;
+    }).join("");
+    drawerBody.innerHTML = `
+      <section>
+        <h5>Simple Definition</h5>
+        <p class="dim">${entry.short}</p>
+      </section>
+      <section>
+        <h5>${isPlain() ? "Plain English" : "Full Explanation"}</h5>
+        <p>${text}</p>
+      </section>
+      ${entry.example ? `<section><h5>Example Usage</h5><div class="quote">${entry.example}</div></section>` : ""}
+      ${entry.whyItMatters ? `<section><h5>Why It Matters</h5><p class="dim">${entry.whyItMatters}</p></section>` : ""}
+      ${related ? `<section><h5>Related Concepts</h5><div class="related-tags">${related}</div></section>` : ""}
+    `;
+    drawerBody.querySelectorAll('[data-rel]').forEach(t => {
+      t.addEventListener("click", () => openDrawer(t.dataset.rel));
+    });
+    $("#drawerPron").onclick = () => speak(entry.pronunciation || entry.term);
+    $("#drawerOpenGlossary").onclick = () => {
+      closeDrawer();
+      $("#kc-glossary").scrollIntoView({ behavior: "smooth" });
+      $("#glossarySearch").value = entry.term;
+      filterGlossary();
+    };
+    drawer.classList.add("visible");
+    drawerBackdrop.classList.add("visible");
+    drawer.setAttribute("aria-hidden", "false");
+  }
+  function closeDrawer() {
+    drawer.classList.remove("visible");
+    drawerBackdrop.classList.remove("visible");
+    drawer.setAttribute("aria-hidden", "true");
+  }
+  $("#drawerClose").addEventListener("click", closeDrawer);
+  drawerBackdrop.addEventListener("click", closeDrawer);
+
+  // -----------------------------------------------------------
+  // Theme toggle
+  // -----------------------------------------------------------
+  const themeBtn = $("#themeBtn");
+  function setTheme(t) {
+    document.body.setAttribute("data-theme", t);
+    themeBtn.textContent = t === "light" ? "☼" : "☾";
+  }
+  themeBtn.addEventListener("click", () => {
+    const cur = document.body.getAttribute("data-theme") || "dark";
+    setTheme(cur === "dark" ? "light" : "dark");
+  });
+  setTheme("dark");
+
+  // -----------------------------------------------------------
+  // Plain English toggle
+  // -----------------------------------------------------------
+  const plainBtn = $("#plainEngBtn");
+  function isPlain() { return document.body.getAttribute("data-plain") === "on"; }
+  plainBtn.addEventListener("click", () => {
+    const next = isPlain() ? "off" : "on";
+    document.body.setAttribute("data-plain", next);
+    plainBtn.classList.toggle("active", next === "on");
+    plainBtn.setAttribute("aria-pressed", next === "on");
+    // Refresh visible drawer/popover content
+    if (activePopover) showPopover(activePopover.anchor, activePopover.entry);
+    if (activeHovercard) showHovercard(activeHovercard.anchor, activeHovercard.entry);
+  });
+
+  // -----------------------------------------------------------
+  // Concept Cards
+  // -----------------------------------------------------------
+  const conceptIds = ["scene", "rough-in", "circadian", "multi-zone-audio", "acoustic-treatment", "atmos"];
+  $("#conceptGrid").innerHTML = conceptIds.map(id => {
+    const e = GLOSSARY[id];
+    return `
+      <article class="concept-card" data-rel="${id}" tabindex="0" role="button" aria-label="${e.term}">
+        <div class="cc-icon">${e.icon || "◇"}</div>
+        <div class="cc-cat">${e.category}</div>
+        <h4>${e.term}</h4>
+        <p>${e.short}</p>
+        <div class="learn">Learn more →</div>
+      </article>
+    `;
+  }).join("");
+  $$(".concept-card").forEach(c => {
+    const open = () => openDrawer(c.dataset.rel);
+    c.addEventListener("click", open);
+    c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+
+  // -----------------------------------------------------------
+  // Annotated image markers
+  // -----------------------------------------------------------
+  const MARKERS = {
+    screen:    { title: "120\" Screen",      body: "Acoustically transparent — speakers fire through it for centered dialog." },
+    speakers:  { title: "Front L/R Mains",   body: "Reference-grade left and right channels at ear height of the seated viewer." },
+    seating:   { title: "Front Row",         body: "Positioned at 0.6× screen-distance ratio for full immersion." },
+    riser:     { title: "Riser Row",         body: "Elevated 12 inches with sightline-corrected backrests." },
+    atmos:     { title: "Atmos Surrounds",   body: "Side and rear surround speakers placed for object-based audio." }
+  };
+  let activeMarkerCard = null;
+  $$(".marker").forEach(m => {
+    m.addEventListener("click", (e) => {
+      e.stopPropagation();
+      $$(".marker").forEach(x => x.classList.remove("active"));
+      m.classList.add("active");
+      if (activeMarkerCard) activeMarkerCard.remove();
+      const data = MARKERS[m.dataset.marker];
+      const card = document.createElement("div");
+      card.className = "marker-card visible";
+      card.style.left = m.style.left;
+      card.style.top = m.style.top;
+      card.innerHTML = `<h6>${data.title}</h6><p>${data.body}</p>`;
+      $("#annotated").appendChild(card);
+      activeMarkerCard = card;
+    });
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.classList || !e.target.classList.contains("marker")) {
+      if (activeMarkerCard) {
+        activeMarkerCard.remove();
+        activeMarkerCard = null;
+        $$(".marker").forEach(x => x.classList.remove("active"));
+      }
+    }
+  });
+
+  // -----------------------------------------------------------
+  // Interactive Diagram
+  // -----------------------------------------------------------
+  const NODES = {
+    hub:         { title: "Automation Hub",       body: "The central brain. Coordinates every subsystem and exposes one unified control surface." },
+    audio:       { title: "Audio Subsystem",      body: "All speakers, amplifiers, and sources organized into zones with independent control." },
+    video:       { title: "Video Subsystem",      body: "Displays, projectors, and switchers — including HDMI matrices and streaming sources." },
+    ambient:     { title: "Ambient Subsystem",    body: "Environmental controls: lighting scenes, motorized shades, climate, ventilation." },
+    sonos:       { title: "Sonos / Speakers",     body: "In-wall and in-ceiling speakers driven by zone amplifiers or networked players." },
+    "atmos-node":{ title: "Atmos / Projector",    body: "The dedicated theater chain — projector, screen, processor, and Atmos speaker array." },
+    lighting:    { title: "Lighting & Shades",    body: "Lutron-class keypads, dimmers, and motorized shades programmed into scenes." }
+  };
+  $$(".diagram .node").forEach(n => {
+    const open = () => {
+      $$(".diagram .node-bg").forEach(b => b.classList.remove("active"));
+      n.querySelector(".node-bg").classList.add("active");
+      const data = NODES[n.dataset.node];
+      $("#diagramInfo").innerHTML = `<h5>${data.title}</h5><p>${data.body}</p>`;
+    };
+    n.addEventListener("click", open);
+    n.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+
+  // -----------------------------------------------------------
+  // Timeline
+  // -----------------------------------------------------------
+  const TIMELINE = [
+    { phase: "Phase 1", title: "Discovery & Design Intent", short: "Listening sessions, room walkthroughs, and lifestyle mapping.", expanded: "Our team meets with the client and architect to understand how each space will be used. We document lifestyle patterns — morning routine, entertaining, sleep — that drive automation logic." },
+    { phase: "Phase 2", title: "Architectural Coordination", short: "Cabling specs delivered to the GC and electrician.", expanded: "We produce as-built drawings showing every speaker, keypad, screen, and conduit run. The general contractor uses these drawings to coordinate trades." },
+    { phase: "Phase 3", title: "Low-Voltage Rough-In", short: "Wiring pulled before drywall.", expanded: "Cat6a, fiber, RG6 quad-shield, and 14/4 speaker cable are pulled to every documented location. Photos of every wall are taken before close-up." },
+    { phase: "Phase 4", title: "Equipment Trim & Programming", short: "Hardware installed, software configured.", expanded: "After paint and millwork, we install displays, mounts, speaker grilles, keypads, and AV racks. Programming begins in parallel using a virtual model of the home." },
+    { phase: "Phase 5", title: "Calibration & Tuning", short: "ISF picture and Audyssey/Trinnov audio.", expanded: "ISF technicians calibrate every display. Audio is tuned per-room using measurement microphones and reference signals." },
+    { phase: "Phase 6", title: "Client Onboarding", short: "Training and lifecycle handoff.", expanded: "We spend 2–4 hours with the client teaching the system, then provide a printed quick-reference. Twelve months of support and remote monitoring are included." }
+  ];
+  $("#timeline").innerHTML = TIMELINE.map((t, i) => `
+    <div class="timeline-item" data-i="${i}" tabindex="0" role="button" aria-expanded="false">
+      <div class="phase">${t.phase}</div>
+      <h5>${t.title}</h5>
+      <div class="summary">${t.short}</div>
+      <div class="extra">${t.expanded}</div>
+    </div>
+  `).join("");
+  $$(".timeline-item").forEach(item => {
+    const toggle = () => {
+      item.classList.toggle("expanded");
+      item.setAttribute("aria-expanded", item.classList.contains("expanded"));
+    };
+    item.addEventListener("click", toggle);
+    item.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+
+  // -----------------------------------------------------------
+  // Read More
+  // -----------------------------------------------------------
+  const rm = $("#readmore");
+  $("#readmoreBtn").addEventListener("click", () => {
+    rm.classList.toggle("expanded");
+    $("#readmoreBtn").textContent = rm.classList.contains("expanded") ? "Show less" : "Read more";
+  });
+
+  // -----------------------------------------------------------
+  // Footnote flash highlighting
+  // -----------------------------------------------------------
+  $$(".fn-ref, .footnotes .back").forEach(a => {
+    a.addEventListener("click", (e) => {
+      const target = document.querySelector(a.getAttribute("href"));
+      if (target) {
+        target.classList.remove("fn-flash");
+        // Force reflow
+        void target.offsetWidth;
+        target.classList.add("fn-flash");
+      }
+    });
+  });
+
+  // -----------------------------------------------------------
+  // Pronunciation (Web Speech API)
+  // -----------------------------------------------------------
+  function speak(text) {
+    if (!("speechSynthesis" in window)) {
+      alert("Pronunciation: " + text);
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9;
+    u.pitch = 1;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+  $$(".pron-btn").forEach(b => {
+    b.addEventListener("click", () => speak(b.dataset.pron));
+  });
+
+  // -----------------------------------------------------------
+  // Video placeholder
+  // -----------------------------------------------------------
+  $("#videoPlaceholder").addEventListener("click", () => {
+    alert("Demo: in production this would open the embed for your YouTube/Vimeo/Loom URL.");
+  });
+
+  // -----------------------------------------------------------
+  // Searchable Glossary
+  // -----------------------------------------------------------
+  const glossaryEntries = Object.entries(GLOSSARY).map(([id, e]) => ({ id, ...e }));
+  const categories = ["All", ...Array.from(new Set(glossaryEntries.map(e => e.category)))];
+  let activeCategory = "All";
+
+  $("#glossaryFilters").innerHTML = categories.map(c =>
+    `<button class="glossary-chip ${c === "All" ? "active" : ""}" data-cat="${c}">${c}</button>`
+  ).join("");
+  $$(".glossary-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeCategory = chip.dataset.cat;
+      $$(".glossary-chip").forEach(c => c.classList.toggle("active", c === chip));
+      filterGlossary();
+    });
+  });
+
+  function filterGlossary() {
+    const q = ($("#glossarySearch").value || "").trim().toLowerCase();
+    const list = glossaryEntries.filter(e => {
+      if (activeCategory !== "All" && e.category !== activeCategory) return false;
+      if (!q) return true;
+      return (
+        e.term.toLowerCase().includes(q) ||
+        e.short.toLowerCase().includes(q) ||
+        (e.full || "").toLowerCase().includes(q)
+      );
+    });
+    if (!list.length) {
+      $("#glossaryList").innerHTML = `<div class="glossary-empty">No matches for “${q}”.</div>`;
+      return;
+    }
+    $("#glossaryList").innerHTML = list.map(e => `
+      <article class="glossary-entry" data-rel="${e.id}" tabindex="0" role="button">
+        <div class="ge-cat">${e.category}</div>
+        <h4>${e.icon ? e.icon + " " : ""}${e.term}</h4>
+        <p>${isPlain() ? e.plain : e.short}</p>
+      </article>
+    `).join("");
+    $$(".glossary-entry").forEach(g => {
+      const open = () => openDrawer(g.dataset.rel);
+      g.addEventListener("click", open);
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    });
+  }
+  $("#glossarySearch").addEventListener("input", filterGlossary);
+  filterGlossary();
+
+  $("#glossaryBtn").addEventListener("click", () => {
+    document.getElementById("kc-glossary").scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => $("#glossarySearch").focus(), 400);
+  });
+
+  // -----------------------------------------------------------
+  // AI Explainer Widget (front-end placeholder)
+  // -----------------------------------------------------------
+  const aiPanel = $("#aiPanel");
+  const aiMsgs = $("#aiMsgs");
+  const aiInput = $("#aiInput");
+
+  function aiAdd(text, who = "bot") {
+    const div = document.createElement("div");
+    div.className = "ai-msg " + who;
+    div.textContent = text;
+    aiMsgs.appendChild(div);
+    aiMsgs.scrollTop = aiMsgs.scrollHeight;
+  }
+  function openAi() {
+    aiPanel.classList.add("visible");
+    if (!aiMsgs.children.length) {
+      aiAdd("Hi — I'm your dossier assistant. Ask about any term, package, or concept on this page.");
+      const sg = $("#aiSuggestions");
+      sg.innerHTML = ["What is Dolby Atmos?", "Explain Control4 simply", "What is rough-in?", "Why does calibration matter?"]
+        .map(s => `<button>${s}</button>`).join("");
+      $$("#aiSuggestions button").forEach(b => b.addEventListener("click", () => { aiInput.value = b.textContent; aiSubmit(); }));
+    }
+  }
+  function closeAi() { aiPanel.classList.remove("visible"); }
+  $("#aiLaunch").addEventListener("click", () => aiPanel.classList.contains("visible") ? closeAi() : openAi());
+  $("#aiClose").addEventListener("click", closeAi);
+
+  function aiAnswer(query) {
+    const q = query.toLowerCase();
+    // Try to find a glossary term that matches
+    const match = glossaryEntries.find(e =>
+      q.includes(e.term.toLowerCase()) || e.term.toLowerCase().split(" ").some(w => w.length > 3 && q.includes(w.toLowerCase()))
+    );
+    if (match) {
+      const wantSimple = /simple|plain|easy|basic|child|layman|simply/.test(q);
+      const wantWhy = /why|matter|important|impact|care/.test(q);
+      const wantRelated = /related|connect|similar|other|like/.test(q);
+      let response = wantSimple ? match.plain : match.short;
+      if (wantWhy && match.whyItMatters) response += " " + match.whyItMatters;
+      if (wantRelated && match.related && match.related.length) {
+        response += " Related: " + match.related.map(r => GLOSSARY[r]?.term).filter(Boolean).join(", ") + ".";
+      }
+      return response;
+    }
+    if (/package|tier|cost|price|how much/.test(q)) {
+      return "There are three tiers per room: Foundation, Signature, and Reference. Foundation is reliable everyday equipment, Signature adds smart-home integration, Reference is flagship cinema/automation. Use the dossier above to mix tiers across rooms.";
+    }
+    if (/install|how long|timeline/.test(q)) {
+      return "A Foundation room can be done in a day. A full Reference theater typically runs 3–6 weeks coordinated with the contractor. See the timeline section above for the six standard phases.";
+    }
+    return "I don't have a direct match for that yet. Try asking about Atmos, Control4, OLED, rough-in, calibration, or any highlighted term on this page.";
+  }
+  function aiSubmit() {
+    const v = aiInput.value.trim();
+    if (!v) return;
+    aiAdd(v, "user");
+    aiInput.value = "";
+    setTimeout(() => aiAdd(aiAnswer(v)), 320);
+  }
+  $("#aiSend").addEventListener("click", aiSubmit);
+  aiInput.addEventListener("keydown", (e) => { if (e.key === "Enter") aiSubmit(); });
+
+  // -----------------------------------------------------------
+  // Initial wiring
+  // -----------------------------------------------------------
+  wireTerms();
+  // Re-wire after any future DOM changes are not expected, but expose if needed
+  window.knl = { open: openDrawer, glossary: GLOSSARY, wire: wireTerms };
+})();
+</script>
+
+</body>
+</html>

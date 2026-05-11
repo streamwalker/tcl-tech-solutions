@@ -14,6 +14,7 @@ import ChapterQuizPage from "@/pages/platform/ChapterQuizPage";
 import FinalExamPage from "@/pages/platform/FinalExamPage";
 import CertificatePage from "@/pages/platform/CertificatePage";
 import CertificatesPage from "@/pages/platform/CertificatesPage";
+import DossierPage from "@/pages/platform/DossierPage";
 
 export default function Platform() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Platform() {
         <Route path="service" element={<ServiceOrders />} />
         <Route path="profit-analysis" element={<ProfitAnalysisView onBack={() => navigate("/platform")} />} />
         <Route path="academy" element={<AcademyHome />} />
+        <Route path="dossier" element={<DossierPage />} />
         <Route path="academy/certificates" element={<CertificatesPage />} />
         <Route path="academy/:courseSlug" element={<CoursePage />} />
         <Route path="academy/:courseSlug/exam" element={<FinalExamPage />} />
