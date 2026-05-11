@@ -124,15 +124,17 @@ export default function AcademyHome() {
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="pt-5 flex items-center gap-3">
-            <Trophy className="h-5 w-5 text-primary" />
-            <div>
-              <div className="text-2xl font-serif">{certCount}</div>
-              <div className="text-xs text-muted-foreground">Certificates earned</div>
-            </div>
-          </CardContent>
-        </Card>
+        <Link to="/platform/academy/certificates" className="block">
+          <Card className="hover:border-primary/50 transition-colors h-full">
+            <CardContent className="pt-5 flex items-center gap-3">
+              <Trophy className="h-5 w-5 text-primary" />
+              <div>
+                <div className="text-2xl font-serif">{certCount}</div>
+                <div className="text-xs text-muted-foreground">Certificates earned →</div>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       {resume && (

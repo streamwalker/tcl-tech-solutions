@@ -1,50 +1,58 @@
-# Retake quiz with previous-answer comparison
+# Certificates hub page
 
-Today, `QuizRunner`'s "Try again" button wipes all answers and resets the graded state. After a retake, students lose visibility into what they got wrong last time. This plan adds a true **retake flow** that preserves the prior attempt and shows it side-by-side with the new attempt and the correct answer.
+A single page that lists every certificate the signed-in student has earned, with quick view and download for each. The existing per-course certificate page (`/platform/academy/:courseSlug/certificate`) keeps working — this is the index/hub on top of it.
+
+## Route
+
+Add `/platform/academy/certificates` (rendered inside the existing `Platform` layout, gated by `AuthGuard` like the rest of `/platform/*`). Register it in `src/pages/Platform.tsx` next to the other academy routes.
 
 ## UX
 
-When a student submits a chapter quiz, the existing per-question explanation panel still appears. A new **"Retake quiz"** button (replaces "Try again" when a prior attempt exists) re-opens the inputs but, for every question, shows three stacked rows under the prompt:
+Header: "My Certificates" + count, e.g. `2 of 3 courses certified`.
 
-1. **Your previous answer** — the value from the last submitted attempt, with a ✓/✗ indicator.
-2. **Your new answer** — the live editable input (radio / number / text).
-3. After re-submitting: **Correct answer + explanation** — same panel as today, plus a "Changed from last time" badge when the new answer differs from the previous one.
+Three states:
 
-The previous-attempt row remains visible across as many retakes as the student does (we always compare the new attempt against the **immediately previous** one). A small "Attempt #N" chip in the card header tracks the count.
+1. **Empty** — no certificates yet. Show a friendly card explaining "Pass any course's final exam (≥70%) to earn a certificate" with a button to "Browse courses" (→ `/platform/academy`).
+2. **Has certificates** — responsive grid (1 col mobile, 2 cols ≥md) of certificate cards. Each card shows:
+   - Course icon + title
+   - "Certified" badge with score (e.g. `Score 88%`)
+   - Issue date + certificate number (mono)
+   - Buttons: **View** (→ `/platform/academy/:courseSlug/certificate`) and **Download PDF**
+3. **Locked previews** (below earned ones, collapsible "Courses still in progress") — for each course the student has progress in but no certificate yet, a muted card with progress bar and "Take final exam" button → `/platform/academy/:slug/exam` if all chapters built, else "Continue learning".
 
-A "Start fresh" link in the header clears prior-answer memory if the student wants a clean slate.
+## Download
 
-## Data flow
+Reuse the existing print path: clicking **Download PDF** on a card navigates to the existing single-certificate page and triggers the print dialog automatically (already wired via `window.print()` in `CertificateView`). Implementation detail: pass a `?print=1` query param; `CertificatePage` reads it on mount and calls `window.print()` after the certificate renders. This avoids adding a new PDF-generation library and keeps the look identical to the on-screen certificate.
 
-- **No schema changes.** `academy_quiz_attempts` already stores every attempt's `answers` JSONB; we already insert one row per submission.
-- On mount of `ChapterQuizPage`, fetch the most recent attempt for `(user_id, course_slug, chapter_slug)` ordered by `attempted_at desc limit 1` and pass its `answers` array into `QuizRunner` as a new `previousAnswers` prop.
-- After each submit, `ChapterQuizPage` re-reads (or just stores locally) the just-submitted answers as the new "previous" so a second retake compares against the most recent attempt.
+## Data
 
-## Component changes
+Single query at mount:
 
-### `src/components/academy/QuizRunner.tsx`
-- New optional prop `previousAnswers?: QuizAnswer[]`.
-- New internal state `priorAnswers` initialized from the prop; updated to the just-graded answers when the user clicks **Retake quiz**.
-- Replace the existing `reset()` with `retake()` that:
-  - Saves the just-submitted graded answers into `priorAnswers`.
-  - Clears `answers` and `submitted`.
-  - Increments an `attempt` counter shown as a badge.
-- Render a "Previous attempt" row under each question prompt when `priorAnswers` has an entry for that question. For MCQ, show the chosen choice text + ✓/✗; for numeric/short, show the raw value + ✓/✗.
-- After grading, if the new answer differs from the previous answer for that question, show a small "Changed" badge next to the explanation.
-- Keep the existing pass/fail badge and `onSubmit` callback unchanged.
+```
+supabase.from("academy_certificates")
+  .select("course_slug, final_score, certificate_no, issued_at")
+  .order("issued_at", { ascending: false })
+```
 
-### `src/pages/platform/ChapterQuizPage.tsx`
-- On mount, fetch the latest attempt for this user/course/chapter and pass `answers` as `previousAnswers` to `QuizRunner`.
-- No other behavior changes — the existing "Try again" reset button on the result card is removed in favor of the in-runner Retake control to avoid two competing reset paths.
+RLS already restricts rows to the current user (existing `own cert select` policy). Join to course metadata client-side via `getCourse(slug)` from `src/data/academy`.
 
-### `src/data/academy/types.ts`
-- No changes (existing `QuizAnswer` already has `{ questionId, given, correct }`).
+For the in-progress section, also fetch `academy_progress` (already used on `AcademyHome`) to compute per-course completion percentage.
 
-## Out of scope
-- Showing more than one prior attempt at a time (only the immediately previous attempt is rendered).
-- A full attempt-history view (could be added later under a "View attempt history" drawer).
-- Applying the same flow to the **Final Exam** — final exam keeps its single-attempt-per-session behavior unless you want the same treatment there too (call it out and I'll extend `FinalExamPage` the same way).
+## Discoverability
+
+- **Sidebar / navigation**: add a "Certificates" link to the Academy area. Lightest touch: add a button in the `AcademyHome` stats card ("Certificates earned") that links to the new page, plus a small `<Link>` chip in the Academy header next to "Browse catalog".
+- The single-course certificate page gets a `← All certificates` back link in addition to the existing "Back to course" button.
 
 ## Files touched
-- `src/components/academy/QuizRunner.tsx` — add prop, retake state, prior-answer row, "Changed" badge.
-- `src/pages/platform/ChapterQuizPage.tsx` — fetch latest attempt, pass `previousAnswers`, drop the redundant outer "Try again" button.
+
+- `src/pages/platform/CertificatesPage.tsx` — new hub.
+- `src/pages/Platform.tsx` — register `academy/certificates` route (above the `:courseSlug` route to avoid the dynamic match swallowing it).
+- `src/pages/platform/CertificatePage.tsx` — auto-print when `?print=1` is present; add "All certificates" back link.
+- `src/pages/platform/AcademyHome.tsx` — wrap the "Certificates earned" stat card in a `Link` to the new page.
+
+## Out of scope
+
+- Server-rendered PDF generation (we rely on the browser print dialog → "Save as PDF").
+- Public/shareable certificate verification URLs by `certificate_no`.
+- LinkedIn share metadata.
+- Email delivery of certificates.
