@@ -1,12 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Trophy, RotateCw, GraduationCap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Trophy, GraduationCap } from "lucide-react";
 import { getCourse } from "@/data/academy";
 import { QuizRunner } from "@/components/academy/QuizRunner";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import type { QuizAnswer } from "@/data/academy/types";
 
 export default function ChapterQuizPage() {
   const { courseSlug = "", chapterSlug = "" } = useParams();
@@ -14,6 +15,30 @@ export default function ChapterQuizPage() {
   const course = getCourse(courseSlug);
   const chapter = course?.chapters.find((c) => c.slug === chapterSlug);
   const [result, setResult] = useState<{ score: number; passed: boolean; correct: number; total: number } | null>(null);
+  const [previousAnswers, setPreviousAnswers] = useState<QuizAnswer[] | undefined>(undefined);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!course || !chapter) return;
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setLoaded(true); return; }
+      const { data } = await supabase
+        .from("academy_quiz_attempts")
+        .select("answers")
+        .eq("user_id", user.id)
+        .eq("course_slug", course.slug)
+        .eq("chapter_slug", chapter.slug)
+        .order("attempted_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data?.answers && Array.isArray(data.answers)) {
+        setPreviousAnswers(data.answers as unknown as QuizAnswer[]);
+      }
+      setLoaded(true);
+    })();
+  }, [course, chapter]);
+
   if (!course || !chapter) return <div>Not found.</div>;
 
   const builtChapters = course.chapters.filter((c) => c.built);
@@ -29,13 +54,15 @@ export default function ChapterQuizPage() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground">Chapter {chapter.number} Quiz</div>
         <h1 className="font-serif text-3xl">{chapter.title}</h1>
       </div>
-      <QuizRunner
+      {loaded && <QuizRunner
         title={`Chapter ${chapter.number} Quiz`}
         questions={chapter.quiz}
+        previousAnswers={previousAnswers}
         onSubmit={async (score, answers) => {
           const correct = answers.filter((a) => a.correct).length;
           const passed = score >= 70;
           setResult({ score, passed, correct, total: answers.length });
+          setPreviousAnswers(answers);
           const { data: { user } } = await supabase.auth.getUser();
           if (!user) return;
           await supabase.from("academy_quiz_attempts").insert({
@@ -62,7 +89,7 @@ export default function ChapterQuizPage() {
             toast.message(`Scored ${score.toFixed(0)}% — review and try again.`);
           }
         }}
-      />
+      />}
 
       {result && (
         <Card className={result.passed ? "border-emerald-500/50 bg-emerald-500/5" : "border-amber-500/50 bg-amber-500/5"}>
@@ -87,11 +114,6 @@ export default function ChapterQuizPage() {
               {result.passed && !nextChapter && (
                 <Button onClick={() => navigate(`/platform/academy/${course.slug}/exam`)}>
                   <GraduationCap className="h-4 w-4 mr-1" /> Take final exam
-                </Button>
-              )}
-              {!result.passed && (
-                <Button onClick={() => { setResult(null); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-                  <RotateCw className="h-4 w-4 mr-1" /> Try again
                 </Button>
               )}
               <Button variant="outline" onClick={() => navigate(`/platform/academy/${course.slug}`)}>
