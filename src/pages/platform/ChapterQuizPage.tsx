@@ -2,12 +2,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Trophy, GraduationCap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Trophy, GraduationCap, History } from "lucide-react";
 import { getCourse } from "@/data/academy";
 import { QuizRunner } from "@/components/academy/QuizRunner";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type { QuizAnswer } from "@/data/academy/types";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { AttemptHistory, type AttemptRow } from "@/components/academy/AttemptHistory";
 
 export default function ChapterQuizPage() {
   const { courseSlug = "", chapterSlug = "" } = useParams();
@@ -17,6 +19,7 @@ export default function ChapterQuizPage() {
   const [result, setResult] = useState<{ score: number; passed: boolean; correct: number; total: number } | null>(null);
   const [previousAnswers, setPreviousAnswers] = useState<QuizAnswer[] | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
+  const [attempts, setAttempts] = useState<AttemptRow[]>([]);
 
   useEffect(() => {
     if (!course || !chapter) return;
@@ -25,15 +28,16 @@ export default function ChapterQuizPage() {
       if (!user) { setLoaded(true); return; }
       const { data } = await supabase
         .from("academy_quiz_attempts")
-        .select("answers")
+        .select("id, score_pct, attempted_at, answers")
         .eq("user_id", user.id)
         .eq("course_slug", course.slug)
         .eq("chapter_slug", chapter.slug)
-        .order("attempted_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (data?.answers && Array.isArray(data.answers)) {
-        setPreviousAnswers(data.answers as unknown as QuizAnswer[]);
+        .order("attempted_at", { ascending: false });
+      const rows = (data ?? []) as AttemptRow[];
+      setAttempts(rows);
+      const latest = rows[0];
+      if (latest && Array.isArray(latest.answers)) {
+        setPreviousAnswers(latest.answers as unknown as QuizAnswer[]);
       }
       setLoaded(true);
     })();
@@ -50,9 +54,29 @@ export default function ChapterQuizPage() {
       <Button asChild variant="ghost" size="sm">
         <Link to={`/platform/academy/${course.slug}`}><ChevronLeft className="h-4 w-4 mr-1" /> Back to course</Link>
       </Button>
-      <div>
-        <div className="text-xs uppercase tracking-wider text-muted-foreground">Chapter {chapter.number} Quiz</div>
-        <h1 className="font-serif text-3xl">{chapter.title}</h1>
+      <div className="flex items-end justify-between gap-3 flex-wrap">
+        <div>
+          <div className="text-xs uppercase tracking-wider text-muted-foreground">Chapter {chapter.number} Quiz</div>
+          <h1 className="font-serif text-3xl">{chapter.title}</h1>
+        </div>
+        {attempts.length > 0 && (
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm">
+                <History className="h-4 w-4 mr-1" /> View attempt history ({attempts.length})
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle className="font-serif">Attempt history</SheetTitle>
+                <p className="text-xs text-muted-foreground">Chapter {chapter.number} · {chapter.title}</p>
+              </SheetHeader>
+              <div className="mt-4">
+                <AttemptHistory attempts={attempts} showCorrectness />
+              </div>
+            </SheetContent>
+          </Sheet>
+        )}
       </div>
       {loaded && <QuizRunner
         title={`Chapter ${chapter.number} Quiz`}
@@ -63,6 +87,10 @@ export default function ChapterQuizPage() {
           const passed = score >= 70;
           setResult({ score, passed, correct, total: answers.length });
           setPreviousAnswers(answers);
+          setAttempts((prev) => [
+            { score_pct: score, attempted_at: new Date().toISOString(), answers },
+            ...prev,
+          ]);
           const { data: { user } } = await supabase.auth.getUser();
           if (!user) return;
           await supabase.from("academy_quiz_attempts").insert({
