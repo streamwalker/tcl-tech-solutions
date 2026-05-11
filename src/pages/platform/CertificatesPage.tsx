@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Award, ChevronLeft, Download, Eye, GraduationCap, ArrowRight, Loader2, Sparkles } from "lucide-react";
+import { Award, ChevronLeft, Download, Eye, GraduationCap, ArrowRight, Loader2, Sparkles, Search, X } from "lucide-react";
 import { courses, getCourse } from "@/data/academy";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Cert = {
   course_slug: string;
@@ -22,6 +24,9 @@ export default function CertificatesPage() {
   const [certs, setCerts] = useState<Cert[]>([]);
   const [progress, setProgress] = useState<ProgressRow[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "score-desc" | "score-asc" | "course-az">("newest");
+  const [filterCourse, setFilterCourse] = useState<string>("all");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -64,6 +69,40 @@ export default function CertificatesPage() {
     return courses[0];
   })();
   const nextCandidatePct = nextCandidate ? pctFor(nextCandidate.slug) : 0;
+
+  const visibleCerts = useMemo(() => {
+    let list = certs.slice();
+    if (filterCourse !== "all") list = list.filter((c) => c.course_slug === filterCourse);
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
+      list = list.filter((c) => {
+        const course = getCourse(c.course_slug);
+        return (
+          c.certificate_no.toLowerCase().includes(q) ||
+          (course?.title.toLowerCase().includes(q) ?? false) ||
+          (course?.subtitle.toLowerCase().includes(q) ?? false)
+        );
+      });
+    }
+    list.sort((a, b) => {
+      switch (sortBy) {
+        case "oldest": return +new Date(a.issued_at) - +new Date(b.issued_at);
+        case "score-desc": return Number(b.final_score) - Number(a.final_score);
+        case "score-asc": return Number(a.final_score) - Number(b.final_score);
+        case "course-az": {
+          const at = getCourse(a.course_slug)?.title ?? "";
+          const bt = getCourse(b.course_slug)?.title ?? "";
+          return at.localeCompare(bt);
+        }
+        case "newest":
+        default:
+          return +new Date(b.issued_at) - +new Date(a.issued_at);
+      }
+    });
+    return list;
+  }, [certs, sortBy, filterCourse, search]);
+
+  const filtersActive = filterCourse !== "all" || search.trim().length > 0 || sortBy !== "newest";
 
   return (
     <div className="space-y-6">
@@ -162,8 +201,79 @@ export default function CertificatesPage() {
       )}
 
       {certs.length > 0 && (
-        <div className="grid md:grid-cols-2 gap-4">
-          {certs.map((cert) => {
+        <>
+          {/* Filter + sort toolbar (only when there are 2+ certs) */}
+          {certs.length > 1 && (
+            <Card>
+              <CardContent className="pt-4 pb-4 flex flex-col md:flex-row md:items-center gap-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by course or certificate №…"
+                    className="pl-9"
+                  />
+                </div>
+                <Select value={filterCourse} onValueChange={setFilterCourse}>
+                  <SelectTrigger className="md:w-56">
+                    <SelectValue placeholder="All courses" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All courses</SelectItem>
+                    {[...new Set(certs.map((c) => c.course_slug))].map((slug) => {
+                      const c = getCourse(slug);
+                      return (
+                        <SelectItem key={slug} value={slug}>
+                          {c?.icon} {c?.title ?? slug}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+                <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+                  <SelectTrigger className="md:w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest">Newest first</SelectItem>
+                    <SelectItem value="oldest">Oldest first</SelectItem>
+                    <SelectItem value="score-desc">Highest score</SelectItem>
+                    <SelectItem value="score-asc">Lowest score</SelectItem>
+                    <SelectItem value="course-az">Course (A–Z)</SelectItem>
+                  </SelectContent>
+                </Select>
+                {filtersActive && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => { setSearch(""); setFilterCourse("all"); setSortBy("newest"); }}
+                  >
+                    <X className="h-4 w-4 mr-1" /> Reset
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>
+              Showing {visibleCerts.length} of {certs.length} certificate{certs.length === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          {visibleCerts.length === 0 ? (
+            <Card className="border-dashed">
+              <CardContent className="pt-6 pb-6 text-center text-sm text-muted-foreground space-y-3">
+                <div>No certificates match your filters.</div>
+                <Button variant="outline" size="sm" onClick={() => { setSearch(""); setFilterCourse("all"); setSortBy("newest"); }}>
+                  Clear filters
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-4">
+              {visibleCerts.map((cert) => {
             const course = getCourse(cert.course_slug);
             if (!course) return null;
             return (
@@ -208,8 +318,10 @@ export default function CertificatesPage() {
                 </CardContent>
               </Card>
             );
-          })}
-        </div>
+              })}
+            </div>
+          )}
+        </>
       )}
 
       {inProgress.length > 0 && (
