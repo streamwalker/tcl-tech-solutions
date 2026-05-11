@@ -1,58 +1,53 @@
-# Certificates hub page
+# Quiz attempt history per chapter
 
-A single page that lists every certificate the signed-in student has earned, with quick view and download for each. The existing per-course certificate page (`/platform/academy/:courseSlug/certificate`) keeps working — this is the index/hub on top of it.
+Surface every quiz attempt the student has made for each chapter, with score %, pass/fail, and timestamp. No new tables — `academy_quiz_attempts` already records one row per submission with `score_pct`, `attempted_at`, and the full `answers` JSONB.
 
-## Route
+## Where it shows up
 
-Add `/platform/academy/certificates` (rendered inside the existing `Platform` layout, gated by `AuthGuard` like the rest of `/platform/*`). Register it in `src/pages/Platform.tsx` next to the other academy routes.
+Two complementary surfaces, both reading the same data:
 
-## UX
+### 1. Course page — inline "Attempt history" per chapter
+On `src/pages/platform/CoursePage.tsx`, each built chapter card already shows the **best** quiz score badge. Add a small `<Collapsible>` "Attempts (N)" toggle inside the chapter card that expands a compact table:
 
-Header: "My Certificates" + count, e.g. `2 of 3 courses certified`.
+| # | Date / time | Score | Result |
+|---|-------------|-------|--------|
+| 3 | May 11, 2026 · 2:14 PM | 92% | ✓ Pass |
+| 2 | May 10, 2026 · 9:01 AM | 64% | ✗ Retry |
+| 1 | May 9, 2026 · 7:48 PM | 50% | ✗ Retry |
 
-Three states:
+Newest first, attempt # counted ascending so #1 = first try. Empty state hides the toggle entirely.
 
-1. **Empty** — no certificates yet. Show a friendly card explaining "Pass any course's final exam (≥70%) to earn a certificate" with a button to "Browse courses" (→ `/platform/academy`).
-2. **Has certificates** — responsive grid (1 col mobile, 2 cols ≥md) of certificate cards. Each card shows:
-   - Course icon + title
-   - "Certified" badge with score (e.g. `Score 88%`)
-   - Issue date + certificate number (mono)
-   - Buttons: **View** (→ `/platform/academy/:courseSlug/certificate`) and **Download PDF**
-3. **Locked previews** (below earned ones, collapsible "Courses still in progress") — for each course the student has progress in but no certificate yet, a muted card with progress bar and "Take final exam" button → `/platform/academy/:slug/exam` if all chapters built, else "Continue learning".
-
-## Download
-
-Reuse the existing print path: clicking **Download PDF** on a card navigates to the existing single-certificate page and triggers the print dialog automatically (already wired via `window.print()` in `CertificateView`). Implementation detail: pass a `?print=1` query param; `CertificatePage` reads it on mount and calls `window.print()` after the certificate renders. This avoids adding a new PDF-generation library and keeps the look identical to the on-screen certificate.
+### 2. Chapter quiz page — "View all attempts" link
+On `src/pages/platform/ChapterQuizPage.tsx`, add a small button under the title: **"View attempt history (N)"** that opens a `<Sheet>` (right drawer) showing the same table at full width with one extra column **per-question correctness** (e.g. `9/12 correct`) computed from the stored `answers` JSONB.
 
 ## Data
 
-Single query at mount:
+Single fetch on each page — already partially fetched today:
 
+```ts
+supabase.from("academy_quiz_attempts")
+  .select("id, chapter_slug, score_pct, attempted_at, answers")
+  .eq("course_slug", course.slug)
+  .order("attempted_at", { ascending: false });
 ```
-supabase.from("academy_certificates")
-  .select("course_slug, final_score, certificate_no, issued_at")
-  .order("issued_at", { ascending: false })
-```
 
-RLS already restricts rows to the current user (existing `own cert select` policy). Join to course metadata client-side via `getCourse(slug)` from `src/data/academy`.
+CoursePage groups by `chapter_slug` client-side. ChapterQuizPage filters by both course + chapter.
 
-For the in-progress section, also fetch `academy_progress` (already used on `AcademyHome`) to compute per-course completion percentage.
+Pass threshold stays at **70%** (matches `passPct` default in `QuizRunner` and current "passed" logic in `ChapterQuizPage`).
 
-## Discoverability
+## Component
 
-- **Sidebar / navigation**: add a "Certificates" link to the Academy area. Lightest touch: add a button in the `AcademyHome` stats card ("Certificates earned") that links to the new page, plus a small `<Link>` chip in the Academy header next to "Browse catalog".
-- The single-course certificate page gets a `← All certificates` back link in addition to the existing "Back to course" button.
+New small component `src/components/academy/AttemptHistory.tsx` that takes `attempts: { score_pct: number; attempted_at: string; answers: any[] }[]` and renders the table. Both surfaces reuse it.
 
 ## Files touched
 
-- `src/pages/platform/CertificatesPage.tsx` — new hub.
-- `src/pages/Platform.tsx` — register `academy/certificates` route (above the `:courseSlug` route to avoid the dynamic match swallowing it).
-- `src/pages/platform/CertificatePage.tsx` — auto-print when `?print=1` is present; add "All certificates" back link.
-- `src/pages/platform/AcademyHome.tsx` — wrap the "Certificates earned" stat card in a `Link` to the new page.
+- `src/components/academy/AttemptHistory.tsx` — new shared table.
+- `src/pages/platform/CoursePage.tsx` — fetch full attempts (replace the existing best-score-only query), group by chapter, add collapsible per chapter.
+- `src/pages/platform/ChapterQuizPage.tsx` — fetch attempts for the chapter, add "View attempt history" Sheet.
 
 ## Out of scope
 
-- Server-rendered PDF generation (we rely on the browser print dialog → "Save as PDF").
-- Public/shareable certificate verification URLs by `certificate_no`.
-- LinkedIn share metadata.
-- Email delivery of certificates.
+- Re-opening a previous attempt to inspect each individual answer (`QuizRunner` already shows "previous answer" comparison on the next retake; deeper per-attempt review can come later).
+- Deleting attempts.
+- Filter/search across courses or date ranges.
+- Final-exam attempt history (separate table `academy_exam_attempts`; can mirror this later if you want it).

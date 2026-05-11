@@ -4,15 +4,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, BookOpen, FileText, GraduationCap, ChevronLeft, Lock } from "lucide-react";
+import { ArrowRight, BookOpen, FileText, GraduationCap, ChevronLeft, Lock, History, ChevronDown } from "lucide-react";
 import { getCourse } from "@/data/academy";
 import { supabase } from "@/integrations/supabase/client";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { AttemptHistory, type AttemptRow } from "@/components/academy/AttemptHistory";
 
 export default function CoursePage() {
   const { courseSlug = "" } = useParams();
   const course = getCourse(courseSlug);
   const [doneLessons, setDoneLessons] = useState<Set<string>>(new Set());
   const [quizScores, setQuizScores] = useState<Record<string, number>>({});
+  const [attemptsByChapter, setAttemptsByChapter] = useState<Record<string, AttemptRow[]>>({});
 
   useEffect(() => {
     if (!course) return;
@@ -25,13 +28,17 @@ export default function CoursePage() {
 
       const { data: quizzes } = await supabase
         .from("academy_quiz_attempts")
-        .select("chapter_slug, score_pct")
-        .eq("course_slug", course.slug);
+        .select("id, chapter_slug, score_pct, attempted_at, answers")
+        .eq("course_slug", course.slug)
+        .order("attempted_at", { ascending: false });
       const map: Record<string, number> = {};
+      const grouped: Record<string, AttemptRow[]> = {};
       (quizzes ?? []).forEach((q: any) => {
         map[q.chapter_slug] = Math.max(map[q.chapter_slug] ?? 0, Number(q.score_pct));
+        (grouped[q.chapter_slug] ??= []).push(q as AttemptRow);
       });
       setQuizScores(map);
+      setAttemptsByChapter(grouped);
     })();
   }, [course]);
 
@@ -122,6 +129,18 @@ export default function CoursePage() {
                       </Link>
                     </li>
                   </ul>
+                  {(attemptsByChapter[ch.slug]?.length ?? 0) > 0 && (
+                    <Collapsible className="mt-3 border-t border-border pt-3">
+                      <CollapsibleTrigger className="group flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+                        <History className="h-3 w-3" />
+                        Attempt history ({attemptsByChapter[ch.slug].length})
+                        <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-2">
+                        <AttemptHistory attempts={attemptsByChapter[ch.slug]} />
+                      </CollapsibleContent>
+                    </Collapsible>
+                  )}
                 </CardContent>
               )}
             </Card>
