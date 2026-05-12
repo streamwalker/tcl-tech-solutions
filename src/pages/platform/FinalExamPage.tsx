@@ -35,13 +35,15 @@ export default function FinalExamPage() {
             submitted_at: new Date().toISOString(),
           });
           if (passed) {
-            await supabase.from("academy_certificates").upsert({
-              user_id: user.id,
-              course_slug: course.slug,
-              final_score: score,
-            }, { onConflict: "user_id,course_slug" });
-            toast.success("Certificate issued!");
-            navigate(`/platform/academy/${course.slug}/certificate`);
+            const { error: certError } = await supabase.rpc("issue_certificate_if_passed", {
+              _course_slug: course.slug,
+            });
+            if (certError) {
+              toast.error("Couldn't issue certificate. Please retry.");
+            } else {
+              toast.success("Certificate issued!");
+              navigate(`/platform/academy/${course.slug}/certificate`);
+            }
           } else {
             toast.error("Below 70% — try again to earn the certificate.");
           }
