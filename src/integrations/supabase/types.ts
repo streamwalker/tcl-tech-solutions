@@ -714,6 +714,23 @@ export type Database = {
         }
         Returns: boolean
       }
+      issue_certificate_if_passed: {
+        Args: { _course_slug: string }
+        Returns: {
+          certificate_no: string
+          course_slug: string
+          final_score: number
+          id: string
+          issued_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "academy_certificates"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
