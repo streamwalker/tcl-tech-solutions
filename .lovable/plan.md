@@ -1,53 +1,24 @@
-# Quiz attempt history per chapter
+# Add CINEMASHOP Star Panel subpage
 
-Surface every quiz attempt the student has made for each chapter, with score %, pass/fail, and timestamp. No new tables — `academy_quiz_attempts` already records one row per submission with `score_pct`, `attempted_at`, and the full `answers` JSONB.
+Mirror the existing `/platform/dossier` pixel-perfect import pattern to embed the uploaded `CINEMASHOP_StarPanel_Platform.html` as a new module in the TCL Platform suite.
 
-## Where it shows up
+## Changes
 
-Two complementary surfaces, both reading the same data:
+1. **Copy assets to `public/`**
+   - `user-uploads://CINEMASHOP_StarPanel_Platform.html` → `public/cinemashop-starpanel.html`
+   - `user-uploads://CINEMASHOP_StarPanel_Manual.md` → `public/cinemashop-starpanel-manual.md` (so the HTML can reference it if needed, and for download)
 
-### 1. Course page — inline "Attempt history" per chapter
-On `src/pages/platform/CoursePage.tsx`, each built chapter card already shows the **best** quiz score badge. Add a small `<Collapsible>` "Attempts (N)" toggle inside the chapter card that expands a compact table:
+2. **New page component** `src/pages/platform/StarPanelPage.tsx`
+   - Same shape as `DossierPage.tsx`: full-bleed iframe (`-m-6 h-[calc(100vh-3rem)]`) pointing to `/cinemashop-starpanel.html`.
 
-| # | Date / time | Score | Result |
-|---|-------------|-------|--------|
-| 3 | May 11, 2026 · 2:14 PM | 92% | ✓ Pass |
-| 2 | May 10, 2026 · 9:01 AM | 64% | ✗ Retry |
-| 1 | May 9, 2026 · 7:48 PM | 50% | ✗ Retry |
+3. **Route** in `src/pages/Platform.tsx`
+   - Add `<Route path="star-panel" element={<StarPanelPage />} />` at `/platform/star-panel`.
 
-Newest first, attempt # counted ascending so #1 = first try. Empty state hides the toggle entirely.
+4. **Sidebar entry** in `src/components/platform/PlatformSidebar.tsx`
+   - Add `{ title: "Star Panel", url: "/platform/star-panel", icon: Sparkles }` (lucide `Sparkles` icon, fits the fiber-optic star ceiling theme), placed just after "Client Dossier".
 
-### 2. Chapter quiz page — "View all attempts" link
-On `src/pages/platform/ChapterQuizPage.tsx`, add a small button under the title: **"View attempt history (N)"** that opens a `<Sheet>` (right drawer) showing the same table at full width with one extra column **per-question correctness** (e.g. `9/12 correct`) computed from the stored `answers` JSONB.
+## Technical notes
 
-## Data
-
-Single fetch on each page — already partially fetched today:
-
-```ts
-supabase.from("academy_quiz_attempts")
-  .select("id, chapter_slug, score_pct, attempted_at, answers")
-  .eq("course_slug", course.slug)
-  .order("attempted_at", { ascending: false });
-```
-
-CoursePage groups by `chapter_slug` client-side. ChapterQuizPage filters by both course + chapter.
-
-Pass threshold stays at **70%** (matches `passPct` default in `QuizRunner` and current "passed" logic in `ChapterQuizPage`).
-
-## Component
-
-New small component `src/components/academy/AttemptHistory.tsx` that takes `attempts: { score_pct: number; attempted_at: string; answers: any[] }[]` and renders the table. Both surfaces reuse it.
-
-## Files touched
-
-- `src/components/academy/AttemptHistory.tsx` — new shared table.
-- `src/pages/platform/CoursePage.tsx` — fetch full attempts (replace the existing best-score-only query), group by chapter, add collapsible per chapter.
-- `src/pages/platform/ChapterQuizPage.tsx` — fetch attempts for the chapter, add "View attempt history" Sheet.
-
-## Out of scope
-
-- Re-opening a previous attempt to inspect each individual answer (`QuizRunner` already shows "previous answer" comparison on the next retake; deeper per-attempt review can come later).
-- Deleting attempts.
-- Filter/search across courses or date ranges.
-- Final-exam attempt history (separate table `academy_exam_attempts`; can mirror this later if you want it).
+- Prototype keeps its own dark theme/CSS — no design-token integration, matching the dossier import decision.
+- No backend, no data model changes.
+- The manual `.md` is shipped statically so the prototype's links resolve; no parser added.
