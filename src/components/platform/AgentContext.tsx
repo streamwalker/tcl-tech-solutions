@@ -11,11 +11,13 @@ interface AgentContextType {
 const AgentContext = createContext<AgentContextType | null>(null);
 
 const STORAGE_KEY = "tcl-agent-history";
+// Use sessionStorage so sensitive business data (clients, revenue) doesn't
+// persist across browser sessions or devices.
 
 export function AgentProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Msg[]>(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = sessionStorage.getItem(STORAGE_KEY);
       return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
@@ -24,13 +26,13 @@ export function AgentProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     } catch {}
   }, [messages]);
 
   const clearMessages = useCallback(() => {
     setMessages([]);
-    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
   }, []);
 
   return (

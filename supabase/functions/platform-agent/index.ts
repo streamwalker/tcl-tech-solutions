@@ -392,10 +392,10 @@ serve(async (req) => {
       });
     }
 
-    const anonClient = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    const userClient = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_ANON_KEY")!, {
       global: { headers: { Authorization: authHeader } },
     });
-    const { data: { user }, error: userError } = await anonClient.auth.getUser();
+    const { data: { user }, error: userError } = await userClient.auth.getUser();
     if (userError || !user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -404,8 +404,9 @@ serve(async (req) => {
     }
     const userId = user.id;
 
-    // Service role client for DB operations
-    const db = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    // User-scoped DB client so RLS enforces data isolation as a safety net
+    // on top of the explicit user_id filters in executeTool.
+    const db = userClient;
 
     const { messages } = await req.json();
 
