@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, AlertTriangle, CheckCircle2, ExternalLink, Globe, Clock, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Footer from "@/components/Footer";
+import PropagationTracker from "@/components/troubleshooting/PropagationTracker";
 
 const LOVABLE_IP = "185.158.133.1";
 
@@ -30,6 +31,8 @@ export default function TroubleshootingDns() {
             DNS fix at your registrar.
           </p>
         </header>
+
+        <PropagationTracker />
 
         <Card className="bg-gray-900 border-gray-800 mb-8">
           <CardHeader>
