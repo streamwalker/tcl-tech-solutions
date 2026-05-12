@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINEMASHOP Star Panel Installation & Service Platform</title>
+<style>
+:root {
+  --bg-deep: #050816;
+  --bg-panel: #0c1226;
+  --bg-card: #131a35;
+  --bg-elev: #1a2247;
+  --border: #2a3563;
+  --text-primary: #e8edff;
+  --text-secondary: #a8b3d4;
+  --text-muted: #6b779e;
+  --accent: #4fb6ff;
+  --accent-glow: #4fb6ff44;
+  --accent-2: #ffd166;
+  --success: #6ee7a7;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+  --gradient-1: linear-gradient(135deg, #4fb6ff 0%, #8b5cf6 100%);
+  --gradient-2: linear-gradient(135deg, #ffd166 0%, #f97316 100%);
+  --shadow-glow: 0 0 40px rgba(79, 182, 255, 0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Starfield Background */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at top, #0f1633 0%, #050816 50%, #020410 100%);
+}
+.starfield canvas { width: 100%; height: 100%; }
+
+/* Layout */
+.app {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: rgba(12, 18, 38, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.logo {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.logo-title {
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.search-box {
+  padding: 0 16px 16px;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 14px 10px 36px;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b779e' stroke-width='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.nav {
+  padding: 0 12px;
+}
+.nav-section {
+  margin-bottom: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.nav-item:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+.nav-item.active {
+  background: var(--bg-elev);
+  color: var(--accent);
+  border-color: var(--border);
+}
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.nav-num {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Main content */
+.main {
+  padding: 32px 48px 80px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.hero {
+  margin-bottom: 32px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(79, 182, 255, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(79, 182, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  color: var(--text-secondary);
+  max-width: 700px;
+  font-size: 15px;
+}
+
+.section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.section.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+.section-badge {
+  font-size: 11px;
+  background: var(--bg-elev);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.card p {
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card ul, .card ol {
+  color: var(--text-secondary);
+  margin: 8px 0 12px 24px;
+}
+.card li {
+  margin-bottom: 6px;
+}
+
+/* Tables */
+.spec-table, .cmd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.spec-table th, .cmd-table th {
+  background: var(--bg-elev);
+  color: var(--accent);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+.spec-table td, .cmd-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.cmd-table code {
+  background: var(--bg-deep);
+  color: var(--accent-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "SF Mono", Monaco, Consolas, monospace;
+  font-size: 12px;
+}
+
+/* Alerts */
+.alert {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 12px 0;
+  border-left: 3px solid;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.alert-warning {
+  background: rgba(251, 191, 36, 0.08);
+  border-color: var(--warning);
+  color: #fde68a;
+}
+.alert-danger {
+  background: rgba(248, 113, 113, 0.08);
+  border-color: var(--danger);
+  color: #fca5a5;
+}
+.alert-info {
+  background: rgba(79, 182, 255, 0.08);
+  border-color: var(--accent);
+  color: #bfdbfe;
+}
+.alert-success {
+  background: rgba(110, 231, 167, 0.08);
+  border-color: var(--success);
+  color: #a7f3d0;
+}
+.alert-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Installation Wizard */
+.wizard-progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.wizard-step-dot {
+  flex: 1;
+  min-width: 60px;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+}
+.wizard-step-dot.completed {
+  background: rgba(110, 231, 167, 0.1);
+  color: var(--success);
+}
+.wizard-step-dot.active {
+  background: var(--gradient-1);
+  color: white;
+  font-weight: 600;
+}
+.wizard-step-dot:hover:not(.active) {
+  background: var(--bg-elev);
+  color: var(--text-primary);
+}
+.wizard-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+}
+.wizard-step-num {
+  display: inline-block;
+  background: var(--gradient-1);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 32px;
+  font-weight: 700;
+  margin-right: 12px;
+}
+.wizard-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+.wizard-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn-primary {
+  background: var(--gradient-1);
+  border: none;
+  color: white;
+}
+.btn-primary:hover {
+  color: white;
+  filter: brightness(1.1);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Troubleshooting Decision Tree */
+.diagnostic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.symptom-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+.symptom-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.symptom-card.selected {
+  border-color: var(--accent);
+  background: var(--bg-elev);
+}
+.symptom-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+.symptom-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+.symptom-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.diagnostic-output {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 200px;
+}
+.diagnostic-empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px 20px;
+}
+.cause-item {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--warning);
+}
+.cause-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--warning);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cause-resolution {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-left: 24px;
+}
+.cause-resolution ol, .cause-resolution ul { margin-left: 18px; }
+
+/* RS232 Command Builder */
+.builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.builder-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.builder-output {
+  background: var(--bg-deep);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: "SF Mono", Monaco, Consolas, monospace;
+  font-size: 18px;
+  color: var(--accent-2);
+  text-align: center;
+  margin: 12px 0;
+  word-break: break-all;
+}
+.builder-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  display: block;
+  margin-top: 12px;
+}
+.builder-select {
+  width: 100%;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+.builder-select:focus { border-color: var(--accent); }
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 6px;
+  margin: 8px 0;
+}
+.color-swatch {
+  height: 50px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px;
+  font-size: 9px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  font-weight: 600;
+}
+.color-swatch:hover { transform: scale(1.05); }
+.color-swatch.selected { border-color: white; box-shadow: 0 0 0 2px var(--accent); }
+
+/* Effect grid */
+.effect-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.effect-btn {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s;
+  color: var(--text-secondary);
+}
+.effect-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+.effect-btn.selected {
+  background: var(--gradient-1);
+  color: white;
+  border-color: transparent;
+}
+.effect-emoji { font-size: 20px; display: block; margin-bottom: 4px; }
+
+.copy-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.copy-btn:hover { filter: brightness(1.1); }
+.copy-btn.copied {
+  background: var(--success);
+}
+
+/* Wiring topology selector */
+.topology-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.topology-tab {
+  padding: 10px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.topology-tab:hover { border-color: var(--accent); }
+.topology-tab.active {
+  background: var(--bg-elev);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.diagram-frame {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  overflow-x: auto;
+}
+
+/* Maintenance Schedule */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.schedule-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  border-top: 3px solid var(--accent);
+}
+.schedule-frequency {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.schedule-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.schedule-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Inventory checklist */
+.checklist {
+  list-style: none;
+  margin: 0 !important;
+  padding: 0;
+}
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.checklist li.checked .check-box {
+  background: var(--success);
+  border-color: var(--success);
+}
+.checklist li.checked .check-box::after {
+  content: "✓";
+  color: var(--bg-deep);
+  font-weight: 700;
+  font-size: 13px;
+}
+.checklist li.checked .check-label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.check-label { flex: 1; color: var(--text-secondary); font-size: 14px; }
+
+/* SVG diagram styles */
+.wiring-svg { width: 100%; height: auto; }
+.wiring-svg .panel-rect {
+  fill: var(--bg-elev);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.wiring-svg .panel-text { fill: var(--text-primary); font-size: 11px; font-weight: 600; }
+.wiring-svg .cable { stroke: var(--accent); stroke-width: 2; fill: none; }
+.wiring-svg .cable-shooting { stroke: #ff6b6b; stroke-width: 2; fill: none; stroke-dasharray: 4 2; }
+.wiring-svg .cable-cross { stroke: #6ee7a7; stroke-width: 2; fill: none; stroke-dasharray: 4 2; }
+.wiring-svg .controller-rect {
+  fill: var(--bg-card);
+  stroke: var(--accent-2);
+  stroke-width: 2;
+}
+.wiring-svg .controller-text { fill: var(--accent-2); font-size: 10px; font-weight: 700; }
+.wiring-svg .star { fill: var(--accent-2); }
+
+/* Mobile responsiveness */
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: 100;
+    width: 280px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .main { padding: 20px; }
+  .menu-toggle { display: block !important; }
+  .builder { grid-template-columns: 1fr; }
+}
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 101;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Tooltip */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  z-index: 10;
+}
+
+/* Search highlight */
+.search-highlight {
+  background: rgba(255, 209, 102, 0.3);
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+.fact-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.fact-row:last-child { border-bottom: none; }
+.fact-key { color: var(--text-muted); font-size: 13px; }
+.fact-val { color: var(--text-primary); font-weight: 600; font-size: 13px; font-variant-numeric: tabular-nums; }
+
+.kbd {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: "SF Mono", Monaco, Consolas, monospace;
+  font-size: 11px;
+  color: var(--accent-2);
+}
+</style>
+</head>
+<body>
+
+<div class="starfield"><canvas id="stars"></canvas></div>
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z"/></svg>
+        CINEMASHOP
+      </div>
+      <div class="logo-subtitle">Service Platform v1.0</div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search the manual...">
+    </div>
+
+    <nav class="nav" id="nav">
+      <a class="nav-item active" data-target="overview">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Overview
+      </a>
+      <a class="nav-item" data-target="inventory">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-9-4-9 4v10l9 4 9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+        Inventory & Specs
+        <span class="nav-num">01</span>
+      </a>
+      <a class="nav-item" data-target="safety">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-3.5 9.5-9 10-5.5-.5-9-5-9-10V6z"/></svg>
+        Safety Protocols
+        <span class="nav-num">02</span>
+      </a>
+      <a class="nav-item" data-target="wizard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Installation Wizard
+        <span class="nav-num">03</span>
+      </a>
+      <a class="nav-item" data-target="wiring">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v6a6 6 0 0 0 6 6h3"/></svg>
+        Wiring Topology
+        <span class="nav-num">04</span>
+      </a>
+      <a class="nav-item" data-target="control">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Control System
+        <span class="nav-num">05</span>
+      </a>
+      <a class="nav-item" data-target="builder">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        RS232 Command Builder
+        <span class="nav-num">06</span>
+      </a>
+      <a class="nav-item" data-target="maintenance">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Maintenance
+        <span class="nav-num">07</span>
+      </a>
+      <a class="nav-item" data-target="troubleshoot">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        Troubleshooting
+        <span class="nav-num">08</span>
+      </a>
+      <a class="nav-item" data-target="fieldcut">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+        Field Cutting
+        <span class="nav-num">09</span>
+      </a>
+      <a class="nav-item" data-target="warranty">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+        Warranty
+        <span class="nav-num">10</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <section class="section active" id="overview">
+      <div class="hero">
+        <h1>CINEMASHOP Star Panel Service Platform</h1>
+        <p>The complete interactive reference for installation, configuration, maintenance, and diagnostics of CINEMASHOP Fiber Optic Star Ceiling Panels. Navigate via the sidebar, or begin with the Installation Wizard.</p>
+      </div>
+
+      <div class="diagnostic-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <button class="symptom-card" onclick="navigate('wizard')">
+          <div class="symptom-icon">🛠️</div>
+          <div class="symptom-label">Begin Installation</div>
+          <div class="symptom-desc">Step-by-step interactive wizard</div>
+        </button>
+        <button class="symptom-card" onclick="navigate('troubleshoot')">
+          <div class="symptom-icon">🔍</div>
+          <div class="symptom-label">Diagnose a Problem</div>
+          <div class="symptom-desc">Interactive symptom matcher</div>
+        </button>
+        <button class="symptom-card" onclick="navigate('builder')">
+          <div class="symptom-icon">⌨️</div>
+          <div class="symptom-label">RS232 Builder</div>
+          <div class="symptom-desc">Generate control commands</div>
+        </button>
+        <button class="symptom-card" onclick="navigate('wiring')">
+          <div class="symptom-icon">🔌</div>
+          <div class="symptom-label">View Wiring Diagrams</div>
+          <div class="symptom-desc">Interactive topology selector</div>
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Quick Reference Specifications</h3>
+        <div class="fact-row"><span class="fact-key">Panel Voltage</span><span class="fact-val">12V or 24V DC</span></div>
+        <div class="fact-row"><span class="fact-key">Standard Panel Draw</span><span class="fact-val">1.4 W per starboard</span></div>
+        <div class="fact-row"><span class="fact-key">Shooting Star Panel Draw</span><span class="fact-val">4.2 W per panel</span></div>
+        <div class="fact-row"><span class="fact-key">Power Supply Rating</span><span class="fact-val">12V/24V @ 90W Class 2</span></div>
+        <div class="fact-row"><span class="fact-key">Max Panels Per Supply</span><span class="fact-val">27 panels</span></div>
+        <div class="fact-row"><span class="fact-key">Max Panels Per Lead Wire</span><span class="fact-val">9 (data drops above)</span></div>
+        <div class="fact-row"><span class="fact-key">Cable Type</span><span class="fact-val">CAT5 or CAT5e (NOT 6/7)</span></div>
+        <div class="fact-row"><span class="fact-key">Max Cable Distance to First Panel</span><span class="fact-val">150 ft</span></div>
+        <div class="fact-row"><span class="fact-key">Mounting Hardware</span><span class="fact-val">6 Rotofast Anchors per panel</span></div>
+        <div class="fact-row"><span class="fact-key">Control Interface</span><span class="fact-val">Bluetooth / Wi-Fi / RS232</span></div>
+        <div class="fact-row"><span class="fact-key">Mobile Application</span><span class="fact-val">ILLUMINATE 1.0 (iOS / Android)</span></div>
+        <div class="fact-row"><span class="fact-key">UL Listing</span><span class="fact-val">E530053</span></div>
+        <div class="fact-row"><span class="fact-key">Warranty Period</span><span class="fact-val">1 Year Manufacturer</span></div>
+      </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="section" id="inventory">
+      <div class="section-header">
+        <h2>Inventory & Technical Specifications</h2>
+        <span class="section-badge">Section 01</span>
+      </div>
+
+      <div class="card">
+        <h3>Pre-Installation Inventory Checklist</h3>
+        <p>Click items to mark them as verified before commencing installation. Progress saves locally to your browser.</p>
+        <ul class="checklist" id="inventoryList">
+          <li><div class="check-box"></div><span class="check-label">Acoustical fiber optic panels (count matches order)</span></li>
+          <li><div class="check-box"></div><span class="check-label">Rotofast anchors (minimum 6 per panel)</span></li>
+          <li><div class="check-box"></div><span class="check-label">10-foot low-voltage RJ45 / CAT5 jumper cables</span></li>
+          <li><div class="check-box"></div><span class="check-label">30-foot lead conductor flex wire(s) for LED strip lights</span></li>
+          <li><div class="check-box"></div><span class="check-label">Hex tools and poker tool</span></li>
+          <li><div class="check-box"></div><span class="check-label">Drywall anchors</span></li>
+          <li><div class="check-box"></div><span class="check-label">12V or 24V @ 90W Class 2 power supply with cord</span></li>
+          <li><div class="check-box"></div><span class="check-label">Spacers (optional, for halo backlighting or extra wire clearance)</span></li>
+          <li><div class="check-box"></div><span class="check-label">Switchable AC outlet pre-wired at planned location</span></li>
+          <li><div class="check-box"></div><span class="check-label">CAT5/CAT5e wire run pre-installed (one per system)</span></li>
+          <li><div class="check-box"></div><span class="check-label">Additional CAT5 per shooting star (1 extra for SS2, 2 extra for SS3)</span></li>
+          <li><div class="check-box"></div><span class="check-label">Stepladder and second installer available</span></li>
+          <li><div class="check-box"></div><span class="check-label">Laser measure, chalk line, masking tape, pencil</span></li>
+          <li><div class="check-box"></div><span class="check-label">Latex gloves to protect panel fabric</span></li>
+          <li><div class="check-box"></div><span class="check-label">Safety glasses and gloves</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Power Specifications</h3>
+        <table class="spec-table">
+          <tr><th>Parameter</th><th>Specification</th></tr>
+          <tr><td>Panel Voltage</td><td>12V or 24V DC</td></tr>
+          <tr><td>Standard Panel Wattage</td><td>1.4 W per starboard</td></tr>
+          <tr><td>Shooting Star Adder</td><td>+2.8 W (total 4.2 W per panel)</td></tr>
+          <tr><td>Power Supply</td><td>UL Listed 12V/24V @ 90W Class 2</td></tr>
+          <tr><td>UL Listing Number</td><td>E530053</td></tr>
+          <tr><td>Max Panels per Supply</td><td>27 interconnected</td></tr>
+          <tr><td>Daisy Chain Limit per Lead Wire</td><td>9 panels (data drops above)</td></tr>
+          <tr><td>Master Board CAT5 Outputs</td><td>3 ports</td></tr>
+          <tr><td>Max Distance, Driver to First Panel</td><td>150 ft</td></tr>
+          <tr><td>Use Environment</td><td>Indoor, dry, residential</td></tr>
+        </table>
+      </div>
+
+      <div class="alert alert-warning">
+        <strong>Important Cable Compatibility Note:</strong> The system requires CAT5 or CAT5e exclusively. CAT6 and CAT7 cables are <strong>not compatible</strong> and will produce malfunctions.
+      </div>
+    </section>
+
+    <!-- SAFETY -->
+    <section class="section" id="safety">
+      <div class="section-header">
+        <h2>Safety Protocols</h2>
+        <span class="section-badge">Section 02 • Mandatory</span>
+      </div>
+
+      <div class="alert alert-danger">
+        <strong>⚠ WARNING — Risk of Electric Shock, Fire, and Injury.</strong> Review the assembly instructions to confirm that the appropriate critical components and accessories are used with the furnishing. Compliance with these protocols is not optional.
+      </div>
+
+      <div class="card">
+        <h3>Before You Begin</h3>
+        <ol>
+          <li>Read all instructions and warnings in their entirety before installation. Test panels on the floor prior to mounting.</li>
+          <li><strong>Ensure proper grounding</strong> and that no wiring is exposed.</li>
+          <li>Install away from heat sources, water, and flammable materials.</li>
+          <li>Use only the recommended power source. Substitutions are prohibited.</li>
+          <li><strong>Disconnect the power supply</strong> before installing, moving, or servicing the panel.</li>
+          <li>Handle panels with caution; sharp edges may be present.</li>
+          <li>Wear gloves, eye protection, and appropriate safety gear.</li>
+          <li>Cut and trim only with a sharp non-serrated knife or box cutter.</li>
+          <li>Wear latex gloves to preserve panel cleanliness during handling.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Electrical Safety</h3>
+        <ul>
+          <li>Always unplug from the electrical outlet before cleaning or servicing.</li>
+          <li>Unplug before installing or removing components.</li>
+          <li>Use this furnishing only for its intended purpose. Do not use unapproved attachments.</li>
+          <li>Never operate with damaged cord or plug, after a drop, or after water exposure.</li>
+          <li>Keep cords away from heated surfaces.</li>
+          <li>Never insert objects into any opening.</li>
+          <li><strong>Do not use outdoors.</strong> Indoor dry locations only.</li>
+          <li>Do not operate where aerosol products are in use, or where oxygen is being administered.</li>
+          <li>Ensure wiring meets all local building codes.</li>
+          <li>Disconnect power to the area before beginning installation.</li>
+          <li>Wear protective clothing and eye protection when working with fiber optic components.</li>
+          <li>Inspect for frayed or exposed wires before installation.</li>
+          <li>Never install in damp or wet areas.</li>
+          <li>Plug only into properly grounded outlets.</li>
+          <li>Keep flammable materials away during operation.</li>
+          <li><strong>Never attempt self-repair.</strong> Return defective units to a service center.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Emergency Response</h3>
+        <div class="alert alert-danger" style="margin: 8px 0;">
+          <div><strong>Electric Shock:</strong> Remove person to fresh air; keep comfortable for breathing. Obtain medical attention.</div>
+        </div>
+        <div class="alert alert-warning" style="margin: 8px 0;">
+          <div><strong>Skin Cut:</strong> Wash with plenty of soap and water. If irritation occurs, obtain medical attention.</div>
+        </div>
+        <div class="alert alert-warning" style="margin: 8px 0;">
+          <div><strong>Dust in Eyes:</strong> Rinse cautiously with water for several minutes. Remove contact lenses if easy to do. Continue rinsing. If irritation persists, obtain medical advice.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIZARD -->
+    <section class="section" id="wizard">
+      <div class="section-header">
+        <h2>Installation Wizard</h2>
+        <span class="section-badge">Section 03 • Interactive</span>
+      </div>
+
+      <div class="wizard-progress" id="wizardProgress"></div>
+
+      <div class="wizard-content" id="wizardContent"></div>
+    </section>
+
+    <!-- WIRING -->
+    <section class="section" id="wiring">
+      <div class="section-header">
+        <h2>Wiring Topology</h2>
+        <span class="section-badge">Section 04 • Diagrams</span>
+      </div>
+
+      <div class="card">
+        <h3>Select Configuration</h3>
+        <div class="topology-tabs" id="topologyTabs">
+          <button class="topology-tab active" data-topo="basic">Basic Daisy Chain</button>
+          <button class="topology-tab" data-topo="multi">3-Branch Master</button>
+          <button class="topology-tab" data-topo="shooting">With Shooting Star</button>
+          <button class="topology-tab" data-topo="halo">With RGB Halo</button>
+        </div>
+        <div class="diagram-frame" id="diagramFrame"></div>
+        <div id="topologyDescription" style="margin-top: 16px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Connection Rules</h3>
+        <ul>
+          <li>Each Starboard Light Engine has <strong>1 IN port and 2 OUT ports</strong>. Either OUT may jump to the next starboard.</li>
+          <li>The Master Board provides <strong>3 CAT5 OUTPUT ports</strong>.</li>
+          <li>Maximum <strong>9 panels per lead wire</strong>. Exceeding this produces data drops.</li>
+          <li>Maximum <strong>27 panels per power supply</strong>. Add an additional supply and Master Board beyond this.</li>
+          <li>Each shooting star requires its own dedicated CAT5 lead from the Master Board.</li>
+          <li>The Master Board may live on-panel or remotely in an equipment closet within 150 ft of the first panel.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTROL -->
+    <section class="section" id="control">
+      <div class="section-header">
+        <h2>ILLUMINATE 1.0 Control System</h2>
+        <span class="section-badge">Section 05</span>
+      </div>
+
+      <div class="card">
+        <h3>Initial Setup</h3>
+        <ol>
+          <li>Download the <strong>ILLUMINATE 1.0</strong> application from the Apple App Store or Google Play Store.</li>
+          <li>Enable Bluetooth on your mobile device. The application will prompt if it is not active.</li>
+          <li>Launch the application. The system pairs automatically when in range.</li>
+          <li>Adjust settings as desired. You may switch between iOS, Android, and RS232 control at any time.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Star Ceiling Controls</h3>
+        <p>The <strong>Stars</strong> section controls the ceiling itself.</p>
+        <h4>Starry Night Effects</h4>
+        <div class="effect-grid">
+          <div class="effect-btn" data-tooltip="Stars twinkle on and off"><span class="effect-emoji">✨</span>Twinkle</div>
+          <div class="effect-btn" data-tooltip="Soft glowing pattern"><span class="effect-emoji">🪲</span>Firefly</div>
+          <div class="effect-btn" data-tooltip="Gentle wave-like motion"><span class="effect-emoji">🌬️</span>Breeze</div>
+          <div class="effect-btn" data-tooltip="Pseudorandom firing"><span class="effect-emoji">🎲</span>Random</div>
+          <div class="effect-btn" data-tooltip="Falling-droplet pattern"><span class="effect-emoji">💧</span>Rain Drops</div>
+          <div class="effect-btn" data-tooltip="High-energy multi-pattern"><span class="effect-emoji">🎉</span>Jamboree</div>
+        </div>
+        <h4 style="margin-top: 20px;">Additional Controls</h4>
+        <ul>
+          <li><strong>Starry Night Colors</strong> — preset palette plus custom color wheel (hue + opacity)</li>
+          <li><strong>Shooting Star</strong> — SS1, SS2, SS3 with color and interval (Off, 1, 2, 5, or 10 minutes)</li>
+          <li><strong>On/Off Toggle</strong> — turns stars on or off</li>
+          <li><strong>Dimmer</strong> — 10% to 100%</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Ambient Light Controls (Halo Strips)</h3>
+        <p>The <strong>Ambient Light</strong> section controls the RGB/RGBW perimeter strip lights.</p>
+        <h4>Effects</h4>
+        <div class="effect-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="effect-btn"><span class="effect-emoji">🌀</span>Fade</div>
+          <div class="effect-btn"><span class="effect-emoji">👁️</span>Blink</div>
+          <div class="effect-btn"><span class="effect-emoji">⭕</span>No Effect</div>
+        </div>
+        <h4 style="margin-top: 20px;">Controls</h4>
+        <ul>
+          <li><strong>Ambient Light Colors</strong> — preset palette plus custom color wheel</li>
+          <li><strong>Speed Slider</strong> — controls effect speed</li>
+          <li><strong>Dimmer</strong> — 10% to 100%</li>
+          <li><strong>On/Off Toggle</strong> — turns ambient lights on or off</li>
+        </ul>
+      </div>
+
+      <div class="alert alert-info">
+        <strong>Confirmation Behavior:</strong> Upon selecting a show or color, the system blinks twice to confirm receipt of the command before commencing the show. This is normal and indicates a successful connection — it is not a fault.
+      </div>
+    </section>
+
+    <!-- BUILDER -->
+    <section class="section" id="builder">
+      <div class="section-header">
+        <h2>RS232 Command Builder</h2>
+        <span class="section-badge">Section 06 • Interactive</span>
+      </div>
+
+      <div class="card">
+        <h3>Generate Commands for Home Automation</h3>
+        <p>Select a command category and parameters. The generated RS232 string is shown below and may be copied to your home automation system. All commands terminate with the asterisk character <code style="background:var(--bg-deep); color:var(--accent-2); padding:1px 5px; border-radius:3px;">*</code>.</p>
+
+        <label class="builder-label">Command Category</label>
+        <select class="builder-select" id="cmdCategory" onchange="renderBuilder()">
+          <option value="effect">Starry Night Effect</option>
+          <option value="color">Starry Night Color</option>
+          <option value="transition">Color Transition</option>
+          <option value="dimmer">Star Dimmer</option>
+          <option value="shooting">Shooting Star</option>
+          <option value="ambient-effect">Ambient Light Effect</option>
+          <option value="ambient-color">Ambient Light Color</option>
+          <option value="ambient-dim">Ambient Dimmer</option>
+        </select>
+
+        <div id="builderParams"></div>
+
+        <div class="builder-output" id="builderOutput">—</div>
+        <button class="copy-btn" onclick="copyCommand()" id="copyBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Command
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Complete Command Reference</h3>
+        <h4>Starry Night Effects</h4>
+        <table class="cmd-table">
+          <tr><th>Effect</th><th>Command</th></tr>
+          <tr><td>Twinkle</td><td><code>T</code></td></tr>
+          <tr><td>Firefly</td><td><code>F</code></td></tr>
+          <tr><td>Breeze</td><td><code>B</code></td></tr>
+          <tr><td>Random</td><td><code>R</code></td></tr>
+          <tr><td>Rain Drops</td><td><code>P</code></td></tr>
+          <tr><td>Jamboree</td><td><code>J</code></td></tr>
+        </table>
+
+        <h4>Color Transitions</h4>
+        <table class="cmd-table">
+          <tr><th>Effect</th><th>Command</th></tr>
+          <tr><td>Wipe color</td><td><code>w</code></td></tr>
+          <tr><td>Fade color</td><td><code>f</code></td></tr>
+          <tr><td>Rainbow color</td><td><code>r</code></td></tr>
+          <tr><td>Blink color</td><td><code>b</code></td></tr>
+        </table>
+
+        <h4>Format Reference</h4>
+        <table class="cmd-table">
+          <tr><th>Type</th><th>Format</th><th>Example</th></tr>
+          <tr><td>Starry Night Color</td><td><code>c,R,G,B,W*</code></td><td><code>c,255,0,0,0*</code></td></tr>
+          <tr><td>Ambient Light Color</td><td><code>A,R,G,B,W*</code></td><td><code>A,0,0,255,0*</code></td></tr>
+          <tr><td>Star Dimmer</td><td><code>D,%*</code></td><td><code>D,80*</code></td></tr>
+          <tr><td>Ambient Dimmer</td><td><code>d,%</code></td><td><code>d,80</code></td></tr>
+          <tr><td>Shooting Star</td><td><code>Zone,R,G,B,W,Time*</code></td><td><code>X,255,0,0,0,1*</code></td></tr>
+          <tr><td>Ambient Effect</td><td><code>mode,speed</code></td><td><code>e,255</code> (fade fast)</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- MAINTENANCE -->
+    <section class="section" id="maintenance">
+      <div class="section-header">
+        <h2>Maintenance Protocol</h2>
+        <span class="section-badge">Section 07</span>
+      </div>
+
+      <div class="schedule-grid">
+        <div class="schedule-card">
+          <div class="schedule-frequency">Every 3-6 Months</div>
+          <div class="schedule-title">Light Dust Removal</div>
+          <div class="schedule-desc">Soft microfiber cloth or low-suction vacuum with brush attachment</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-frequency">Every 6 Months</div>
+          <div class="schedule-title">Visual Inspection</div>
+          <div class="schedule-desc">Check panels, fiber endpoints, and cable runs for damage</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-frequency">Annually</div>
+          <div class="schedule-title">Connection Verification</div>
+          <div class="schedule-desc">Reseat RJ45 connectors, inspect cables for kinks or damage</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-frequency">Annually</div>
+          <div class="schedule-title">Power Supply Inspection</div>
+          <div class="schedule-desc">Verify ventilation, dust removal, lead wire integrity</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-frequency">Annually</div>
+          <div class="schedule-title">Full System Test</div>
+          <div class="schedule-desc">Cycle every effect, color, shooting star, and dimmer range</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Routine Cleaning Procedure</h3>
+        <div class="alert alert-warning">
+          <strong>Disconnect power before any cleaning.</strong> Non-negotiable.
+        </div>
+        <ol>
+          <li>Disconnect AC power to the system.</li>
+          <li>Allow the system to cool if it has been operating.</li>
+          <li>Wear clean latex or nitrile gloves to prevent skin-oil transfer.</li>
+          <li>Use a soft, dry microfiber cloth. Wipe in one direction. Do not scrub.</li>
+          <li>For dust in crevices, use a soft-bristle brush or vacuum on lowest suction. Hold the attachment above the surface — do not press into the fabric.</li>
+          <li><strong>Do not use water, solvents, cleaning sprays, or chemical cleaners.</strong> Fabric and fiber optics may be damaged.</li>
+          <li>For stubborn marks, contact CINEMASHOP for approved cleaning agents. Unauthorized chemicals void the warranty.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Fiber Optic Inspection</h3>
+        <ul>
+          <li><strong>Loose or protruding fibers</strong> — reinsert with the supplied poker tool.</li>
+          <li><strong>Discoloration or yellowing</strong> — typically indicates aging of an individual fiber.</li>
+          <li><strong>Missing fibers</strong> — contact CINEMASHOP for replacement guidance.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Annual Comprehensive Check</h3>
+        <ol>
+          <li>Disconnect power.</li>
+          <li>Power on and cycle through each effect: Twinkle, Firefly, Breeze, Random, Rain Drops, Jamboree.</li>
+          <li>Cycle through each preset color. Confirm full reproduction without missing channels.</li>
+          <li>Trigger each shooting star (SS1, SS2, SS3 as installed) at each duration.</li>
+          <li>Verify the dimmer responds smoothly across 10–100%.</li>
+          <li>Test ambient light effects and colors if RGB perimeter is installed.</li>
+          <li>Note any anomalies and consult the troubleshooting section.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOT -->
+    <section class="section" id="troubleshoot">
+      <div class="section-header">
+        <h2>Troubleshooting Diagnostic</h2>
+        <span class="section-badge">Section 08 • Interactive</span>
+      </div>
+
+      <div class="card">
+        <h3>Select Your Symptom</h3>
+        <p>Click the symptom that most closely matches what you are observing. Probable causes and resolution steps will appear below.</p>
+        <div class="diagnostic-grid" id="symptomGrid"></div>
+        <div class="diagnostic-output" id="diagnosticOutput">
+          <div class="diagnostic-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            <p style="margin-top: 12px;">Select a symptom above to view diagnostic guidance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELDCUT -->
+    <section class="section" id="fieldcut">
+      <div class="section-header">
+        <h2>Field Cutting Panels</h2>
+        <span class="section-badge">Section 09</span>
+      </div>
+
+      <div class="card">
+        <h3>Cutting for Protrusions (Sprinkler Heads, Fixture Boxes, HVAC)</h3>
+        <ol>
+          <li>As you install the panel, mark the protrusion location on the <strong>upper side</strong> of the panel.</li>
+          <li>Remove any fiber optics in the cut area; use the poking tool to reinsert them elsewhere on the panel.</li>
+          <li>Carefully cut <strong>only the 1-inch Fiberglas</strong> for the measured opening with a sharp non-serrated knife or box cutter. Do not cut the fabric below.</li>
+          <li>Make an "X" in the fabric below the opening.</li>
+          <li>Fold the four resulting fabric flaps up into the opening.</li>
+          <li>Glue the flaps over the top of the panel using a light adhesive spray such as <strong>3M Super 77</strong>.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Cutting for Speakers and Air Vents</h3>
+        <p>For these applications, <strong>leave the fabric intact</strong>. After cutting only the Fiberglas, reinsert the fiber strands through the fabric.</p>
+      </div>
+
+      <div class="card">
+        <h3>Trimming Oversized Panels</h3>
+        <ol>
+          <li>"Un-wrap" the fabric on the side requiring trimming.</li>
+          <li>Mark the new cut line on the top of the fiberglass panel.</li>
+          <li>Remove and relocate any fiber optics in the area.</li>
+          <li>Cut to the new size with a sharp non-serrated knife or box cutter, taking care not to nick the fabric.</li>
+          <li>Re-wrap the fabric over the top with slight tension.</li>
+          <li>Tack the fabric back with a light adhesive spray such as 3M Super 77.</li>
+        </ol>
+      </div>
+
+      <div class="alert alert-info">
+        <strong>Tool Reminder:</strong> Use only sharp non-serrated knives or box cutters for fiber optic panel work. Serrated edges will fray the fabric and damage internal fibers.
+      </div>
+    </section>
+
+    <!-- WARRANTY -->
+    <section class="section" id="warranty">
+      <div class="section-header">
+        <h2>Warranty Information</h2>
+        <span class="section-badge">Section 10</span>
+      </div>
+
+      <div class="card">
+        <h3>1 Year Manufacturer's Warranty</h3>
+        <p>CINEMASHOP provides a 1 Year Manufacturer's Warranty with the purchase of the star panels.</p>
+
+        <h4>What Is Covered</h4>
+        <ul>
+          <li>Defects in materials and/or workmanship</li>
+          <li>Repair or replacement of defective parts</li>
+          <li>Parts and labor for the warranty period</li>
+        </ul>
+
+        <h4>Conditions</h4>
+        <ul>
+          <li>Products must be installed and used in accordance with written instructions.</li>
+          <li>Warranty labor must be pre-approved by CINEMASHOP before proceeding.</li>
+          <li>Warranty labor not pre-approved and performed by a qualified provider will not be reimbursed.</li>
+        </ul>
+
+        <h4>What Is Not Covered</h4>
+        <ul>
+          <li>Damage or destruction caused by the end user</li>
+          <li>Normal wear and tear</li>
+          <li>Shipping damage (must be claimed with the freight carrier)</li>
+        </ul>
+      </div>
+
+      <div class="alert alert-warning">
+        <strong>Shipping Damage:</strong> All damaged shipments must be noted to the freight carrier, then refused and returned to the address on the shipping label for claim processing. Damage claims must be reported immediately. Failure to note damage with the carrier may require claims against your own insurance.
+      </div>
+
+      <div class="card">
+        <h3>Limitation of Liability</h3>
+        <p>The manufacturer will not be liable for any implied warranty of merchantability or fitness for a particular purpose to any person other than the original purchaser and user. Under no circumstances will the manufacturer be liable for property damage, economic loss, or consequential damages sustained in connection with the purchase and use of any products.</p>
+        <p>Some states do not permit limitations on implied warranty duration, or do not allow exclusion of incidental or consequential damages, so certain limitations or exclusions may not apply to you. This warranty gives you specific legal rights; you may also have other rights which vary from state to state.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ============= STARFIELD ============= */
+(function() {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    const count = Math.min(180, Math.floor(window.innerWidth * window.innerHeight / 15000));
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.3 + 0.2,
+        a: Math.random() * 0.6 + 0.2,
+        twinkle: Math.random() * 0.02 + 0.005,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let s of stars) {
+      const alpha = s.a + Math.sin(t * s.twinkle + s.phase) * 0.3;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220, 230, 255, ${Math.max(0.1, Math.min(1, alpha))})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  draw(0);
+})();
+
+/* ============= NAVIGATION ============= */
+function navigate(target) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById(target);
+  if (sec) sec.classList.add('active');
+  const navItem = document.querySelector(`.nav-item[data-target="${target}"]`);
+  if (navItem) navItem.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.innerWidth < 900) document.getElementById('sidebar').classList.remove('open');
+}
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => navigate(item.dataset.target));
+});
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+/* ============= SEARCH ============= */
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    document.querySelectorAll('.search-highlight').forEach(el => {
+      el.outerHTML = el.innerHTML;
+    });
+    return;
+  }
+  // Walk all visible text within sections and highlight matches.
+  // For simplicity, find the first section that contains the query and navigate to it.
+  const sections = ['overview','inventory','safety','wizard','wiring','control','builder','maintenance','troubleshoot','fieldcut','warranty'];
+  for (const id of sections) {
+    const sec = document.getElementById(id);
+    if (sec && sec.textContent.toLowerCase().includes(q)) {
+      navigate(id);
+      // brief visual flash
+      sec.style.transition = 'background 0.4s';
+      sec.style.background = 'rgba(79,182,255,0.04)';
+      setTimeout(() => sec.style.background = '', 600);
+      break;
+    }
+  }
+});
+
+/* ============= INVENTORY CHECKLIST ============= */
+const invList = document.getElementById('inventoryList');
+const invKey = 'cinemashop_inventory_v1';
+const invSaved = JSON.parse(localStorage.getItem(invKey) || '[]');
+invList.querySelectorAll('li').forEach((li, idx) => {
+  if (invSaved[idx]) li.classList.add('checked');
+  li.addEventListener('click', () => {
+    li.classList.toggle('checked');
+    const state = Array.from(invList.querySelectorAll('li')).map(l => l.classList.contains('checked'));
+    localStorage.setItem(invKey, JSON.stringify(state));
+  });
+});
+
+/* ============= INSTALLATION WIZARD ============= */
+const wizardSteps = [
+  {
+    title: "Square the Room",
+    body: `<p>A room may appear square but not <em>be</em> square. This distinction is operationally critical.</p>
+      <ul>
+        <li>Measure twice. All panels align off the first panel.</li>
+        <li>A slight deviation in the first panel compounds across the room.</li>
+        <li>Use masking tape, pencil marks, and chalk lines as reference aids.</li>
+        <li>Locate where your first panel will be installed.</li>
+      </ul>
+      <div class="alert alert-info"><strong>Tip:</strong> Two persons are required, plus a stepladder.</div>`
+  },
+  {
+    title: "Plan Power Routing",
+    body: `<p>Two options exist for routing power. Option 1 is recommended.</p>
+      <h4>Option 1 — Remote Driver (Recommended)</h4>
+      <ul>
+        <li>Locate the Driver and Master Board Controller in an equipment area within 150 feet of the first panel.</li>
+        <li>The driver outlet should be controlled by a remote switch or control system.</li>
+        <li>Run a CAT5 from one RJ45 port on the Controller to the Star Panel Leader Slave board INPUT.</li>
+        <li>Begin daisy-chaining panels with supplied 10-foot CAT5 jumpers.</li>
+      </ul>
+      <h4>Option 2 — Embedded Transformer</h4>
+      <ul>
+        <li>If the supply cannot plug into an existing receptacle, a licensed electrician must embed the Driver in the ceiling.</li>
+        <li>A panel cutout is required for access. Use the optional Cut Out Kit.</li>
+        <li>Observe local building codes.</li>
+      </ul>`
+  },
+  {
+    title: "Bench-Test Every Panel",
+    body: `<p>Before mounting <em>anything</em>, test each panel on the floor.</p>
+      <ul>
+        <li>Connect the power supply and lead wire.</li>
+        <li>Plug the lead wire to the Star Panel Master Board Controller.</li>
+        <li>Cycle through colors and effects to verify operation.</li>
+        <li>Identifying a defective panel at floor level is significantly more efficient than diagnosis post-installation.</li>
+      </ul>
+      <div class="alert alert-success">Replace any defective panel before proceeding.</div>`
+  },
+  {
+    title: "Snap Ceiling Grid Lines",
+    body: `<p>This is the most important phase. The chalk lines mark every Rotofast anchor position.</p>
+      <ul>
+        <li>Use laser measurements to determine ceiling centers.</li>
+        <li>Snap primary grid lines.</li>
+        <li>Snap secondary lines for each individual ceiling panel.</li>
+        <li><strong>Measure twice. Snap once.</strong></li>
+      </ul>`
+  },
+  {
+    title: "Install Anchor Hardware",
+    body: `<p>Each panel requires <strong>6 Rotofast anchors</strong>: four at the corners (4-inch inset) plus two at the center of each outside edge.</p>
+      <p>The mounting components are: drywall anchor, screw, spacer, Rotofast.</p>
+      <ol>
+        <li>Screw the drywall anchor into the drywall.</li>
+        <li>Place the Rotofast and spacer on the screw.</li>
+        <li>Screw the assembly into the anchor.</li>
+        <li>Snap the Rotofast hex head into place to permit hex-wrench engagement from below.</li>
+      </ol>
+      <div class="alert alert-info">Rotofast anchors are 2 inches across — large surface area, high pull-out strength, suitable for 6 lb/ft³ rigid fiberglass core panels.</div>`
+  },
+  {
+    title: "Lift and Position First Panel",
+    body: `<p>Two people required. Begin from the center of the ceiling and work outward.</p>
+      <ul>
+        <li>Tilt the panel slightly, lift above the framework, let it settle.</li>
+        <li>The panel face is marked with masking tape at Rotofast positions.</li>
+        <li>Panels are somewhat fragile. Proceed slowly.</li>
+      </ul>
+      <div class="alert alert-info"><strong>Useful tip:</strong> A paint brush extension (any hardware store) helps hold the panel while the second installer engages fasteners.</div>`
+  },
+  {
+    title: "Engage Corner Rotofasts",
+    body: `<p>With the panel held in position:</p>
+      <ol>
+        <li>Insert the hex wrench through the panel face at the marked spot.</li>
+        <li>Use the poker tool to locate the hex nut inside the Rotofast.</li>
+        <li>Insert the hex wrench into the nut.</li>
+        <li>Rotate <strong>counter-clockwise</strong> to engage (raises panel).</li>
+        <li>Apply gentle pressure while turning.</li>
+        <li>Rotate <strong>clockwise</strong> to lower the panel.</li>
+      </ol>
+      <div class="alert alert-warning"><strong>Caution:</strong> Turn slowly. Over-rotation strips the Rotofast's hold.</div>`
+  },
+  {
+    title: "Level Panel and Engage Center Edges",
+    body: `<p>Repeat engagement at all four corners while the second person holds position. Aim for a panel face level with the edging strip and adjacent panels.</p>
+      <p>After the four corners are secured, engage the two center-edge Rotofasts to level the middle of the panel.</p>
+      <p>All <strong>6 mounting points</strong> must be engaged to prevent sag.</p>`
+  },
+  {
+    title: "Continue Across the Ceiling",
+    body: `<p>Work outward from the center. Verify level alignment with previously installed panels at every step.</p>
+      <ul>
+        <li>Field-cut for obstructions, speakers, or air vents using the procedure in Section 09.</li>
+        <li>For oversized panels, un-wrap the fabric, trim the Fiberglas, re-wrap with 3M Super 77 adhesive.</li>
+      </ul>`
+  },
+  {
+    title: "Final Commissioning",
+    body: `<p>With all panels installed:</p>
+      <ol>
+        <li>Power on the system.</li>
+        <li>Download the <strong>ILLUMINATE 1.0</strong> app from iOS App Store or Google Play.</li>
+        <li>Enable Bluetooth and pair.</li>
+        <li>Cycle through every effect (Twinkle, Firefly, Breeze, Random, Rain Drops, Jamboree).</li>
+        <li>Cycle through every preset color.</li>
+        <li>Test each installed shooting star (SS1, SS2, SS3) at each duration setting.</li>
+        <li>Verify the dimmer responds 10–100%.</li>
+        <li>If RGB halo strips are installed, test their effects, colors, and dimmer.</li>
+      </ol>
+      <div class="alert alert-success">Installation complete. Document any anomalies for future reference.</div>`
+  }
+];
+
+let currentStep = parseInt(localStorage.getItem('cinemashop_wizard_step') || '0', 10);
+const completedSteps = new Set(JSON.parse(localStorage.getItem('cinemashop_wizard_completed') || '[]'));
+
+function renderWizard() {
+  const progress = document.getElementById('wizardProgress');
+  progress.innerHTML = '';
+  wizardSteps.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'wizard-step-dot';
+    if (i === currentStep) dot.classList.add('active');
+    if (completedSteps.has(i)) dot.classList.add('completed');
+    dot.textContent = (i + 1) + '. ' + s.title;
+    dot.addEventListener('click', () => { currentStep = i; saveWizard(); renderWizard(); });
+    progress.appendChild(dot);
+  });
+
+  const content = document.getElementById('wizardContent');
+  const step = wizardSteps[currentStep];
+  content.innerHTML = `
+    <div class="wizard-title"><span class="wizard-step-num">${currentStep + 1}</span> ${step.title}</div>
+    <div>${step.body}</div>
+    <div class="wizard-controls">
+      <button class="btn" onclick="prevStep()" ${currentStep === 0 ? 'disabled' : ''}>← Previous</button>
+      <button class="btn" onclick="markComplete()">${completedSteps.has(currentStep) ? '✓ Completed' : 'Mark Complete'}</button>
+      <button class="btn btn-primary" onclick="nextStep()" ${currentStep === wizardSteps.length - 1 ? 'disabled' : ''}>Next →</button>
+    </div>
+  `;
+}
+function prevStep() { if (currentStep > 0) { currentStep--; saveWizard(); renderWizard(); } }
+function nextStep() { if (currentStep < wizardSteps.length - 1) { completedSteps.add(currentStep); currentStep++; saveWizard(); renderWizard(); } }
+function markComplete() {
+  if (completedSteps.has(currentStep)) completedSteps.delete(currentStep);
+  else completedSteps.add(currentStep);
+  saveWizard();
+  renderWizard();
+}
+function saveWizard() {
+  localStorage.setItem('cinemashop_wizard_step', currentStep);
+  localStorage.setItem('cinemashop_wizard_completed', JSON.stringify([...completedSteps]));
+}
+renderWizard();
+
+/* ============= WIRING DIAGRAMS ============= */
+const topologies = {
+  basic: {
+    description: "<strong>Basic Daisy Chain.</strong> A single Master Board drives one chain of up to 9 panels. Each panel's OUT port feeds the IN of the next.",
+    svg: `<svg viewBox="0 0 800 320" class="wiring-svg">
+      <rect class="controller-rect" x="20" y="120" width="100" height="80" rx="6"/>
+      <text class="controller-text" x="70" y="155" text-anchor="middle">MASTER</text>
+      <text class="controller-text" x="70" y="170" text-anchor="middle">BOARD</text>
+      <text fill="#a8b3d4" font-size="9" x="70" y="215" text-anchor="middle">12V @ 90W</text>
+      ${[0,1,2,3,4].map((i) => `
+        <rect class="panel-rect" x="${160 + i * 130}" y="130" width="100" height="60" rx="4"/>
+        <circle class="star" cx="${175 + i * 130}" cy="145" r="1.5"/>
+        <circle class="star" cx="${200 + i * 130}" cy="160" r="1.5"/>
+        <circle class="star" cx="${230 + i * 130}" cy="150" r="1.5"/>
+        <circle class="star" cx="${245 + i * 130}" cy="175" r="1.5"/>
+        <text class="panel-text" x="${210 + i * 130}" y="208" text-anchor="middle">Panel ${i + 1}</text>
+      `).join('')}
+      <path class="cable" d="M 120 160 L 160 160"/>
+      ${[0,1,2,3].map(i => `<path class="cable" d="M ${260 + i * 130} 160 L ${290 + i * 130} 160"/>`).join('')}
+      <text fill="#4fb6ff" font-size="11" x="400" y="50" text-anchor="middle" font-weight="600">Basic Daisy Chain — up to 9 panels per lead wire</text>
+      <text fill="#a8b3d4" font-size="10" x="400" y="280" text-anchor="middle">Blue lines = CAT5 jumper cables (10 ft each)</text>
+    </svg>`
+  },
+  multi: {
+    description: "<strong>3-Branch Master Topology.</strong> The Master Board's three CAT5 OUTPUT ports each drive an independent chain of up to 9 panels, yielding 27 panels per Master.",
+    svg: `<svg viewBox="0 0 800 420" class="wiring-svg">
+      <rect class="controller-rect" x="340" y="20" width="120" height="80" rx="6"/>
+      <text class="controller-text" x="400" y="55" text-anchor="middle">MASTER</text>
+      <text class="controller-text" x="400" y="70" text-anchor="middle">BOARD</text>
+      <text fill="#a8b3d4" font-size="9" x="400" y="92" text-anchor="middle">3 × RJ45 OUTPUT</text>
+      <path class="cable" d="M 360 100 L 360 130 L 130 130 L 130 160"/>
+      <path class="cable" d="M 400 100 L 400 160"/>
+      <path class="cable" d="M 440 100 L 440 130 L 670 130 L 670 160"/>
+      ${[0,1,2].map(branch => {
+        const x = 70 + branch * 270;
+        return [0,1,2].map(row => `
+          <rect class="panel-rect" x="${x}" y="${160 + row * 80}" width="120" height="60" rx="4"/>
+          <circle class="star" cx="${x + 20}" cy="${175 + row * 80}" r="1.5"/>
+          <circle class="star" cx="${x + 50}" cy="${190 + row * 80}" r="1.5"/>
+          <circle class="star" cx="${x + 90}" cy="${180 + row * 80}" r="1.5"/>
+          <circle class="star" cx="${x + 70}" cy="${205 + row * 80}" r="1.5"/>
+          <text class="panel-text" x="${x + 60}" y="${238 + row * 80}" text-anchor="middle">B${branch+1}-P${row+1}</text>
+          ${row < 2 ? `<path class="cable" d="M ${x + 60} 220 L ${x + 60} ${240 + row * 80}"/>` : ''}
+        `).join('');
+      }).join('')}
+      <text fill="#4fb6ff" font-size="11" x="400" y="400" text-anchor="middle" font-weight="600">Up to 9 panels per branch × 3 branches = 27 panels max per Master Board</text>
+    </svg>`
+  },
+  shooting: {
+    description: "<strong>Standard With Shooting Star.</strong> The shooting star (red dashed) uses its own dedicated CAT5 lead from the Master Board, in addition to the normal star daisy chain.",
+    svg: `<svg viewBox="0 0 800 380" class="wiring-svg">
+      <rect class="controller-rect" x="20" y="130" width="100" height="80" rx="6"/>
+      <text class="controller-text" x="70" y="165" text-anchor="middle">MASTER</text>
+      <text class="controller-text" x="70" y="180" text-anchor="middle">BOARD</text>
+      <text fill="#a8b3d4" font-size="9" x="70" y="225" text-anchor="middle">2× CAT5 out</text>
+      ${[0,1].map(row => [0,1].map(col => `
+        <rect class="panel-rect" x="${160 + col * 280}" y="${80 + row * 160}" width="240" height="100" rx="4"/>
+        <text class="panel-text" x="${280 + col * 280}" y="${100 + row * 160}" text-anchor="middle">Panel ${row * 2 + col + 1}</text>
+        ${[...Array(15)].map(() => {
+          const x = 160 + col * 280 + 20 + Math.random() * 200;
+          const y = 80 + row * 160 + 25 + Math.random() * 65;
+          return `<circle class="star" cx="${x}" cy="${y}" r="1.3"/>`;
+        }).join('')}
+      `).join('')).join('')}
+      <path class="cable" d="M 120 170 L 160 170 L 160 130 L 280 130"/>
+      <path class="cable" d="M 400 130 L 440 130 L 440 170 L 440 170"/>
+      <path class="cable" d="M 120 170 L 280 170 L 280 240 L 280 290"/>
+      <path class="cable-shooting" d="M 120 180 L 280 180 L 320 220 L 360 260"/>
+      <text fill="#f87171" font-size="10" x="370" y="270" font-weight="600">Shooting Star (SS1)</text>
+      <text fill="#4fb6ff" font-size="11" x="400" y="350" text-anchor="middle" font-weight="600">Red dashed = dedicated shooting star CAT5 lead</text>
+    </svg>`
+  },
+  halo: {
+    description: "<strong>With RGB / RGBW Perimeter Halo.</strong> An additional ILLUMINATE 1.0 RGB Strip Light Controller powers perimeter LED strips for halo effect, sharing the same power supply or with a dedicated supply.",
+    svg: `<svg viewBox="0 0 800 380" class="wiring-svg">
+      <rect class="controller-rect" x="20" y="40" width="120" height="80" rx="6"/>
+      <text class="controller-text" x="80" y="75" text-anchor="middle">MASTER</text>
+      <text class="controller-text" x="80" y="90" text-anchor="middle">BOARD</text>
+      <rect class="controller-rect" x="20" y="160" width="120" height="80" rx="6" stroke="#8b5cf6"/>
+      <text fill="#c4b5fd" font-size="10" x="80" y="195" text-anchor="middle" font-weight="600">RGB STRIP</text>
+      <text fill="#c4b5fd" font-size="10" x="80" y="210" text-anchor="middle" font-weight="600">CONTROLLER</text>
+      <text fill="#a8b3d4" font-size="9" x="80" y="230" text-anchor="middle">ILLUMINATE 1.0</text>
+      <path class="cable" d="M 80 120 L 80 160"/>
+      <rect x="170" y="40" width="600" height="280" rx="6" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="4 2"/>
+      <text fill="#c4b5fd" font-size="11" x="470" y="35" text-anchor="middle" font-weight="600">RGB Halo Strip (perimeter)</text>
+      ${[0,1].map(r => [0,1,2].map(c => `
+        <rect class="panel-rect" x="${190 + c * 195}" y="${80 + r * 130}" width="170" height="100" rx="4"/>
+        <text class="panel-text" x="${275 + c * 195}" y="${100 + r * 130}" text-anchor="middle">Panel ${r * 3 + c + 1}</text>
+        ${[...Array(10)].map(() => {
+          const x = 195 + c * 195 + Math.random() * 160;
+          const y = 85 + r * 130 + 20 + Math.random() * 70;
+          return `<circle class="star" cx="${x}" cy="${y}" r="1.2"/>`;
+        }).join('')}
+      `).join('')).join('')}
+      <path class="cable" d="M 140 80 L 170 80 L 170 130 L 190 130"/>
+      <path class="cable" d="M 360 130 L 385 130"/>
+      <path class="cable" d="M 555 130 L 580 130"/>
+      <path class="cable" d="M 750 180 L 750 230 L 580 230 L 580 260"/>
+      <path class="cable" d="M 360 260 L 385 260"/>
+      <path class="cable" d="M 190 260 L 170 260 L 170 300"/>
+      <text fill="#4fb6ff" font-size="10" x="400" y="365" text-anchor="middle">Purple dashed boundary = RGB strip; blue lines = star CAT5</text>
+    </svg>`
+  }
+};
+
+function renderTopology(name) {
+  document.querySelectorAll('.topology-tab').forEach(t => t.classList.toggle('active', t.dataset.topo === name));
+  document.getElementById('diagramFrame').innerHTML = topologies[name].svg;
+  document.getElementById('topologyDescription').innerHTML = `<div class="alert alert-info">${topologies[name].description}</div>`;
+}
+document.querySelectorAll('.topology-tab').forEach(t => {
+  t.addEventListener('click', () => renderTopology(t.dataset.topo));
+});
+renderTopology('basic');
+
+/* ============= RS232 BUILDER ============= */
+const colors = [
+  {name:"Red", r:255, g:0, b:0, w:0, hex:"#ff0000"},
+  {name:"Orange", r:255, g:50, b:0, w:0, hex:"#ff3200"},
+  {name:"Amber", r:255, g:150, b:0, w:0, hex:"#ff9600"},
+  {name:"Yellow", r:255, g:255, b:0, w:0, hex:"#ffff00"},
+  {name:"Green", r:0, g:255, b:0, w:0, hex:"#00ff00"},
+  {name:"Light Green", r:0, g:255, b:150, w:0, hex:"#00ff96"},
+  {name:"Lime", r:0, g:255, b:50, w:0, hex:"#00ff32"},
+  {name:"Aqua", r:0, g:255, b:255, w:0, hex:"#00ffff"},
+  {name:"Blue", r:0, g:0, b:255, w:0, hex:"#0000ff"},
+  {name:"Violet", r:150, g:0, b:255, w:0, hex:"#9600ff"},
+  {name:"Purple", r:255, g:0, b:200, w:0, hex:"#ff00c8"},
+  {name:"Pink", r:255, g:0, b:50, w:0, hex:"#ff0032"},
+  {name:"White", r:0, g:0, b:0, w:255, hex:"#ffffff"},
+  {name:"Warm White", r:202, g:218, b:255, w:0, hex:"#cadaff"},
+  {name:"Natural White", r:255, g:246, b:237, w:0, hex:"#fff6ed"},
+  {name:"Cool White", r:255, g:193, b:141, w:0, hex:"#ffc18d"}
+];
+let builderState = {
+  category: 'effect',
+  effect: 'T',
+  color: 0,
+  transition: 'w',
+  dimmer: 80,
+  shootingZone: 'X',
+  shootingColor: 0,
+  shootingTime: '1',
+  ambEffect: 'e',
+  ambSpeed: 255,
+  ambColor: 0,
+  ambDim: 80
+};
+
+function renderBuilder() {
+  builderState.category = document.getElementById('cmdCategory').value;
+  const params = document.getElementById('builderParams');
+  let html = '';
+  const cat = builderState.category;
+
+  if (cat === 'effect') {
+    html += `<label class="builder-label">Effect</label>
+      <div class="effect-grid">
+        ${[['T','✨','Twinkle'],['F','🪲','Firefly'],['B','🌬️','Breeze'],['R','🎲','Random'],['P','💧','Rain Drops'],['J','🎉','Jamboree']]
+          .map(([cmd, e, n]) => `<div class="effect-btn ${builderState.effect === cmd ? 'selected' : ''}" onclick="builderState.effect='${cmd}'; renderBuilder()"><span class="effect-emoji">${e}</span>${n}</div>`).join('')}
+      </div>`;
+  }
+  if (cat === 'color' || cat === 'ambient-color') {
+    html += `<label class="builder-label">Color</label><div class="color-grid">
+      ${colors.map((c, i) => `<div class="color-swatch ${(cat==='color' ? builderState.color : builderState.ambColor) === i ? 'selected' : ''}" style="background:${c.hex}; ${c.hex==='#ffffff' || c.hex.startsWith('#ff')&&!c.hex.startsWith('#ff0')?'color:#222; text-shadow:none;':''}" onclick="${cat==='color'?'builderState.color':'builderState.ambColor'}=${i}; renderBuilder()">${c.name}</div>`).join('')}
+    </div>`;
+  }
+  if (cat === 'transition') {
+    html += `<label class="builder-label">Transition</label>
+      <div class="effect-grid">
+        ${[['w','➡️','Wipe'],['f','🌀','Fade'],['r','🌈','Rainbow'],['b','👁️','Blink']]
+          .map(([cmd, e, n]) => `<div class="effect-btn ${builderState.transition === cmd ? 'selected' : ''}" onclick="builderState.transition='${cmd}'; renderBuilder()"><span class="effect-emoji">${e}</span>${n}</div>`).join('')}
+      </div>`;
+  }
+  if (cat === 'dimmer' || cat === 'ambient-dim') {
+    const val = cat === 'dimmer' ? builderState.dimmer : builderState.ambDim;
+    html += `<label class="builder-label">Brightness: ${val}%</label>
+      <input type="range" min="10" max="100" value="${val}" style="width:100%;" oninput="${cat==='dimmer'?'builderState.dimmer':'builderState.ambDim'}=parseInt(this.value); renderBuilder()">`;
+  }
+  if (cat === 'shooting') {
+    html += `<label class="builder-label">Zone</label>
+      <select class="builder-select" onchange="builderState.shootingZone=this.value; renderBuilder()">
+        <option value="X" ${builderState.shootingZone==='X'?'selected':''}>SS1 (Zone X)</option>
+        <option value="Y" ${builderState.shootingZone==='Y'?'selected':''}>SS2 (Zone Y)</option>
+        <option value="Z" ${builderState.shootingZone==='Z'?'selected':''}>SS3 (Zone Z)</option>
+      </select>
+      <label class="builder-label">Color</label>
+      <div class="color-grid">
+        ${colors.map((c, i) => `<div class="color-swatch ${builderState.shootingColor === i ? 'selected' : ''}" style="background:${c.hex}; ${c.hex==='#ffffff'||c.hex.startsWith('#ff')&&!c.hex.startsWith('#ff0')?'color:#222; text-shadow:none;':''}" onclick="builderState.shootingColor=${i}; renderBuilder()">${c.name}</div>`).join('')}
+      </div>
+      <label class="builder-label">Interval</label>
+      <select class="builder-select" onchange="builderState.shootingTime=this.value; renderBuilder()">
+        <option value="0" ${builderState.shootingTime==='0'?'selected':''}>Off</option>
+        <option value="1" ${builderState.shootingTime==='1'?'selected':''}>1 Minute</option>
+        <option value="2" ${builderState.shootingTime==='2'?'selected':''}>2 Minutes</option>
+        <option value="5" ${builderState.shootingTime==='5'?'selected':''}>5 Minutes</option>
+        <option value="10" ${builderState.shootingTime==='10'?'selected':''}>10 Minutes</option>
+      </select>`;
+  }
+  if (cat === 'ambient-effect') {
+    html += `<label class="builder-label">Effect</label>
+      <div class="effect-grid">
+        ${[['e','🌀','Fade'],['k','👁️','Blink'],['n','⭕','No Effect']]
+          .map(([cmd, e, n]) => `<div class="effect-btn ${builderState.ambEffect === cmd ? 'selected' : ''}" onclick="builderState.ambEffect='${cmd}'; renderBuilder()"><span class="effect-emoji">${e}</span>${n}</div>`).join('')}
+      </div>
+      ${builderState.ambEffect !== 'n' ? `<label class="builder-label">Speed: ${builderState.ambSpeed === 255 ? 'Fast' : builderState.ambSpeed === 150 ? 'Slow' : builderState.ambSpeed}</label>
+      <input type="range" min="150" max="255" value="${builderState.ambSpeed}" style="width:100%;" oninput="builderState.ambSpeed=parseInt(this.value); renderBuilder()">` : ''}`;
+  }
+
+  params.innerHTML = html;
+
+  // Compute command
+  let cmd = '';
+  if (cat === 'effect') cmd = builderState.effect;
+  else if (cat === 'color') { const c = colors[builderState.color]; cmd = `c,${c.r},${c.g},${c.b},${c.w}*`; }
+  else if (cat === 'transition') cmd = builderState.transition;
+  else if (cat === 'dimmer') cmd = `D,${builderState.dimmer}*`;
+  else if (cat === 'shooting') {
+    const c = colors[builderState.shootingColor];
+    cmd = `${builderState.shootingZone},${c.r},${c.g},${c.b},${c.w},${builderState.shootingTime}*`;
+  }
+  else if (cat === 'ambient-effect') {
+    cmd = builderState.ambEffect === 'n' ? 'n' : `${builderState.ambEffect},${builderState.ambSpeed}`;
+  }
+  else if (cat === 'ambient-color') { const c = colors[builderState.ambColor]; cmd = `A,${c.r},${c.g},${c.b},${c.w}*`; }
+  else if (cat === 'ambient-dim') cmd = `d,${builderState.ambDim}`;
+
+  document.getElementById('builderOutput').textContent = cmd;
+}
+function copyCommand() {
+  const text = document.getElementById('builderOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '✓ Copied';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Command';
+    }, 1500);
+  });
+}
+renderBuilder();
+
+/* ============= TROUBLESHOOTING ============= */
+const symptoms = [
+  {
+    id: 'no-stars', icon: '⚫', label: 'No stars illuminate at all', desc: 'Whole system appears dead',
+    causes: [
+      { title: 'AC power is absent', resolution: '<ol><li>Verify the AC outlet is energized. Test with another device.</li><li>Verify the switchable outlet is in the "On" position — common oversight.</li><li>Confirm the power supply cord is firmly seated in the outlet and the power supply.</li></ol>' },
+      { title: 'Power supply has failed', resolution: '<ol><li>Verify the power supply indicator (if present) illuminates.</li><li>Inspect for visible damage or burned components.</li><li>If failed, replace with the manufacturer-specified 12V/24V 90W Class 2 unit only.</li></ol>' },
+      { title: 'DC connection between Driver and Master Board is loose', resolution: 'Verify the DC barrel connector is fully inserted into the Master Board.' },
+      { title: 'Application not paired or stars toggled off', resolution: '<ol><li>Open the ILLUMINATE 1.0 app. Confirm Bluetooth is enabled.</li><li>Confirm the on/off toggle in the "Stars" section is set to On.</li><li>Confirm the dimmer is not set below 10%.</li></ol>' }
+    ]
+  },
+  {
+    id: 'partial', icon: '⚪', label: 'Some panels work, others do not', desc: 'Subset of chain is dark',
+    causes: [
+      { title: 'Daisy chain exceeds 9 panels per lead wire', resolution: 'Count the panels on the affected chain. If more than 9, the system will exhibit data drops. Redistribute panels across additional Master Board outputs, or add an additional Master Board and power supply.' },
+      { title: 'Defective CAT5 jumper between functional and non-functional panels', resolution: '<ol><li>Identify the last working panel. The fault is in the cable between it and the next panel, or in that next panel.</li><li>Substitute a known-good CAT5 jumper cable. If panels then function, the original cable is defective.</li></ol>' },
+      { title: 'Loose RJ45 connector', resolution: '<ol><li>Disconnect and firmly reseat the RJ45 connector at the IN port of the first non-functional panel. Listen for an audible click.</li><li>Inspect for bent pins inside the RJ45 jack.</li></ol>' },
+      { title: 'Wrong cable category used', resolution: 'Verify all jumpers and the lead wire are CAT5 or CAT5e. <strong>CAT6 and CAT7 will not function correctly.</strong>' },
+      { title: 'Defective starboard light engine', resolution: 'If a single panel fails to illuminate while panels before and after it function, the panel\'s light engine may be defective. Contact CINEMASHOP for warranty service.' }
+    ]
+  },
+  {
+    id: 'shooting', icon: '☄️', label: 'Shooting star does not function', desc: 'SS1/SS2/SS3 silent',
+    causes: [
+      { title: 'Shooting star duration set to Off (0)', resolution: 'Open the application. Set the desired duration: 1, 2, 5, or 10 minutes.' },
+      { title: 'Missing dedicated CAT5 lead for the shooting star', resolution: 'Each shooting star requires its own CAT5 from the Master Board. Verify the appropriate number of leads is connected.' },
+      { title: 'Wrong zone selected in the application', resolution: 'Confirm SS1, SS2, or SS3 corresponds to the physically installed shooting star configuration.' }
+    ]
+  },
+  {
+    id: 'connect', icon: '📱', label: 'App will not connect', desc: 'ILLUMINATE 1.0 cannot pair',
+    causes: [
+      { title: 'Bluetooth not enabled on mobile device', resolution: 'Open device settings. Enable Bluetooth.' },
+      { title: 'Mobile device out of range', resolution: 'Bluetooth range is typically 30 feet. Approach the Master Board.' },
+      { title: 'Another mobile device already connected', resolution: 'Only one device may control the system at a time. Disconnect from the other device.' },
+      { title: 'App not updated', resolution: 'Update the ILLUMINATE 1.0 application via the App Store or Google Play.' },
+      { title: 'Master Board in fault state', resolution: 'Disconnect AC power to the system for 30 seconds. Reconnect. Attempt reconnection.' }
+    ]
+  },
+  {
+    id: 'flicker', icon: '⚡', label: 'Stars flicker or behave erratically', desc: 'Unstable lighting behavior',
+    causes: [
+      { title: 'Power supply is overloaded', resolution: '<ol><li>Count total connected panels and shooting stars. Verify total wattage does not exceed 90W per power supply.</li><li>Standard panel: 1.4W. Panel with shooting star: 4.2W.</li><li>If overloaded, add an additional power supply and Master Board.</li></ol>' },
+      { title: 'CAT5 cable run length excessive', resolution: 'The first leader CAT5 should not exceed 150 feet from Master Board to first panel. Standard jumpers are 10 feet each.' },
+      { title: 'Electromagnetic interference', resolution: 'Verify CAT5 runs do not pass parallel to high-voltage AC wiring within close proximity. Cross AC wiring at right angles where possible.' },
+      { title: 'Loose connections', resolution: 'Reseat all RJ45 connectors along the affected chain.' }
+    ]
+  },
+  {
+    id: 'color', icon: '🎨', label: 'Color reproduction incorrect', desc: 'Wrong or missing color channels',
+    causes: [
+      { title: 'Wrong color selected', resolution: 'Verify the application color selection. Try the custom color wheel and adjust hue and opacity.' },
+      { title: 'Damaged conductor in lead wire', resolution: 'The LED strip flex wire has 4 or 5 conductors. A break in one conductor eliminates one color channel. Replace the lead wire.' },
+      { title: 'Defective RGB Strip Light Controller', resolution: 'If only ambient lights exhibit incorrect color, the RGB controller may be faulty. Contact CINEMASHOP.' }
+    ]
+  },
+  {
+    id: 'rs232', icon: '⌨️', label: 'RS232 commands ignored', desc: 'Home automation control fails',
+    causes: [
+      { title: 'Command not terminated with asterisk', resolution: 'All RS232 commands require the closing <code style="background:var(--bg-deep); color:var(--accent-2); padding:1px 5px; border-radius:3px;">*</code> character. Verify your command string.' },
+      { title: 'Incorrect command syntax', resolution: 'Refer to the RS232 Command Builder. Verify the exact format for the intended function.' },
+      { title: 'Serial parameters mismatch', resolution: 'Verify your home automation system is configured for the expected baud rate and serial parameters. Consult CINEMASHOP if specifications are required.' },
+      { title: 'RS232 cable defective or miswired', resolution: 'Substitute a known-good cable. Verify pinout.' }
+    ]
+  },
+  {
+    id: 'sag', icon: '⤵️', label: 'Panel sags or is loose', desc: 'Physical mounting issue',
+    causes: [
+      { title: 'Rotofast over-rotated', resolution: 'Excessive rotation strips the fastener\'s hold in the panel material. Replace the affected Rotofast.' },
+      { title: 'Insufficient mounting points engaged', resolution: 'All 6 Rotofasts (4 corners plus 2 center-edges) must be engaged. Verify all are seated.' },
+      { title: 'Drywall anchor failure', resolution: 'The drywall may be deteriorated at the anchor location. Reposition the anchor to firmer drywall, or use a larger anchor rated for the load.' }
+    ]
+  },
+  {
+    id: 'leak', icon: '🔆', label: 'Light leaks between panels', desc: 'Gaps or uneven seams',
+    causes: [
+      { title: 'Panels not properly leveled', resolution: 'Use the hex wrench to make fine adjustments at each Rotofast. Counter-clockwise to raise, clockwise to lower. Aim for a smooth, continuous surface.' },
+      { title: 'Ambient room light bleeding past panel edges', resolution: 'Verify perimeter trim is installed. Add light-blocking trim if necessary.' }
+    ]
+  },
+  {
+    id: 'fiber', icon: '🌟', label: 'Fiber optic strand loose', desc: 'Visible loose or missing fiber',
+    causes: [
+      { title: 'Loose fiber needs reinsertion', resolution: 'Use the supplied poking tool to reinsert the loose fiber into the panel.' },
+      { title: 'Multiple loose fibers or panel damage', resolution: 'If multiple fibers are loose or the panel face is damaged, contact CINEMASHOP for warranty evaluation.' }
+    ]
+  }
+];
+
+const grid = document.getElementById('symptomGrid');
+symptoms.forEach(s => {
+  const card = document.createElement('button');
+  card.className = 'symptom-card';
+  card.dataset.id = s.id;
+  card.innerHTML = `<div class="symptom-icon">${s.icon}</div><div class="symptom-label">${s.label}</div><div class="symptom-desc">${s.desc}</div>`;
+  card.addEventListener('click', () => selectSymptom(s.id));
+  grid.appendChild(card);
+});
+
+function selectSymptom(id) {
+  document.querySelectorAll('.symptom-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+  const s = symptoms.find(x => x.id === id);
+  const out = document.getElementById('diagnosticOutput');
+  out.innerHTML = `
+    <h3 style="margin-bottom: 16px;">${s.icon} ${s.label}</h3>
+    <p style="color:var(--text-muted); margin-bottom: 16px;">Probable causes, ordered by frequency of occurrence. Address each in sequence.</p>
+    ${s.causes.map((c, i) => `
+      <div class="cause-item">
+        <div class="cause-title"><span style="background:var(--bg-deep); border:1px solid var(--border); width:22px; height:22px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">${i+1}</span>${c.title}</div>
+        <div class="cause-resolution">${c.resolution}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+/* Initialize from URL hash if present */
+const hash = window.location.hash.slice(1);
+if (hash && document.getElementById(hash)) navigate(hash);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+});
+</script>
+
+</body>
+</html>
