@@ -37,6 +37,7 @@ const Footer = () => {
     { label: "Terms of Service", to: "/terms-of-service" },
     { label: "Cookie Policy", to: "/cookie-policy" },
     { label: "Security & Compliance", to: "/compliance" },
+    { label: "Domain issues?", to: "/troubleshooting/dns" },
   ];
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
