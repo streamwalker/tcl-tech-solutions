@@ -1,68 +1,62 @@
-# DNS Troubleshooting Page
+# Domain Propagation Status Indicator
 
-Add an in-app page that explains the `DNS_PROBE_FINISHED_NXDOMAIN` error and walks through adding the missing `www` A record for `tcltechsolutions.com`.
+Add a self-service propagation tracker to the existing `/troubleshooting/dns` page. The browser cannot perform authoritative DNS lookups (CORS-blocked), so the indicator is timestamp-driven: the user records when they made the DNS change and the widget shows elapsed time, an estimated activation window, and a checklist of milestones.
 
-## Route
+## Where it lives
 
-- New route: `/troubleshooting/dns`
-- Registered in `src/App.tsx` alongside existing public routes
-- Uses the standard public layout (IBMNavigation header, `pt-16` container, Footer)
-- Styled with existing dark-luxury tokens — no new colors
+- Inserted as a new card at the top of `src/pages/TroubleshootingDns.tsx`, above "Quick diagnosis"
+- Self-contained component: `src/components/troubleshooting/PropagationTracker.tsx`
+- No backend, no edge function — uses `localStorage` only
 
-## File
+## What it shows
 
-- `src/pages/TroubleshootingDns.tsx` — single page component, no backend, no new dependencies
+1. **Setup state** (no timestamp saved yet)
+   - Domain input (defaults to `www.tcltechsolutions.com`, editable)
+   - "I just updated my DNS record" button → stores `{ domain, startedAt }` in `localStorage` key `dns-propagation-tracker`
+   - Optional "I updated it earlier" → datetime-local picker for backfilling
 
-## Page sections
+2. **Tracking state** (timestamp present)
+   - Big live counter: elapsed time since the change (`2h 14m`, updates every 30s via `setInterval`)
+   - Progress bar across a 0–72h scale with three milestone markers:
+     - `15 min` — Typical propagation start
+     - `1–4 hr` — Most regions resolving
+     - `24–72 hr` — Worst-case full propagation
+   - Status label derived from elapsed time:
+     - `< 15 min` → "Just submitted — give it a few minutes"
+     - `15 min – 4 hr` → "Likely propagating now"
+     - `4 – 24 hr` → "Should be active in most regions"
+     - `24 – 72 hr` → "Edge cases still resolving"
+     - `> 72 hr` → "Past the normal window — recheck records"
+   - Estimated activation window: `startedAt + 15min` to `startedAt + 4h` shown as local time
+   - Three actions:
+     - **Check DNS now** → opens `https://dnschecker.org/#A/<domain>` in a new tab
+     - **Reset timer** → clears localStorage
+     - **Mark as active** → stores `activatedAt`, switches to success state
 
-1. **Hero / what this error means**
-   - H1: "Fixing DNS_PROBE_FINISHED_NXDOMAIN"
-   - Plain-English explanation: the browser asked DNS for the hostname and got "no such name." The site isn't down — the address record is missing or hasn't propagated.
+3. **Success state** (`activatedAt` present)
+   - Green check, "Active after `Xh Ym`"
+   - Button to reset for the next change
 
-2. **Quick diagnosis** (callout card)
-   - Symptom: `www.tcltechsolutions.com` returns NXDOMAIN
-   - Root cause: no `A` record for the `www` subdomain at the registrar
-   - Working reference domain: `tcl.streamwalkers.com` (so the project itself is fine)
+## Technical details
 
-3. **Step-by-step fix** (numbered list with monospace value blocks)
-   1. Sign in to the DNS registrar for `tcltechsolutions.com`
-   2. Open the DNS / Zone editor
-   3. Add a new record:
-      - Type: `A`
-      - Name / Host: `www`
-      - Value / Points to: `185.158.133.1`
-      - TTL: default (Auto / 3600)
-   4. Confirm the root record also exists:
-      - Type: `A`, Name: `@`, Value: `185.158.133.1`
-   5. Remove any conflicting old `A`, `AAAA`, or `CNAME` records on `www`
-   6. Check for CAA records — if present, they must allow `letsencrypt.org`
-   7. Save changes
-
-4. **Verify propagation**
-   - External check: link to `https://dnschecker.org/#A/www.tcltechsolutions.com` (opens in new tab)
-   - Expected: most regions return `185.158.133.1`
-   - Time: usually minutes, up to 72 hours
-   - In Lovable: Project Settings → Domains shows status transitioning Verifying → Setting up → Active
-
-5. **If using Cloudflare or a proxy**
-   - Re-add the domain in Lovable with "Domain uses Cloudflare or a similar proxy" checked
-   - Switches verification from A-record to CNAME-based
-
-6. **Still failing checklist** (collapsible / list)
-   - Wrong nameservers at the registrar
-   - DNSSEC misconfiguration after a provider change
-   - Conflicting wildcard `*` record
-   - Browser DNS cache — try `chrome://net-internals/#dns` → Clear host cache
-
-7. **Footer link back** to `/` and to the docs
-
-## Navigation
-
-- Not added to the main IBMNavigation (keeps top nav clean)
-- Reachable directly via `/troubleshooting/dns` and from a small "Domain issues?" link in the site Footer
+- File: `src/components/troubleshooting/PropagationTracker.tsx`, default export `PropagationTracker`
+- Stored shape:
+  ```ts
+  type TrackerState = {
+    domain: string;
+    startedAt: string; // ISO
+    activatedAt?: string;
+  };
+  ```
+- `useState` + `useEffect` for hydration from localStorage on mount (avoids SSR mismatch; safe here since app is SPA)
+- A second `useEffect` runs `setInterval(() => setNow(Date.now()), 30_000)` only when tracking is active; cleared on unmount or state change
+- Reuse existing shadcn components: `Card`, `CardHeader`, `CardTitle`, `CardContent`, `Button`, `Input`, `Progress`
+- Time formatting helper inline (`formatElapsed(ms)` → `"2h 14m"`, `"3d 4h"`)
+- All colors via existing tokens — yellow accents, gray-900 surfaces, no new tailwind config
 
 ## Out of scope
 
-- No backend, no edge function, no DB changes
-- No automatic DNS lookup from the browser (CORS-blocked anyway)
-- No changes to existing routes or components beyond adding the route and one footer link
+- No real DNS resolution (browsers can't; would need an edge function calling a DNS-over-HTTPS provider)
+- No multi-domain tracking (single record per browser)
+- No notifications/email when likely-active
+- No changes to `src/App.tsx` or routing — page already exists
