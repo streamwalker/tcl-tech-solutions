@@ -1,0 +1,28 @@
+# The Connected Lifestyle (TCL Tech Solutions)
+
+> San Antonio's veteran-owned smart home automation, home theater, and managed IT services company. Authorized Control4, Savant, and Lutron dealer.
+
+The Connected Lifestyle delivers residential smart home automation, custom home theater installations, enterprise networking, and AI integration across San Antonio and South Texas. Contact: (210) 995-8655.
+
+## Pages
+
+- [Home](/): Overview of TCL services, portfolio, and San Antonio service area.
+- [Services](/services): Smart home automation, home theater, enterprise networks, AI integration, managed services.
+- [Education](/education): TCL Technician Education Plan — a 7-phase training curriculum.
+- [Academy Catalog](/education/academy): Course catalog for the TCL Academy.
+- [Josh.ai Tutorial](/josh-ai-tutorial): Training and configuration guide for Josh.ai voice automation.
+- [OmniCode](/omnicode): TCL's 7-layer computational knowledge engine.
+- [Knowledge](/knowledge): Knowledge base of articles and how-tos.
+- [Glossary](/glossary): Industry terminology for smart home, AV, and network installation.
+- [Press](/press): Press announcements, including Damon Jackson as 2026 Parade of Homes Co-Chair.
+- [Business Plan](/business-plan): TCL strategic business plan overview.
+- [Investor White Paper](/investor-white-paper): Investor-facing white paper.
+- [Capital Stack](/capital-stack): $1.9M non-dilutive capital stack roadmap.
+- [Builder Deck](/builder-deck): Builder and developer partnership deck.
+- [Compliance](/compliance): GDPR, SOC 2, and legal compliance overview.
+
+## Optional
+
+- [Terms of Service](/terms-of-service)
+- [Privacy Policy](/privacy-policy)
+- [Cookie Policy](/cookie-policy)
