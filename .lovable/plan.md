@@ -1,62 +1,53 @@
-# Domain Propagation Status Indicator
+## Goal
 
-Add a self-service propagation tracker to the existing `/troubleshooting/dns` page. The browser cannot perform authoritative DNS lookups (CORS-blocked), so the indicator is timestamp-driven: the user records when they made the DNS change and the widget shows elapsed time, an estimated activation window, and a checklist of milestones.
+Activate Google AdSense (publisher `ca-pub-4031739871952197`) sitewide using Auto Ads, replace the fake sidebar cards in `AdSidebar.tsx` with real AdSense display units, and ship the supporting files Google requires for serving and verification.
 
-## Where it lives
+## Changes
 
-- Inserted as a new card at the top of `src/pages/TroubleshootingDns.tsx`, above "Quick diagnosis"
-- Self-contained component: `src/components/troubleshooting/PropagationTracker.tsx`
-- No backend, no edge function — uses `localStorage` only
+### 1. `public/ads.txt` (new)
+Required by AdSense to authorize your account to monetize the domain. Single line:
 
-## What it shows
+```
+google.com, pub-4031739871952197, DIRECT, f08c47fec0942fa0
+```
 
-1. **Setup state** (no timestamp saved yet)
-   - Domain input (defaults to `www.tcltechsolutions.com`, editable)
-   - "I just updated my DNS record" button → stores `{ domain, startedAt }` in `localStorage` key `dns-propagation-tracker`
-   - Optional "I updated it earlier" → datetime-local picker for backfilling
+Served at `https://tcltechsolutions.com/ads.txt` automatically by Vite's public dir.
 
-2. **Tracking state** (timestamp present)
-   - Big live counter: elapsed time since the change (`2h 14m`, updates every 30s via `setInterval`)
-   - Progress bar across a 0–72h scale with three milestone markers:
-     - `15 min` — Typical propagation start
-     - `1–4 hr` — Most regions resolving
-     - `24–72 hr` — Worst-case full propagation
-   - Status label derived from elapsed time:
-     - `< 15 min` → "Just submitted — give it a few minutes"
-     - `15 min – 4 hr` → "Likely propagating now"
-     - `4 – 24 hr` → "Should be active in most regions"
-     - `24 – 72 hr` → "Edge cases still resolving"
-     - `> 72 hr` → "Past the normal window — recheck records"
-   - Estimated activation window: `startedAt + 15min` to `startedAt + 4h` shown as local time
-   - Three actions:
-     - **Check DNS now** → opens `https://dnschecker.org/#A/<domain>` in a new tab
-     - **Reset timer** → clears localStorage
-     - **Mark as active** → stores `activatedAt`, switches to success state
+### 2. `index.html`
+- Keep the existing AdSense script tag (already present, correct).
+- Add an Auto Ads activation snippet so Google can place anchor/in-page ads automatically:
 
-3. **Success state** (`activatedAt` present)
-   - Green check, "Active after `Xh Ym`"
-   - Button to reset for the next change
+```html
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-4031739871952197",
+    enable_page_level_ads: true
+  });
+</script>
+```
 
-## Technical details
+- CSP already allows `pagead2.googlesyndication.com` and `*.googlesyndication.com` — no CSP changes needed.
 
-- File: `src/components/troubleshooting/PropagationTracker.tsx`, default export `PropagationTracker`
-- Stored shape:
-  ```ts
-  type TrackerState = {
-    domain: string;
-    startedAt: string; // ISO
-    activatedAt?: string;
-  };
-  ```
-- `useState` + `useEffect` for hydration from localStorage on mount (avoids SSR mismatch; safe here since app is SPA)
-- A second `useEffect` runs `setInterval(() => setNow(Date.now()), 30_000)` only when tracking is active; cleared on unmount or state change
-- Reuse existing shadcn components: `Card`, `CardHeader`, `CardTitle`, `CardContent`, `Button`, `Input`, `Progress`
-- Time formatting helper inline (`formatElapsed(ms)` → `"2h 14m"`, `"3d 4h"`)
-- All colors via existing tokens — yellow accents, gray-900 surfaces, no new tailwind config
+### 3. `src/components/AdSense.tsx` (new)
+Small reusable React component that renders an `<ins class="adsbygoogle">` slot and pushes `adsbygoogle` on mount. Props: `slot` (ad unit ID), `format` (default `auto`), `responsive` (default `true`), optional `style`/`className`. Handles SPA re-renders safely (guards against double-push, re-pushes on route change via a key).
+
+### 4. `src/components/AdSidebar.tsx` (replace)
+Delete all six placeholder ad components (Drip Slayer, Codex Miraculorum, Avengers, Apple Watch, EquiForge, Turo, PicPoppit). Replace each sidebar with 2–3 real `<AdSense />` slots stacked in the same sticky column. Since you're using Auto Ads only, the sidebar will use **display ad units with `data-ad-format="auto"` and no explicit slot ID** — Google's Auto Ads will fill them based on page context. If/when you create named display units in AdSense, swap in those slot IDs.
+
+Layout, sticky positioning, `hidden xl:block`, and the dark-theme container styling are preserved so the page rhythm doesn't shift.
+
+### 5. `public/robots.txt`
+No changes required — Googlebot and `Mediapartners-Google` are already allowed under `User-agent: *`. (AdSense's crawler `Mediapartners-Google` falls back to `*` rules.)
 
 ## Out of scope
 
-- No real DNS resolution (browsers can't; would need an edge function calling a DNS-over-HTTPS provider)
-- No multi-domain tracking (single record per browser)
-- No notifications/email when likely-active
-- No changes to `src/App.tsx` or routing — page already exists
+- No manual in-article ad placements (you chose Auto Ads only).
+- No changes to other pages — Auto Ads handles in-page placement automatically once the snippet ships.
+- No AdSense account changes — verification, payment setup, and ads.txt validation happen in your AdSense dashboard after deploy.
+
+## Post-deploy checklist (you do these in AdSense)
+
+1. Confirm `https://tcltechsolutions.com/ads.txt` returns the single line above.
+2. In AdSense → Sites, confirm `tcltechsolutions.com` shows "Ready" with ads.txt status green.
+3. In AdSense → Ads → Overview, enable **Auto ads** for the site and pick formats (anchor, in-page, side rail).
+4. Allow 20–60 min for first ads to appear; ad blockers will hide them locally.
