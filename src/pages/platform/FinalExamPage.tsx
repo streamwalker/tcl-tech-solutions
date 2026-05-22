@@ -23,27 +23,24 @@ export default function FinalExamPage() {
         title="Final Exam"
         questions={course.finalExam}
         passPct={70}
-        onSubmit={async (score) => {
+        onSubmit={async (_score, answers) => {
           const { data: { user } } = await supabase.auth.getUser();
           if (!user) return;
-          const passed = score >= 70;
-          await supabase.from("academy_exam_attempts").insert({
-            user_id: user.id,
-            course_slug: course.slug,
-            score_pct: score,
-            passed,
-            submitted_at: new Date().toISOString(),
+
+          const { data, error } = await supabase.functions.invoke("submit-final-exam", {
+            body: {
+              courseSlug: course.slug,
+              answers: answers.map(({ questionId, given }) => ({ questionId, given })),
+            },
           });
-          if (passed) {
-            const { error: certError } = await supabase.rpc("issue_certificate_if_passed", {
-              _course_slug: course.slug,
-            });
-            if (certError) {
-              toast.error("Couldn't issue certificate. Please retry.");
-            } else {
-              toast.success("Certificate issued!");
-              navigate(`/platform/academy/${course.slug}/certificate`);
-            }
+          if (error) {
+            toast.error("Couldn't submit exam. Please retry.");
+            return;
+          }
+
+          if (data?.passed) {
+            toast.success("Certificate issued!");
+            navigate(`/platform/academy/${course.slug}/certificate`);
           } else {
             toast.error("Below 70% — try again to earn the certificate.");
           }
