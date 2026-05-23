@@ -1,36 +1,71 @@
-## Finding
+## RLS Verification Plan
 
-The screenshot matches a live TLS failure on the root domain:
+Goal: produce a repeatable, automated checklist that confirms RLS on the recently hardened tables (`academy_exam_attempts`, `academy_certificates`, `contact_submissions`) and re-validates the rest of the user-scoped tables for regressions.
 
-- `https://tcltechsolutions.com/` fails during TLS handshake with `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
-- `https://www.tcltechsolutions.com/` has a valid certificate and responds correctly.
-- `https://tcl.streamwalkers.com/` redirects to the broken root domain, which makes the working Streamwalkers domain appear broken too.
+### 1. Static checklist (read-only SQL via `supabase--read_query`)
 
-## Likely cause
+Run a single audit query that returns one row per finding so anything non-empty is a failure:
 
-The root domain is pointed at Lovable, but its SSL certificate/provisioning is not active for the bare domain. The `www` hostname is already provisioned successfully.
+```text
+- Tables in public schema with rowsecurity = false
+- Tables with FORCE row security disabled where it should be on
+- Policies with qual = 'true' or with_check = 'true' (except known-public reads like knowledge_nodes)
+- Tables granted INSERT/UPDATE/DELETE to anon or authenticated where policy is `false`
+  (catches column-grant bypass of WITH CHECK false)
+- SECURITY DEFINER functions whose EXECUTE is granted to anon/authenticated
+  (must include issue_certificate_if_passed → service_role only)
+- Policies on academy_exam_attempts / academy_certificates that allow client INSERT/UPDATE/DELETE
+- contact_submissions INSERT policy must reference name/email/phone/project_type
+  validation (not 'true')
+```
 
-## Recommended fix
+Output is pasted into the plan note for the user.
 
-1. In Lovable domain settings, set `www.tcltechsolutions.com` as the Primary domain temporarily.
-2. Make sure both domains are connected separately:
-   - `tcltechsolutions.com`
-   - `www.tcltechsolutions.com`
-3. For the root domain, click retry/complete setup if it is in `Failed`, `Verifying`, or `Action required`.
-4. Confirm DNS for the root domain has only the Lovable A record:
-   - Type: `A`
-   - Host: `@`
-   - Value: `185.158.133.1`
-5. Remove conflicting root `AAAA`, old `A`, or proxied/CDN records if present.
-6. If the domain uses Cloudflare or another proxy, reconnect the domain with proxy mode enabled instead of direct A-record mode.
-7. After SSL becomes active for the root, set the desired primary domain back to `tcltechsolutions.com` if you prefer the non-www version.
+### 2. Dynamic test cases (Edge Function: `rls-selftest`, dev-only)
 
-## Code changes
+A small Deno function that runs a fixed matrix using three clients: `anon`, `authenticated user A`, `authenticated user B`, and `service_role`. Each case asserts an exact outcome.
 
-No source-code changes are needed for this specific SSL error. The issue is domain/SSL provisioning, not the React app or AdSense setup.
+**academy_exam_attempts**
+1. anon INSERT → denied
+2. user A direct INSERT (bypassing edge function) → denied by `WITH CHECK false`
+3. user A UPDATE own row → denied
+4. user A SELECT user B's row → 0 rows
+5. user A SELECT own row → returns row
+6. service_role INSERT via `submit-final-exam` happy path → row created, score correct
+7. submit-final-exam with tampered answers (extra fields, wrong length, unknown course) → 400
+8. submit-final-exam called without JWT → 401
 
-## Verification after changes
+**academy_certificates**
+9. anon/auth INSERT/UPDATE/DELETE → all denied
+10. user A SELECT user B cert → 0 rows
+11. Passing exam issues exactly one cert; second pass does not duplicate
+12. Failing exam (<70%) issues no cert
 
-- Open `https://tcltechsolutions.com/` and confirm it loads without the Chrome SSL warning.
-- Confirm `https://www.tcltechsolutions.com/` redirects or serves consistently based on the selected Primary domain.
-- Confirm `https://tcltechsolutions.com/ads.txt` returns the AdSense line.
+**contact_submissions**
+13. anon INSERT valid payload → success
+14. anon INSERT invalid email / short name / bad project_type / >2000 char message → denied
+15. anon SELECT → 0 rows (admin-only)
+16. non-admin authenticated SELECT → 0 rows
+17. admin SELECT → returns rows
+
+**Regression sweep on user-scoped tables** (`clients`, `products`, `proposals`, `proposal_items`, `projects`, `project_tasks`, `service_orders`, `service_order_checklist`, `profit_analyses`, `academy_enrollments`, `academy_progress`, `academy_quiz_attempts`)
+18. user A cannot SELECT/UPDATE/DELETE user B rows
+19. user A INSERT with `user_id = userB` → denied by WITH CHECK
+20. anon cannot SELECT/INSERT
+
+### 3. Deliverables
+
+- New edge function `supabase/functions/rls-selftest/index.ts` (verify_jwt = false; protected by an `RLS_SELFTEST_TOKEN` secret header so only the operator can invoke it).
+- The function seeds two throwaway test users (created + deleted with service_role each run), executes the matrix, and returns `{ passed, failed: [...], summary }`.
+- A short admin page is **not** added — invocation is via `supabase functions invoke` / curl with the secret token.
+- A markdown report `docs/rls-verification.md` documenting the checklist, how to run, and how to interpret results.
+
+### 4. Run + report
+
+After deploy, invoke the function and paste the JSON summary. Any non-empty `failed` array is treated as a security regression and triggers a follow-up migration before closing the task.
+
+### Technical notes
+- Test users created via `auth.admin.createUser` with random emails `rls-test+<uuid>@example.invalid`, deleted in a `finally` block.
+- Use two separate `createClient` instances signed in as each test user (via `signInWithPassword`) to evaluate RLS as `authenticated`, and a third using only the anon key for `anon` cases.
+- Static audit query is idempotent and safe to run anytime; can later be wired into CI.
+- No schema changes required unless the audit surfaces a real gap; in that case a follow-up migration is created.
