@@ -196,10 +196,14 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4031739871952197" crossorigin="anonymous"></script>
     <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-4031739871952197",
-        enable_page_level_ads: true
-      });
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4031739871952197",
+          enable_page_level_ads: true
+        });
+      } catch (e) {
+        // AdSense not yet loaded or blocked; safe to ignore.
+      }
     </script>
   </head>
 
