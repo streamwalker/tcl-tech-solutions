@@ -102,6 +102,35 @@ const IBMNavigation = () => {
 
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors py-2">
+                  <span className="font-medium">Products</span>
+                  <ChevronDown className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-80 p-4">
+                  <div className="grid gap-2">
+                    <Link to="/products/urc-bridge">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">URC ↔ Rose ↔ Josh AI Bridge</div>
+                        <div className="text-sm text-muted-foreground">Stable HTTP bridge with /v2 Universal Translator</div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/products/urc-bridge/pricing">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">Pricing</div>
+                        <div className="text-sm text-muted-foreground">Single-Site, Dealer Toolkit, Enterprise</div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to="/products/urc-bridge/download">
+                      <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                        <div className="font-medium">Download</div>
+                        <div className="text-sm text-muted-foreground">Bridge bundle + installer scripts</div>
+                      </DropdownMenuItem>
+                    </Link>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors py-2">
                   <span className="font-medium">Support</span>
                   <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
@@ -190,6 +219,7 @@ const IBMNavigation = () => {
               <Link to="/services" className="block text-lg font-medium text-foreground">Services</Link>
               <Link to="/services" className="block text-lg font-medium text-foreground">Solutions</Link>
               <Link to="/business-plan" className="block text-lg font-medium text-foreground">About</Link>
+              <Link to="/products/urc-bridge" className="block text-lg font-medium text-foreground">Products</Link>
               <Link to="#" className="block text-lg font-medium text-foreground">Support</Link>
               <Link to="/investor-white-paper" className="block text-lg font-medium text-primary">Investor 2026</Link>
             </div>

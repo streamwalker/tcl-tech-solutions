@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { UrcBridgeShell } from "@/modules/urc-bridge/components/UrcBridgeShell";
 import { CodeBlock } from "@/modules/urc-bridge/components/CodeBlock";
 
@@ -12,8 +13,29 @@ const PHASES = [
 ];
 
 export default function UrcBridgeLanding() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "macOS (Apple Silicon)",
+    softwareVersion: "1.0.0",
+    description:
+      "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Versioned /v1 contract plus a /v2 Universal Translator across Control4, URC, and Josh.",
+    url: "https://www.tcltechsolutions.com/products/urc-bridge",
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: "0",
+      url: "https://www.tcltechsolutions.com/products/urc-bridge/pricing",
+    },
+    publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
+  };
   return (
     <UrcBridgeShell>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
       <section className="pt-16 pb-12 sm:pt-20">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
