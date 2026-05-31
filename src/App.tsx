@@ -30,6 +30,15 @@ import Knowledge from "./pages/Knowledge";
 import Glossary from "./pages/Glossary";
 import AcademyCatalog from "./pages/AcademyCatalog";
 import TroubleshootingDns from "./pages/TroubleshootingDns";
+import UrcBridgeLanding from "./pages/urc-bridge/Landing";
+import UrcBridgePricing from "./pages/urc-bridge/Pricing";
+import UrcBridgeDemo from "./pages/urc-bridge/Demo";
+import UrcBridgePilot from "./pages/urc-bridge/Pilot";
+import UrcBridgeFaq from "./pages/urc-bridge/Faq";
+import UrcBridgeDocs from "./pages/urc-bridge/Docs";
+import UrcBridgeDeploymentDocs from "./pages/urc-bridge/DocsDeployment";
+import UrcBridgeJoshAiDocs from "./pages/urc-bridge/DocsJoshAi";
+import UrcBridgeDownload from "./pages/urc-bridge/Download";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -97,6 +106,15 @@ const SEO: Record<string, SeoCfg> = {
   "/privacy-policy": { title: "Privacy Policy | The Connected Lifestyle", description: "Privacy Policy describing what data TCL collects, how it is used, and your rights." },
   "/cookie-policy": { title: "Cookie Policy | The Connected Lifestyle", description: "How The Connected Lifestyle uses cookies and similar technologies on this website." },
   "/troubleshooting/dns": { title: "DNS Troubleshooting | TCL", description: "DNS propagation tracker and troubleshooting guide for the tcltechsolutions.com custom domain." },
+  "/products/urc-bridge": { title: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL", description: "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across Control4, URC, and Josh." },
+  "/products/urc-bridge/pricing": { title: "Pricing — URC Rose Bridge | TCL", description: "Three published tiers for the URC ↔ Rose RS520 ↔ Josh AI compatibility bridge: Single-Site, Dealer Toolkit, Enterprise." },
+  "/products/urc-bridge/demo": { title: "Request a Demo — URC Rose Bridge | TCL", description: "Demo requests for the URC ↔ Rose RS520 compatibility bridge. We respond within one business day." },
+  "/products/urc-bridge/pilot": { title: "Start a 30-day Pilot — URC Rose Bridge | TCL", description: "Full bridge access for 30 days, no payment up front." },
+  "/products/urc-bridge/faq": { title: "FAQ — URC Rose Bridge | TCL", description: "Candid answers about firmware drift, Rose endorsement, URC dealer requirements, Josh AI, refunds, and SLAs." },
+  "/products/urc-bridge/docs": { title: "Docs — URC Rose Bridge | TCL", description: "API contract, configuration, and operations guide for the urc-rose-bridge HTTP service." },
+  "/products/urc-bridge/docs/deployment": { title: "URC Deployment Guide — URC Rose Bridge | TCL", description: "Step-by-step manual for URC dealers: install the Mac mini bridge and integrate it with URC Total Control 2.0 and MX HomePro." },
+  "/products/urc-bridge/docs/josh-ai": { title: "Josh AI Integration Guide — URC Rose Bridge | TCL", description: "Wire the bridge into Josh AI: Custom HTTP Device config, Josh-tuned aliases, sample utterances." },
+  "/products/urc-bridge/download": { title: "Download — URC Rose Bridge | TCL", description: "Source bundle, one-shot installer, and architecture references for the urc-rose-bridge service." },
   "/auth": { title: "Sign In | The Connected Lifestyle", description: "Sign in to your TCL account." },
   "/dashboard": { title: "Dashboard | The Connected Lifestyle", description: "TCL operator dashboard." },
 };
@@ -140,6 +158,15 @@ const App = () => (
           <Route path="/glossary" element={<Page path="/glossary"><Glossary /></Page>} />
           <Route path="/education/academy" element={<Page path="/education/academy"><AcademyCatalog /></Page>} />
           <Route path="/troubleshooting/dns" element={<Page path="/troubleshooting/dns"><TroubleshootingDns /></Page>} />
+          <Route path="/products/urc-bridge" element={<Page path="/products/urc-bridge"><UrcBridgeLanding /></Page>} />
+          <Route path="/products/urc-bridge/pricing" element={<Page path="/products/urc-bridge/pricing"><UrcBridgePricing /></Page>} />
+          <Route path="/products/urc-bridge/demo" element={<Page path="/products/urc-bridge/demo"><UrcBridgeDemo /></Page>} />
+          <Route path="/products/urc-bridge/pilot" element={<Page path="/products/urc-bridge/pilot"><UrcBridgePilot /></Page>} />
+          <Route path="/products/urc-bridge/faq" element={<Page path="/products/urc-bridge/faq"><UrcBridgeFaq /></Page>} />
+          <Route path="/products/urc-bridge/docs" element={<Page path="/products/urc-bridge/docs"><UrcBridgeDocs /></Page>} />
+          <Route path="/products/urc-bridge/docs/deployment" element={<Page path="/products/urc-bridge/docs/deployment"><UrcBridgeDeploymentDocs /></Page>} />
+          <Route path="/products/urc-bridge/docs/josh-ai" element={<Page path="/products/urc-bridge/docs/josh-ai"><UrcBridgeJoshAiDocs /></Page>} />
+          <Route path="/products/urc-bridge/download" element={<Page path="/products/urc-bridge/download"><UrcBridgeDownload /></Page>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
