@@ -1,4 +1,4 @@
-import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp, GraduationCap, BookUser, Sparkles } from "lucide-react";
+import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp, GraduationCap, BookUser, Sparkles, Calculator } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -22,6 +22,7 @@ const modules = [
   { title: "Projects", url: "/platform/projects", icon: FolderKanban },
   { title: "Service Orders", url: "/platform/service", icon: Wrench },
   { title: "Profit Analysis", url: "/platform/profit-analysis", icon: TrendingUp },
+  { title: "Upgrade Model", url: "/platform/upgrade-model", icon: Calculator },
   { title: "Client Dossier", url: "/platform/dossier", icon: BookUser },
   { title: "Star Panel", url: "/platform/star-panel", icon: Sparkles },
   { title: "Academy", url: "/platform/academy", icon: GraduationCap },
