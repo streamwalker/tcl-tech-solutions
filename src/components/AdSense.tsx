@@ -16,6 +16,20 @@ interface AdSenseProps {
 }
 
 const PUBLISHER_ID = "ca-pub-4031739871952197";
+const ADSENSE_SRC = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`;
+const ADSENSE_SCRIPT_ID = "tcl-adsense-script";
+
+const ensureAdSenseScript = () => {
+  if (typeof document === "undefined") return;
+  if (document.getElementById(ADSENSE_SCRIPT_ID)) return;
+
+  const script = document.createElement("script");
+  script.id = ADSENSE_SCRIPT_ID;
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  script.src = ADSENSE_SRC;
+  document.head.appendChild(script);
+};
 
 const AdSense = ({
   slot,
@@ -30,6 +44,7 @@ const AdSense = ({
 
   useEffect(() => {
     if (pushedRef.current) return;
+    ensureAdSenseScript();
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       pushedRef.current = true;
