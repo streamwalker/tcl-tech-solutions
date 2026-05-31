@@ -83,7 +83,26 @@ const ARTICLE_JSONLD = {
   datePublished: "2026-01-15",
   author: { "@type": "Person", name: "Damon Jackson" },
   publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
-  mainEntityOfPage: "https://tcltechsolutions.com/press",
+  mainEntityOfPage: "https://www.tcltechsolutions.com/press",
+};
+
+const URC_BRIDGE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "macOS (Apple Silicon)",
+  softwareVersion: "1.0.0",
+  description:
+    "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Versioned /v1 contract plus a /v2 Universal Translator across Control4, URC, and Josh.",
+  url: "https://www.tcltechsolutions.com/products/urc-bridge",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "USD",
+    price: "0",
+    url: "https://www.tcltechsolutions.com/products/urc-bridge/pricing",
+  },
+  publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
 };
 
 type SeoCfg = { title: string; description: string; ogType?: "website" | "article"; jsonLd?: object | object[] };
@@ -106,7 +125,7 @@ const SEO: Record<string, SeoCfg> = {
   "/privacy-policy": { title: "Privacy Policy | The Connected Lifestyle", description: "Privacy Policy describing what data TCL collects, how it is used, and your rights." },
   "/cookie-policy": { title: "Cookie Policy | The Connected Lifestyle", description: "How The Connected Lifestyle uses cookies and similar technologies on this website." },
   "/troubleshooting/dns": { title: "DNS Troubleshooting | TCL", description: "DNS propagation tracker and troubleshooting guide for the tcltechsolutions.com custom domain." },
-  "/products/urc-bridge": { title: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL", description: "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across Control4, URC, and Josh." },
+  "/products/urc-bridge": { title: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL", description: "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across Control4, URC, and Josh.", jsonLd: URC_BRIDGE_JSONLD },
   "/products/urc-bridge/pricing": { title: "Pricing — URC Rose Bridge | TCL", description: "Three published tiers for the URC ↔ Rose RS520 ↔ Josh AI compatibility bridge: Single-Site, Dealer Toolkit, Enterprise." },
   "/products/urc-bridge/demo": { title: "Request a Demo — URC Rose Bridge | TCL", description: "Demo requests for the URC ↔ Rose RS520 compatibility bridge. We respond within one business day." },
   "/products/urc-bridge/pilot": { title: "Start a 30-day Pilot — URC Rose Bridge | TCL", description: "Full bridge access for 30 days, no payment up front." },
