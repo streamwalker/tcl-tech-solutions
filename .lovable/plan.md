@@ -1,64 +1,140 @@
-# Integrate TCL Upgrade Platform Module
+# URC-Rose-Josh AI Universal Translator — Product Micro-Site
 
-Port the standalone `TCL_Upgrade_Platform.html` (calculator + 30-term glossary + 107 tooltips) into the existing React app as a new platform module, following `integration_spec.json` verbatim for fonts, spacing, colors, motion, and calculation engine.
+Port the uploaded TanStack Start app into TCL as a new product micro-site under `/products/urc-bridge/*`, reusing TCL's React Router, Supabase auth, IBM navigation, and dark-luxury design tokens. Park the Fastify bridge service and installer as downloadable assets — the TCL site cannot host a Node service, so the bridge ships as documentation + a downloadable tarball.
 
 ## Scope
 
-- New route mounted in the existing Platform layout (not a global redesign).
-- 8-tab IA preserved: Dashboard, Deal Modeler, Portfolio, AT&T, Spread, Hardware, Credit/Cash, Glossary.
-- All economics (`$530 deal profit`, `$56,500 portfolio net`) reproduced exactly per `calculationEngine`.
-- Jargon explainer system wired through every tab.
+In:
+- 9 public pages (landing, pricing, demo, pilot, FAQ, docs index, deployment docs, Josh AI docs, downloads)
+- 1 gated admin page (leads + simulations viewer)
+- Product glossary + simulator (client-only) ported from `src/lib/`
+- Bridge tarball + installer scripts + 2 architecture DOCXs served from `/public/downloads/urc-bridge/`
+- Lead capture (pilot/subscribe forms) → new Supabase table
 
-## Where it goes
+Out:
+- The Fastify bridge service itself (zipped, served as download — not deployed)
+- TanStack Start server functions (`*.functions.ts` are server-only and won't run here; rewritten as Supabase edge functions or client-only logic)
+- Stripe/payment integration (pricing page is presentational; "Contact for pilot" CTA)
+- Auth duplication — reuses existing TCL Supabase auth + RBAC
 
-- Route: `/platform/upgrade-model` (added to `App.tsx`, rendered inside `PlatformLayout`).
-- Sidebar link added to `PlatformSidebar.tsx` under existing platform tools.
-- All module CSS scoped under a `.tcl-upgrade-root` wrapper so the spec's `:root` design tokens (`--navy`, `--steel`, Arial 14px base, etc.) do not leak into the rest of the app.
+## Route map (under TCL React Router)
+
+```text
+/products/urc-bridge                       → Landing (from src/routes/index.tsx)
+/products/urc-bridge/pricing               → Pricing tiers
+/products/urc-bridge/demo                  → Interactive simulator
+/products/urc-bridge/pilot                 → Pilot signup form → leads table
+/products/urc-bridge/faq                   → FAQ accordion
+/products/urc-bridge/docs                  → Docs index
+/products/urc-bridge/docs/deployment       → Deployment guide
+/products/urc-bridge/docs/josh-ai          → Josh AI integration guide
+/products/urc-bridge/download              → Bridge tarball + installer (auth-gated)
+/platform/urc-bridge-admin                 → Admin leads/simulations (admin role only)
+```
+
+All pages render inside the existing `IBMNavigation` header + `Footer`, with `pt-16` per layout-constraints memory.
 
 ## File layout
 
 ```text
-src/pages/platform/UpgradeModel.tsx          # route shell + tab switcher
-src/modules/upgrade/
-  data/glossary.ts                            # 30-term glossary (from spec)
-  data/defaults.ts                            # dataModel.defaults seed
-  engine/calc.ts                              # calculationEngine fns (pure)
-  state/useUpgradeStore.ts                    # localStorage('tcl_model') + import/export
+src/pages/urc-bridge/
+  Landing.tsx                  ← from routes/index.tsx
+  Pricing.tsx                  ← from routes/pricing.tsx + PricingTiers component
+  Demo.tsx                     ← from routes/demo.tsx + simulator engine
+  Pilot.tsx                    ← from routes/pilot.tsx (pilot lead form)
+  Faq.tsx                      ← from routes/faq.tsx
+  Docs.tsx                     ← from routes/_authenticated.docs.tsx
+  DocsDeployment.tsx
+  DocsJoshAi.tsx
+  Download.tsx                 ← auth-gated download page
+  Admin.tsx                    ← admin-role-gated, mounted under /platform
+src/modules/urc-bridge/
+  data/glossary.ts             ← from src/lib/glossary.ts (separate from TCL glossary)
+  data/pricing.ts              ← tier definitions
+  simulator/
+    engine.ts                  ← from src/lib/simulator/engine.ts (pure)
+    profiles.ts                ← from src/lib/simulator/profiles.ts
   components/
-    Tooltip.tsx                               # hover/focus/tap, 0.25s ease fade
-    Jargon.tsx                                # <Jargon termId="float"> wrapper + InfoIcon
-    Tabs.tsx                                  # 8-tab nav, dashboard default
-    tabs/DashboardTab.tsx
-    tabs/DealModelerTab.tsx
-    tabs/PortfolioTab.tsx
-    tabs/AttTab.tsx
-    tabs/SpreadTab.tsx
-    tabs/HardwareTab.tsx
-    tabs/CreditCashTab.tsx
-    tabs/GlossaryTab.tsx                      # searchable list, "On this platform:" line
-  styles/upgrade.css                          # :root vars + component CSS verbatim
+    SimulatorPanel.tsx
+    PricingTiers.tsx
+    SubscribeForm.tsx
+    CodeBlock.tsx              ← reuse TCL prism setup if present, else port
+public/downloads/urc-bridge/
+  urc-rose-bridge-v1.0.0.tar.gz       ← zipped /bridge folder
+  install.sh, uninstall.sh, update.sh ← from /installer
+  com.tcltech.urc-rose-bridge.plist
+  URC_RS520_JoshAI_Implementation_Plan.pdf  ← converted from docx
+  Universal_Translator_Architecture.pdf
 ```
 
-The existing `src/data/glossary.ts` (TCL brand glossary used by `KnowledgeContext`) is left untouched — this module's glossary is domain-specific (deal economics) and lives separately to avoid collision.
+## Database (one migration)
 
-## Implementation notes
+```sql
+CREATE TABLE public.urc_bridge_leads (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text NOT NULL,
+  company text,
+  role text,
+  systems text[],                  -- which ecosystems they own
+  message text,
+  source text NOT NULL,            -- 'pilot' | 'subscribe' | 'demo'
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+GRANT INSERT ON public.urc_bridge_leads TO anon, authenticated;
+GRANT SELECT ON public.urc_bridge_leads TO authenticated;
+ALTER TABLE public.urc_bridge_leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "anyone can submit" ON public.urc_bridge_leads
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY "admins read leads" ON public.urc_bridge_leads
+  FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
 
-1. Copy `:root` CSS variable block and component CSS from `TCL_Upgrade_Platform.html` verbatim into `upgrade.css`, scoped under `.tcl-upgrade-root`.
-2. Port `calculationEngine` functions from `integration_spec.json` into `engine/calc.ts` as pure TS; unit-ready but no tests required by spec.
-3. `Tooltip.tsx`: single component handling hover (desktop), focus (keyboard), and tap (mobile via `pointerdown`); 0.25s ease opacity fade only (no other transitions, per fidelity contract). Click → navigates to Glossary tab and scrolls to entry.
-4. `Jargon.tsx`: `<Jargon termId="float">float</Jargon>` renders dotted underline; `<InfoIcon termId="..." />` renders the ⓘ. Both resolve against `glossary.ts`. Throws in dev if `termId` is missing (reference-integrity guard).
-5. State: zustand-free — a small `useUpgradeStore` hook with `useSyncExternalStore` over a module-scoped store that mirrors to `localStorage('tcl_model')`. JSON import/export buttons in Dashboard.
-6. Dashboard shows a one-time welcome note ("Hover any dotted term…") gated by `localStorage('tcl_model.welcomeSeen')`.
-7. No backend, no Supabase changes, no auth changes. Pure client module.
+CREATE TABLE public.urc_bridge_simulations (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+  profile text NOT NULL,
+  inputs jsonb NOT NULL,
+  result jsonb NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+GRANT INSERT ON public.urc_bridge_simulations TO anon, authenticated;
+GRANT SELECT ON public.urc_bridge_simulations TO authenticated;
+ALTER TABLE public.urc_bridge_simulations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "anyone logs sim" ON public.urc_bridge_simulations
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY "admins read sims" ON public.urc_bridge_simulations
+  FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
+```
 
-## Acceptance (from spec)
+No new auth flows — admin page uses existing `has_role(auth.uid(), 'admin')` and is mounted inside `<AuthGuard>` + `<Platform>`.
 
-- Every one of the 28 inline tooltip keys resolves (compile-time check via `keyof typeof glossary`).
-- Default seed produces `$530` deal profit and `$56,500` portfolio net.
-- Glossary tab lists all 30 terms with plain-English + "On this platform:" lines.
-- Tooltip uses exactly `opacity 0.25s ease`; no width/transform animations elsewhere.
+## Design / branding
 
-## Out of scope
+- Reuse TCL tokens (Playfair Display headings, DM Sans body, `#C42020` accents, dark luxury).
+- Landing hero re-themed: keep copy and architecture diagram from `routes/index.tsx`, restyle to match `BusinessPlanHero` aesthetic.
+- ASCII hub-and-spoke diagram from the bridge README rendered in a `<pre>` block with the existing DM Mono treatment.
+- Code samples use the existing TCL `CodeBlock` styling (no new prism setup unless missing).
 
-- No changes to existing pages, brand glossary, RLS, edge functions, SEO, or AdSense.
-- No new dependencies (uses existing React + Tailwind + lucide; module CSS is plain CSS scoped to the wrapper).
+## SEO
+
+Add nine new `SEO` entries to `src/App.tsx` (`/products/urc-bridge`, …) with titles, descriptions, and a `SoftwareApplication` JSON-LD on the landing page.
+
+## Sidebar / navigation
+
+- Add a top-nav "Products" dropdown link to `IBMNavigation` → "URC ↔ Rose ↔ Josh AI Bridge".
+- Add `PlatformSidebar` entry "URC Bridge Admin" gated by admin role.
+- Update `public/sitemap.xml` with the nine new public routes.
+
+## Out of scope (explicit)
+
+- No Fastify deployment, no Docker, no Node server inside TCL — bridge ships only as a download.
+- No Stripe checkout — pricing is presentational.
+- No real C4/URC/Josh adapter wiring from the browser — the simulator is the in-browser demonstration.
+- No edits to existing TCL pages other than `App.tsx` (routes + SEO), `IBMNavigation.tsx` (one nav entry), `PlatformSidebar.tsx` (admin entry), and `sitemap.xml`.
+
+## Acceptance
+
+- All 9 public routes render under TCL header/footer with correct SEO.
+- Pilot/subscribe form inserts into `urc_bridge_leads`; admin page lists rows.
+- Simulator runs entirely client-side and matches the engine output of the original.
+- Download page serves the tarball + installer scripts + both architecture PDFs.
+- No regressions on existing TCL routes (build clean, no console errors).
