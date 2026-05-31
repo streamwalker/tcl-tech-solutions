@@ -1,4 +1,4 @@
-import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp, GraduationCap, BookUser, Sparkles, Calculator } from "lucide-react";
+import { Package, FileText, FolderKanban, Users, Wrench, LayoutDashboard, Bot, TrendingUp, GraduationCap, BookUser, Sparkles, Calculator, Network } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -25,6 +25,7 @@ const modules = [
   { title: "Upgrade Model", url: "/platform/upgrade-model", icon: Calculator },
   { title: "Client Dossier", url: "/platform/dossier", icon: BookUser },
   { title: "Star Panel", url: "/platform/star-panel", icon: Sparkles },
+  { title: "URC Bridge Admin", url: "/platform/urc-bridge-admin", icon: Network },
   { title: "Academy", url: "/platform/academy", icon: GraduationCap },
 ];
 

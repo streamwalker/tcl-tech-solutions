@@ -17,6 +17,7 @@ import CertificatesPage from "@/pages/platform/CertificatesPage";
 import DossierPage from "@/pages/platform/DossierPage";
 import StarPanelPage from "@/pages/platform/StarPanelPage";
 import UpgradeModelPage from "@/pages/platform/UpgradeModelPage";
+import UrcBridgeAdminPage from "@/pages/platform/UrcBridgeAdminPage";
 
 export default function Platform() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function Platform() {
         <Route path="dossier" element={<DossierPage />} />
         <Route path="star-panel" element={<StarPanelPage />} />
         <Route path="upgrade-model" element={<UpgradeModelPage />} />
+        <Route path="urc-bridge-admin" element={<UrcBridgeAdminPage />} />
         <Route path="academy/certificates" element={<CertificatesPage />} />
         <Route path="academy/:courseSlug" element={<CoursePage />} />
         <Route path="academy/:courseSlug/exam" element={<FinalExamPage />} />

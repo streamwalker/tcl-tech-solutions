@@ -663,6 +663,45 @@ export type Database = {
           },
         ]
       }
+      urc_bridge_leads: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          name: string | null
+          role: string | null
+          rs520_count: number | null
+          source: string
+          tier: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          name?: string | null
+          role?: string | null
+          rs520_count?: number | null
+          source?: string
+          tier?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string | null
+          role?: string | null
+          rs520_count?: number | null
+          source?: string
+          tier?: string | null
+        }
+        Relationships: []
+      }
       user_consents: {
         Row: {
           accepted_at: string
