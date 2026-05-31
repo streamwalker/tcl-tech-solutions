@@ -68,10 +68,10 @@ const HOWTO_JSONLD = {
   totalTime: "P7D",
   estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "1500-25000" },
   step: [
-    { "@type": "HowToStep", position: 1, name: "Schedule a Free Consultation", text: "Call (210) 995-8655 to schedule a free on-site consultation.", url: "https://tcltechsolutions.com/#contact" },
-    { "@type": "HowToStep", position: 2, name: "Receive a Custom Design & Proposal", text: "We create a tailored smart home design with product recommendations and transparent pricing.", url: "https://tcltechsolutions.com/services" },
-    { "@type": "HowToStep", position: 3, name: "Professional Installation", text: "Certified technicians perform a clean, code-compliant installation.", url: "https://tcltechsolutions.com/services" },
-    { "@type": "HowToStep", position: 4, name: "Training & Ongoing Support", text: "We walk you through your system and provide 24/7 support via managed services.", url: "https://tcltechsolutions.com/services" },
+    { "@type": "HowToStep", position: 1, name: "Schedule a Free Consultation", text: "Call (210) 995-8655 to schedule a free on-site consultation.", url: "https://www.tcltechsolutions.com/#contact" },
+    { "@type": "HowToStep", position: 2, name: "Receive a Custom Design & Proposal", text: "We create a tailored smart home design with product recommendations and transparent pricing.", url: "https://www.tcltechsolutions.com/services" },
+    { "@type": "HowToStep", position: 3, name: "Professional Installation", text: "Certified technicians perform a clean, code-compliant installation.", url: "https://www.tcltechsolutions.com/services" },
+    { "@type": "HowToStep", position: 4, name: "Training & Ongoing Support", text: "We walk you through your system and provide 24/7 support via managed services.", url: "https://www.tcltechsolutions.com/services" },
   ],
 };
 
