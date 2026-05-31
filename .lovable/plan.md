@@ -1,140 +1,58 @@
-# URC-Rose-Josh AI Universal Translator — Product Micro-Site
+## Goal
 
-Port the uploaded TanStack Start app into TCL as a new product micro-site under `/products/urc-bridge/*`, reusing TCL's React Router, Supabase auth, IBM navigation, and dark-luxury design tokens. Park the Fastify bridge service and installer as downloadable assets — the TCL site cannot host a Node service, so the bridge ships as documentation + a downloadable tarball.
+Every public route emits a unique, correct `<link rel="canonical">` and a complete, consistent Open Graph + Twitter Card block — all pointing at the **www.tcltechsolutions.com** host. No duplicate canonicals, no stale apex-host URLs, no missing social previews.
 
-## Scope
+## Changes
 
-In:
-- 9 public pages (landing, pricing, demo, pilot, FAQ, docs index, deployment docs, Josh AI docs, downloads)
-- 1 gated admin page (leads + simulations viewer)
-- Product glossary + simulator (client-only) ported from `src/lib/`
-- Bridge tarball + installer scripts + 2 architecture DOCXs served from `/public/downloads/urc-bridge/`
-- Lead capture (pilot/subscribe forms) → new Supabase table
+### 1. `src/components/Seo.tsx` — strengthen the per-route head
 
-Out:
-- The Fastify bridge service itself (zipped, served as download — not deployed)
-- TanStack Start server functions (`*.functions.ts` are server-only and won't run here; rewritten as Supabase edge functions or client-only logic)
-- Stripe/payment integration (pricing page is presentational; "Contact for pilot" CTA)
-- Auth duplication — reuses existing TCL Supabase auth + RBAC
+- Change `SITE` from `https://tcltechsolutions.com` → `https://www.tcltechsolutions.com`.
+- Add a default `ogImage` fallback (the existing home-theater social image already in `index.html`) so every route ships a full social card, not just the few that pass `ogImage`.
+- Emit a complete OG set on every route: `og:title`, `og:description`, `og:url`, `og:type`, `og:image`, `og:image:width` (1200), `og:image:height` (630), `og:image:alt`, `og:site_name` ("The Connected Lifestyle"), `og:locale` ("en_US").
+- Emit a complete Twitter set: `twitter:card` ("summary_large_image"), `twitter:title`, `twitter:description`, `twitter:url`, `twitter:image`, `twitter:image:alt`.
+- Allow per-route override of `ogImage` and a new optional `ogImageAlt`.
 
-## Route map (under TCL React Router)
+Helmet dedupes `<meta>` by `name`/`property`, so the per-route values cleanly replace the static ones in `index.html` for JS-executing crawlers; the static block remains as the fallback for non-JS social crawlers (LinkedIn, Slack, Facebook).
 
-```text
-/products/urc-bridge                       → Landing (from src/routes/index.tsx)
-/products/urc-bridge/pricing               → Pricing tiers
-/products/urc-bridge/demo                  → Interactive simulator
-/products/urc-bridge/pilot                 → Pilot signup form → leads table
-/products/urc-bridge/faq                   → FAQ accordion
-/products/urc-bridge/docs                  → Docs index
-/products/urc-bridge/docs/deployment       → Deployment guide
-/products/urc-bridge/docs/josh-ai          → Josh AI integration guide
-/products/urc-bridge/download              → Bridge tarball + installer (auth-gated)
-/platform/urc-bridge-admin                 → Admin leads/simulations (admin role only)
+### 2. `index.html` — remove the duplicate canonical, fix the host
+
+- **Delete** any static `<link rel="canonical">` from `<head>` (Helmet already emits one per route; `<link rel="canonical">` does NOT dedupe and would ship as two canonicals).
+- Update the sitewide static fallbacks to the www host:
+  - `og:url`, `twitter:url` → `https://www.tcltechsolutions.com/`
+- Leave the sitewide `og:image`, `og:site_name`, `twitter:card` etc. in place as the no-JS fallback.
+
+### 3. `src/App.tsx` — fill SEO gaps and pass `path` correctly
+
+- The `SEO` map already covers all 27 public routes mounted under `<Page>`. Verify and:
+  - Add an `ogImage` override for `/press` (the Damon Jackson Parade-of-Homes article) if a unique image exists; otherwise rely on the default.
+  - Add the URC Bridge landing page's existing `SoftwareApplication` JSON-LD by promoting it from the inline `<Helmet>` into the central `SEO` map (or leave it inline — it doesn't affect canonical/OG work; flagged so the two don't drift).
+- Confirm `/auth` and `/dashboard` keep their entries (they aren't in the sitemap but still benefit from a clean canonical when shared).
+
+### 4. `src/pages/urc-bridge/Landing.tsx` — stop double-emitting head tags
+
+- The page currently wraps `<Helmet>` directly to add JSON-LD. Move that JSON-LD into the `SEO` map entry's `jsonLd` field so it flows through the same `<Seo>` component. Avoids a second `<Helmet>` instance on the same route.
+
+### 5. `public/sitemap.xml` — align host
+
+- Replace any `https://tcltechsolutions.com` or `https://tcl.streamwalkers.com` `<loc>` with `https://www.tcltechsolutions.com` so the sitemap-advertised host matches the canonical host.
+
+### 6. Verification
+
+- After changes, mentally walk three routes (`/`, `/products/urc-bridge`, `/press`) and confirm: exactly one `<link rel="canonical">`, og/twitter URLs match canonical, og:image present, JSON-LD intact.
+- Run `seo_chat--list_findings` after the implementation to mark canonical/OG-related findings as fixed.
+
+## Out of scope
+
+- No new routes, no new content, no design changes.
+- No SSR — the existing client-side Helmet limitation for social crawlers remains; the static `index.html` fallback covers it for the home page.
+- No new images generated; the existing home-theater social image is reused as the default.
+- No changes to `/platform/*` (gated, no SEO needed).
+
+## Technical notes
+
 ```
-
-All pages render inside the existing `IBMNavigation` header + `Footer`, with `pt-16` per layout-constraints memory.
-
-## File layout
-
-```text
-src/pages/urc-bridge/
-  Landing.tsx                  ← from routes/index.tsx
-  Pricing.tsx                  ← from routes/pricing.tsx + PricingTiers component
-  Demo.tsx                     ← from routes/demo.tsx + simulator engine
-  Pilot.tsx                    ← from routes/pilot.tsx (pilot lead form)
-  Faq.tsx                      ← from routes/faq.tsx
-  Docs.tsx                     ← from routes/_authenticated.docs.tsx
-  DocsDeployment.tsx
-  DocsJoshAi.tsx
-  Download.tsx                 ← auth-gated download page
-  Admin.tsx                    ← admin-role-gated, mounted under /platform
-src/modules/urc-bridge/
-  data/glossary.ts             ← from src/lib/glossary.ts (separate from TCL glossary)
-  data/pricing.ts              ← tier definitions
-  simulator/
-    engine.ts                  ← from src/lib/simulator/engine.ts (pure)
-    profiles.ts                ← from src/lib/simulator/profiles.ts
-  components/
-    SimulatorPanel.tsx
-    PricingTiers.tsx
-    SubscribeForm.tsx
-    CodeBlock.tsx              ← reuse TCL prism setup if present, else port
-public/downloads/urc-bridge/
-  urc-rose-bridge-v1.0.0.tar.gz       ← zipped /bridge folder
-  install.sh, uninstall.sh, update.sh ← from /installer
-  com.tcltech.urc-rose-bridge.plist
-  URC_RS520_JoshAI_Implementation_Plan.pdf  ← converted from docx
-  Universal_Translator_Architecture.pdf
+Canonical host: https://www.tcltechsolutions.com (chosen by user)
+Default og:image: existing GCS social image already in index.html
+Helmet dedupe: meta[name|property] = yes, link[rel] = NO → must remove static canonical
+Routes touched: 0 (only Seo.tsx + App.tsx data + index.html + sitemap.xml + Landing.tsx cleanup)
 ```
-
-## Database (one migration)
-
-```sql
-CREATE TABLE public.urc_bridge_leads (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  email text NOT NULL,
-  company text,
-  role text,
-  systems text[],                  -- which ecosystems they own
-  message text,
-  source text NOT NULL,            -- 'pilot' | 'subscribe' | 'demo'
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-GRANT INSERT ON public.urc_bridge_leads TO anon, authenticated;
-GRANT SELECT ON public.urc_bridge_leads TO authenticated;
-ALTER TABLE public.urc_bridge_leads ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "anyone can submit" ON public.urc_bridge_leads
-  FOR INSERT TO anon, authenticated WITH CHECK (true);
-CREATE POLICY "admins read leads" ON public.urc_bridge_leads
-  FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
-
-CREATE TABLE public.urc_bridge_simulations (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
-  profile text NOT NULL,
-  inputs jsonb NOT NULL,
-  result jsonb NOT NULL,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-GRANT INSERT ON public.urc_bridge_simulations TO anon, authenticated;
-GRANT SELECT ON public.urc_bridge_simulations TO authenticated;
-ALTER TABLE public.urc_bridge_simulations ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "anyone logs sim" ON public.urc_bridge_simulations
-  FOR INSERT TO anon, authenticated WITH CHECK (true);
-CREATE POLICY "admins read sims" ON public.urc_bridge_simulations
-  FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
-```
-
-No new auth flows — admin page uses existing `has_role(auth.uid(), 'admin')` and is mounted inside `<AuthGuard>` + `<Platform>`.
-
-## Design / branding
-
-- Reuse TCL tokens (Playfair Display headings, DM Sans body, `#C42020` accents, dark luxury).
-- Landing hero re-themed: keep copy and architecture diagram from `routes/index.tsx`, restyle to match `BusinessPlanHero` aesthetic.
-- ASCII hub-and-spoke diagram from the bridge README rendered in a `<pre>` block with the existing DM Mono treatment.
-- Code samples use the existing TCL `CodeBlock` styling (no new prism setup unless missing).
-
-## SEO
-
-Add nine new `SEO` entries to `src/App.tsx` (`/products/urc-bridge`, …) with titles, descriptions, and a `SoftwareApplication` JSON-LD on the landing page.
-
-## Sidebar / navigation
-
-- Add a top-nav "Products" dropdown link to `IBMNavigation` → "URC ↔ Rose ↔ Josh AI Bridge".
-- Add `PlatformSidebar` entry "URC Bridge Admin" gated by admin role.
-- Update `public/sitemap.xml` with the nine new public routes.
-
-## Out of scope (explicit)
-
-- No Fastify deployment, no Docker, no Node server inside TCL — bridge ships only as a download.
-- No Stripe checkout — pricing is presentational.
-- No real C4/URC/Josh adapter wiring from the browser — the simulator is the in-browser demonstration.
-- No edits to existing TCL pages other than `App.tsx` (routes + SEO), `IBMNavigation.tsx` (one nav entry), `PlatformSidebar.tsx` (admin entry), and `sitemap.xml`.
-
-## Acceptance
-
-- All 9 public routes render under TCL header/footer with correct SEO.
-- Pilot/subscribe form inserts into `urc_bridge_leads`; admin page lists rows.
-- Simulator runs entirely client-side and matches the engine output of the original.
-- Download page serves the tarball + installer scripts + both architecture PDFs.
-- No regressions on existing TCL routes (build clean, no console errors).
