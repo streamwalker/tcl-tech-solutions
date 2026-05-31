@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TCL Tech Solutions — Upgrade Membership Platform</title>
+<style>
+  :root{
+    --navy:#1f3864; --steel:#2e5496; --steel2:#3a64a8; --green:#1e7145; --green-bg:#e2efda;
+    --amber:#bf8f00; --amber-bg:#fff2cc; --red:#c00000; --red-bg:#fce4e4;
+    --bg:#eef1f6; --card:#ffffff; --line:#d7deea; --ink:#1c2533; --muted:#6b7686; --blue:#0a58ca;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+  header{background:linear-gradient(135deg,var(--navy),var(--steel));color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  header .brand{display:flex;align-items:center;gap:14px}
+  header .logo{width:42px;height:42px;border-radius:8px;background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;letter-spacing:-1px}
+  header h1{font-size:18px;margin:0;font-weight:bold}
+  header .sub{font-size:11px;opacity:.85;margin-top:2px}
+  header .actions{display:flex;gap:8px;flex-wrap:wrap}
+  header button{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+  header button:hover{background:rgba(255,255,255,.28)}
+  nav{background:var(--navy);display:flex;flex-wrap:wrap;padding:0 12px;position:sticky;top:0;z-index:20}
+  nav button{background:none;border:none;color:#c7d3e8;padding:13px 16px;cursor:pointer;font-size:13px;border-bottom:3px solid transparent}
+  nav button:hover{color:#fff}
+  nav button.active{color:#fff;border-bottom-color:#7aa6e8;font-weight:bold}
+  main{padding:22px;max-width:1180px;margin:0 auto}
+  .tab{display:none} .tab.active{display:block}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:18px;box-shadow:0 1px 3px rgba(20,40,80,.06)}
+  .card h2{margin:0 0 4px;font-size:16px;color:var(--navy)}
+  .card .desc{color:var(--muted);font-size:12px;margin-bottom:14px}
+  h3.section{font-size:13px;color:var(--steel);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+  th{background:var(--steel);color:#fff;font-weight:bold;font-size:11.5px;text-align:right;position:sticky}
+  th:first-child,td:first-child{text-align:left}
+  tbody tr:hover{background:#f6f9fe}
+  td input{width:92px;border:1px solid #c3cee0;border-radius:5px;padding:5px 6px;text-align:right;font-size:13px;color:var(--blue);font-weight:bold;font-family:inherit}
+  td input.name{width:100%;text-align:left;color:var(--ink);font-weight:normal}
+  input:focus{outline:2px solid #7aa6e8}
+  .pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:11px;font-weight:bold}
+  .pill.strong{background:var(--green-bg);color:var(--green)}
+  .pill.marginal{background:var(--amber-bg);color:var(--amber)}
+  .pill.poor{background:var(--red-bg);color:var(--red)}
+  .pill.yes{background:var(--green-bg);color:var(--green)}
+  .pill.check{background:var(--red-bg);color:var(--red)}
+  .pill.est{background:#eef0f3;color:var(--muted);font-weight:normal}
+  .pill.act{background:var(--green-bg);color:var(--green);font-weight:normal}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:6px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:8px;padding:14px 16px}
+  .kpi .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .kpi .val{font-size:24px;font-weight:bold;color:var(--navy);margin-top:4px}
+  .kpi .note{font-size:11px;color:var(--muted);margin-top:3px}
+  .kpi.green{border-left-color:var(--green)} .kpi.green .val{color:var(--green)}
+  .kpi.amber{border-left-color:var(--amber)} .kpi.amber .val{color:var(--amber)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .field{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .field label{font-size:13px;color:var(--ink)}
+  .field .hint{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+  .field input,.field select{width:120px;border:1px solid #c3cee0;border-radius:5px;padding:6px 8px;text-align:right;font-size:13px;color:var(--blue);font-weight:bold;font-family:inherit}
+  select{color:var(--ink)!important}
+  .breakdown{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .brow{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px solid var(--line);font-size:13px}
+  .brow .v{font-weight:bold}
+  .brow.total{background:#f0f5ff;font-size:15px;margin-top:4px;border-radius:6px;padding:11px 8px}
+  .brow.total .v{color:var(--navy)}
+  .panel{background:#f0f5ff;border:1px solid #cfe;border-radius:8px;padding:14px;border:1px solid var(--line)}
+  .panelh{font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .panel.cust .panelh{color:var(--steel)} .panel.tcl .panelh{color:var(--green)}
+  .bar-wrap{display:flex;align-items:center;gap:10px;margin:6px 0}
+  .bar-label{width:90px;font-size:12px;color:var(--muted)}
+  .bar-track{flex:1;background:#eef1f6;border-radius:5px;height:22px;position:relative;overflow:hidden}
+  .bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--steel),var(--steel2));display:flex;align-items:center;justify-content:flex-end;padding-right:7px;color:#fff;font-size:11px;font-weight:bold;min-width:34px}
+  .bar-fill.capped{background:linear-gradient(90deg,var(--amber),#d6a92e)}
+  .bar-fill.green{background:linear-gradient(90deg,var(--green),#2f9c63)}
+  .note{font-size:11.5px;color:var(--muted);font-style:italic;margin-top:10px;line-height:1.5}
+  .callout{background:var(--green-bg);border:1px solid #b5d8bf;border-radius:8px;padding:12px 14px;color:#1c5a37;font-size:13px;line-height:1.5}
+  .callout.amber{background:var(--amber-bg);border-color:#e6d089;color:#7a5c00}
+  .rowbtn{background:none;border:1px solid #c3cee0;border-radius:5px;color:var(--muted);cursor:pointer;padding:3px 8px;font-size:12px}
+  .rowbtn:hover{background:#f6f9fe;color:var(--red);border-color:var(--red)}
+  .addbtn{background:var(--steel);color:#fff;border:none;border-radius:6px;padding:8px 14px;cursor:pointer;font-size:13px;margin-top:10px}
+  .addbtn:hover{background:var(--navy)}
+  .est-cell{font-size:11px}
+  .src{font-size:11px;color:var(--muted);margin-top:8px}
+  .tag{font-size:10px;background:#eef0f3;color:var(--muted);padding:1px 7px;border-radius:8px;margin-left:6px;vertical-align:middle}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1}
+  /* ---- tooltips / jargon explainers ---- */
+  .term{border-bottom:1px dotted var(--steel);cursor:help}
+  .term:hover,.term:focus{background:#eef5ff;outline:none}
+  .info{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--steel);color:#fff;font-size:10px;font-style:italic;font-weight:bold;cursor:help;margin-left:5px;vertical-align:middle;font-family:Georgia,'Times New Roman',serif;line-height:1}
+  .info:hover,.info:focus{background:var(--navy);outline:none}
+  #tip{position:fixed;z-index:100;max-width:300px;background:#10233f;color:#fff;font-size:12.5px;line-height:1.5;padding:10px 12px;border-radius:8px;box-shadow:0 6px 22px rgba(10,25,50,.32);opacity:0;transform:translateY(4px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+  #tip.show{opacity:1;transform:translateY(0)}
+  #tip .tt{font-weight:bold;color:#9ec5ff;display:block;margin-bottom:3px;font-size:12px}
+  #tip .more{color:#7aa6e8;font-size:11px;margin-top:6px;display:block}
+  #tip::after{content:"";position:absolute;left:var(--ax,20px);bottom:-5px;width:11px;height:11px;background:#10233f;transform:rotate(45deg)}
+  #tip.below::after{top:-5px;bottom:auto}
+  /* ---- glossary ---- */
+  .gloss-search{width:100%;max-width:380px;padding:9px 12px;border:1px solid #c3cee0;border-radius:7px;font-size:13px;margin-bottom:6px;font-family:inherit;color:var(--ink)}
+  .gloss-item{padding:13px 2px;border-bottom:1px solid var(--line);scroll-margin-top:70px;border-radius:6px}
+  .gloss-term{font-size:14px;font-weight:bold;color:var(--navy)}
+  .gloss-eli5{font-size:13px;color:var(--ink);margin-top:4px;line-height:1.55}
+  .gloss-ctx{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+  .gloss-ctx b{color:var(--steel)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">TCL</div>
+    <div>
+      <h1>Upgrade Membership Platform</h1>
+      <div class="sub">Internal deal-modeling tool &nbsp;•&nbsp; TCL Tech Solutions &nbsp;•&nbsp; CEO: Damon Jackson</div>
+    </div>
+  </div>
+  <div class="actions">
+    <button onclick="exportJSON()">⭳ Save scenario</button>
+    <button onclick="document.getElementById('imp').click()">⭱ Load scenario</button>
+    <button onclick="exportCSV()">⤓ Export catalog CSV</button>
+    <button onclick="resetAll()">↺ Reset defaults</button>
+    <input id="imp" type="file" accept="application/json" style="display:none" onchange="importJSON(event)">
+  </div>
+</header>
+<nav id="nav"></nav>
+<main>
+  <section id="dashboard" class="tab active"></section>
+  <section id="catalog" class="tab"></section>
+  <section id="tiers" class="tab"></section>
+  <section id="deal" class="tab"></section>
+  <section id="rollover" class="tab"></section>
+  <section id="portfolio" class="tab"></section>
+  <section id="att" class="tab"></section>
+  <section id="glossary" class="tab"></section>
+</main>
+<div id="toast" class="toast"></div>
+<div id="tip"></div>
+
+<script>
+"use strict";
+
+// ---------- GLOSSARY (plain-English, explain-like-I'm-5) ----------
+// term  = the word as shown;  short = the hover bubble (one breath);  ctx = how it works HERE.
+const GLOSSARY = {
+  msrp:{term:"MSRP (sticker price)", short:"The full price the maker says it should sell for \u2014 the big number before any deal.", ctx:"On this platform it's the 'before' price we measure every discount against."},
+  dealer:{term:"Dealer cost", short:"What TCL actually pays its supplier to buy the item. Always lower than the sticker price.", ctx:"This is TCL's floor: we can never sell below it without losing money."},
+  spread:{term:"Spread", short:"The gap between what TCL pays (dealer cost) and the sticker price (MSRP). It's the wiggle room to give a discount and still profit.", ctx:"The single most important number here: the customer's credit can never be bigger than the spread."},
+  points:{term:"Points (spread %)", short:"The spread written as a percentage of the sticker price. '50 points' means the gap is half the price.", ctx:"Bigger points = more room to make money. 50+ points is what makes a component great for this program."},
+  credit:{term:"Credit", short:"Money the customer slowly builds up by paying monthly, which they later knock off the price of a new component.", ctx:"Think of it like a gift card that fills up over time \u2014 but capped so it can't grow forever."},
+  bonus:{term:"Bonus", short:"Extra credit TCL adds on top of what the customer paid in, as a thank-you for joining.", ctx:"Example: a member pays in $480 over a year but their credit is $600 \u2014 that extra $120 is the bonus."},
+  subscription:{term:"Subscription (monthly fee)", short:"The set amount the customer pays every month just to be a member of the club.", ctx:"This steady monthly money is the heart of how the program profits."},
+  tier:{term:"Tier", short:"A membership level. Higher tiers cost more per month but build bigger credits.", ctx:"Standard, Plus, and Premium are the tiers \u2014 plus a Programming tier for labor."},
+  oop:{term:"Out-of-pocket", short:"The cash the customer actually hands over at the counter, AFTER their credit is subtracted.", ctx:"Sticker price minus credit = out-of-pocket. It can never drop below TCL's dealer cost."},
+  savings:{term:"Real savings vs MSRP", short:"What the customer truly saves once you subtract the monthly fees they already paid.", ctx:"A neat fact: this always equals (credit \u2212 subscription paid), no matter which item they pick."},
+  hardware_margin:{term:"Hardware margin", short:"The profit on the gear itself: what the customer pays for it minus what TCL paid the supplier.", ctx:"Separate from the subscription money. On thin-spread items this can shrink to near zero."},
+  margin:{term:"Margin (effective)", short:"What slice of the money coming in is actually profit after costs.", ctx:"Higher is better. Shown as a percentage of the subscription revenue."},
+  net_profit:{term:"Net profit", short:"What's left over after every cost is paid \u2014 the real bottom line.", ctx:"Subscription money + hardware margin \u2212 servicing costs."},
+  float:{term:"Float", short:"All the monthly money piling up in TCL's account from members who haven't upgraded yet. A big, steady pool of cash.", ctx:"Because most members upgrade rarely, this pool keeps growing and is where most of the profit lives."},
+  volume:{term:"Volume", short:"Simply having LOTS of customers. Small money per person becomes big money across many people.", ctx:"The program needs many members for the math to work \u2014 a few won't move the needle."},
+  float_volume_engine:{term:"Float-and-volume profit engine", short:"The way the business makes money: collect small monthly fees from MANY members (volume), most of whom upgrade rarely, so the steady pool of fees (float) earns far more than the occasional discount costs.", ctx:"It's the exact same trick AT&T uses with phones: lots of subscribers, a big cash pool, and only the occasional payout."},
+  redemption:{term:"Redemption", short:"When a customer finally cashes in their built-up credit to get a component.", ctx:"Each redemption costs TCL a little discount but the member keeps paying their monthly fee."},
+  redemption_freq:{term:"Upgrade frequency", short:"How often the average member actually upgrades \u2014 like 'once every 3 years.'", ctx:"The LESS often they upgrade, the more the float grows. The program is built assuming infrequent upgrades."},
+  rollover:{term:"Rollover", short:"If a member doesn't spend their credit this year, part of it carries over into next year.", ctx:"Keeps members feeling rewarded for staying \u2014 without handing back every dollar."},
+  rollover_cap:{term:"Rollover cap", short:"A ceiling on how high unused credit can stack up, so a member can't save for years and then wipe out TCL's profit in one purchase.", ctx:"Here it's set to 2\u00d7 the first-year credit \u2014 the key defense against 'credit banking'."},
+  rec_credit:{term:"Recommended credit", short:"A safe credit amount (75% of the spread) that still feels like a deal but leaves profit for TCL.", ctx:"A guardrail so you don't accidentally give away the entire spread."},
+  fit:{term:"Program fit", short:"A simple grade \u2014 STRONG, MARGINAL, or POOR \u2014 for whether a component is worth building the program around.", ctx:"Based on points: 50%+ = STRONG, 35\u201350% = MARGINAL, under 35% = POOR."},
+  viable:{term:"Viable / CHECK", short:"Viable = the deal makes money for TCL AND saves the customer money. CHECK = something's off and needs a second look.", ctx:"'CHECK' appears when TCL would lose money or the customer would save nothing."},
+  basis:{term:"Basis (Actual vs Estimate)", short:"Whether the price is a real, confirmed number or a placeholder guess to be replaced.", ctx:"'Estimate' rows use stand-in pricing \u2014 overwrite them with TCL's real dealer costs."},
+  servicing:{term:"Servicing cost", short:"What it costs TCL each year to support a member \u2014 visits, tweaks, programming time.", ctx:"Subtracted from revenue to get true net profit."},
+  portfolio:{term:"Portfolio", short:"The whole group of members looked at together, instead of one customer at a time.", ctx:"This view answers: across ALL members, does the program make money?"},
+  installment:{term:"Installment plan", short:"Paying for something in small monthly pieces instead of all at once.", ctx:"How AT&T spreads a phone's cost over 36 months."},
+  tradein:{term:"Trade-in", short:"Handing back your old device to lower the cost of the new one.", ctx:"AT&T requires this; TCL's credit model does NOT \u2014 a point in TCL's favor."},
+  anchoring:{term:"MSRP anchoring", short:"Showing the big sticker price first so the discount feels large by comparison.", ctx:"Why marketing should always quote MSRP, not TCL's everyday street price."},
+  programming:{term:"Programming", short:"The labor of setting up and configuring the smart-home system, charged by the hour.", ctx:"The $25/mo Programming tier covers a couple of hours of this each year."}
+};
+function gloss(term,disp){const g=GLOSSARY[term];if(!g)return disp||term;return `<span class="term" data-term="${term}" tabindex="0">${disp||g.term}</span>`;}
+function info(term){return `<span class="info" data-term="${term}" tabindex="0" role="button" aria-label="What does this mean?">i</span>`;}
+
+const DEFAULTS = {
+  assumptions:{ bonusPct:0.25, rolloverBonus:300, rolloverCapX:2.0, recCreditPct:0.75, laborRate:120 },
+  tiers:[
+    {name:"Tier 1 - Standard", monthly:40},
+    {name:"Tier 2 - Plus", monthly:75},
+    {name:"Tier 3 - Premium", monthly:100},
+    {name:"Programming", monthly:25}
+  ],
+  catalog:[
+    {name:"URC cinema remote", dealer:650, msrp:1300, basis:"Actual"},
+    {name:"Bookshelf speakers (pair)", dealer:250, msrp:899, basis:"Actual"},
+    {name:"Marantz pre-amp", dealer:2800, msrp:4000, basis:"Actual"},
+    {name:"Denon AV receiver", dealer:1200, msrp:2000, basis:"Estimate"},
+    {name:"URC total-control processor", dealer:700, msrp:1500, basis:"Estimate"},
+    {name:"In-ceiling speakers (pair)", dealer:180, msrp:600, basis:"Estimate"},
+    {name:"Outdoor speakers (pair)", dealer:220, msrp:700, basis:"Estimate"},
+    {name:"Powered subwoofer", dealer:450, msrp:1100, basis:"Estimate"},
+    {name:"4K home-theater projector", dealer:2500, msrp:5000, basis:"Estimate"},
+    {name:"Motorized projector screen", dealer:900, msrp:2200, basis:"Estimate"},
+    {name:"Multi-zone amplifier (8-ch)", dealer:800, msrp:1800, basis:"Estimate"},
+    {name:"Network video recorder (NVR)", dealer:500, msrp:1200, basis:"Estimate"},
+    {name:"4K security camera (each)", dealer:120, msrp:350, basis:"Estimate"},
+    {name:"WiFi-6 access point", dealer:180, msrp:450, basis:"Estimate"},
+    {name:"Managed switch (24-port)", dealer:350, msrp:800, basis:"Estimate"},
+    {name:"Smart-lighting hub", dealer:300, msrp:750, basis:"Estimate"},
+    {name:"Motorized shades (per window)", dealer:400, msrp:1000, basis:"Estimate"},
+    {name:'Touchscreen wall controller 10"', dealer:600, msrp:1400, basis:"Estimate"}
+  ],
+  portfolio:{ members:100, fee:50, freq:3, hwMargin:75, service:60 },
+  sel:{ dealTier:0, dealItem:0, rollTier:0 }
+};
+
+let S = clone(DEFAULTS);
+function clone(o){return JSON.parse(JSON.stringify(o));}
+
+// ---------- persistence (safe) ----------
+function save(){ try{ localStorage.setItem("tcl_model", JSON.stringify(S)); }catch(e){} }
+function load(){ try{ const d=localStorage.getItem("tcl_model"); if(d){ S=Object.assign(clone(DEFAULTS),JSON.parse(d)); } }catch(e){} }
+
+// ---------- formatting ----------
+const $=id=>document.getElementById(id);
+const money=v=>{ if(v==null||isNaN(v))return "—"; const n=Math.round(v); return (n<0?"("+"$"+Math.abs(n).toLocaleString()+")":"$"+n.toLocaleString()); };
+const pct=v=>(v==null||isNaN(v))?"—":(v*100).toFixed(1)+"%";
+const num=(v,d=0)=>(v==null||isNaN(v))?"—":Number(v).toLocaleString(undefined,{maximumFractionDigits:d});
+
+// ---------- core calcs ----------
+function annualSub(t){ return t.monthly*12; }
+function tierCredit(t){ return annualSub(t)*(1+S.assumptions.bonusPct); }
+function spread(c){ return c.msrp-c.dealer; }
+function points(c){ return c.msrp>0 ? spread(c)/c.msrp : 0; }
+function fit(c){ const p=points(c); return p>=0.5?"STRONG":p>=0.35?"MARGINAL":"POOR"; }
+function recCredit(c){ return spread(c)*S.assumptions.recCreditPct; }
+
+function deal(t,c){
+  const sub=annualSub(t), cr=Math.min(tierCredit(t), spread(c));
+  const oop=c.msrp-cr, total=sub+oop, savings=c.msrp-total;
+  const tclProfit=sub+(oop-c.dealer);
+  const viable=(oop>=c.dealer-0.001)&&(savings>0);
+  return {sub,credit:cr,oop,total,savings,tclProfit,viable};
+}
+function rollover(t){
+  const cr=tierCredit(t), cap=cr*S.assumptions.rolloverCapX, sub=annualSub(t), out=[];
+  let raw=cr;
+  for(let y=1;y<=5;y++){
+    if(y>1) raw+=S.assumptions.rolloverBonus;
+    const avail=Math.min(raw,cap);
+    out.push({y,cumSub:sub*y,raw,cap,avail,pctPaid:avail/(sub*y),capped:raw>cap});
+  }
+  return out;
+}
+function portfolio(p){
+  const subRev=p.members*p.fee*12, redemptions=p.members/p.freq;
+  const hw=redemptions*p.hwMargin, service=p.members*p.service;
+  const net=subRev+hw-service;
+  return {subRev,redemptions,hw,service,net,perMember:net/p.members,margin:net/subRev};
+}
+
+// ---------- navigation ----------
+const TABS=[["dashboard","Dashboard"],["catalog","SKU Catalog"],["tiers","Tiers & Assumptions"],
+  ["deal","Deal Calculator"],["rollover","Rollover"],["portfolio","Portfolio Model"],["att","AT&T Comparison"],
+  ["glossary","Glossary"]];
+function buildNav(){
+  $("nav").innerHTML=TABS.map((t,i)=>`<button class="${i===0?'active':''}" data-t="${t[0]}" onclick="goto('${t[0]}',this)">${t[1]}</button>`).join("");
+}
+function goto(id,btn){
+  document.querySelectorAll(".tab").forEach(e=>e.classList.remove("active"));
+  document.querySelectorAll("#nav button").forEach(e=>e.classList.remove("active"));
+  $(id).classList.add("active"); btn.classList.add("active");
+  renderAll();
+}
+
+// ---------- renderers ----------
+function renderDashboard(){
+  const strong=S.catalog.filter(c=>fit(c)==="STRONG").length;
+  const heroes=[...S.catalog].map(c=>({c,p:points(c),s:spread(c)})).filter(x=>fit(x.c)==="STRONG").sort((a,b)=>b.s-a.s).slice(0,3);
+  const port=portfolio(S.portfolio);
+  const avgPts=S.catalog.reduce((a,c)=>a+points(c),0)/S.catalog.length;
+  let html=`
+  <div class="card">
+    <h2>Program Dashboard</h2>
+    <div class="desc">Live snapshot of the membership economics. Every figure recalculates as you edit catalog, tiers, or portfolio inputs.</div>
+    <div class="callout amber" style="margin-bottom:14px">New here? Anywhere you see a dotted-underlined word or an ${info('spread')} icon, hover over it (or tap on a phone) for a plain-English explanation. The full <b>Glossary</b> tab spells out every term.</div>
+    <div class="kpis">
+      <div class="kpi"><div class="label">Components ${info('fit')}</div><div class="val">${S.catalog.length}</div><div class="note">${strong} rated ${gloss('fit','STRONG fit')}</div></div>
+      <div class="kpi green"><div class="label">${gloss('net_profit','Net profit')} / year</div><div class="val">${money(port.net)}</div><div class="note">${num(S.portfolio.members)} members @ ${money(S.portfolio.fee)}/mo</div></div>
+      <div class="kpi"><div class="label">Profit / member / yr</div><div class="val">${money(port.perMember)}</div><div class="note">Effective ${gloss('margin','margin')} ${pct(port.margin)}</div></div>
+      <div class="kpi amber"><div class="label">Avg catalog ${gloss('spread','spread')}</div><div class="val">${pct(avgPts)}</div><div class="note">Program needs 50%+ to thrive</div></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h2>Best program inventory</h2>
+      <div class="desc">Highest-spread components — point the program at these.</div>
+      <table><thead><tr><th>Component</th><th>${gloss('spread','Spread')}</th><th>${gloss('points','Points')}</th><th>${gloss('fit','Fit')}</th></tr></thead><tbody>
+      ${heroes.map(h=>`<tr><td>${h.c.name}</td><td>${money(h.s)}</td><td>${pct(h.p)}</td><td><span class="pill strong">STRONG</span></td></tr>`).join("")||'<tr><td colspan="4">No STRONG-fit components yet.</td></tr>'}
+      </tbody></table>
+    </div>
+    <div class="card">
+      <h2>The governing rule</h2>
+      <div class="desc">Why this program is a ${gloss('spread','spread')} engine, not a discount.</div>
+      <div class="callout">${gloss('credit','Credit')} granted is a discount off ${gloss('msrp','MSRP')}, so <b>Customer ${gloss('oop','Out-of-Pocket')} = MSRP − Credit</b>. To never sell below cost, <b>Maximum Credit = MSRP − ${gloss('dealer','Dealer Cost')} = the ${gloss('spread','Spread')}</b>. The program only profits on high-spread (50-${gloss('points','point')}) inventory.</div>
+      <div class="callout amber" style="margin-top:12px">Mathematical truth: a member's ${gloss('savings','real dollar savings')} always equals <b>Credit − ${gloss('subscription','Subscription')} paid</b> — identical regardless of which component they ${gloss('redemption','redeem')} against. You are selling cadence &amp; convenience, not raw dollars.</div>
+    </div>
+  </div>`;
+  $("dashboard").innerHTML=html;
+}
+
+function renderCatalog(){
+  let rows=S.catalog.map((c,i)=>{
+    const f=fit(c), b=c.basis==="Actual";
+    return `<tr>
+      <td><input class="name" value="${esc(c.name)}" oninput="upd('catalog',${i},'name',this.value,true)"></td>
+      <td><input type="number" value="${c.dealer}" oninput="upd('catalog',${i},'dealer',this.value)"></td>
+      <td><input type="number" value="${c.msrp}" oninput="upd('catalog',${i},'msrp',this.value)"></td>
+      <td>${money(spread(c))}</td>
+      <td>${pct(points(c))}</td>
+      <td>${money(recCredit(c))}</td>
+      <td><span class="pill ${f.toLowerCase()}">${f}</span></td>
+      <td><span class="pill ${b?'act':'est'}">${c.basis}</span></td>
+      <td><button class="rowbtn" onclick="delRow(${i})">✕</button></td>
+    </tr>`;
+  }).join("");
+  $("catalog").innerHTML=`
+  <div class="card">
+    <h2>SKU Catalog — Spread Analysis <span class="tag">editable</span></h2>
+    <div class="desc">Edit ${gloss('dealer','dealer cost')} &amp; ${gloss('msrp','MSRP')} inline (blue cells). ${gloss('spread','Spread')}, ${gloss('points','points')}, ${gloss('rec_credit','recommended credit')} and program ${gloss('fit','fit')} recalc instantly. ${gloss('basis','Estimate')} rows use placeholder pricing — overwrite with TCL's actual dealer numbers.</div>
+    <table><thead><tr>
+      <th>Component</th><th>${gloss('dealer','Dealer Cost')}</th><th>${gloss('msrp','MSRP')}</th><th>${gloss('spread','Spread')}</th><th>${gloss('points','Points %')}</th>
+      <th>${gloss('rec_credit','Rec. Credit')}</th><th>${gloss('fit','Fit')}</th><th>${gloss('basis','Basis')}</th><th></th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <button class="addbtn" onclick="addRow()">+ Add component</button>
+    <div class="note">Fit: STRONG = 50%+ spread (ideal). MARGINAL = 35–50%. POOR = under 35% (a full credit erases hardware profit). Recommended credit = ${pct(S.assumptions.recCreditPct)} of spread.</div>
+  </div>`;
+}
+
+function renderTiers(){
+  const a=S.assumptions;
+  let trows=S.tiers.map((t,i)=>`<tr>
+    <td><input class="name" value="${esc(t.name)}" oninput="upd('tiers',${i},'name',this.value,true)"></td>
+    <td><input type="number" value="${t.monthly}" oninput="upd('tiers',${i},'monthly',this.value)"></td>
+    <td>${money(annualSub(t))}</td>
+    <td>${money(tierCredit(t))}</td>
+    <td>${pct(S.assumptions.bonusPct)}</td>
+    <td><button class="rowbtn" onclick="delTier(${i})">✕</button></td>
+  </tr>`).join("");
+  $("tiers").innerHTML=`
+  <div class="grid2">
+    <div class="card">
+      <h2>Membership Tiers <span class="tag">editable</span></h2>
+      <div class="desc">Set the monthly price per ${gloss('tier','tier')}. Year-1 ${gloss('credit','credit')} = annual paid × (1 + ${gloss('bonus','bonus')}).</div>
+      <table><thead><tr><th>${gloss('tier','Tier')}</th><th>Monthly</th><th>${gloss('subscription','Annual Paid')}</th><th>${gloss('credit','Yr-1 Credit')}</th><th>${gloss('bonus','Bonus')}</th><th></th></tr></thead>
+      <tbody>${trows}</tbody></table>
+      <button class="addbtn" onclick="addTier()">+ Add tier</button>
+      <div class="note">Programming tier delivers labor: ${money(S.tiers.find(t=>/program/i.test(t.name))?annualSub(S.tiers.find(t=>/program/i.test(t.name))):300)}/yr collected → 2 hrs free programming (${money(a.laborRate*2)} value at ${money(a.laborRate)}/hr).</div>
+    </div>
+    <div class="card">
+      <h2>Program Drivers <span class="tag">editable</span></h2>
+      <div class="desc">Global assumptions governing credit, rollover and labor.</div>
+      <div class="field"><label>${gloss('credit','Credit')} ${gloss('bonus','bonus')} over ${gloss('subscription','subscription')} ${info('bonus')}<span class="hint">Yr-1 credit = annual × (1 + this)</span></label><input type="number" step="0.01" value="${a.bonusPct}" oninput="updA('bonusPct',this.value)"></div>
+      <div class="field"><label>Annual ${gloss('rollover','rollover')} bonus ($) ${info('rollover')}<span class="hint">Added each unredeemed year</span></label><input type="number" value="${a.rolloverBonus}" oninput="updA('rolloverBonus',this.value)"></div>
+      <div class="field"><label>${gloss('rollover_cap','Rollover cap')} (× yr-1 credit) ${info('rollover_cap')}<span class="hint">Anti-banking ceiling</span></label><input type="number" step="0.1" value="${a.rolloverCapX}" oninput="updA('rolloverCapX',this.value)"></div>
+      <div class="field"><label>${gloss('rec_credit','Recommended credit')} (% of spread) ${info('rec_credit')}<span class="hint">Margin safety governor</span></label><input type="number" step="0.05" value="${a.recCreditPct}" oninput="updA('recCreditPct',this.value)"></div>
+      <div class="field"><label>${gloss('programming','Programming')} labor rate ($/hr)</label><input type="number" value="${a.laborRate}" oninput="updA('laborRate',this.value)"></div>
+    </div>
+  </div>`;
+}
+
+function renderDeal(){
+  if(S.sel.dealTier>=S.tiers.length)S.sel.dealTier=0;
+  if(S.sel.dealItem>=S.catalog.length)S.sel.dealItem=0;
+  const t=S.tiers[S.sel.dealTier], c=S.catalog[S.sel.dealItem], d=deal(t,c);
+  const tierOpts=S.tiers.map((x,i)=>`<option value="${i}" ${i==S.sel.dealTier?'selected':''}>${esc(x.name)} — ${money(x.monthly)}/mo</option>`).join("");
+  const itemOpts=S.catalog.map((x,i)=>`<option value="${i}" ${i==S.sel.dealItem?'selected':''}>${esc(x.name)}</option>`).join("");
+  // full matrix for selected tier
+  let matrix=S.catalog.map(c2=>{const dd=deal(t,c2);return `<tr>
+    <td>${c2.name}</td><td>${money(c2.msrp)}</td><td>${money(dd.credit)}</td><td>${money(dd.oop)}</td>
+    <td>${money(dd.total)}</td><td>${money(dd.savings)}</td><td><b>${money(dd.tclProfit)}</b></td>
+    <td><span class="pill ${dd.viable?'yes':'check'}">${dd.viable?'YES':'CHECK'}</span></td></tr>`;}).join("");
+  $("deal").innerHTML=`
+  <div class="card">
+    <h2>Deal Calculator</h2>
+    <div class="desc">Pick a tier and component to model a single year-one redemption — customer cost beside TCL profit.</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px">
+      <div><div class="panelh" style="color:var(--muted)">Tier</div><select onchange="S.sel.dealTier=+this.value;save();renderDeal()">${tierOpts}</select></div>
+      <div><div class="panelh" style="color:var(--muted)">Component</div><select onchange="S.sel.dealItem=+this.value;save();renderDeal()">${itemOpts}</select></div>
+    </div>
+    <div class="grid2" style="margin-top:8px">
+      <div class="panel cust">
+        <div class="panelh">Customer view</div>
+        <div class="brow"><span>Component ${gloss('msrp','MSRP')}</span><span class="v">${money(c.msrp)}</span></div>
+        <div class="brow"><span>${gloss('credit','Credit')} applied <span class="tag">capped at ${gloss('spread','spread')}</span></span><span class="v">${money(d.credit)}</span></div>
+        <div class="brow"><span>${gloss('oop','Out-of-pocket')} at purchase</span><span class="v">${money(d.oop)}</span></div>
+        <div class="brow"><span>${gloss('subscription','Subscription')} paid (yr 1)</span><span class="v">${money(d.sub)}</span></div>
+        <div class="brow total"><span>Customer total cost</span><span class="v">${money(d.total)}</span></div>
+        <div class="brow"><span>${gloss('savings','Real savings vs MSRP')}</span><span class="v" style="color:${d.savings>0?'var(--green)':'var(--red)'}">${money(d.savings)}</span></div>
+      </div>
+      <div class="panel tcl">
+        <div class="panelh">TCL view</div>
+        <div class="brow"><span>${gloss('dealer','Dealer cost')}</span><span class="v">${money(c.dealer)}</span></div>
+        <div class="brow"><span>Hardware revenue (${gloss('oop','OOP')})</span><span class="v">${money(d.oop)}</span></div>
+        <div class="brow"><span>${gloss('hardware_margin','Hardware margin')}</span><span class="v">${money(d.oop-c.dealer)}</span></div>
+        <div class="brow"><span>${gloss('subscription','Subscription')} revenue</span><span class="v">${money(d.sub)}</span></div>
+        <div class="brow total"><span>TCL total ${gloss('net_profit','profit')}</span><span class="v">${money(d.tclProfit)}</span></div>
+        <div class="brow"><span>Deal ${gloss('viable','viable')}?</span><span class="v"><span class="pill ${d.viable?'yes':'check'}">${d.viable?'YES':'CHECK'}</span></span></div>
+      </div>
+    </div>
+    <div class="note">${gloss('credit','Credit')} is auto-capped at the component's ${gloss('spread','spread')} so TCL never sells below ${gloss('dealer','dealer cost')}. ${gloss('viable','CHECK')} = redemption that loses money or delivers no customer value (re-tier or re-target).</div>
+  </div>
+  <div class="card">
+    <h2>Full economics — ${esc(t.name)}</h2>
+    <div class="desc">Every component at the selected tier.</div>
+    <table><thead><tr><th>Component</th><th>${gloss('msrp','MSRP')}</th><th>${gloss('credit','Credit')}</th><th>Cust. ${gloss('oop','OOP')}</th><th>Cust. Total</th><th>${gloss('savings','Savings')}</th><th>TCL ${gloss('net_profit','Profit')}</th><th>${gloss('viable','Viable')}</th></tr></thead>
+    <tbody>${matrix}</tbody></table>
+  </div>`;
+}
+
+function renderRollover(){
+  if(S.sel.rollTier>=S.tiers.length)S.sel.rollTier=0;
+  const t=S.tiers[S.sel.rollTier], R=rollover(t), maxv=Math.max(...R.map(r=>r.avail),tierCredit(t)*S.assumptions.rolloverCapX);
+  const tierOpts=S.tiers.map((x,i)=>`<option value="${i}" ${i==S.sel.rollTier?'selected':''}>${esc(x.name)}</option>`).join("");
+  let bars=R.map(r=>`<div class="bar-wrap"><div class="bar-label">Year ${r.y}</div>
+    <div class="bar-track"><div class="bar-fill ${r.capped?'capped':''}" style="width:${Math.max(8,r.avail/maxv*100)}%">${money(r.avail)}</div></div></div>`).join("");
+  let rows=R.map(r=>`<tr><td>Year ${r.y}</td><td>${money(r.cumSub)}</td><td>${money(r.raw)}</td><td>${money(r.cap)}</td>
+    <td><b>${money(r.avail)}</b></td><td>${pct(r.pctPaid)}</td><td><span class="pill ${r.capped?'marginal':'strong'}">${r.capped?'Capped':'Growing'}</span></td></tr>`).join("");
+  $("rollover").innerHTML=`
+  <div class="card">
+    <h2>${gloss('rollover','Rollover')} Schedule — Anti-Banking Mechanic</h2>
+    <div class="desc">If a member never ${gloss('redemption','redeems')}, ${gloss('credit','credit')} grows by the rollover bonus each year but is ${gloss('rollover_cap','capped')} to protect margin.</div>
+    <div style="margin-bottom:12px"><span class="panelh" style="color:var(--muted)">${gloss('tier','Tier')}:&nbsp;</span><select onchange="S.sel.rollTier=+this.value;save();renderRollover()">${tierOpts}</select></div>
+    ${bars}
+    <table style="margin-top:14px"><thead><tr><th>Year</th><th>Cumulative Paid</th><th>Raw Accrued</th><th>${gloss('rollover_cap','Cap')}</th><th>Available ${gloss('credit','Credit')}</th><th>% of Paid</th><th>Status</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="callout amber" style="margin-top:14px">The ${gloss('rollover_cap','cap')} (${num(S.assumptions.rolloverCapX,1)}× year-1 credit) is the key defense: a member cannot bank indefinitely and then extract TCL's entire ${gloss('spread','spread')} on one premium ${gloss('redemption','redemption')}.</div>
+  </div>`;
+}
+
+function renderPortfolio(){
+  const p=S.portfolio, r=portfolio(p);
+  const sens=[1,2,3,4,5].map(freq=>{const pp=Object.assign({},p,{freq});const rr=portfolio(pp);return {freq,net:rr.net,per:rr.perMember};});
+  const maxNet=Math.max(...sens.map(s=>s.net));
+  let sbars=sens.map(s=>`<div class="bar-wrap"><div class="bar-label">Every ${s.freq} yr${s.freq>1?'s':''}</div>
+    <div class="bar-track"><div class="bar-fill green" style="width:${Math.max(8,s.net/maxNet*100)}%">${money(s.net)}</div></div></div>`).join("");
+  $("portfolio").innerHTML=`
+  <div class="grid2">
+    <div class="card">
+      <h2>Base Assumptions <span class="tag">editable</span></h2>
+      <div class="desc">Scale the program across a member base.</div>
+      <div class="field"><label>Total members enrolled</label><input type="number" value="${p.members}" oninput="updP('members',this.value)"></div>
+      <div class="field"><label>Avg monthly fee (blended $)</label><input type="number" value="${p.fee}" oninput="updP('fee',this.value)"></div>
+      <div class="field"><label>Avg ${gloss('redemption_freq','upgrade frequency')} (every N yrs) ${info('redemption_freq')}<span class="hint">Higher = members upgrade less often</span></label><input type="number" step="0.5" value="${p.freq}" oninput="updP('freq',this.value)"></div>
+      <div class="field"><label>Avg ${gloss('hardware_margin','hardware margin')} / upgrade ($) ${info('hardware_margin')}</label><input type="number" value="${p.hwMargin}" oninput="updP('hwMargin',this.value)"></div>
+      <div class="field"><label>Avg ${gloss('servicing','servicing cost')} / member / yr ($) ${info('servicing')}</label><input type="number" value="${p.service}" oninput="updP('service',this.value)"></div>
+    </div>
+    <div class="card">
+      <h2>Annual Results</h2>
+      <div class="desc">The recurring ${gloss('float','float')} is the engine.</div>
+      <div class="brow"><span>Recurring ${gloss('subscription','subscription')} revenue ${info('float')}</span><span class="v">${money(r.subRev)}</span></div>
+      <div class="brow"><span>Upgrades ${gloss('redemption','redeemed')} / year</span><span class="v">${num(r.redemptions,1)}</span></div>
+      <div class="brow"><span>${gloss('hardware_margin','Hardware margin')} from upgrades</span><span class="v">${money(r.hw)}</span></div>
+      <div class="brow"><span>${gloss('servicing','Servicing cost')}</span><span class="v">${money(r.service)}</span></div>
+      <div class="brow total"><span>${gloss('net_profit','NET ANNUAL PROFIT')}</span><span class="v">${money(r.net)}</span></div>
+      <div class="brow"><span>Net profit / member / yr</span><span class="v">${money(r.perMember)}</span></div>
+      <div class="brow"><span>Effective program ${gloss('margin','margin')}</span><span class="v">${pct(r.margin)}</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Sensitivity — Net Profit vs. Upgrade Frequency</h2>
+    <div class="desc">Profit is dominated by the subscription ${gloss('float','float')} and barely moves with ${gloss('redemption_freq','upgrade frequency')}. Member ${gloss('volume','volume')} is the lever.</div>
+    ${sbars}
+  </div>`;
+}
+
+function renderATT(){
+  const rows=[
+    ["Monthly fee","$10 / month","$40–$100 / month (tiered)","TCL fee is higher because the assets ($900–$4,000) dwarf a phone."],
+    ["What the fee buys","Upgrade eligibility only","Accruing "+gloss('credit','credit')+" toward components","TCL's accruing credit is a genuine differentiator AT&T lacks."],
+    [gloss('credit','Credit')+" accrual","None — not applied to balance","Yes — "+gloss('rollover','rolls forward')+", "+gloss('rollover_cap','capped'),"Directly answers Damon's question: does my money accumulate? Yes."],
+    ["Upgrade cadence","Up to 3 / 12 mo, after 50% paid","Annual, "+gloss('tier','tier')+"-defined (not anytime)","Annual cadence protects margin, matches slow AV refresh cycles."],
+    ["Old asset",gloss('tradein','Trade in')+" to waive balance","Customer keeps / TCL may resell","Possible 2nd margin: refurbish-and-resell trade-ins."],
+    ["Profit engine",gloss('volume','Volume')+" + financing + add-ons",gloss('spread','Spread')+" + low "+gloss('redemption','redemption')+" + "+gloss('float','float'),"Identical logic: large base, infrequent use."],
+    ["Underlying unit cost","~$2,000 carrier cost / phone","$120–$2,800 "+gloss('dealer','dealer')+" / component","TCL gets the same dealer "+gloss('volume','volume')+" discount AT&T gets on phones."],
+    ["Lock-in",gloss('installment','Installment')+" + trade-in dependency","Membership + installed base","Installed system creates natural retention; bundle service."],
+    ["Cancel terms","Cancel anytime; re-enroll in 30 days","Recommend: forfeit unredeemed "+gloss('credit','credit'),"Forfeiture-on-cancel discourages churn-after-redemption gaming."]
+  ];
+  $("att").innerHTML=`
+  <div class="card">
+    <h2>Side-by-Side — AT&T vs. TCL</h2>
+    <div class="desc">Structural comparison of the two recurring-upgrade models. AT&T terms verified May 2026.</div>
+    <table><thead><tr><th>Dimension</th><th style="text-align:left">AT&T Next Up Anytime</th><th style="text-align:left">TCL Program</th><th style="text-align:left">Implication for TCL</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b></td><td style="text-align:left">${r[1]}</td><td style="text-align:left;background:#f0f5ff">${r[2]}</td><td style="text-align:left;color:#404040;font-size:12px">${r[3]}</td></tr>`).join("")}</tbody></table>
+    <div class="callout" style="margin-top:14px"><b>Takeaway:</b> copy AT&T's ${gloss('float_volume_engine','float-and-volume profit engine')}, but beat them on the one feature their customers wish they had — ${gloss('credit','credit')} that actually accumulates.</div>
+    <div class="src">Source: AT&T Next Up Anytime — att.com/plans/next-up-anytime, verified May 2026.</div>
+  </div>`;
+}
+
+function renderGlossary(){
+  const items=Object.keys(GLOSSARY).map(k=>{const g=GLOSSARY[k];
+    return `<div class="gloss-item" id="g_${k}" data-search="${esc((g.term+' '+g.short+' '+g.ctx).toLowerCase())}">
+      <div class="gloss-term">${esc(g.term)}</div>
+      <div class="gloss-eli5">${esc(g.short)}</div>
+      <div class="gloss-ctx"><b>On this platform:</b> ${esc(g.ctx)}</div>
+    </div>`;}).join("");
+  $("glossary").innerHTML=`
+  <div class="card">
+    <h2>Plain-English Glossary</h2>
+    <div class="desc">Every specialized word used in this tool, explained as simply as possible. Anywhere in the platform, hover or tap an <span class="info" style="cursor:default">i</span> icon or a <span class="term" style="cursor:default">dotted&nbsp;underlined word</span> to see the short version; the full explanation lives here.</div>
+    <input class="gloss-search" placeholder="Search the glossary\u2026" oninput="filterGloss(this.value)">
+    <div id="glossList">${items}</div>
+    <div class="note" id="glossEmpty" style="display:none">No terms match that search.</div>
+  </div>`;
+}
+function filterGloss(q){
+  q=(q||"").toLowerCase().trim(); let shown=0;
+  document.querySelectorAll("#glossList .gloss-item").forEach(el=>{
+    const hit=!q||el.getAttribute("data-search").indexOf(q)>=0;
+    el.style.display=hit?"":"none"; if(hit)shown++;
+  });
+  const e=$("glossEmpty"); if(e)e.style.display=shown?"none":"block";
+}
+
+function renderAll(){ renderDashboard();renderCatalog();renderTiers();renderDeal();renderRollover();renderPortfolio();renderATT();renderGlossary(); }
+
+// ---------- tooltip engine (hover / focus / tap) ----------
+function initTips(){
+  const tip=$("tip");
+  function show(el){
+    const k=el.getAttribute("data-term"), g=GLOSSARY[k]; if(!g)return;
+    tip.innerHTML=`<span class="tt">${esc(g.term)}</span>${esc(g.short)}<span class="more">Tap for the full entry in the Glossary \u2192</span>`;
+    tip.classList.add("show");
+    const r=el.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight;
+    let left=Math.max(8, Math.min(r.left+r.width/2-tw/2, window.innerWidth-tw-8));
+    let top=r.top-th-10, below=false;
+    if(top<8){ top=r.bottom+10; below=true; }
+    tip.classList.toggle("below", below);
+    tip.style.left=left+"px"; tip.style.top=top+"px";
+    tip.style.setProperty("--ax", Math.max(8, Math.min(r.left+r.width/2-left-5, tw-16))+"px");
+  }
+  function hide(){ tip.classList.remove("show"); }
+  document.body.addEventListener("mouseover",e=>{const t=e.target.closest("[data-term]");if(t)show(t);});
+  document.body.addEventListener("mouseout",e=>{const t=e.target.closest("[data-term]");if(t)hide();});
+  document.body.addEventListener("focusin",e=>{const t=e.target.closest("[data-term]");if(t)show(t);});
+  document.body.addEventListener("focusout",hide);
+  window.addEventListener("scroll",hide,true);
+  document.body.addEventListener("click",e=>{
+    const t=e.target.closest("[data-term]"); if(!t)return;
+    const k=t.getAttribute("data-term");
+    const btn=[...document.querySelectorAll("#nav button")].find(b=>b.dataset.t==="glossary");
+    if(btn){ goto("glossary",btn);
+      setTimeout(()=>{const el=$("g_"+k); if(el){el.scrollIntoView({behavior:"smooth",block:"center"});
+        el.style.background="#fff7da"; setTimeout(()=>el.style.background="",1600);}},70);
+    }
+  });
+}
+
+// ---------- editing ----------
+function esc(s){return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function upd(coll,i,key,val,isText){
+  S[coll][i][key]= isText? val : (parseFloat(val)||0);
+  save();
+  // light refresh: dashboard + the edited collection's dependent views
+  renderDashboard();
+  if(coll==='catalog'){ renderDeal(); }
+  if(coll==='tiers'){ renderTiers(); renderDeal(); renderRollover(); }
+}
+function updA(key,val){ S.assumptions[key]=parseFloat(val)||0; save(); renderDashboard(); renderTiers(); renderCatalog(); renderDeal(); renderRollover(); }
+function updP(key,val){ S.portfolio[key]=parseFloat(val)||0; save(); renderDashboard(); renderPortfolio(); }
+function addRow(){ S.catalog.push({name:"New component",dealer:100,msrp:300,basis:"Estimate"}); save(); renderCatalog(); renderDashboard(); }
+function delRow(i){ S.catalog.splice(i,1); save(); renderCatalog(); renderDashboard(); renderDeal(); }
+function addTier(){ S.tiers.push({name:"New tier",monthly:50}); save(); renderTiers(); }
+function delTier(i){ if(S.tiers.length<=1)return; S.tiers.splice(i,1); save(); renderTiers(); renderDeal(); renderRollover(); }
+
+// ---------- import/export ----------
+function exportJSON(){ download("tcl_scenario.json", JSON.stringify(S,null,2), "application/json"); toast("Scenario saved"); }
+function importJSON(ev){ const f=ev.target.files[0]; if(!f)return; const r=new FileReader();
+  r.onload=()=>{ try{ S=Object.assign(clone(DEFAULTS),JSON.parse(r.result)); save(); renderAll(); toast("Scenario loaded"); }catch(e){ toast("Invalid file"); } }; r.readAsText(f); ev.target.value=""; }
+function exportCSV(){
+  const head=["Component","Dealer Cost","MSRP","Spread","Points %","Rec Credit","Fit","Basis"];
+  const lines=[head.join(",")].concat(S.catalog.map(c=>[
+    '"'+c.name.replace(/"/g,'""')+'"',c.dealer,c.msrp,spread(c),(points(c)*100).toFixed(1)+"%",Math.round(recCredit(c)),fit(c),c.basis
+  ].join(",")));
+  download("tcl_catalog.csv", lines.join("\n"), "text/csv"); toast("Catalog exported");
+}
+function download(name,content,type){
+  const b=new Blob([content],{type}); const u=URL.createObjectURL(b); const a=document.createElement("a");
+  a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+function resetAll(){ if(confirm("Reset all inputs to defaults? This clears your edits.")){ S=clone(DEFAULTS); save(); renderAll(); toast("Reset to defaults"); } }
+let toT; function toast(m){ const e=$("toast"); e.textContent=m; e.classList.add("show"); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove("show"),1600); }
+
+// ---------- init ----------
+load(); buildNav(); renderAll(); initTips();
+</script>
+</body>
+</html>
