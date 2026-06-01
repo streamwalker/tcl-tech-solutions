@@ -1,0 +1,5 @@
+-- See backend/schema.sql for full definitions of:
+--   has_role(uuid, app_role) -> boolean (SECURITY DEFINER, STABLE)
+--   update_updated_at_column() trigger function
+--   issue_certificate_if_passed(course_slug text) -> academy_certificates (SECURITY DEFINER)
+-- These are the only three database functions in the public schema.
