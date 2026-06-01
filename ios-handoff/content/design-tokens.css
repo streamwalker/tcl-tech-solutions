@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 218 27% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 218 27% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 27% 8%;
+
+    /* IBM Blue */
+    --primary: 218 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 14% 96%;
+    --secondary-foreground: 218 27% 8%;
+
+    --muted: 210 14% 96%;
+    --muted-foreground: 218 16% 60%;
+
+    --accent: 210 14% 96%;
+    --accent-foreground: 218 27% 8%;
+
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 218 12% 90%;
+    --input: 218 12% 90%;
+    --ring: 218 100% 50%;
+
+    --radius: 6px;
+
+    /* IBM Design System Colors */
+    --ibm-blue: 218 100% 50%;
+    --ibm-blue-light: 218 100% 70%;
+    --ibm-blue-dark: 218 100% 30%;
+    --ibm-gray-10: 210 14% 96%;
+    --ibm-gray-20: 210 11% 93%;
+    --ibm-gray-30: 212 10% 83%;
+    --ibm-gray-50: 214 9% 60%;
+    --ibm-gray-70: 216 12% 40%;
+    --ibm-gray-90: 218 27% 8%;
+    --ibm-gray-100: 216 100% 4%;
+
+    /* Professional shadows - softer, more IBM-like */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 218 27% 8%;
+    --sidebar-primary: 218 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 14% 96%;
+    --sidebar-accent-foreground: 218 27% 8%;
+    --sidebar-border: 218 12% 90%;
+    --sidebar-ring: 218 100% 50%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 214 84% 70%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* TCL Dark Brand Colors */
+    --tcl-blue: 214 84% 70%;
+    --tcl-blue-light: 214 84% 80%;
+    --tcl-blue-dark: 214 84% 50%;
+    --tcl-accent: 195 100% 55%;
+    --tcl-success: 142 76% 46%;
+    --tcl-warning: 38 92% 60%;
+    --tcl-error: 0 84% 70%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .gradient-success {
+    background: var(--gradient-success);
+  }
+  
+  .card-elevated {
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-elevated:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--tcl-blue) / 0.05) 100%);
+  }
+  
+  .certification-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: hsl(var(--tcl-blue) / 0.1);
+    color: hsl(var(--tcl-blue));
+    border: 1px solid hsl(var(--tcl-blue) / 0.2);
+  }
+
+  /* Interactive Element Indicators */
+  .interactive-card {
+    @apply relative cursor-pointer transition-all duration-300 ease-out;
+    @apply hover:shadow-lg hover:scale-[1.02] hover:border-primary/20;
+  }
+  
+  .interactive-card::after {
+    content: 'ⓘ';
+    @apply absolute top-2 right-2 w-5 h-5 bg-primary/10 text-primary rounded-full;
+    @apply flex items-center justify-center text-xs font-bold opacity-0 transition-opacity;
+    @apply hover:opacity-100;
+  }
+  
+  .interactive-card:hover::after {
+    @apply opacity-80;
+  }
+
+  .interactive-stat {
+    @apply relative cursor-pointer transition-all duration-300 ease-out;
+    @apply hover:scale-105 hover:text-primary;
+  }
+  
+  .interactive-stat::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+  
+  .interactive-stat:hover::before {
+    @apply opacity-100;
+  }
+
+  .clickable-benefit {
+    @apply relative cursor-pointer transition-all duration-300 ease-out;
+    @apply hover:bg-primary/5 hover:border-primary/20 hover:shadow-md;
+    @apply border border-transparent rounded-lg p-4 -m-4;
+  }
+  
+  .clickable-benefit::after {
+    content: '+';
+    @apply absolute top-2 right-2 w-6 h-6 bg-primary/20 text-primary rounded-full;
+    @apply flex items-center justify-center text-sm font-bold opacity-0 transition-all;
+    @apply rotate-0 hover:rotate-45;
+  }
+  
+  .clickable-benefit:hover::after {
+    @apply opacity-100;
+  }
+
+  .pulse-hint {
+    animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .glow-on-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .glow-on-hover:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .expand-icon {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  .expand-icon:hover {
+    @apply scale-110 rotate-12;
+  }
+}

@@ -1,0 +1,205 @@
+[
+  {
+    "path": "/",
+    "title": "Smart Home Automation San Antonio TX | The Connected Lifestyle",
+    "description": "Veteran-owned smart home automation, home theater & IT services in San Antonio. Control4, Savant & Lutron dealer. Free consultation: (210) 995-8655.",
+    "ogType": "website",
+    "hasJsonLd": true
+  },
+  {
+    "path": "/services",
+    "title": "Services — Smart Home, Theater & IT | TCL Tech Solutions",
+    "description": "Smart home automation, home theater, enterprise networks, AI integration, and managed IT services in San Antonio.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/business-plan",
+    "title": "Business Plan | The Connected Lifestyle",
+    "description": "TCL's strategic business plan: market, services, operations, and growth roadmap for San Antonio smart home and IT services.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/investor-white-paper",
+    "title": "Investor White Paper | TCL Tech Solutions",
+    "description": "Investor white paper outlining TCL's market position, financial model, and growth thesis in smart home and managed IT.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/capital-stack",
+    "title": "Capital Stack — $1.9M Non-Dilutive Roadmap | TCL",
+    "description": "TCL's $1.9M non-dilutive capital stack roadmap: grants, SBA, revenue-based financing, and strategic partnerships.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/education",
+    "title": "Technician Education Plan | TCL Academy",
+    "description": "TCL's 7-phase Technician Education Plan covering smart home, networking, AV, and managed services certifications.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/education/academy",
+    "title": "Academy Catalog | TCL Academy",
+    "description": "Course catalog for the TCL Academy — smart home, network, and AV training tracks for technicians.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/josh-ai-tutorial",
+    "title": "Josh.ai Tutorial — Voice Automation Training | TCL",
+    "description": "Step-by-step Josh.ai configuration and training guide for installers and homeowners.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/press",
+    "title": "Press — Damon Jackson, 2026 Parade of Homes Co-Chair | TCL",
+    "description": "TCL Tech Solutions founder Damon Jackson named Co-Chair of the 2026 San Antonio Parade of Homes.",
+    "ogType": "article",
+    "hasJsonLd": true
+  },
+  {
+    "path": "/knowledge",
+    "title": "Knowledge Base | TCL Tech Solutions",
+    "description": "Articles, how-tos, and reference material on smart home automation, networking, and AV installation.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/glossary",
+    "title": "Glossary — Smart Home & AV Terminology | TCL",
+    "description": "Plain-English glossary of smart home, audio/video, and networking terms used by TCL installers.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/omnicode",
+    "title": "OmniCode — 7-Layer Knowledge Engine | TCL",
+    "description": "OmniCode is TCL's 7-layer computational knowledge engine for installer operations and customer support.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/builder-deck",
+    "title": "Builder Deck | TCL Tech Solutions",
+    "description": "Partnership deck for homebuilders integrating TCL smart home and AV packages into new construction.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/compliance",
+    "title": "Compliance — GDPR, SOC 2 & Legal | TCL",
+    "description": "TCL's compliance posture: GDPR, SOC 2 roadmap, EULA, account deletion, and data privacy practices.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/terms-of-service",
+    "title": "Terms of Service | The Connected Lifestyle",
+    "description": "Terms of Service for The Connected Lifestyle (TCL Tech Solutions) website and services.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/privacy-policy",
+    "title": "Privacy Policy | The Connected Lifestyle",
+    "description": "Privacy Policy describing what data TCL collects, how it is used, and your rights.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/cookie-policy",
+    "title": "Cookie Policy | The Connected Lifestyle",
+    "description": "How The Connected Lifestyle uses cookies and similar technologies on this website.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/troubleshooting/dns",
+    "title": "DNS Troubleshooting | TCL",
+    "description": "DNS propagation tracker and troubleshooting guide for the tcltechsolutions.com custom domain.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge",
+    "title": "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL",
+    "description": "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across Control4, URC, and Josh.",
+    "ogType": "website",
+    "hasJsonLd": true
+  },
+  {
+    "path": "/products/urc-bridge/pricing",
+    "title": "Pricing — URC Rose Bridge | TCL",
+    "description": "Three published tiers for the URC ↔ Rose RS520 ↔ Josh AI compatibility bridge: Single-Site, Dealer Toolkit, Enterprise.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/demo",
+    "title": "Request a Demo — URC Rose Bridge | TCL",
+    "description": "Demo requests for the URC ↔ Rose RS520 compatibility bridge. We respond within one business day.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/pilot",
+    "title": "Start a 30-day Pilot — URC Rose Bridge | TCL",
+    "description": "Full bridge access for 30 days, no payment up front.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/faq",
+    "title": "FAQ — URC Rose Bridge | TCL",
+    "description": "Candid answers about firmware drift, Rose endorsement, URC dealer requirements, Josh AI, refunds, and SLAs.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/docs",
+    "title": "Docs — URC Rose Bridge | TCL",
+    "description": "API contract, configuration, and operations guide for the urc-rose-bridge HTTP service.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/docs/deployment",
+    "title": "URC Deployment Guide — URC Rose Bridge | TCL",
+    "description": "Step-by-step manual for URC dealers: install the Mac mini bridge and integrate it with URC Total Control 2.0 and MX HomePro.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/docs/josh-ai",
+    "title": "Josh AI Integration Guide — URC Rose Bridge | TCL",
+    "description": "Wire the bridge into Josh AI: Custom HTTP Device config, Josh-tuned aliases, sample utterances.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/products/urc-bridge/download",
+    "title": "Download — URC Rose Bridge | TCL",
+    "description": "Source bundle, one-shot installer, and architecture references for the urc-rose-bridge service.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/auth",
+    "title": "Sign In | The Connected Lifestyle",
+    "description": "Sign in to your TCL account.",
+    "ogType": "website",
+    "hasJsonLd": false
+  },
+  {
+    "path": "/dashboard",
+    "title": "Dashboard | The Connected Lifestyle",
+    "description": "TCL operator dashboard.",
+    "ogType": "website",
+    "hasJsonLd": false
+  }
+]
