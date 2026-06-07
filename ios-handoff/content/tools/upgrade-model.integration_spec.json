@@ -1,0 +1,866 @@
+{
+  "$schema": "https://tclts.dev/schemas/platform-integration/v1",
+  "meta": {
+    "name": "TCL Tech Solutions \u2014 Upgrade Membership Module",
+    "version": "1.0.0",
+    "purpose": "Integration specification to port the standalone deal-modeling tool into the production TCL platform while reproducing the source design system EXACTLY: identical font, spacing, formatting, and motion.",
+    "owner": "Damon Jackson, CEO, TCL Tech Solutions",
+    "generated": "2026-05-30",
+    "sourceArtifact": "TCL_Upgrade_Platform.html",
+    "fidelityContract": "Implementers MUST reproduce every token below verbatim. Do not substitute a design-system equivalent (e.g. a framework's default font or spacing scale). Pixel values, hex colors, easing curves and durations are normative, not advisory."
+  },
+  "integrationSteps": [
+    "1. Mount the module at a route such as /tools/upgrade-model. It is fully client-side; no backend is required for the calculator itself.",
+    "2. Reproduce the design system in 'designSystem' as CSS custom properties on the module root. Copy the :root variable block verbatim.",
+    "3. Rebuild each component in 'components' to the exact paddings, radii, font sizes and colors given. Use the source HTML as the reference DOM.",
+    "4. Implement 'motion' exactly: only the toast uses a CSS transition (opacity 0.25s ease); hover state changes are instantaneous (no transition declared); bars render at a fixed computed width with no width animation. Match this precisely.",
+    "5. Wire the 'calculationEngine' functions exactly as specified so economics are identical to the spreadsheet model.",
+    "6. Seed state from 'dataModel.defaults'. Persist edits via the host platform store, or retain the source's safe localStorage('tcl_model') + JSON import/export fallback.",
+    "7. Keep the eight-tab information architecture in 'navigation' (seven working tabs + Glossary). Default landing tab = 'dashboard'.",
+    "8. Reproduce the jargon-explainer system in 'jargonExplainers': every specialized term is wrapped with a hover/focus/tap tooltip and the full 'glossary' is its own tab. Implement the tooltip component and motion exactly as specified; wire each term/info icon to its glossary key.",
+    "9. Validate against 'acceptanceTests' \u2014 all must pass before release."
+  ],
+  "designSystem": {
+    "typography": {
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "baseSizePx": 14,
+      "rolesPx": {
+        "headerH1": 18,
+        "headerSub": 11,
+        "navButton": 13,
+        "cardH2": 16,
+        "cardDesc": 12,
+        "sectionH3": 13,
+        "table": 13,
+        "th": 11.5,
+        "input": 13,
+        "pill": 11,
+        "kpiLabel": 11,
+        "kpiValue": 24,
+        "kpiNote": 11,
+        "brow": 13,
+        "browTotal": 15,
+        "panelHeader": 12,
+        "note": 11.5,
+        "callout": 13,
+        "tag": 10,
+        "toast": 13,
+        "src": 11
+      },
+      "weights": {
+        "normal": 400,
+        "bold": 700
+      },
+      "letterSpacing": {
+        "sectionH3": "0.5px",
+        "kpiLabel": "0.4px",
+        "panelHeader": "0.5px"
+      },
+      "transforms": {
+        "sectionH3": "uppercase",
+        "kpiLabel": "uppercase",
+        "panelHeader": "uppercase"
+      }
+    },
+    "color": {
+      "cssVariables": {
+        "--navy": "#1f3864",
+        "--steel": "#2e5496",
+        "--steel2": "#3a64a8",
+        "--green": "#1e7145",
+        "--green-bg": "#e2efda",
+        "--amber": "#bf8f00",
+        "--amber-bg": "#fff2cc",
+        "--red": "#c00000",
+        "--red-bg": "#fce4e4",
+        "--bg": "#eef1f6",
+        "--card": "#ffffff",
+        "--line": "#d7deea",
+        "--ink": "#1c2533",
+        "--muted": "#6b7686",
+        "--blue": "#0a58ca"
+      },
+      "incidentalHex": {
+        "navButtonText": "#c7d3e8",
+        "navActiveUnderline": "#7aa6e8",
+        "inputBorder": "#c3cee0",
+        "inputFocusOutline": "#7aa6e8",
+        "rowHoverBg": "#f6f9fe",
+        "barTrackBg": "#eef1f6",
+        "totalRowBg": "#f0f5ff",
+        "panelBg": "#f0f5ff",
+        "pillEstBg": "#eef0f3",
+        "tagBg": "#eef0f3",
+        "calloutAmberText": "#7a5c00",
+        "calloutGreenText": "#1c5a37",
+        "calloutAmberBorder": "#e6d089",
+        "calloutGreenBorder": "#b5d8bf",
+        "tooltipBg": "#10233f",
+        "tooltipTitle": "#9ec5ff",
+        "tooltipMore": "#7aa6e8",
+        "termUnderline": "#2e5496 (dotted)",
+        "termHoverBg": "#eef5ff",
+        "infoIconBg": "#2e5496",
+        "infoIconHoverBg": "#1f3864",
+        "glossHighlightBg": "#fff7da"
+      },
+      "headerGradient": "linear-gradient(135deg, #1f3864, #2e5496)",
+      "barFillGradient": "linear-gradient(90deg, #2e5496, #3a64a8)",
+      "barFillCappedGradient": "linear-gradient(90deg, #bf8f00, #d6a92e)",
+      "barFillGreenGradient": "linear-gradient(90deg, #1e7145, #2f9c63)"
+    },
+    "spacing": {
+      "scalePx": [
+        2,
+        4,
+        5,
+        6,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24
+      ],
+      "usage": {
+        "mainPadding": "22px",
+        "mainMaxWidth": "1180px",
+        "headerPadding": "16px 24px",
+        "navPadding": "0 12px",
+        "cardPadding": "18px 20px",
+        "cardMarginBottom": "18px",
+        "grid2Gap": "18px",
+        "kpiGap": "14px",
+        "kpiPadding": "14px 16px",
+        "thtdPadding": "8px 10px",
+        "navButtonPadding": "13px 16px",
+        "fieldPadding": "8px 0",
+        "browPadding": "9px 4px",
+        "browTotalPadding": "11px 8px",
+        "panelPadding": "14px"
+      }
+    },
+    "shape": {
+      "radiusPx": {
+        "card": 10,
+        "kpi": 8,
+        "panel": 8,
+        "input": 5,
+        "barTrack": 5,
+        "barFill": 5,
+        "pill": 11,
+        "logo": 8,
+        "button": 6,
+        "rowbtn": 5,
+        "browTotal": 6,
+        "toast": 8,
+        "tag": 8
+      },
+      "borders": {
+        "card": "1px solid var(--line)",
+        "kpiLeftAccent": "4px solid var(--steel)  (green/amber variants swap the accent color)",
+        "thtd": "1px solid var(--line) bottom only",
+        "input": "1px solid #c3cee0",
+        "navActive": "3px solid #7aa6e8 (bottom)"
+      },
+      "shadows": {
+        "card": "0 1px 3px rgba(20,40,80,0.06)"
+      }
+    },
+    "layout": {
+      "navPosition": "sticky; top:0; z-index:20",
+      "grid2": "two columns 1fr 1fr, gap 18px; collapses to a single column at max-width 820px",
+      "kpiGrid": "repeat(auto-fit, minmax(170px, 1fr)), gap 14px",
+      "catalogKpiBreakpoint": "820px"
+    }
+  },
+  "components": {
+    "header": {
+      "background": "headerGradient",
+      "padding": "16px 24px",
+      "color": "#fff",
+      "logo": "42x42px, radius 8px, white bg, navy text, bold 18px, letter-spacing -1px",
+      "buttons": "rgba(255,255,255,.14) bg, 1px solid rgba(255,255,255,.35), padding 7px 12px, radius 6px, 12px; hover bg rgba(255,255,255,.28)"
+    },
+    "nav": {
+      "background": "var(--navy)",
+      "button": "color #c7d3e8, padding 13px 16px, 13px; hover color #fff; active color #fff + bold + 3px #7aa6e8 bottom border"
+    },
+    "card": {
+      "bg": "var(--card)",
+      "border": "1px solid var(--line)",
+      "radius": "10px",
+      "padding": "18px 20px",
+      "marginBottom": "18px",
+      "shadow": "0 1px 3px rgba(20,40,80,.06)",
+      "h2": "16px var(--navy)",
+      "desc": "12px var(--muted), marginBottom 14px"
+    },
+    "kpi": {
+      "bg": "var(--card)",
+      "leftAccent": "4px solid var(--steel)",
+      "radius": "8px",
+      "padding": "14px 16px",
+      "label": "11px var(--muted) uppercase",
+      "value": "24px bold var(--navy)",
+      "note": "11px var(--muted)",
+      "variants": {
+        "green": "accent+value var(--green)",
+        "amber": "accent+value var(--amber)"
+      }
+    },
+    "table": {
+      "font": "13px",
+      "th": "var(--steel) bg, #fff, 11.5px bold, padding 8px 10px",
+      "td": "padding 8px 10px, 1px solid var(--line) bottom",
+      "firstColAlign": "left, others right",
+      "rowHover": "#f6f9fe"
+    },
+    "input": {
+      "width": "92px (catalog) / 120px (field)",
+      "border": "1px solid #c3cee0",
+      "radius": "5px",
+      "padding": "5px 6px",
+      "textAlign": "right",
+      "color": "var(--blue) bold",
+      "nameVariant": "full width, left align, ink color, normal weight",
+      "focus": "outline 2px #7aa6e8"
+    },
+    "pill": {
+      "padding": "2px 9px",
+      "radius": "11px",
+      "font": "11px bold",
+      "states": {
+        "strong/yes": "green-bg + green",
+        "marginal/capped": "amber-bg + amber",
+        "poor/check": "red-bg + red",
+        "est": "#eef0f3 + muted normal",
+        "act": "green-bg + green normal"
+      }
+    },
+    "panel": {
+      "bg": "#f0f5ff",
+      "border": "1px solid var(--line)",
+      "radius": "8px",
+      "padding": "14px",
+      "header": "12px bold uppercase letter-spacing .5px; cust=steel, tcl=green"
+    },
+    "brow": {
+      "padding": "9px 4px",
+      "borderBottom": "1px solid var(--line)",
+      "font": "13px",
+      "valueBold": true,
+      "total": "bg #f0f5ff, 15px, radius 6px, padding 11px 8px, marginTop 4px, value navy"
+    },
+    "bar": {
+      "label": "90px width, 12px muted",
+      "track": "bg #eef1f6, radius 5px, height 22px",
+      "fill": "barFillGradient, right-aligned white 11px bold label, min-width 34px, computed width %",
+      "variants": {
+        "capped": "amber gradient",
+        "green": "green gradient"
+      }
+    },
+    "callout": {
+      "green": "bg var(--green-bg), 1px solid #b5d8bf, #1c5a37, radius 8px, padding 12px 14px, 13px",
+      "amber": "bg var(--amber-bg), 1px solid #e6d089, #7a5c00"
+    },
+    "buttons": {
+      "addbtn": "var(--steel) bg #fff, radius 6px, padding 8px 14px, 13px; hover var(--navy)",
+      "rowbtn": "transparent, 1px solid #c3cee0, muted, padding 3px 8px, 12px; hover red text+border, bg #f6f9fe"
+    },
+    "tag": {
+      "font": "10px",
+      "bg": "#eef0f3",
+      "color": "var(--muted)",
+      "padding": "1px 7px",
+      "radius": "8px",
+      "marginLeft": "6px"
+    },
+    "term": {
+      "desc": "Inline jargon word that reveals a tooltip",
+      "style": "border-bottom 1px dotted #2e5496; cursor help; hover/focus bg #eef5ff",
+      "tabindex": 0,
+      "trigger": "mouseover / focusin show, click navigates to its Glossary entry"
+    },
+    "info": {
+      "desc": "Small circular i icon placed after a label",
+      "style": "15x15px circle, bg #2e5496, white italic bold 'i' in Georgia serif, radius 50%, marginLeft 5px; hover bg #1f3864",
+      "tabindex": 0,
+      "role": "button"
+    },
+    "tooltip": {
+      "id": "#tip",
+      "desc": "Single floating bubble reused for all terms",
+      "style": "fixed, z-index 100, max-width 300px, bg #10233f, #fff, 12.5px, line-height 1.5, padding 10px 12px, radius 8px, shadow 0 6px 22px rgba(10,25,50,.32)",
+      "title": ".tt = bold #9ec5ff 12px block",
+      "footer": ".more = #7aa6e8 11px 'Tap for the full entry in the Glossary'",
+      "arrow": "9-11px square rotated 45deg, bg matches bubble, repositions top/bottom via .below",
+      "positioning": "centered above the term; flips below if it would clip the top; clamped 8px from viewport edges; arrow tracks term center via --ax custom property"
+    },
+    "glossary": {
+      "search": ".gloss-search input, max-width 380px, 1px solid #c3cee0, radius 7px, padding 9px 12px, 13px",
+      "item": ".gloss-item, padding 13px 2px, 1px solid var(--line) bottom, scroll-margin-top 70px",
+      "term": ".gloss-term 14px bold var(--navy)",
+      "eli5": ".gloss-eli5 13px var(--ink) line-height 1.55",
+      "context": ".gloss-ctx 12px var(--muted), label 'On this platform:' in var(--steel) bold"
+    }
+  },
+  "motion": {
+    "principle": "The source is deliberately restrained. Reproduce EXACTLY \u2014 do not add framework animations.",
+    "transitions": [
+      {
+        "element": ".toast",
+        "property": "opacity",
+        "from": 0,
+        "to": 1,
+        "duration": "0.25s",
+        "easing": "ease (browser default)",
+        "autoDismissMs": 1600,
+        "position": "fixed; bottom 20px; left 50%; translateX(-50%); z-index 50; pointer-events none"
+      },
+      {
+        "element": "#tip (jargon tooltip)",
+        "property": "opacity + transform",
+        "from": "opacity 0, translateY(4px)",
+        "to": "opacity 1, translateY(0)",
+        "duration": "0.25s",
+        "easing": "ease",
+        "trigger": "shown on hover/focus of any [data-term]; hidden on mouseout/focusout/scroll",
+        "note": "Reuses the SAME 0.25s ease timing as the toast for a consistent feel. This is the only motion added beyond the original source."
+      }
+    ],
+    "instantaneousStateChanges": [
+      "header buttons hover (background only, NO transition declared)",
+      "nav buttons hover (color only, NO transition)",
+      "table row hover (background #f6f9fe, NO transition)",
+      "rowbtn hover (color+border, NO transition)",
+      "addbtn hover (background, NO transition)"
+    ],
+    "focus": {
+      "element": "inputs",
+      "effect": "outline 2px solid #7aa6e8 on :focus"
+    },
+    "noAnimation": [
+      "bar-fill widths render statically at their computed percentage (no width tween)",
+      "tab switching is an instant display:none/block swap (no fade or slide)",
+      "no scroll, parallax, or entrance animations anywhere"
+    ],
+    "reducedMotion": "The only animated element (toast) is non-essential; honor prefers-reduced-motion by setting its transition to none if the host platform enforces it."
+  },
+  "navigation": {
+    "defaultTab": "dashboard",
+    "tabs": [
+      {
+        "id": "dashboard",
+        "label": "Dashboard"
+      },
+      {
+        "id": "catalog",
+        "label": "SKU Catalog"
+      },
+      {
+        "id": "tiers",
+        "label": "Tiers & Assumptions"
+      },
+      {
+        "id": "deal",
+        "label": "Deal Calculator"
+      },
+      {
+        "id": "rollover",
+        "label": "Rollover"
+      },
+      {
+        "id": "portfolio",
+        "label": "Portfolio Model"
+      },
+      {
+        "id": "att",
+        "label": "AT&T Comparison"
+      },
+      {
+        "id": "glossary",
+        "label": "Glossary"
+      }
+    ],
+    "switchBehavior": "Set .tab.active on target, .active on its nav button; instant display swap; re-render all views."
+  },
+  "jargonExplainers": {
+    "intent": "No user should hit a word they do not understand. Every specialized term is explained inline (tooltip) and in full (Glossary tab), written at an explain-like-I'm-5 reading level.",
+    "mechanics": {
+      "inlineTerm": "Wrap the word in <span class='term' data-term='KEY' tabindex='0'>. Dotted underline signals it is explainable.",
+      "infoIcon": "Place <span class='info' data-term='KEY' tabindex='0'> (a small 'i') after a label that has no natural word to underline.",
+      "tooltip": "A single reused #tip bubble shows GLOSSARY[KEY].term (title) + .short (the one-breath explanation) + a 'Tap for the full entry' footer.",
+      "click": "Clicking any term or info icon navigates to the Glossary tab and highlights that entry (bg #fff7da for 1.6s).",
+      "glossaryTab": "Lists every term with: bold title, the plain-English 'eli5' line, and an 'On this platform:' context line. Includes a live search filter."
+    },
+    "coverage": "All 30 terms below are wrapped at least once in the UI and/or carry an info icon, and all appear in the Glossary tab. Implementers MUST preserve this coverage when restyling.",
+    "authoringRules": [
+      "eli5 = one sentence a newcomer could read aloud in a single breath; no jargon inside the jargon definition.",
+      "onThisPlatform = how the term behaves specifically in THIS tool, not a textbook definition.",
+      "Never define a term using another undefined term. If you must, that second term also gets an entry."
+    ]
+  },
+  "glossary": {
+    "msrp": {
+      "term": "MSRP (sticker price)",
+      "eli5": "The full price the maker says it should sell for \u2014 the big number before any deal.",
+      "onThisPlatform": "On this platform it's the 'before' price we measure every discount against."
+    },
+    "dealer": {
+      "term": "Dealer cost",
+      "eli5": "What TCL actually pays its supplier to buy the item. Always lower than the sticker price.",
+      "onThisPlatform": "This is TCL's floor: we can never sell below it without losing money."
+    },
+    "spread": {
+      "term": "Spread",
+      "eli5": "The gap between what TCL pays (dealer cost) and the sticker price (MSRP). It's the wiggle room to give a discount and still profit.",
+      "onThisPlatform": "The single most important number here: the customer's credit can never be bigger than the spread."
+    },
+    "points": {
+      "term": "Points (spread %)",
+      "eli5": "The spread written as a percentage of the sticker price. '50 points' means the gap is half the price.",
+      "onThisPlatform": "Bigger points = more room to make money. 50+ points is what makes a component great for this program."
+    },
+    "credit": {
+      "term": "Credit",
+      "eli5": "Money the customer slowly builds up by paying monthly, which they later knock off the price of a new component.",
+      "onThisPlatform": "Think of it like a gift card that fills up over time \u2014 but capped so it can't grow forever."
+    },
+    "bonus": {
+      "term": "Bonus",
+      "eli5": "Extra credit TCL adds on top of what the customer paid in, as a thank-you for joining.",
+      "onThisPlatform": "Example: a member pays in $480 over a year but their credit is $600 \u2014 that extra $120 is the bonus."
+    },
+    "subscription": {
+      "term": "Subscription (monthly fee)",
+      "eli5": "The set amount the customer pays every month just to be a member of the club.",
+      "onThisPlatform": "This steady monthly money is the heart of how the program profits."
+    },
+    "tier": {
+      "term": "Tier",
+      "eli5": "A membership level. Higher tiers cost more per month but build bigger credits.",
+      "onThisPlatform": "Standard, Plus, and Premium are the tiers \u2014 plus a Programming tier for labor."
+    },
+    "oop": {
+      "term": "Out-of-pocket",
+      "eli5": "The cash the customer actually hands over at the counter, AFTER their credit is subtracted.",
+      "onThisPlatform": "Sticker price minus credit = out-of-pocket. It can never drop below TCL's dealer cost."
+    },
+    "savings": {
+      "term": "Real savings vs MSRP",
+      "eli5": "What the customer truly saves once you subtract the monthly fees they already paid.",
+      "onThisPlatform": "A neat fact: this always equals (credit \u2212 subscription paid), no matter which item they pick."
+    },
+    "hardware_margin": {
+      "term": "Hardware margin",
+      "eli5": "The profit on the gear itself: what the customer pays for it minus what TCL paid the supplier.",
+      "onThisPlatform": "Separate from the subscription money. On thin-spread items this can shrink to near zero."
+    },
+    "margin": {
+      "term": "Margin (effective)",
+      "eli5": "What slice of the money coming in is actually profit after costs.",
+      "onThisPlatform": "Higher is better. Shown as a percentage of the subscription revenue."
+    },
+    "net_profit": {
+      "term": "Net profit",
+      "eli5": "What's left over after every cost is paid \u2014 the real bottom line.",
+      "onThisPlatform": "Subscription money + hardware margin \u2212 servicing costs."
+    },
+    "float": {
+      "term": "Float",
+      "eli5": "All the monthly money piling up in TCL's account from members who haven't upgraded yet. A big, steady pool of cash.",
+      "onThisPlatform": "Because most members upgrade rarely, this pool keeps growing and is where most of the profit lives."
+    },
+    "volume": {
+      "term": "Volume",
+      "eli5": "Simply having LOTS of customers. Small money per person becomes big money across many people.",
+      "onThisPlatform": "The program needs many members for the math to work \u2014 a few won't move the needle."
+    },
+    "float_volume_engine": {
+      "term": "Float-and-volume profit engine",
+      "eli5": "The way the business makes money: collect small monthly fees from MANY members (volume), most of whom upgrade rarely, so the steady pool of fees (float) earns far more than the occasional discount costs.",
+      "onThisPlatform": "It's the exact same trick AT&T uses with phones: lots of subscribers, a big cash pool, and only the occasional payout."
+    },
+    "redemption": {
+      "term": "Redemption",
+      "eli5": "When a customer finally cashes in their built-up credit to get a component.",
+      "onThisPlatform": "Each redemption costs TCL a little discount but the member keeps paying their monthly fee."
+    },
+    "redemption_freq": {
+      "term": "Upgrade frequency",
+      "eli5": "How often the average member actually upgrades \u2014 like 'once every 3 years.'",
+      "onThisPlatform": "The LESS often they upgrade, the more the float grows. The program is built assuming infrequent upgrades."
+    },
+    "rollover": {
+      "term": "Rollover",
+      "eli5": "If a member doesn't spend their credit this year, part of it carries over into next year.",
+      "onThisPlatform": "Keeps members feeling rewarded for staying \u2014 without handing back every dollar."
+    },
+    "rollover_cap": {
+      "term": "Rollover cap",
+      "eli5": "A ceiling on how high unused credit can stack up, so a member can't save for years and then wipe out TCL's profit in one purchase.",
+      "onThisPlatform": "Here it's set to 2\u00d7 the first-year credit \u2014 the key defense against 'credit banking'."
+    },
+    "rec_credit": {
+      "term": "Recommended credit",
+      "eli5": "A safe credit amount (75% of the spread) that still feels like a deal but leaves profit for TCL.",
+      "onThisPlatform": "A guardrail so you don't accidentally give away the entire spread."
+    },
+    "fit": {
+      "term": "Program fit",
+      "eli5": "A simple grade \u2014 STRONG, MARGINAL, or POOR \u2014 for whether a component is worth building the program around.",
+      "onThisPlatform": "Based on points: 50%+ = STRONG, 35\u201350% = MARGINAL, under 35% = POOR."
+    },
+    "viable": {
+      "term": "Viable / CHECK",
+      "eli5": "Viable = the deal makes money for TCL AND saves the customer money. CHECK = something's off and needs a second look.",
+      "onThisPlatform": "'CHECK' appears when TCL would lose money or the customer would save nothing."
+    },
+    "basis": {
+      "term": "Basis (Actual vs Estimate)",
+      "eli5": "Whether the price is a real, confirmed number or a placeholder guess to be replaced.",
+      "onThisPlatform": "'Estimate' rows use stand-in pricing \u2014 overwrite them with TCL's real dealer costs."
+    },
+    "servicing": {
+      "term": "Servicing cost",
+      "eli5": "What it costs TCL each year to support a member \u2014 visits, tweaks, programming time.",
+      "onThisPlatform": "Subtracted from revenue to get true net profit."
+    },
+    "portfolio": {
+      "term": "Portfolio",
+      "eli5": "The whole group of members looked at together, instead of one customer at a time.",
+      "onThisPlatform": "This view answers: across ALL members, does the program make money?"
+    },
+    "installment": {
+      "term": "Installment plan",
+      "eli5": "Paying for something in small monthly pieces instead of all at once.",
+      "onThisPlatform": "How AT&T spreads a phone's cost over 36 months."
+    },
+    "tradein": {
+      "term": "Trade-in",
+      "eli5": "Handing back your old device to lower the cost of the new one.",
+      "onThisPlatform": "AT&T requires this; TCL's credit model does NOT \u2014 a point in TCL's favor."
+    },
+    "anchoring": {
+      "term": "MSRP anchoring",
+      "eli5": "Showing the big sticker price first so the discount feels large by comparison.",
+      "onThisPlatform": "Why marketing should always quote MSRP, not TCL's everyday street price."
+    },
+    "programming": {
+      "term": "Programming",
+      "eli5": "The labor of setting up and configuring the smart-home system, charged by the hour.",
+      "onThisPlatform": "The $25/mo Programming tier covers a couple of hours of this each year."
+    }
+  },
+  "calculationEngine": {
+    "note": "Reproduce verbatim. These match TCL_Upgrade_Membership_Model.xlsx exactly. Currency rounded for display only; compute on raw values.",
+    "functions": {
+      "annualSub": "tier.monthly * 12",
+      "tierCredit": "annualSub(tier) * (1 + assumptions.bonusPct)",
+      "spread": "component.msrp - component.dealer",
+      "points": "component.msrp > 0 ? spread/component.msrp : 0",
+      "fit": "points >= 0.50 -> 'STRONG'; >= 0.35 -> 'MARGINAL'; else 'POOR'",
+      "recCredit": "spread * assumptions.recCreditPct",
+      "deal": {
+        "creditApplied": "min(tierCredit(tier), spread(component))   // GOVERNING RULE: never exceeds spread",
+        "customerOOP": "component.msrp - creditApplied",
+        "customerTotal": "annualSub(tier) + customerOOP",
+        "savingsVsMSRP": "component.msrp - customerTotal   // identity: equals creditApplied - annualSub",
+        "tclProfit": "annualSub(tier) + (customerOOP - component.dealer)",
+        "viable": "customerOOP >= component.dealer AND savingsVsMSRP > 0   // else flag 'CHECK'"
+      },
+      "rollover": {
+        "perYear y=1..5": {
+          "cumulativePaid": "annualSub * y",
+          "rawAccrued": "y==1 ? tierCredit : rawAccrued(y-1) + assumptions.rolloverBonus",
+          "cap": "tierCredit * assumptions.rolloverCapX",
+          "availableCredit": "min(rawAccrued, cap)",
+          "status": "rawAccrued > cap ? 'Capped' : 'Growing'"
+        }
+      },
+      "portfolio": {
+        "subscriptionRevenue": "members * fee * 12",
+        "redemptionsPerYear": "members / freq",
+        "hardwareMargin": "redemptionsPerYear * hwMarginPerUpgrade",
+        "servicingCost": "members * servicePerMember",
+        "netAnnualProfit": "subscriptionRevenue + hardwareMargin - servicingCost",
+        "profitPerMember": "netAnnualProfit / members",
+        "effectiveMargin": "netAnnualProfit / subscriptionRevenue"
+      }
+    },
+    "formatting": {
+      "money": "round to integer; negatives in parentheses; null/NaN -> em dash",
+      "pct": "value*100 to 1 decimal + '%'",
+      "number": "locale grouped, max decimals as specified per field"
+    }
+  },
+  "dataModel": {
+    "schemas": {
+      "component": {
+        "name": "string",
+        "dealer": "number (USD)",
+        "msrp": "number (USD)",
+        "basis": "'Actual' | 'Estimate'"
+      },
+      "tier": {
+        "name": "string",
+        "monthly": "number (USD)"
+      },
+      "assumptions": {
+        "bonusPct": "0..1",
+        "rolloverBonus": "USD/yr",
+        "rolloverCapX": "multiple",
+        "recCreditPct": "0..1",
+        "laborRate": "USD/hr"
+      },
+      "portfolio": {
+        "members": "int",
+        "fee": "USD/mo blended",
+        "freq": "years between upgrades",
+        "hwMargin": "USD/upgrade",
+        "service": "USD/member/yr"
+      }
+    },
+    "defaults": {
+      "assumptions": {
+        "bonusPct": 0.25,
+        "rolloverBonus": 300,
+        "rolloverCapX": 2.0,
+        "recCreditPct": 0.75,
+        "laborRate": 120
+      },
+      "tiers": [
+        {
+          "name": "Tier 1 - Standard",
+          "monthly": 40
+        },
+        {
+          "name": "Tier 2 - Plus",
+          "monthly": 75
+        },
+        {
+          "name": "Tier 3 - Premium",
+          "monthly": 100
+        },
+        {
+          "name": "Programming",
+          "monthly": 25
+        }
+      ],
+      "catalog": [
+        {
+          "name": "URC cinema remote",
+          "dealer": 650,
+          "msrp": 1300,
+          "basis": "Actual"
+        },
+        {
+          "name": "Bookshelf speakers (pair)",
+          "dealer": 250,
+          "msrp": 899,
+          "basis": "Actual"
+        },
+        {
+          "name": "Marantz pre-amp",
+          "dealer": 2800,
+          "msrp": 4000,
+          "basis": "Actual"
+        },
+        {
+          "name": "Denon AV receiver",
+          "dealer": 1200,
+          "msrp": 2000,
+          "basis": "Estimate"
+        },
+        {
+          "name": "URC total-control processor",
+          "dealer": 700,
+          "msrp": 1500,
+          "basis": "Estimate"
+        },
+        {
+          "name": "In-ceiling speakers (pair)",
+          "dealer": 180,
+          "msrp": 600,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Outdoor speakers (pair)",
+          "dealer": 220,
+          "msrp": 700,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Powered subwoofer",
+          "dealer": 450,
+          "msrp": 1100,
+          "basis": "Estimate"
+        },
+        {
+          "name": "4K home-theater projector",
+          "dealer": 2500,
+          "msrp": 5000,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Motorized projector screen",
+          "dealer": 900,
+          "msrp": 2200,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Multi-zone amplifier (8-ch)",
+          "dealer": 800,
+          "msrp": 1800,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Network video recorder (NVR)",
+          "dealer": 500,
+          "msrp": 1200,
+          "basis": "Estimate"
+        },
+        {
+          "name": "4K security camera (each)",
+          "dealer": 120,
+          "msrp": 350,
+          "basis": "Estimate"
+        },
+        {
+          "name": "WiFi-6 access point",
+          "dealer": 180,
+          "msrp": 450,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Managed switch (24-port)",
+          "dealer": 350,
+          "msrp": 800,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Smart-lighting hub",
+          "dealer": 300,
+          "msrp": 750,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Motorized shades (per window)",
+          "dealer": 400,
+          "msrp": 1000,
+          "basis": "Estimate"
+        },
+        {
+          "name": "Touchscreen wall controller 10\"",
+          "dealer": 600,
+          "msrp": 1400,
+          "basis": "Estimate"
+        }
+      ],
+      "portfolio": {
+        "members": 100,
+        "fee": 50,
+        "freq": 3,
+        "hwMargin": 75,
+        "service": 60
+      }
+    },
+    "persistence": {
+      "key": "tcl_model",
+      "store": "localStorage (safe try/catch)",
+      "io": "JSON export/import + catalog CSV export"
+    }
+  },
+  "acceptanceTests": [
+    {
+      "case": "Tier 1 ($40/mo) + URC remote",
+      "expect": {
+        "creditApplied": 600,
+        "customerOOP": 700,
+        "customerTotal": 1180,
+        "savingsVsMSRP": 120,
+        "tclProfit": 530,
+        "viable": true
+      }
+    },
+    {
+      "case": "Tier 1 + Marantz pre-amp",
+      "expect": {
+        "customerOOP": 3400,
+        "customerTotal": 3880,
+        "savingsVsMSRP": 120,
+        "tclProfit": 1080,
+        "viable": true
+      }
+    },
+    {
+      "case": "Tier 1 + Bookshelf speakers",
+      "expect": {
+        "creditApplied": 600,
+        "customerOOP": 299,
+        "savingsVsMSRP": 120,
+        "tclProfit": 529
+      }
+    },
+    {
+      "case": "Savings identity",
+      "expect": "savingsVsMSRP == tierCredit - annualSub for any component where creditApplied is not spread-capped"
+    },
+    {
+      "case": "Rollover Tier 1",
+      "expect": {
+        "y1": 600,
+        "y2": 900,
+        "y3": 1200,
+        "y4": 1200,
+        "y5": 1200,
+        "capFrom": "year 3"
+      }
+    },
+    {
+      "case": "Portfolio default",
+      "expect": {
+        "subscriptionRevenue": 60000,
+        "netAnnualProfit": 56500,
+        "profitPerMember": 565
+      }
+    },
+    {
+      "case": "Fit classification",
+      "expect": {
+        "URC remote (50%)": "STRONG",
+        "Marantz (30%)": "POOR",
+        "Denon (40%)": "MARGINAL"
+      }
+    },
+    {
+      "case": "Jargon coverage",
+      "expect": "Every key in 'glossary' resolves; no [data-term] in the UI points to a missing key; Glossary tab renders all 30 entries with a working search filter."
+    },
+    {
+      "case": "Tooltip behavior",
+      "expect": "Hover/focus of any term or info icon shows #tip with that term's eli5; click navigates to the Glossary entry and highlights it."
+    }
+  ],
+  "assets": [
+    {
+      "file": "TCL_Upgrade_Platform.html",
+      "role": "Reference implementation + design source of truth (single self-contained file)."
+    },
+    {
+      "file": "TCL_Upgrade_Membership_Model.xlsx",
+      "role": "Authoritative economics; the calculationEngine must match this workbook (7 sheets, 320 formulas)."
+    },
+    {
+      "file": "integration_spec.json",
+      "role": "This file \u2014 normative design + logic contract."
+    }
+  ]
+}
