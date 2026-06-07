@@ -39,6 +39,7 @@ import UrcBridgeDocs from "./pages/urc-bridge/Docs";
 import UrcBridgeDeploymentDocs from "./pages/urc-bridge/DocsDeployment";
 import UrcBridgeJoshAiDocs from "./pages/urc-bridge/DocsJoshAi";
 import UrcBridgeDownload from "./pages/urc-bridge/Download";
+import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -136,6 +137,7 @@ const SEO: Record<string, SeoCfg> = {
   "/products/urc-bridge/download": { title: "Download — URC Rose Bridge | TCL", description: "Source bundle, one-shot installer, and architecture references for the urc-rose-bridge service." },
   "/auth": { title: "Sign In | The Connected Lifestyle", description: "Sign in to your TCL account." },
   "/dashboard": { title: "Dashboard | The Connected Lifestyle", description: "TCL operator dashboard." },
+  "/tools/upgrade-model": { title: "Upgrade Membership Model | TCL Tech Solutions", description: "Interactive deal-modeling tool: portfolio economics, AT&T comparison, and upgrade membership calculator." },
 };
 
 function Page({ path, children }: { path: string; children: ReactNode }) {
@@ -186,6 +188,7 @@ const App = () => (
           <Route path="/products/urc-bridge/docs/deployment" element={<Page path="/products/urc-bridge/docs/deployment"><UrcBridgeDeploymentDocs /></Page>} />
           <Route path="/products/urc-bridge/docs/josh-ai" element={<Page path="/products/urc-bridge/docs/josh-ai"><UrcBridgeJoshAiDocs /></Page>} />
           <Route path="/products/urc-bridge/download" element={<Page path="/products/urc-bridge/download"><UrcBridgeDownload /></Page>} />
+          <Route path="/tools/upgrade-model" element={<Page path="/tools/upgrade-model"><UpgradeModelPage /></Page>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
