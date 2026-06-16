@@ -1238,7 +1238,7 @@ const Education = () => {
                               
                               <h4 className="font-semibold mb-3 mt-4">Topics Covered</h4>
                               <ul className="space-y-1 text-sm">
-                                <li>• Ecosystems: URC, Savant, Lutron, Crestron, Control4</li>
+                                <li>• Ecosystems: URC, Savant, Lutron, Crestron</li>
                                 <li>• Protocols: Zigbee, Z-Wave, Matter, Thread, BLE</li>
                                 <li>• Lighting, HVAC, AV, surveillance integration</li>
                                 <li>• IoT security (firmware updates, password policies)</li>

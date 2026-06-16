@@ -86,7 +86,7 @@ const CompanyMarket = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold">National Entrants</h4>
-                    <p className="text-sm text-gray-600">Best Buy (Geek Squad), Vivint, ADT Control4</p>
+                    <p className="text-sm text-gray-600">Best Buy (Geek Squad), Vivint, ADT</p>
                   </div>
                 </div>
               </CardContent>

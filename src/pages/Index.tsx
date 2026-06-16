@@ -58,7 +58,7 @@ const FAQS = [
   { q: "Are you licensed and insured?", a: "Absolutely. TCL Tech Solutions is fully licensed, bonded, and insured. We are also a Veteran-owned business operating with military-grade discipline and accountability." },
   { q: "How long does a typical installation take?", a: "A standard TV and speaker install can be done in a single day. Full home theater or smart home projects typically take 2–5 days. Commercial projects and new construction pre-wires vary by scope." },
   { q: "Do you offer financing?", a: "Yes, we offer flexible financing options to make your dream setup affordable. Ask about our 0% interest plans during your consultation." },
-  { q: "What brands do you work with?", a: "We are brand-agnostic and work with all major manufacturers including Sonos, Control4, Lutron, Samsung, Sony, JBL, Denon, Ubiquiti, and more. We recommend what's best for your space and budget." },
+  { q: "What brands do you work with?", a: "We are brand-agnostic and work with all major manufacturers including Sonos, Lutron, Samsung, Sony, JBL, Denon, Ubiquiti, and more. We recommend what's best for your space and budget." },
   { q: "Do you offer ongoing support after installation?", a: "Yes. Every installation comes with a warranty and we offer ongoing support and maintenance packages to keep your systems running perfectly." },
   { q: "What's included in your builder pre-wire packages?", a: "Our pre-wire packages include structured wiring for data/AV/security, conduit placement, low-voltage rough-in, and detailed documentation. We work directly from your blueprints." },
 ];
@@ -507,7 +507,7 @@ function PortfolioSection() {
   const projects = [
     { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", img: portfolioHomeTheater },
     { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", img: portfolioRooftopAudio },
-    { title: "Smart Home Full Build", category: "Residential", desc: "Control4 automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", img: portfolioSmartHome },
+    { title: "Smart Home Full Build", category: "Residential", desc: "automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", img: portfolioSmartHome },
     { title: "New Construction Pre-Wire", category: "Builder", desc: "Complete pre-wire for a 52-home production community — structured wiring, AV, and security rough-in.", img: portfolioPrewire },
     { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", img: portfolioRestaurantAv },
     { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", img: portfolioOutdoor },
@@ -701,7 +701,7 @@ function AboutSection() {
                   <img src={paradeOfHomesLogo2} alt="2026 Parade of Homes" style={{ height: 28, borderRadius: 4 }} />
                 </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
-                  22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, Control4, RTI, IC Realtime, and Home Theater Design & Calibration.
+                  22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, RTI, IC Realtime, and Home Theater Design & Calibration.
                 </p>
               </div>
             </div>

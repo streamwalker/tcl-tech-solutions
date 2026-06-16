@@ -242,7 +242,7 @@ export const CompanyPopups = {
               <h4 className="font-semibold text-gray-900">Damon Jackson</h4>
               <p className="text-blue-600 font-medium">Founder & CEO</p>
               <p className="text-gray-600 text-sm mt-2">
-                20+ years experience in smart home technology and business development. Expert in Control4, Lutron, and enterprise network solutions.
+                20+ years experience in smart home technology and business development. Expert in Lutron, and enterprise network solutions.
               </p>
             </div>
           </div>
@@ -255,7 +255,7 @@ export const CompanyPopups = {
             <div className="bg-gray-50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2">Technical Specialists</h4>
               <ul className="space-y-1 text-sm text-gray-600">
-                <li>• Certified Control4 installers</li>
+                <li>• Certified installers</li>
                 <li>• Lutron RadioRA2 specialists</li>
                 <li>• Network security experts</li>
                 <li>• Audio/video engineers</li>
@@ -314,7 +314,6 @@ export const CompanyPopups = {
               Complete whole-home automation for 8,500 sq ft estate including lighting, climate, security, and entertainment systems.
             </p>
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Control4</span>
               <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Lutron</span>
               <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Savant</span>
             </div>
@@ -616,7 +615,7 @@ export const ServicesPopups = {
             Trusted Brands & Partners
           </h4>
           <div className="flex flex-wrap gap-2">
-            {["Control4", "Lutron RadioRA2", "Nest", "Ring", "Sonos"].map((brand, idx) => (
+            {["Lutron RadioRA2", "Nest", "Ring", "Sonos"].map((brand, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {brand}
               </span>
@@ -807,7 +806,7 @@ export const ServicesPopups = {
             Trusted Brands & Partners
           </h4>
           <div className="flex flex-wrap gap-2">
-            {["Sony", "Denon", "Bose", "JBL", "Control4"].map((brand, idx) => (
+            {["Sony", "Denon", "Bose", "JBL"].map((brand, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {brand}
               </span>
@@ -902,7 +901,7 @@ export const ServicesPopups = {
             Trusted Brands & Partners
           </h4>
           <div className="flex flex-wrap gap-2">
-            {["Google AI", "Amazon Alexa", "Apple HomeKit", "Control4"].map((brand, idx) => (
+            {["Google AI", "Amazon Alexa", "Apple HomeKit"].map((brand, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {brand}
               </span>
@@ -997,7 +996,7 @@ export const ServicesPopups = {
             Trusted Brands & Partners
           </h4>
           <div className="flex flex-wrap gap-2">
-            {["Control4", "Lutron", "Ubiquiti", "Nest"].map((brand, idx) => (
+            {["Lutron", "Ubiquiti", "Nest"].map((brand, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {brand}
               </span>
@@ -1092,7 +1091,7 @@ export const ServicesPopups = {
             Trusted Brands & Partners
           </h4>
           <div className="flex flex-wrap gap-2">
-            {["Control4", "Lutron", "Savant", "Crestron", "Sonos"].map((brand, idx) => (
+            {["Lutron", "Savant", "Crestron", "Sonos"].map((brand, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {brand}
               </span>

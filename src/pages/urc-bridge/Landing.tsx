@@ -8,7 +8,7 @@ const PHASES = [
   { n: "2", t: "URC driver", d: "Custom IP driver in Total Control hits /v1/* — no changes when Rose ships firmware.", s: "shipped" },
   { n: "3", t: "Dealer rollout kit", d: "One-shot installer, launchd daemon, sha256-verified auto-update from the release manifest.", s: "shipped" },
   { n: "4", t: "Josh AI", d: "Same /v1/* contract powers voice control via Josh AI's HTTP integration.", s: "shipped" },
-  { n: "5", t: "Universal Translator (/v2)", d: "Canonical hub-and-spoke router across Control4, URC, and Josh AI. Issue a command from any ecosystem, target any other.", s: "shipped" },
+  { n: "5", t: "Universal Translator (/v2)", d: "Canonical hub-and-spoke router across Savant, URC, and Josh AI. Issue a command from any ecosystem, target any other.", s: "shipped" },
 ];
 
 export default function UrcBridgeLanding() {
@@ -93,12 +93,11 @@ curl -X POST -H 'content-type: application/json' \\
         <p className="mt-4 max-w-3xl text-muted-foreground">
           Hub-and-spoke. Every ecosystem translates to and from one neutral vocabulary in the
           middle, instead of writing a converter for every pair. Issue a Josh voice intent;
-          drive a Control4-only light. Issue a URC function; switch the Rose source.
+          drive a third-party-only light. Issue a URC function; switch the Rose source.
         </p>
         <CodeBlock
           title="architecture"
-          code={` Control4 ─┐                                   ┌─ Control4 devices
-      URC ─┤  controllers   ┌───────────┐  device│   URC devices
+          code={`      URC ─┐  controllers   ┌───────────┐  device│   URC devices
   Josh AI ─┤ ─ translate ─► │ canonical │ ─ apply├─ Josh devices
            │   inbound      │   router  │  command│   Hi-Fi Rose (LIVE)
            └─ /v2/ingress   └───────────┘         └─ mock demo devices`}

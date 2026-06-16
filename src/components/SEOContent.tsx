@@ -11,7 +11,7 @@ import { MapPin, ArrowRight, Phone, Mail, Clock } from "lucide-react";
 const quickAnswers = [
   {
     question: "What is The Connected Lifestyle?",
-    answer: "The Connected Lifestyle is a veteran-owned smart home automation and IT services company based in San Antonio, Texas. We specialize in Control4, Savant, and Lutron smart home installations, Dolby Atmos home theaters, enterprise networking, and managed IT services.",
+    answer: "The Connected Lifestyle is a veteran-owned smart home automation and IT services company based in San Antonio, Texas. We specialize in Savant and Lutron smart home installations, Dolby Atmos home theaters, enterprise networking, and managed IT services.",
   },
   {
     question: "How do I contact The Connected Lifestyle?",
@@ -19,7 +19,7 @@ const quickAnswers = [
   },
   {
     question: "What does smart home automation cost in San Antonio?",
-    answer: "Smart home automation in San Antonio ranges from $1,500 for basic setups to $25,000+ for whole-home Control4 or Savant systems. The Connected Lifestyle provides free on-site consultations with transparent pricing.",
+    answer: "Smart home automation in San Antonio ranges from $1,500 for basic setups to $25,000+ for whole-home Savant systems. The Connected Lifestyle provides free on-site consultations with transparent pricing.",
   },
   {
     question: "Does The Connected Lifestyle serve my area?",
@@ -31,19 +31,19 @@ const quickAnswers = [
 const faqs = [
   {
     q: "How much does smart home automation cost in San Antonio?",
-    a: "Smart home automation costs in San Antonio typically range from $1,500 for basic setups to $25,000+ for whole-home Control4 or Savant systems. The Connected Lifestyle offers free consultations to provide exact quotes tailored to your San Antonio home. We serve all areas including Helotes, Alamo Ranch, Leon Springs, and Stone Oak.",
+    a: "Smart home automation costs in San Antonio typically range from $1,500 for basic setups to $25,000+ for whole-home Savant systems. The Connected Lifestyle offers free consultations to provide exact quotes tailored to your San Antonio home. We serve all areas including Helotes, Alamo Ranch, Leon Springs, and Stone Oak.",
   },
   {
     q: "What is the best home theater system for a living room?",
     a: "The best home theater system depends on your room size and budget. We install premium brands including Sonos, Bose, JBL Synthesis, and AVA Cinema systems. Our San Antonio home theater installations include acoustic treatment, 4K/8K projection, Dolby Atmos surround sound, and smart lighting integration.",
   },
   {
-    q: "Do you offer Control4 smart home installation in San Antonio TX?",
-    a: "Yes! The Connected Lifestyle is an authorized Control4 dealer serving San Antonio, TX and surrounding areas. We design, install, and program complete Control4 smart home systems including lighting control, motorized shades, security integration, and whole-home audio. We also work with Savant, Lutron, and URC systems.",
+    q: "Do you offer smart home installation in San Antonio TX?",
+    a: "Yes! The Connected Lifestyle is an authorized dealer serving San Antonio, TX and surrounding areas. We design, install, and program complete smart home systems including lighting control, motorized shades, security integration, and whole-home audio. We also work with Savant, Lutron, and URC systems.",
   },
   {
     q: "What smart home brands do you install?",
-    a: "We install and integrate leading smart home brands including Control4, Savant, Lutron, URC, RTI, Crestron, Ring, Nest, Ecobee, Sonos, and more. As a veteran-owned business in San Antonio, we pride ourselves on recommending the right technology for each customer's unique needs and budget.",
+    a: "We install and integrate leading smart home brands including Savant, Lutron, URC, RTI, Crestron, Ring, Nest, Ecobee, Sonos, and more. As a veteran-owned business in San Antonio, we pride ourselves on recommending the right technology for each customer's unique needs and budget.",
   },
   {
     q: "How long does a home theater installation take?",
@@ -106,7 +106,7 @@ const internalLinks = [
 ];
 
 const brands = [
-  "Control4", "Savant", "Lutron", "URC", "RTI", "Crestron",
+  "Savant", "Lutron", "URC", "RTI", "Crestron",
   "Sonos", "Bose", "JBL Synthesis", "AVA Cinema", "Ring", "Nest",
   "Ecobee", "Sony", "Samsung", "LG", "Epson", "Denon", "Marantz",
   "Ubiquiti", "Cisco Meraki", "Ruckus", "Aruba",

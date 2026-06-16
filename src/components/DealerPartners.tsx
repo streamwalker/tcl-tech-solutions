@@ -5,13 +5,6 @@ import { handleContactClick } from "@/utils/smoothScroll";
 const DealerPartners = () => {
   const partners = [
     {
-      name: "Control4",
-      badge: "Authorized Dealer",
-      specialty: "Whole-Home Automation Platform",
-      description: "Industry-leading smart home automation with enterprise-grade reliability and professional installation standards.",
-      keyBenefits: ["Professional-grade hardware", "Scalable automation", "Enterprise reliability"]
-    },
-    {
       name: "URC (Universal Remote Control)",
       badge: "Certified Partner",
       specialty: "Premium Control Systems",

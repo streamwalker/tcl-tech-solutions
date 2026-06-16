@@ -122,8 +122,7 @@ const Knowledge: React.FC = () => {
           <Section id="hover-card" title="Hover cards" eyebrow="04">
             <p>
               Premium previews for important entities. Hover (or tap){" "}
-              <TermHoverCard termId="josh-ai">Josh.ai</TermHoverCard>,{" "}
-              <TermHoverCard termId="control4">Control4</TermHoverCard>, or{" "}
+              <TermHoverCard termId="josh-ai">Josh.ai</TermHoverCard> or{" "}
               <TermHoverCard termId="lutron">Lutron</TermHoverCard> to preview.
             </p>
           </Section>

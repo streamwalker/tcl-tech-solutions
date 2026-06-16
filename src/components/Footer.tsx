@@ -56,7 +56,7 @@ const Footer = () => {
             </h3>
             <p className="text-gray-300 mb-4 leading-relaxed text-sm">
               San Antonio's premier veteran-owned smart home automation, home theater installation, 
-              and enterprise IT services company. Authorized Control4, Savant, and Lutron dealer 
+              and enterprise IT services company. Authorized Savant and Lutron dealer 
               serving residential and commercial customers across South Texas.
             </p>
             <div className="space-y-2 mb-6">

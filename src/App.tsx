@@ -50,10 +50,10 @@ const FAQ_JSONLD = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "How much does smart home automation cost in San Antonio?", acceptedAnswer: { "@type": "Answer", text: "Smart home automation costs in San Antonio typically range from $1,500 for basic setups to $25,000+ for whole-home Control4 or Savant systems. The Connected Lifestyle offers free consultations to provide exact quotes tailored to your San Antonio home." } },
+    { "@type": "Question", name: "How much does smart home automation cost in San Antonio?", acceptedAnswer: { "@type": "Answer", text: "Smart home automation costs in San Antonio typically range from $1,500 for basic setups to $25,000+ for whole-home Savant systems. The Connected Lifestyle offers free consultations to provide exact quotes tailored to your San Antonio home." } },
     { "@type": "Question", name: "What is the best home theater system for a living room?", acceptedAnswer: { "@type": "Answer", text: "The best home theater system depends on your room size and budget. We install premium brands including Sonos, Bose, JBL Synthesis, and AVA Cinema systems with Dolby Atmos surround sound and 4K/8K projection." } },
-    { "@type": "Question", name: "Do you offer Control4 smart home installation in San Antonio TX?", acceptedAnswer: { "@type": "Answer", text: "Yes. The Connected Lifestyle is an authorized Control4 dealer serving San Antonio, TX and surrounding areas including Helotes, Alamo Ranch, Stone Oak, and The Dominion." } },
-    { "@type": "Question", name: "What smart home brands do you install?", acceptedAnswer: { "@type": "Answer", text: "We install Control4, Savant, Lutron, URC, RTI, Crestron, Ring, Nest, Ecobee, Sonos, and more." } },
+    { "@type": "Question", name: "Do you offer smart home installation in San Antonio TX?", acceptedAnswer: { "@type": "Answer", text: "Yes. The Connected Lifestyle is an authorized dealer serving San Antonio, TX and surrounding areas including Helotes, Alamo Ranch, Stone Oak, and The Dominion." } },
+    { "@type": "Question", name: "What smart home brands do you install?", acceptedAnswer: { "@type": "Answer", text: "We install Savant, Lutron, URC, RTI, Crestron, Ring, Nest, Ecobee, Sonos, and more." } },
     { "@type": "Question", name: "How long does a home theater installation take?", acceptedAnswer: { "@type": "Answer", text: "A typical home theater installation in San Antonio takes 1–3 days depending on complexity." } },
     { "@type": "Question", name: "Do you provide business IT network installation?", acceptedAnswer: { "@type": "Answer", text: "Yes — enterprise network installation, structured cabling (Cat6/Cat6A), Wi-Fi 6E/7, server rooms, and managed IT." } },
     { "@type": "Question", name: "What areas in San Antonio do you serve?", acceptedAnswer: { "@type": "Answer", text: "All of San Antonio plus Helotes, Leon Springs, Alamo Ranch, Stone Oak, The Dominion, Boerne, New Braunfels, Schertz, Cibolo, and greater Bexar County." } },
@@ -95,7 +95,7 @@ const URC_BRIDGE_JSONLD = {
   operatingSystem: "macOS (Apple Silicon)",
   softwareVersion: "1.0.0",
   description:
-    "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Versioned /v1 contract plus a /v2 Universal Translator across Control4, URC, and Josh.",
+    "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Versioned /v1 contract plus a /v2 Universal Translator across URC, and Josh.",
   url: "https://www.tcltechsolutions.com/products/urc-bridge",
   offers: {
     "@type": "Offer",
@@ -108,7 +108,7 @@ const URC_BRIDGE_JSONLD = {
 
 type SeoCfg = { title: string; description: string; ogType?: "website" | "article"; jsonLd?: object | object[] };
 const SEO: Record<string, SeoCfg> = {
-  "/": { title: "Smart Home Automation San Antonio TX | The Connected Lifestyle", description: "Veteran-owned smart home automation, home theater & IT services in San Antonio. Control4, Savant & Lutron dealer. Free consultation: (210) 995-8655.", jsonLd: [FAQ_JSONLD, HOWTO_JSONLD] },
+  "/": { title: "Smart Home Automation San Antonio TX | The Connected Lifestyle", description: "Veteran-owned smart home automation, home theater & IT services in San Antonio. Savant & Lutron dealer. Free consultation: (210) 995-8655.", jsonLd: [FAQ_JSONLD, HOWTO_JSONLD] },
   "/services": { title: "Services — Smart Home, Theater & IT | TCL Tech Solutions", description: "Smart home automation, home theater, enterprise networks, AI integration, and managed IT services in San Antonio." },
   "/business-plan": { title: "Business Plan | The Connected Lifestyle", description: "TCL's strategic business plan: market, services, operations, and growth roadmap for San Antonio smart home and IT services." },
   "/investor-white-paper": { title: "Investor White Paper | TCL Tech Solutions", description: "Investor white paper outlining TCL's market position, financial model, and growth thesis in smart home and managed IT." },
@@ -126,7 +126,7 @@ const SEO: Record<string, SeoCfg> = {
   "/privacy-policy": { title: "Privacy Policy | The Connected Lifestyle", description: "Privacy Policy describing what data TCL collects, how it is used, and your rights." },
   "/cookie-policy": { title: "Cookie Policy | The Connected Lifestyle", description: "How The Connected Lifestyle uses cookies and similar technologies on this website." },
   "/troubleshooting/dns": { title: "DNS Troubleshooting | TCL", description: "DNS propagation tracker and troubleshooting guide for the tcltechsolutions.com custom domain." },
-  "/products/urc-bridge": { title: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL", description: "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across Control4, URC, and Josh.", jsonLd: URC_BRIDGE_JSONLD },
+  "/products/urc-bridge": { title: "URC ↔ Hi-Fi Rose RS520 ↔ Josh AI Bridge | TCL", description: "Stable HTTP bridge between URC Total Control, the Hi-Fi Rose RS520, and Josh AI. Firmware-drift maintenance and a /v2 Universal Translator across URC, and Josh.", jsonLd: URC_BRIDGE_JSONLD },
   "/products/urc-bridge/pricing": { title: "Pricing — URC Rose Bridge | TCL", description: "Three published tiers for the URC ↔ Rose RS520 ↔ Josh AI compatibility bridge: Single-Site, Dealer Toolkit, Enterprise." },
   "/products/urc-bridge/demo": { title: "Request a Demo — URC Rose Bridge | TCL", description: "Demo requests for the URC ↔ Rose RS520 compatibility bridge. We respond within one business day." },
   "/products/urc-bridge/pilot": { title: "Start a 30-day Pilot — URC Rose Bridge | TCL", description: "Full bridge access for 30 days, no payment up front." },

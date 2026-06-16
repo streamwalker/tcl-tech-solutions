@@ -11,7 +11,7 @@ const IBMRecommendations = () => {
       badgeVariant: "default" as const,
       icon: Home,
       title: "Complete Smart Home Automation in San Antonio",
-      description: "Transform your San Antonio home with integrated Control4 and Savant lighting, security, climate control, and whole-home entertainment systems.",
+      description: "Transform your San Antonio home with integrated Savant lighting, security, climate control, and whole-home entertainment systems.",
       image: "/HomeTheater.jpg",
       link: "/services#automation",
       cta: "Explore automation"
@@ -82,7 +82,7 @@ const IBMRecommendations = () => {
           </h2>
           <p className="text-muted-foreground max-w-2xl">
             Discover our comprehensive smart home automation, home theater, and enterprise IT solutions 
-            designed for San Antonio homeowners and businesses. Authorized Control4, Savant, and Lutron dealer.
+            designed for San Antonio homeowners and businesses. Authorized Savant and Lutron dealer.
           </p>
         </div>
 

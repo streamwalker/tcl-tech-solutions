@@ -1592,7 +1592,7 @@
   <div class="reading-panel">
     <p>
       A modern smart home is built around a single
-      <span class="term" data-term="control4" data-component="popover">whole-home automation system</span>
+      <span class="term" data-term="savant" data-component="popover">whole-home automation system</span>
       that ties every subsystem together. In the living room, your
       <span class="term" data-term="atmos" data-component="hovercard">Dolby Atmos</span>
       sound stage works in concert with smart lighting and motorized shades to create scenes you can summon by voice.
@@ -1874,8 +1874,8 @@
       <div class="ac-body"><p>A Foundation-tier room can be completed in a single day. A full Reference theater room with new construction typically requires 3–6 weeks, coordinated with the general contractor.</p></div>
     </details>
     <details class="faq">
-      <summary>Do I have to choose Control4? Can I use other systems?</summary>
-      <div class="ac-body"><p>No. We work across major automation platforms including Control4, Crestron, Savant, and Lutron. Your needs and existing infrastructure inform the choice.</p></div>
+      <summary>Which automation platform do you recommend?</summary>
+      <div class="ac-body"><p>No. We work across major automation platforms including Crestron, Savant, and Lutron. Your needs and existing infrastructure inform the choice.</p></div>
     </details>
     <details class="faq">
       <summary>What ongoing support is included?</summary>
@@ -2201,7 +2201,7 @@
             "8-zone landscape audio with in-ground subs",
             "Automated retractable shade or pergola integration",
             "Pool-edge waterproof control panel",
-            "Full Control4 outdoor zone with voice control",
+            "Full outdoor automation zone with voice control",
             "Architectural lighting design (50+ fixtures)",
             "Custom outdoor AV cabinet with climate control"
           ]
@@ -2595,18 +2595,6 @@
   // Centralized glossary
   // -----------------------------------------------------------
   const GLOSSARY = {
-    "control4": {
-      term: "Control4",
-      category: "Brands",
-      icon: "🧠",
-      pronunciation: "kuhn-TROHL FOR",
-      short: "A whole-home automation system platform.",
-      full: "Control4 is a manufacturer of home-automation systems that lets a single application or remote control unify televisions, audio zones, lighting, climate, locks, and security cameras under one interface. It supports thousands of third-party devices and is one of the dominant platforms used by certified custom installers.",
-      plain: "Think of Control4 as the brain that lets one app — or your voice — run your TV, lights, locks, music, and cameras at the same time.",
-      example: "We installed a Control4 hub in the equipment closet so a single Goodnight scene locks the doors, dims every light to 5%, lowers the bedroom shade, and arms the alarm.",
-      whyItMatters: "Without an automation hub, smart-home devices stay siloed in their own apps. The hub is what turns a collection of products into a coherent system.",
-      related: ["crestron", "savant", "lutron"]
-    },
     "crestron": {
       term: "Crestron",
       category: "Brands",
@@ -2614,10 +2602,10 @@
       pronunciation: "KRES-trahn",
       short: "Premium commercial-grade automation system.",
       full: "Crestron is a long-standing manufacturer of automation control systems used in luxury homes, corporate boardrooms, and broadcast studios. Crestron systems are programmable to a deeper level than most consumer alternatives and require certified dealers for setup.",
-      plain: "Crestron is the high-end, fully customizable cousin of Control4 — usually found in commercial buildings and luxury homes.",
+      plain: "Crestron is the high-end, fully customizable cousin of Savant — usually found in commercial buildings and luxury homes.",
       example: "The boardroom uses a Crestron touch panel to start the projector, drop the screen, dim the lights, and dial in to Zoom — all from one button.",
       whyItMatters: "When clients need multi-room broadcast-grade reliability and deep custom programming, Crestron is the standard.",
-      related: ["control4", "savant"]
+      related: ["savant"]
     },
     "savant": {
       term: "Savant",
@@ -2628,7 +2616,7 @@
       plain: "Savant is the Apple-flavored take on whole-home control — sleek hardware, polished apps.",
       example: "Savant's Pro app lets the homeowner control all subsystems from an iPad or Apple Watch.",
       whyItMatters: "For Apple-first households, Savant integrates more naturally than most competitors.",
-      related: ["control4", "crestron"]
+      related: ["crestron"]
     },
     "lutron": {
       term: "Lutron",
@@ -2639,7 +2627,7 @@
       plain: "When you want lights and shades that feel premium and behave reliably, Lutron is what installers reach for.",
       example: "Every keypad in the home is a Lutron Palladiom — engraved buttons mapped to scenes like Welcome, Dinner, and Goodnight.",
       whyItMatters: "Lighting is the most-used subsystem in any smart home. Cheap dimmers feel cheap every day.",
-      related: ["control4", "crestron", "smart-lighting"]
+      related: ["crestron", "smart-lighting"]
     },
     "atmos": {
       term: "Dolby Atmos",
@@ -2796,7 +2784,7 @@
       plain: "One button that changes dozens of things at the same time.",
       example: "Movie Night dims the lights to 10%, lowers the shades, switches the TV input, and silences the doorbell.",
       whyItMatters: "Scenes are the user-facing language of automation. Done right, they replace dozens of daily decisions.",
-      related: ["smart-lighting", "control4"]
+      related: ["smart-lighting"]
     },
     "acoustic-treatment": {
       term: "Acoustic Treatment",
@@ -3322,7 +3310,7 @@
     if (!aiMsgs.children.length) {
       aiAdd("Hi — I'm your dossier assistant. Ask about any term, package, or concept on this page.");
       const sg = $("#aiSuggestions");
-      sg.innerHTML = ["What is Dolby Atmos?", "Explain Control4 simply", "What is rough-in?", "Why does calibration matter?"]
+      sg.innerHTML = ["What is Dolby Atmos?", "Explain home automation simply", "What is rough-in?", "Why does calibration matter?"]
         .map(s => `<button>${s}</button>`).join("");
       $$("#aiSuggestions button").forEach(b => b.addEventListener("click", () => { aiInput.value = b.textContent; aiSubmit(); }));
     }
@@ -3354,7 +3342,7 @@
     if (/install|how long|timeline/.test(q)) {
       return "A Foundation room can be done in a day. A full Reference theater typically runs 3–6 weeks coordinated with the contractor. See the timeline section above for the six standard phases.";
     }
-    return "I don't have a direct match for that yet. Try asking about Atmos, Control4, OLED, rough-in, calibration, or any highlighted term on this page.";
+    return "I don't have a direct match for that yet. Try asking about Atmos, OLED, rough-in, calibration, or any highlighted term on this page.";
   }
   function aiSubmit() {
     const v = aiInput.value.trim();
