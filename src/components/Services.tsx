@@ -22,7 +22,7 @@ const Services = () => {
           "Voice control integration",
           "Mobile app control from anywhere"
         ],
-        brands: ["Control4", "Lutron RadioRA2", "Nest", "Ring", "Sonos"],
+        brands: ["Lutron RadioRA2", "Nest", "Ring", "Sonos"],
         process: "Consultation → Design → Installation → Programming → Training",
         timeline: "2-4 weeks for complete installation"
       }
@@ -127,7 +127,7 @@ const Services = () => {
           "Advanced security integration",
           "Concierge-level support"
         ],
-        brands: ["Savant", "Control4", "Crestron", "Lutron", "RTI"],
+        brands: ["Savant", "Crestron", "Lutron", "RTI"],
         process: "Consultation → Design → Project Management → Installation → Commissioning",
         timeline: "2-6 months for complete estate automation"
       }
@@ -275,7 +275,7 @@ const Services = () => {
               Serving San Antonio & Surrounding Areas
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Authorized dealer for Control4, URC, AVA Cinema, Savant, RTI, and Lutron RadioRA2. 
+              Authorized dealer for URC, AVA Cinema, Savant, RTI, and Lutron RadioRA2. 
               Partnerships with Coventry, Lennar, and Perry Homes in zip codes 78245, 78253, and 78254.
             </p>
             <Button 

@@ -37,7 +37,7 @@ const About = () => {
     },
     {
       icon: Home,
-      title: "Control4 (CN) Designer/Programmer",
+      title: "(CN) Designer/Programmer",
       description: "Programming expertise allowing unification of devices into cohesive, scalable ecosystems tailored to client needs."
     },
     {
@@ -173,7 +173,7 @@ const About = () => {
             
             <p className="text-lg mb-8 leading-relaxed">
               We've completed over 15 smart home installations with our authorized dealer partnerships 
-              including Control4, URC, AVA Cinema, Savant, RTI, and Lutron RadioRA3, ensuring access 
+              including URC, AVA Cinema, Savant, RTI, and Lutron RadioRA3, ensuring access 
               to professional-grade equipment at competitive prices.
             </p>
 

@@ -19,7 +19,7 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      quote: "The home theater system TCL installed in our Stone Oak home exceeded all my expectations. The Dolby Atmos sound quality is incredible and the Control4 automation makes everything so easy.",
+      quote: "The home theater system TCL installed in our Stone Oak home exceeded all my expectations. The Dolby Atmos sound quality is incredible and the automation makes everything so easy.",
       name: "Earl W. — Stone Oak, San Antonio",
       serviceType: "Home Theater & Audio/Video Setup",
       rating: 5
@@ -53,7 +53,7 @@ const Testimonials = () => {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Real experiences from San Antonio homeowners who've transformed their homes with our smart home automation, 
-            home theater installation, and Control4 integration services.
+            home theater installation, and integration services.
           </p>
         </div>
 

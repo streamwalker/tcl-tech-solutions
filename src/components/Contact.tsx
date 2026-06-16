@@ -95,7 +95,7 @@ const Contact = () => {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Ready to transform your San Antonio home with smart home automation, a professional home theater, 
             or enterprise IT services? Contact The Connected Lifestyle for a free consultation. 
-            Veteran-owned. Control4 & Savant authorized dealer. Serving Helotes, Stone Oak, Alamo Ranch & all of South Texas.
+            Veteran-owned. Savant authorized dealer. Serving Helotes, Stone Oak, Alamo Ranch & all of South Texas.
           </p>
         </div>
 
