@@ -93,12 +93,11 @@ curl -X POST -H 'content-type: application/json' \\
         <p className="mt-4 max-w-3xl text-muted-foreground">
           Hub-and-spoke. Every ecosystem translates to and from one neutral vocabulary in the
           middle, instead of writing a converter for every pair. Issue a Josh voice intent;
-          drive a Control4-only light. Issue a URC function; switch the Rose source.
+          drive a third-party-only light. Issue a URC function; switch the Rose source.
         </p>
         <CodeBlock
           title="architecture"
-          code={` Control4 ─┐                                   ┌─ Control4 devices
-      URC ─┤  controllers   ┌───────────┐  device│   URC devices
+          code={`      URC ─┐  controllers   ┌───────────┐  device│   URC devices
   Josh AI ─┤ ─ translate ─► │ canonical │ ─ apply├─ Josh devices
            │   inbound      │   router  │  command│   Hi-Fi Rose (LIVE)
            └─ /v2/ingress   └───────────┘         └─ mock demo devices`}

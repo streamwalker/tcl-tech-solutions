@@ -36,11 +36,6 @@ const About = () => {
       description: "Advanced training in RTI automation systems, creating customized control environments for residential and commercial applications."
     },
     {
-      icon: Home,
-      title: "(CN) Designer/Programmer",
-      description: "Programming expertise allowing unification of devices into cohesive, scalable ecosystems tailored to client needs."
-    },
-    {
       icon: Target,
       title: "Certified Home Theater Designer & Calibrator",
       description: "Precision in theater design and calibration ensuring cinema-quality sound and visuals for immersive experiences."

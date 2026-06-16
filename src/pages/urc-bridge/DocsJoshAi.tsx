@@ -55,7 +55,7 @@ Type:     AVR / Streamer`} />
           <h2 className="text-2xl font-semibold tracking-tight">4. Universal Translator (/v2)</h2>
           <p className="mt-2 text-muted-foreground">
             With /v2 ingress, Josh can drive non-Rose devices through the same bridge — e.g.
-            "turn on the living room lights" routes to Control4 via the canonical capability
+            "turn on the living room lights" routes to the target ecosystem via the canonical capability
             model. See the <Link to="/products/urc-bridge" className="text-primary hover:underline">overview page</Link> for the hub-and-spoke diagram.
           </p>
           <CodeBlock code={`curl -X POST http://192.168.1.10:8088/v2/ingress/josh \\

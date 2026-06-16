@@ -152,7 +152,7 @@ export default function ProductLibrary() {
           <div className="space-y-4">
             <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Product name" /></div>
             <div className="grid grid-cols-2 gap-4">
-              <div><Label>Manufacturer</Label><Input value={form.manufacturer} onChange={(e) => setForm({ ...form, manufacturer: e.target.value })} placeholder="e.g. Control4" /></div>
+              <div><Label>Manufacturer</Label><Input value={form.manufacturer} onChange={(e) => setForm({ ...form, manufacturer: e.target.value })} placeholder="e.g. Savant" /></div>
               <div><Label>Model</Label><Input value={form.model} onChange={(e) => setForm({ ...form, model: e.target.value })} placeholder="e.g. C4-EA5" /></div>
             </div>
             <div><Label>Category</Label>

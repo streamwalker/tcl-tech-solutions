@@ -314,7 +314,6 @@ export const CompanyPopups = {
               Complete whole-home automation for 8,500 sq ft estate including lighting, climate, security, and entertainment systems.
             </p>
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Control4</span>
               <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Lutron</span>
               <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Savant</span>
             </div>

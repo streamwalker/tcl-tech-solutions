@@ -547,7 +547,6 @@ const InvestorWhitePaper = () => {
                   <ul className="text-xs text-gray-700 space-y-1">
                     <li>• SnapAV</li>
                     <li>• Savant</li>
-                    <li>• Control4</li>
                     <li>• Best Buy (Geek Squad)</li>
                   </ul>
                 </div>
