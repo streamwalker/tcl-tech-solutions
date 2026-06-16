@@ -336,17 +336,6 @@ const BuilderDeck = () => {
       ],
       link: "https://www.rticorp.com/"
     },
-    control4: {
-      title: "Control4 Designer Certified",
-      description: "Professional home automation design certification for Control4 systems, specializing in whole-home integration.",
-      benefits: [
-        "Comprehensive whole-home automation design",
-        "Seamless integration of lighting, audio, video, and climate",
-        "Professional system commissioning and support",
-        "Custom programming for unique home requirements"
-      ],
-      link: "https://www.control4.com/"
-    },
     theater: {
       title: "Home Theater Designer",
       description: "Specialized expertise in designing and installing custom home theater and entertainment spaces for optimal audiovisual experiences.",
@@ -1788,53 +1777,6 @@ const BuilderDeck = () => {
                     </DialogContent>
                   </Dialog>
 
-                  <Dialog open={certificationDialog === 'control4'} onOpenChange={(open) => setCertificationDialog(open ? 'control4' : null)}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <DialogTrigger asChild>
-                          <button type="button" className="certification-badge interactive-element relative group">
-                            <Shield className="w-4 h-4 mr-2" />
-                            Control4 Designer
-                            <Info className="w-3 h-3 absolute -top-1 -right-1 text-primary animate-pulse" />
-                          </button>
-                        </DialogTrigger>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Click for certification details</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <DialogContent className="max-w-2xl">
-                      <DialogHeader>
-                        <DialogTitle>{certificationData.control4.title}</DialogTitle>
-                        <DialogDescription className="mt-4">
-                          {certificationData.control4.description}
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="mt-6">
-                        <h4 className="font-semibold mb-3">Key Benefits:</h4>
-                        <ul className="space-y-2">
-                          {certificationData.control4.benefits.map((benefit, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
-                              <span className="text-sm">{benefit}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="mt-6 pt-4 border-t">
-                          <a 
-                            href={certificationData.control4.link} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-primary hover:underline"
-                          >
-                            Visit Control4
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-
                   <Dialog open={certificationDialog === 'theater'} onOpenChange={(open) => setCertificationDialog(open ? 'theater' : null)}>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -1976,23 +1918,6 @@ const BuilderDeck = () => {
                </TooltipTrigger>
                <TooltipContent>
                  <p>Visit Lutron website</p>
-               </TooltipContent>
-             </Tooltip>
-             <Tooltip>
-               <TooltipTrigger asChild>
-                 <a href="https://www.control4.com/" target="_blank" rel="noopener noreferrer" className="block interactive-element relative group">
-                   <Card className="card-elevated p-6 text-center cursor-pointer">
-                     <div className="w-16 h-16 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                       <Home className="w-8 h-8 text-primary" />
-                     </div>
-                     <h4 className="font-semibold">Control4</h4>
-                     <p className="text-sm text-muted-foreground">Automation</p>
-                     <ExternalLink className="w-3 h-3 absolute top-2 right-2 text-primary opacity-70" />
-                   </Card>
-                 </a>
-               </TooltipTrigger>
-               <TooltipContent>
-                 <p>Visit Control4 website</p>
                </TooltipContent>
              </Tooltip>
              <Tooltip>
