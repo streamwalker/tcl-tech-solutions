@@ -227,7 +227,7 @@ const Financials = () => {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  <li>• Strategic Acquisition – 3‑5 yrs; targets: SnapAV, Savant, Control4, Best Buy</li>
+                  <li>• Strategic Acquisition – 3‑5 yrs; targets: SnapAV, Savant, Savant, Best Buy</li>
                   <li>• IPO Option – 5‑7 yrs pending $12M+ recurring revenue</li>
                   <li>• Investor IRR Goal – 10‑15× via acquisition multiple</li>
                 </ul>

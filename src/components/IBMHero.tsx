@@ -8,7 +8,7 @@ const IBMHero = () => {
     {
       type: "News",
       title: "TCL Launches Advanced Smart Home Automation in San Antonio",
-      excerpt: "Revolutionary Control4 and Savant automation technology for modern San Antonio homes...",
+      excerpt: "Revolutionary Savant automation technology for modern San Antonio homes...",
       link: "/services#smart-home-automation"
     },
     {
@@ -37,7 +37,7 @@ const IBMHero = () => {
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
                 San Antonio's veteran-owned smart home automation, home theater installation, and 
-                enterprise IT company. Control4, Savant, and Lutron authorized dealer serving 
+                enterprise IT company. Savant and Lutron authorized dealer serving 
                 residential and commercial customers across South Texas.
               </p>
             </div>
@@ -73,7 +73,7 @@ const IBMHero = () => {
             <div className="relative">
               <img 
                 src="/TCL%20Home%20Automation.jpg" 
-                alt="Smart home automation installation by The Connected Lifestyle in San Antonio TX — Control4 and Savant whole-home systems" 
+                alt="Smart home automation installation by The Connected Lifestyle in San Antonio TX — Savant whole-home systems" 
                 className="w-full h-80 lg:h-96 object-cover rounded-lg shadow-xl"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg"></div>

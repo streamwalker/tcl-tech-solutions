@@ -38,7 +38,7 @@ export default function BillOfMaterialsView({ onBack }: { onBack?: () => void })
             <h3 className="text-lg font-bold text-gray-800 mb-2">Scope of Work</h3>
             <div className="text-sm text-gray-800 leading-7 bg-gray-100 rounded-lg p-4">
               <p className="mb-2"><strong>1. Home Theater</strong> — Design &amp; Consultation: Assess layout, acoustics, and seating. Recommend projector/TV, screen, and speakers. Equipment Installation: Mount projector/TV, install speakers, subwoofer, and AV receiver. Wiring &amp; Integration: Pre-wire or retrofit cabling, conceal wiring for clean finish. Programming: Universal remote/smart control setup, audio/video calibration.</p>
-              <p><strong>2. Home Automation</strong> — System Design: Recommend automation platform (Control4, Savant, etc.). Lighting Control: Smart switches, dimmers, and scene control. Climate Integration: Smart thermostat installation. Voice Control: Alexa, Google Home, Siri integration. Custom Programming: Unified app/interface control.</p>
+              <p><strong>2. Home Automation</strong> — System Design: Recommend automation platform (Savant, Savant, etc.). Lighting Control: Smart switches, dimmers, and scene control. Climate Integration: Smart thermostat installation. Voice Control: Alexa, Google Home, Siri integration. Custom Programming: Unified app/interface control.</p>
             </div>
             <span className="text-xs text-[#C42020] cursor-pointer">Edit scope of work</span>
           </div>

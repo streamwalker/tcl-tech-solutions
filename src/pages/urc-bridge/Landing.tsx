@@ -8,7 +8,7 @@ const PHASES = [
   { n: "2", t: "URC driver", d: "Custom IP driver in Total Control hits /v1/* — no changes when Rose ships firmware.", s: "shipped" },
   { n: "3", t: "Dealer rollout kit", d: "One-shot installer, launchd daemon, sha256-verified auto-update from the release manifest.", s: "shipped" },
   { n: "4", t: "Josh AI", d: "Same /v1/* contract powers voice control via Josh AI's HTTP integration.", s: "shipped" },
-  { n: "5", t: "Universal Translator (/v2)", d: "Canonical hub-and-spoke router across Control4, URC, and Josh AI. Issue a command from any ecosystem, target any other.", s: "shipped" },
+  { n: "5", t: "Universal Translator (/v2)", d: "Canonical hub-and-spoke router across Savant, URC, and Josh AI. Issue a command from any ecosystem, target any other.", s: "shipped" },
 ];
 
 export default function UrcBridgeLanding() {
