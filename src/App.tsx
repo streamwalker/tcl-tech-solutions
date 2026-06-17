@@ -40,6 +40,7 @@ import UrcBridgeDeploymentDocs from "./pages/urc-bridge/DocsDeployment";
 import UrcBridgeJoshAiDocs from "./pages/urc-bridge/DocsJoshAi";
 import UrcBridgeDownload from "./pages/urc-bridge/Download";
 import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
+import NavICUPrivacy from "./pages/NavICUPrivacy";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -138,6 +139,7 @@ const SEO: Record<string, SeoCfg> = {
   "/auth": { title: "Sign In | The Connected Lifestyle", description: "Sign in to your TCL account." },
   "/dashboard": { title: "Dashboard | The Connected Lifestyle", description: "TCL operator dashboard." },
   "/tools/upgrade-model": { title: "Upgrade Membership Model | TCL Tech Solutions", description: "Interactive deal-modeling tool: portfolio economics, AT&T comparison, and upgrade membership calculator." },
+  "/navicu/privacy": { title: "NavICU Privacy Policy | TCL Tech Solutions", description: "NavICU iOS app privacy policy. The app does not collect data; all processing is on-device." },
 };
 
 function Page({ path, children }: { path: string; children: ReactNode }) {
@@ -189,6 +191,7 @@ const App = () => (
           <Route path="/products/urc-bridge/docs/josh-ai" element={<Page path="/products/urc-bridge/docs/josh-ai"><UrcBridgeJoshAiDocs /></Page>} />
           <Route path="/products/urc-bridge/download" element={<Page path="/products/urc-bridge/download"><UrcBridgeDownload /></Page>} />
           <Route path="/tools/upgrade-model" element={<Page path="/tools/upgrade-model"><UpgradeModelPage /></Page>} />
+          <Route path="/navicu/privacy" element={<Page path="/navicu/privacy"><NavICUPrivacy /></Page>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
