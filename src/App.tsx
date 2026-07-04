@@ -41,6 +41,7 @@ import UrcBridgeJoshAiDocs from "./pages/urc-bridge/DocsJoshAi";
 import UrcBridgeDownload from "./pages/urc-bridge/Download";
 import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
 import NavICUPrivacy from "./pages/NavICUPrivacy";
+import OAuthConsent from "./pages/OAuthConsent";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
