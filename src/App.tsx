@@ -42,6 +42,7 @@ import UrcBridgeDownload from "./pages/urc-bridge/Download";
 import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
 import NavICUPrivacy from "./pages/NavICUPrivacy";
 import OAuthConsent from "./pages/OAuthConsent";
+import McpIntegration from "./pages/McpIntegration";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -194,6 +195,7 @@ const App = () => (
           <Route path="/tools/upgrade-model" element={<Page path="/tools/upgrade-model"><UpgradeModelPage /></Page>} />
           <Route path="/navicu/privacy" element={<Page path="/navicu/privacy"><NavICUPrivacy /></Page>} />
           <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
+          <Route path="/integrations/mcp" element={<Page path="/integrations/mcp"><McpIntegration /></Page>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
