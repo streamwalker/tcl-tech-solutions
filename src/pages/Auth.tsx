@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,17 +20,24 @@ const Auth = () => {
   const [error, setError] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Validate and use the ?next= param so OAuth consent (or any protected page)
+  // can send the user back after login. Only accept same-origin relative paths.
+  const rawNext = searchParams.get('next') ?? '';
+  const safeNext = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '';
+  const postLoginTarget = safeNext || '/dashboard';
 
   useEffect(() => {
     // Check if user is already logged in
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate('/dashboard');
+        navigate(postLoginTarget);
       }
     };
     checkUser();
-  }, [navigate]);
+  }, [navigate, postLoginTarget]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +45,7 @@ const Auth = () => {
     setError('');
 
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}${postLoginTarget}`;
       
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -94,7 +101,7 @@ const Auth = () => {
           setError(error.message);
         }
       } else {
-        navigate('/dashboard');
+        navigate(postLoginTarget);
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');

@@ -41,6 +41,7 @@ import UrcBridgeJoshAiDocs from "./pages/urc-bridge/DocsJoshAi";
 import UrcBridgeDownload from "./pages/urc-bridge/Download";
 import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
 import NavICUPrivacy from "./pages/NavICUPrivacy";
+import OAuthConsent from "./pages/OAuthConsent";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -192,6 +193,7 @@ const App = () => (
           <Route path="/products/urc-bridge/download" element={<Page path="/products/urc-bridge/download"><UrcBridgeDownload /></Page>} />
           <Route path="/tools/upgrade-model" element={<Page path="/tools/upgrade-model"><UpgradeModelPage /></Page>} />
           <Route path="/navicu/privacy" element={<Page path="/navicu/privacy"><NavICUPrivacy /></Page>} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
