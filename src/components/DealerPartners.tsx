@@ -9,150 +9,150 @@ const DealerPartners = () => {
       badge: "Authorized Dealer",
       specialty: "Multi-Room Audio",
       description:
-        "Juke builds compact multi-zone amplifiers that stream AirPlay, Spotify Connect, Sonos, and line-in sources to up to eight zones per unit.",
+        "Juke builds compact, network-based multi-zone amplifiers that stream AirPlay 2, Spotify Connect, Tidal, and analog sources to up to eight zones per chassis — no per-zone streamer, no proprietary head-end.",
       integration:
-        "We rack Juke in the AV closet during trim, map each zone to a room in the control system, and expose zone volume and source control inside URC, Savant, RTI, or Josh.ai — whole-home audio without a per-zone streamer.",
-      keyBenefits: ["8 zones per amp", "Streams every major service", "Unified control-system access"],
+        "We spec Juke during design, terminate speaker home-runs to the AV rack at trim, and expose zone volume, source, and grouping inside URC, Savant, RTI, and Josh.ai so the client controls whole-home audio from the same interface as everything else.",
+      keyBenefits: ["Up to 8 zones per amp", "AirPlay 2 & major streaming built-in", "Unified control-system UI"],
     },
     {
       name: "Kaleidescape",
       badge: "Authorized Dealer",
       specialty: "Reference Cinema",
       description:
-        "The reference-quality movie server used in the world's finest theaters — lossless audio and true 4K HDR that outperforms every streaming service.",
+        "The reference-quality movie server used in the world's finest private theaters — bit-perfect lossless audio and full-bitrate 4K HDR that streaming platforms simply cannot match.",
       integration:
-        "We spec the Strato/Terra combo into theater and media-room designs, wire it into the video matrix, and build one-button 'Watch a Movie' scenes that dim the lights, close the shades, and cue the projector.",
-      keyBenefits: ["Reference 4K HDR", "Lossless audio tracks", "One-button cinema scenes"],
+        "We size Strato players and Terra storage to the client's library, integrate them into the video matrix and AVR, and program single-button 'Watch a Movie' scenes that dim lights, close shades, mask the screen, and cue the projector in the right order.",
+      keyBenefits: ["Full-bitrate 4K HDR", "Lossless Dolby Atmos & DTS:X", "One-touch cinema scenes"],
     },
     {
       name: "Epson",
       badge: "Authorized Dealer",
       specialty: "Projection",
       description:
-        "Epson LS-series and Pro Cinema laser projectors deliver bright, color-accurate images for dedicated theaters, media rooms, and outdoor screens.",
+        "Epson LS-series, QB-series, and Pro Cinema laser projectors deliver bright, color-accurate images for dedicated theaters, media rooms, and outdoor screens, with the light-source longevity clients expect from a permanent install.",
       integration:
-        "Our CEDIA-trained designers pick the right lumens and throw distance for the room, mount and align in-house, and calibrate to ISF and THX targets post-install.",
-      keyBenefits: ["Laser light-source longevity", "High-lumen output", "ISF/THX calibrated"],
+        "Our CEDIA-trained designers match lumens, contrast, and throw to the room and screen, mount and align in-house, then calibrate with Calman to reference targets for both SDR and HDR content.",
+      keyBenefits: ["20,000+ hr laser light source", "Room-matched lumens & throw", "Calman-calibrated SDR/HDR"],
     },
     {
       name: "Samsung",
       badge: "Authorized Dealer",
       specialty: "Displays & Frame TV",
       description:
-        "Samsung Neo QLED, OLED, MicroLED, and The Frame lines cover luxury living rooms, kitchens, primary suites, and outdoor patios.",
+        "Samsung Neo QLED, OLED, MicroLED, The Frame, and Terrace outdoor displays cover every room in a luxury home — from primary living spaces to kitchens, primary suites, and covered patios.",
       integration:
-        "We size and mount displays, hide power and HDMI in-wall, and integrate every TV into the control system so a single button changes source, volume, and lighting scene.",
-      keyBenefits: ["Whole-home display strategy", "Concealed wiring", "One-touch scene control"],
+        "We size and mount each display to sight-lines and seating, run concealed power and HDMI in-wall to code, and integrate every screen into the control system so one button changes source, volume, shading, and lighting together.",
+      keyBenefits: ["Whole-home display strategy", "Code-compliant concealed wiring", "One-touch scene control"],
     },
     {
       name: "JVC",
       badge: "Authorized Dealer",
       specialty: "Reference Projection",
       description:
-        "JVC D-ILA projectors are the gold standard for native-4K contrast and true black level in dedicated theaters.",
+        "JVC D-ILA projectors are the reference standard for native-4K contrast and true black level in dedicated home theaters and screening rooms.",
       integration:
-        "We pair JVC with anamorphic lensing or CinemaScope screens for clients who want true reference cinema, then calibrate with Calman for both HDR and SDR.",
-      keyBenefits: ["Native 4K D-ILA", "Reference black level", "Calman-calibrated"],
+        "We pair JVC with anamorphic lensing or CinemaScope screens when the room warrants it, run Frame Adapt HDR to the client's viewing environment, and finish every install with a Calman calibration for both SDR and HDR.",
+      keyBenefits: ["Native 4K D-ILA panels", "Class-leading black level", "Calman-calibrated Frame Adapt HDR"],
     },
     {
       name: "URC (Universal Remote Control)",
       badge: "HAP Certified Dealer",
       specialty: "Control Systems",
       description:
-        "URC's Total Control and Home Automation Platform is our primary control backbone for smart homes and light commercial spaces.",
+        "URC's Total Control 2.0 and Home Automation Platform (HAP) is our primary control backbone for smart homes and light-commercial installs, with deep two-way drivers for the AV, lighting, climate, and security gear we spec.",
       integration:
-        "We program room-by-room activities, unify AV, lighting, climate, and security under one remote or in-wall touchscreen, and support the system remotely through URC's cloud tools.",
-      keyBenefits: ["Unified whole-home control", "In-wall touchscreens", "Remote service tools"],
+        "We design keypad and touchscreen layouts room by room, program activities and macros, then enroll every project in URC's cloud so we can push updates and resolve issues remotely instead of rolling a truck.",
+      keyBenefits: ["Unified AV, lighting, HVAC & security", "In-wall & handheld touchscreens", "Cloud-based remote service"],
     },
     {
       name: "Elura",
       badge: "Authorized Dealer",
       specialty: "Surveillance & Access",
       description:
-        "Elura provides pro-grade IP cameras, NVRs, intercoms, and analytics purpose-built for residential integrators.",
+        "Elura delivers pro-grade IP cameras, NVRs, video intercoms, and AI analytics purpose-built for residential integrators — not repurposed commercial gear.",
       integration:
-        "We design camera coverage during pre-wire, terminate PoE at the network rack, and surface live feeds and doorbell calls on TVs, phones, and control interfaces.",
-      keyBenefits: ["Pre-wire coverage design", "PoE network integration", "Feeds on every screen"],
+        "We plan coverage and sight-lines during pre-wire, terminate PoE runs on managed switches at the rack, and surface live feeds, event clips, and doorbell calls on TVs, phones, and URC/Savant/Josh.ai interfaces.",
+      keyBenefits: ["Coverage engineered at pre-wire", "PoE on a managed network", "Feeds & alerts on every device"],
     },
     {
       name: "Marantz",
       badge: "Authorized Dealer",
       specialty: "AV Receivers & Preamps",
       description:
-        "Marantz reference AV receivers and Cinema-series processors deliver audiophile 2-channel and reference home-theater performance in one chassis.",
+        "Marantz Cinema-series AV receivers and AV processors deliver audiophile two-channel and reference immersive-audio performance in one chassis, with HDAM circuitry the audio community actually cares about.",
       integration:
-        "We spec Marantz for media rooms and 2-channel listening zones, apply Dirac Live or Audyssey room correction, and hand off a system that sounds right the day you move in.",
-      keyBenefits: ["Audiophile 2-channel", "Reference home theater", "Room-corrected on delivery"],
+        "We spec Marantz where audio quality is the priority, measure the room with a calibrated mic, run Dirac Live or Audyssey MultEQ XT32, and hand off a system that measures and sounds correct on day one.",
+      keyBenefits: ["Audiophile 2-channel performance", "Reference Atmos/DTS:X theater", "Dirac Live room correction"],
     },
     {
       name: "Denon",
       badge: "Authorized Dealer",
       specialty: "AV Receivers",
       description:
-        "Denon AVRs are the workhorse for dedicated theaters and media rooms — up to 11.4 channels with Dolby Atmos and DTS:X.",
+        "Denon AVRs are the workhorse of dedicated theaters and media rooms — up to 11.4 channels of Dolby Atmos and DTS:X with the HDMI 2.1 bandwidth modern sources demand.",
       integration:
-        "We size the AVR to the speaker layout, rack it with proper ventilation, and lock down the configuration so guests can't break the calibration.",
-      keyBenefits: ["Up to 11.4 channels", "Atmos & DTS:X ready", "Config-locked handoff"],
+        "We size the AVR to the speaker layout and source stack, rack it with active ventilation, run Audyssey MultEQ XT32 calibration, then lock the configuration behind an installer PIN so guests can't undo the tune.",
+      keyBenefits: ["Up to 11.4 immersive channels", "8K/4K120 HDMI 2.1 throughput", "Calibrated & config-locked"],
     },
     {
       name: "AVA Cinema Remote",
       badge: "Authorized Dealer",
       specialty: "Luxury Home Theater",
       description:
-        "AVA Cinema delivers commercial-grade luxury theater builds — acoustic design, riser fabrication, motorized seating, and screen and projector packages.",
+        "AVA Cinema delivers commercial-grade luxury theater build-outs — acoustic treatment and isolation, riser fabrication, motorized seating, masking screens, and matched projector packages.",
       integration:
-        "We integrate AVA rooms into the whole-home control system so the theater is one tap away from every family device, with lighting, shades, and HVAC all cued to the movie scene.",
-      keyBenefits: ["Acoustic room design", "Motorized theater seating", "Scene-linked whole home"],
+        "We coordinate AVA's cinema build with our AV, lighting, and shade design so the room is architecturally and acoustically correct, then wire the theater into the whole-home control system with scenes that cue HVAC, lighting, shades, and masking together.",
+      keyBenefits: ["Acoustically treated & isolated", "Motorized theater seating", "Scene-linked with whole home"],
     },
     {
       name: "Big Dog Power",
       badge: "Authorized Dealer",
       specialty: "Power Management",
       description:
-        "Big Dog Power's rack-mount PDUs, surge suppression, and remote reboot units protect every device we install and let us restore a locked AV zone without a truck roll.",
+        "Big Dog Power's rack-mount PDUs, whole-system surge suppression, and IP-addressable remote reboot units protect every dollar of gear in the rack and let us recover a locked-up device without dispatching a technician.",
       integration:
-        "Every TCL rack ships with a Big Dog PDU so the client's investment is protected from day one and remotely serviceable from our support desk.",
-      keyBenefits: ["Surge & power conditioning", "Remote reboot per outlet", "Standard on every rack"],
+        "Every TCL rack ships standard with a Big Dog PDU wired to a labeled outlet map, monitored from our support desk so we can power-cycle any component per-outlet the moment a client reports an issue.",
+      keyBenefits: ["Whole-system surge protection", "Per-outlet remote reboot", "Standard on every TCL rack"],
     },
     {
       name: "Josh.ai",
       badge: "Certified Designer & Programmer",
       specialty: "Voice AI",
       description:
-        "Josh.ai is the privacy-first voice assistant purpose-built for luxury smart homes — natural-language control of lighting, shades, climate, AV, and security without sending audio to advertising clouds.",
+        "Josh.ai is the privacy-first voice assistant purpose-built for luxury smart homes — natural-language control of lighting, shades, climate, AV, and security with no advertising, no listening in, and no data resale.",
       integration:
-        "Our Josh designers program rooms, scenes, and multi-word commands, then integrate Josh with URC, Savant, RTI, Lutron, and Elura so voice becomes the fastest interface in the house.",
-      keyBenefits: ["Privacy-first voice AI", "Multi-word natural commands", "Cross-platform integration"],
+        "Our Josh-certified designers map rooms, scenes, and multi-command phrases to the way the family actually talks, then bridge Josh into URC, Savant, RTI, Lutron, Elura, and Kaleidescape so a single sentence drives every subsystem at once.",
+      keyBenefits: ["Privacy-first — no ad tracking", "Natural multi-command phrasing", "Bridged to every subsystem"],
     },
     {
       name: "Savant",
       badge: "Certified Integrator",
       specialty: "Smart Home AI Platform",
       description:
-        "Advanced smart home automation with intuitive user interfaces and AI-powered personalization across audio, video, and environmental systems.",
+        "Savant is the AI-driven luxury automation platform for whole-home audio, video, lighting, climate, and energy, with the polished touch UI clients expect at this tier.",
       integration:
-        "We deploy Savant Pro hosts, program scenes and schedules, and blend Savant with Lutron, URC, and Josh.ai for a single luxury experience across every room.",
-      keyBenefits: ["AI-driven scenes", "Luxury touch UI", "Cross-brand orchestration"],
+        "We deploy Savant Pro hosts and IP Audio, program scenes, schedules, and energy monitoring, and blend Savant with Lutron, URC, and Josh.ai so lighting, shading, and AV move as one system, not three.",
+      keyBenefits: ["AI-driven scenes & schedules", "Luxury Pro Remote & app UI", "Cross-brand orchestration"],
     },
     {
       name: "RTI",
       badge: "Certified Programmer",
       specialty: "Custom Control",
       description:
-        "RTI delivers commercial-grade control systems for complex residential and light-commercial installations with fully custom UIs.",
+        "RTI delivers commercial-grade control for complex residential and light-commercial installs, with fully custom UIs designed per-project instead of a fixed template.",
       integration:
-        "We design bespoke RTI interfaces, drive AV and lighting drivers, and stand up dealer-managed remote support so we can service the system without a site visit.",
-      keyBenefits: ["Custom on-screen UI", "Commercial reliability", "Remote diagnostics"],
+        "We design bespoke RTI interfaces around the way the client uses each room, deploy two-way drivers for their AV and lighting stack, and enable dealer-managed remote support so most service issues are resolved from our desk.",
+      keyBenefits: ["Bespoke per-project UI", "Commercial-grade reliability", "Dealer-managed remote support"],
     },
     {
       name: "Lutron RadioRA 3",
       badge: "Certified Dealer",
       specialty: "Lighting & Shade Control",
       description:
-        "Lutron RadioRA 3 is the reference wireless platform for whole-home lighting control, keypads, and automated shades.",
+        "Lutron RadioRA 3 is the reference wireless platform for whole-home lighting control, engraved keypads, and Sivoia QS automated shades in a luxury retrofit or new build.",
       integration:
-        "We engineer keypad layouts, load schedules, and shade groups, then bridge Lutron into URC, Savant, RTI, and Josh.ai so lighting scenes trigger with every AV activity.",
-      keyBenefits: ["Wireless reliability", "Custom keypad engraving", "Scene-linked with AV"],
+        "We engineer keypad layouts and engraving room by room, program load schedules and Sivoia shade groups, and bridge Lutron into URC, Savant, RTI, and Josh.ai so lighting and shading move automatically with every AV activity.",
+      keyBenefits: ["Rock-solid Clear Connect wireless", "Custom engraved keypads", "Shades & lighting linked to AV"],
     },
   ];
 
