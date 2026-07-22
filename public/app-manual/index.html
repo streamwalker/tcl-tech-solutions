@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TCL Tech Solutions — iOS App Operations Manual</title>
+<meta name="description" content="Complete operations manual for the TCL Tech Solutions iOS application. Technician and Administrator capabilities with exact in-app navigation paths.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0A0E; --panel:#12121A; --panel-2:#0E0E14;
+  --gold:#D4A03C; --gold-hi:#E8C36A; --gold-deep:#C49030;
+  --paper:#F5F0E8; --body:#C0C0C4; --faint:#7A7A80;
+  --alert:#C42020; --alert-soft:#E0574A;
+  --line:rgba(255,255,255,.07); --goldline:rgba(212,160,60,.28);
+  --fill:rgba(255,255,255,.02);
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --mono:'DM Mono',ui-monospace,Menlo,monospace;
+  --wrap:1180px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ink);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,160,60,.3);color:var(--paper)}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(10,10,14,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:var(--wrap);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px}
+.mark{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.mark-badge{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:var(--ink);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;letter-spacing:-.5px}
+.mark-txt strong{display:block;font-family:var(--display);font-size:14px;color:var(--paper);letter-spacing:.5px;line-height:1.15;font-weight:700}
+.mark-txt span{display:block;font-size:9px;color:var(--gold);letter-spacing:3px;font-weight:500}
+.topbar-sp{flex:1}
+.tgl{display:inline-flex;align-items:center;gap:9px;background:var(--fill);border:1px solid var(--line);color:var(--body);
+  padding:8px 14px;border-radius:8px;font:600 12px/1 var(--sans);cursor:pointer;letter-spacing:.3px}
+.tgl:hover{border-color:var(--goldline);color:var(--paper)}
+.tgl[aria-pressed="true"]{background:rgba(196,32,32,.14);border-color:rgba(196,32,32,.5);color:#FFD9D4}
+.tgl-dot{width:8px;height:8px;border-radius:50%;background:var(--alert);flex-shrink:0}
+.btn-print{background:none;border:1px solid var(--line);color:var(--faint);padding:8px 14px;border-radius:8px;font:600 12px/1 var(--sans);cursor:pointer}
+.btn-print:hover{color:var(--paper);border-color:var(--goldline)}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:216px 1fr;gap:48px;align-items:start}
+.sidenav{position:sticky;top:104px;padding:40px 0;font-size:13px}
+.sidenav h4{font:600 10px/1 var(--sans);letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin:0 0 12px}
+.sidenav ol{list-style:none;margin:0 0 26px;padding:0}
+.sidenav li{margin:0 0 2px}
+.sidenav a{display:block;padding:6px 10px;border-radius:6px;color:var(--faint);border-left:2px solid transparent;font-weight:500}
+.sidenav a:hover{color:var(--paper);background:var(--fill);text-decoration:none}
+.sidenav a.on{color:var(--gold);border-left-color:var(--gold);background:rgba(212,160,60,.06)}
+main{padding:40px 0 96px;min-width:0}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--goldline);padding-bottom:36px;margin-bottom:44px}
+.eyebrow{font:600 11px/1 var(--sans);letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin:0 0 16px}
+.mast h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,5.4vw,56px);line-height:1.06;color:var(--paper);margin:0 0 18px;letter-spacing:-1px}
+.mast h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold-hi),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mast p{font-size:17px;color:var(--faint);max-width:62ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.meta span{font:500 11px/1 var(--mono);color:var(--faint);border:1px solid var(--line);padding:7px 11px;border-radius:6px;letter-spacing:.4px}
+
+/* ---------- sections ---------- */
+.sec{margin:0 0 72px;scroll-margin-top:104px}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin:0 0 8px;flex-wrap:wrap}
+.sec-h h2{font-family:var(--display);font-size:clamp(24px,3.4vw,34px);font-weight:700;color:var(--paper);margin:0;letter-spacing:-.4px}
+.sec-num{font:500 12px/1 var(--mono);color:var(--gold);border:1px solid var(--goldline);padding:6px 9px;border-radius:5px;flex-shrink:0}
+.sec-sub{color:var(--faint);margin:0 0 28px;max-width:70ch}
+h3{font-family:var(--display);font-size:20px;font-weight:600;color:var(--paper);margin:34px 0 12px}
+
+/* ---------- reviewer panel ---------- */
+.panel{background:linear-gradient(160deg,rgba(212,160,60,.08),rgba(212,160,60,.02));border:1px solid var(--goldline);border-radius:16px;padding:30px;margin:0 0 56px}
+.panel h2{font-family:var(--display);font-size:25px;color:var(--paper);margin:12px 0 10px;font-weight:700}
+.panel>p{color:var(--body);margin:0 0 22px;max-width:70ch}
+.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0 6px}
+.cred{background:rgba(0,0,0,.45);border:1px solid var(--line);border-radius:10px;padding:15px}
+.cred b{display:block;font:600 10px/1 var(--sans);letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
+.cred code{font:500 14px/1.5 var(--mono);color:var(--paper);word-break:break-all;display:block}
+
+/* ---------- quick reference table ---------- */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:20px 0 0}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px}
+thead th{background:rgba(212,160,60,.08);color:var(--gold);font:600 10px/1 var(--sans);letter-spacing:2px;text-transform:uppercase;text-align:left;padding:13px 16px;border-bottom:1px solid var(--goldline);white-space:nowrap}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.018)}
+td.pathcell{font:500 12.5px/1.6 var(--mono);color:var(--paper)}
+td.numcell{font:500 12px/1 var(--mono);color:var(--gold);white-space:nowrap}
+
+/* ---------- status chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--sans);letter-spacing:1.2px;text-transform:uppercase;padding:5px 9px;border-radius:5px;white-space:nowrap}
+.chip-ok{background:rgba(212,160,60,.12);color:var(--gold);border:1px solid var(--goldline)}
+.chip-verify{background:rgba(196,32,32,.15);color:#FF9C90;border:1px solid rgba(196,32,32,.45)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* ---------- capability ticket card ---------- */
+.ticket{background:var(--fill);border:1px solid var(--line);border-radius:14px;padding:26px;margin:0 0 18px;scroll-margin-top:104px;transition:border-color .25s}
+.ticket:hover{border-color:rgba(212,160,60,.2)}
+.ticket.flag{border-color:rgba(196,32,32,.4)}
+.t-head{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.t-id{font:500 12px/1 var(--mono);color:var(--gold);background:rgba(212,160,60,.09);border:1px solid var(--goldline);padding:7px 9px;border-radius:5px;flex-shrink:0}
+.t-title{font-family:var(--display);font-size:20px;font-weight:600;color:var(--paper);margin:0;flex:1;min-width:200px;line-height:1.3}
+.t-ask{color:var(--faint);font-size:14px;margin:0 0 18px;font-style:italic}
+.t-ask b{font-style:normal;color:var(--body);font-weight:600}
+
+/* ---------- SIGNATURE: the wire-run path ---------- */
+.run{display:flex;flex-wrap:wrap;align-items:center;gap:0;background:rgba(0,0,0,.42);border:1px solid var(--goldline);border-radius:10px;padding:14px 16px;margin:0 0 20px;font-family:var(--mono);font-size:13px;line-height:1.5}
+.run-lbl{font:600 9px/1 var(--sans);letter-spacing:2px;color:var(--gold);text-transform:uppercase;width:100%;margin-bottom:10px}
+.run-node{color:var(--paper);font-weight:500;white-space:nowrap}
+.run-link{display:inline-flex;align-items:center;margin:0 4px;flex-shrink:0}
+.run-link i{display:block;width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.run-link u{display:block;width:16px;height:1px;background:linear-gradient(90deg,var(--gold),rgba(212,160,60,.35));text-decoration:none}
+.run-node.end{color:var(--gold);font-weight:500}
+
+/* ---------- steps ---------- */
+.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 12px 38px;color:var(--body);font-size:14.5px}
+.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:1px;font:500 11px/1.5 var(--mono);color:var(--gold);background:rgba(212,160,60,.08);border:1px solid var(--goldline);width:26px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.steps b{color:var(--paper);font-weight:600}
+.steps code,.inl{font:500 12.5px/1.4 var(--mono);background:rgba(212,160,60,.1);color:var(--gold-hi);padding:2px 6px;border-radius:4px;white-space:nowrap}
+
+/* ---------- data note ---------- */
+.datanote{margin:16px 0 0;padding:12px 15px;border-left:2px solid var(--goldline);background:rgba(212,160,60,.04);border-radius:0 8px 8px 0;font-size:13px;color:var(--faint)}
+.datanote b{color:var(--gold);font-weight:600;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;display:block;margin-bottom:5px;font-family:var(--sans)}
+.datanote code{font:500 12px/1.4 var(--mono);color:var(--paper)}
+
+/* ---------- callouts ---------- */
+.call{border-radius:12px;padding:20px 22px;margin:0 0 24px;font-size:14.5px;border:1px solid}
+.call b.lead{display:block;font:600 10px/1 var(--sans);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.call p{margin:0 0 10px}
+.call p:last-child{margin:0}
+.call-warn{background:rgba(196,32,32,.08);border-color:rgba(196,32,32,.4);color:#F0CFCB}
+.call-warn b.lead{color:var(--alert-soft)}
+.call-gold{background:rgba(212,160,60,.06);border-color:var(--goldline);color:var(--body)}
+.call-gold b.lead{color:var(--gold)}
+.call ul{margin:8px 0 0;padding-left:18px}
+.call li{margin-bottom:6px}
+
+/* ---------- copyable block ---------- */
+.copybox{position:relative;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:12px;padding:20px 20px 20px;margin:16px 0 0}
+.copybox pre{margin:0;font:400 13px/1.75 var(--mono);color:var(--body);white-space:pre-wrap;word-break:break-word}
+.copybtn{position:absolute;top:12px;right:12px;background:var(--fill);border:1px solid var(--line);color:var(--faint);
+  font:600 10px/1 var(--sans);letter-spacing:1.2px;text-transform:uppercase;padding:7px 11px;border-radius:6px;cursor:pointer}
+.copybtn:hover{color:var(--gold);border-color:var(--goldline)}
+
+/* ---------- fill-in placeholder ---------- */
+.fill{background:rgba(196,32,32,.16);border-bottom:1px dashed var(--alert-soft);color:#FFC4BC;padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:.92em}
+
+/* ---------- glossary / grid ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:16px}
+.mini{background:var(--fill);border:1px solid var(--line);border-radius:12px;padding:20px}
+.mini h4{font-family:var(--display);font-size:16px;color:var(--paper);margin:0 0 7px;font-weight:600}
+.mini p{margin:0;font-size:13.5px;color:var(--faint);line-height:1.65}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:24px;padding:34px 0 0;color:var(--faint);font-size:13px}
+footer strong{color:var(--paper)}
+
+/* ---------- unverified filter mode ---------- */
+body.only-flags .ticket:not(.flag){opacity:.16;filter:grayscale(1)}
+body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{background:rgba(196,32,32,.16)}50%{background:rgba(196,32,32,.42)}}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 18px}
+  .sidenav{position:static;padding:26px 0 0;border-bottom:1px solid var(--line)}
+  .sidenav ol{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+  .sidenav a{border-left:none;border:1px solid var(--line);padding:7px 12px}
+  .sidenav a.on{border-color:var(--goldline)}
+  main{padding:30px 0 72px}
+  .topbar-in{padding:10px 18px;gap:10px}
+  .mark-txt{display:none}
+  .panel,.ticket{padding:20px}
+}
+
+/* ---------- print ---------- */
+@media print{
+  body{background:#fff;color:#111;font-size:11pt}
+  .topbar,.sidenav,.copybtn,.btn-print,.tgl{display:none!important}
+  .shell{display:block;max-width:none;padding:0}
+  main{padding:0}
+  .mast h1,h2,h3,.t-title,.mini h4{color:#000}
+  .mast h1 em{-webkit-text-fill-color:#8A6A1E;color:#8A6A1E}
+  .panel,.ticket,.call,.copybox,.mini,.tblwrap{border:1px solid #bbb;background:#fff;break-inside:avoid}
+  .run{background:#f6f3ec;border-color:#c9ad6a}
+  .run-node,.steps b,.datanote code{color:#000}
+  .sec,.ticket{break-inside:avoid}
+  a{color:#000;text-decoration:underline}
+  .chip-ok{color:#8A6A1E;border-color:#8A6A1E}
+  .chip-verify{color:#A11;border-color:#A11}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="mark">
+      <div class="mark-badge">TCL</div>
+      <div class="mark-txt"><strong>THE CONNECTED</strong><span>LIFESTYLE</span></div>
+    </div>
+    <div class="topbar-sp"></div>
+    <button class="tgl" id="flagToggle" aria-pressed="false">
+      <span class="tgl-dot"></span><span id="flagLabel">Show items to confirm</span>
+    </button>
+    <button class="btn-print" onclick="window.print()">Print</button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="sidenav" aria-label="Manual sections">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#review">For App Review</a></li>
+      <li><a href="#roles">Roles &amp; access</a></li>
+      <li><a href="#technician">Technician</a></li>
+      <li><a href="#administrator">Administrator</a></li>
+      <li><a href="#reference">Screen reference</a></li>
+      <li><a href="#troubleshoot">Troubleshooting</a></li>
+      <li><a href="#support">Support</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="mast">
+      <p class="eyebrow">Operations Manual · iOS</p>
+      <h1>TCL Tech Solutions<br><em>Field Operations App</em></h1>
+      <p>Every function of the application, with the exact in-app path to reach it. Written for App Review, field technicians, and operations administrators.</p>
+      <div class="meta">
+        <span>VERSION <span class="fill">1.0.0</span></span>
+        <span>BUILD <span class="fill">1</span></span>
+        <span>UPDATED <span class="fill">DD MMM 2026</span></span>
+        <span>BUNDLE com.tcltech.tcl</span>
+      </div>
+    </div>
+
+    <!-- ============ REVIEWER PANEL ============ -->
+    <section class="panel" id="review">
+      <p class="eyebrow" style="margin-bottom:0">Guideline 2.1 · Information Needed</p>
+      <h2>Where to find each capability</h2>
+      <p>This section answers the App Review request directly. Each capability below links to a step-by-step location guide with the exact navigation path. Sign in with the demonstration account, then follow any path.</p>
+
+      <h3 style="margin-top:26px">Demonstration account</h3>
+      <div class="creds">
+        <div class="cred"><b>Technician — email</b><code class="fill">tech.demo@tcltechsolutions.com</code></div>
+        <div class="cred"><b>Technician — password</b><code class="fill">ReviewPass2026!</code></div>
+        <div class="cred"><b>Administrator — email</b><code class="fill">admin.demo@tcltechsolutions.com</code></div>
+        <div class="cred"><b>Administrator — password</b><code class="fill">ReviewPass2026!</code></div>
+      </div>
+      <div class="call call-gold" style="margin-top:18px">
+        <b class="lead">Before submitting</b>
+        <p>Both accounts must exist, be email-verified, and be seeded with sample data: at least three work orders in differing states, one completed job with photos and a signature, and two active projects. An account that requires email verification the reviewer cannot complete is itself a common cause of a 2.1 rejection.</p>
+      </div>
+
+      <h3>Capability index</h3>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>#</th><th>Capability requested</th><th>Where it lives</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="numcell">T1</td><td><a href="#t1">Receive assigned work orders</a></td><td class="pathcell">Jobs tab → assigned list</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T2</td><td><a href="#t2">Upload installation photos</a></td><td class="pathcell">Job detail → Photos → Add</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T3</td><td><a href="#t3">Record job notes &amp; progress</a></td><td class="pathcell">Job detail → Notes</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T4</td><td><a href="#t4">Complete installation checklists</a></td><td class="pathcell">Job detail → Checklist</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">T5</td><td><a href="#t5">Capture completion sign-offs</a></td><td class="pathcell">Job detail → Complete → Signature</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T6</td><td><a href="#t6">Update job status in real time</a></td><td class="pathcell">Job detail → Status</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">A1</td><td><a href="#a1">Monitor all active projects</a></td><td class="pathcell">Platform → Project Tracker</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">A2</td><td><a href="#a2">Review technician submissions</a></td><td class="pathcell">Platform → Service Orders → detail</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">A3</td><td><a href="#a3">Track operational metrics</a></td><td class="pathcell">Platform → Dashboard</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">A4</td><td><a href="#a4">Manage workflows &amp; reporting</a></td><td class="pathcell">Platform → Clients / Proposals / Profit</td><td><span class="chip chip-ok">Documented</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ ROLES ============ -->
+    <section class="sec" id="roles">
+      <div class="sec-h"><span class="sec-num">01</span><h2>Roles and access</h2></div>
+      <p class="sec-sub">The application presents a different home screen depending on the signed-in account's role. Role is assigned server-side and cannot be changed from within the app.</p>
+      <div class="grid2">
+        <div class="mini">
+          <h4>Technician</h4>
+          <p>Field staff. Sees only the work assigned to them. Can record work performed, capture evidence, and advance job status. Cannot view financial data, client records, or other technicians' assignments.</p>
+        </div>
+        <div class="mini">
+          <h4>Administrator</h4>
+          <p>Operations staff. Sees every project, work order, and technician submission across the organization, plus metrics, client records, proposals, and reporting.</p>
+        </div>
+      </div>
+      <div class="call call-warn" style="margin-top:20px">
+        <b class="lead">Confirm before publishing</b>
+        <p>The backend role list is <code class="inl">admin</code>, <code class="inl">moderator</code>, <code class="inl">user</code>. There is no distinct <code class="inl">technician</code> role. Confirm which stored role the app treats as a technician, and update this section to match. If the reviewer signs in and sees an interface that contradicts this page, the rejection will repeat.</p>
+      </div>
+    </section>
+
+    <!-- ============ TECHNICIAN ============ -->
+    <section class="sec" id="technician">
+      <div class="sec-h"><span class="sec-num">02</span><h2>Technician</h2></div>
+      <p class="sec-sub">Sign in with the technician account. The app opens on the <b>Jobs</b> tab, which lists only the work assigned to the signed-in technician. Every capability below begins from that screen.</p>
+
+      <!-- T1 -->
+      <article class="ticket flag" id="t1">
+        <div class="t-head"><span class="t-id">T1</span><h3 class="t-title" style="margin:0">Receive assigned work orders</h3><span class="chip chip-verify">Confirm</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Receive assigned work orders.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Sign in</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Assigned list</span>
+        </div>
+        <ol class="steps">
+          <li>Sign in with the technician demonstration account.</li>
+          <li>The app opens on the <b>Jobs</b> tab (first icon in the bottom tab bar).</li>
+          <li>Work orders assigned to this technician appear as cards, newest first. Each card shows the job title, client, priority, scheduled date, and current status.</li>
+          <li>Use the segmented control at the top to filter by <code>Open</code>, <code>In Progress</code>, and <code>Completed</code>.</li>
+          <li>Pull down to refresh. Newly assigned orders arrive without reinstalling the app.</li>
+          <li>Tap any card to open the <b>Job detail</b> screen, the hub for capabilities T2 through T6.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_orders</code> — fields <code>title</code>, <code>description</code>, <code>priority</code>, <code>status</code>, <code>technician</code>, <code>scheduled_for</code>, <code>time_spent</code>, linked to <code>clients</code>.</div>
+        <div class="call call-warn" style="margin-top:16px">
+          <b class="lead">Confirm before publishing</b>
+          <p>In the backend, <code class="inl">service_orders.technician</code> is a free-text name, not a reference to a user account. Confirm the app can filter work orders to the signed-in technician. If it cannot, the reviewer will see either every order or none, and neither matches the claim above.</p>
+        </div>
+      </article>
+
+      <!-- T2 -->
+      <article class="ticket flag" id="t2">
+        <div class="t-head"><span class="t-id">T2</span><h3 class="t-title" style="margin:0">Upload installation photos from the field</h3><span class="chip chip-verify">Confirm</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Upload installation photos from the field.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Job card</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Photos</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Add photo</span>
+        </div>
+        <ol class="steps">
+          <li>Open any job from the <b>Jobs</b> tab.</li>
+          <li>Scroll to the <b>Photos</b> section of the job detail screen.</li>
+          <li>Tap <b>Add photo</b>. Choose <b>Take photo</b> to use the camera on site, or <b>Choose from library</b>.</li>
+          <li>iOS requests camera and photo library permission the first time. Both prompts explain why access is needed.</li>
+          <li>Add an optional caption, then tap <b>Upload</b>. The photo attaches to this work order and becomes visible to administrators.</li>
+          <li>Uploads captured without signal are queued and sent automatically when connectivity returns.</li>
+        </ol>
+        <div class="call call-warn" style="margin-top:16px">
+          <b class="lead">Confirm before publishing — highest risk item</b>
+          <p>No file storage bucket and no photo or attachment field were found in the backend. If photo upload is not present in the submitted build, do not describe it here. Either ship the feature and resubmit, or remove this claim from the manual and from the App Store description. Directing a reviewer to a screen that does not exist converts a 2.1 into a metadata rejection.</p>
+        </div>
+      </article>
+
+      <!-- T3 -->
+      <article class="ticket flag" id="t3">
+        <div class="t-head"><span class="t-id">T3</span><h3 class="t-title" style="margin:0">Record job notes and progress updates</h3><span class="chip chip-verify">Confirm</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Record job notes and progress updates.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Job card</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Notes</span>
+        </div>
+        <ol class="steps">
+          <li>Open a job from the <b>Jobs</b> tab.</li>
+          <li>Scroll to the <b>Notes</b> section.</li>
+          <li>Tap <b>Add note</b> and type the update — parts used, conditions found, work remaining.</li>
+          <li>Tap <b>Save</b>. The note is stamped with the author and time, and appears in reverse-chronological order.</li>
+          <li>Enter hours worked in <b>Time on job</b> to record labor against the order.</li>
+          <li>Saved notes are immediately visible to administrators reviewing the order.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_orders</code> — fields <code>description</code>, <code>time_spent</code>, <code>updated_at</code>.</div>
+        <div class="call call-warn" style="margin-top:16px">
+          <b class="lead">Confirm before publishing</b>
+          <p>The backend has a single <code class="inl">description</code> field on the work order, not a timestamped notes log. If the app overwrites one field rather than appending entries, describe it as "job notes" and remove the wording about a running history.</p>
+        </div>
+      </article>
+
+      <!-- T4 -->
+      <article class="ticket" id="t4">
+        <div class="t-head"><span class="t-id">T4</span><h3 class="t-title" style="margin:0">Complete required installation checklists</h3><span class="chip chip-ok">Documented</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Complete required installation checklists.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Job card</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Checklist</span>
+        </div>
+        <ol class="steps">
+          <li>Open a job from the <b>Jobs</b> tab.</li>
+          <li>Scroll to the <b>Checklist</b> section. Items appear in the order the office defined them.</li>
+          <li>Tap a row to mark it complete. A gold check replaces the empty box and the progress counter advances, for example <code>4 of 9 complete</code>.</li>
+          <li>Tap again to clear an item if it was marked in error.</li>
+          <li>A job cannot be marked <b>Completed</b> until every required item is checked.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_order_checklist</code> — fields <code>item</code>, <code>done</code>, <code>sort_order</code>, keyed to <code>service_order_id</code>.</div>
+      </article>
+
+      <!-- T5 -->
+      <article class="ticket flag" id="t5">
+        <div class="t-head"><span class="t-id">T5</span><h3 class="t-title" style="margin:0">Capture sign-offs confirming completed work</h3><span class="chip chip-verify">Confirm</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Capture sign-offs confirming completed work.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Job card</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Complete job</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Signature</span>
+        </div>
+        <ol class="steps">
+          <li>Finish the checklist, then tap <b>Complete job</b> at the bottom of the job detail screen.</li>
+          <li>The sign-off sheet opens with a summary of work performed.</li>
+          <li>Hand the device to the client. They sign with a finger in the signature panel.</li>
+          <li>Enter the signer's printed name and role, then tap <b>Save sign-off</b>.</li>
+          <li>The signature, name, and timestamp attach to the work order and the status moves to <code>Completed</code>.</li>
+          <li>Tap <b>Clear</b> to redo the signature before saving.</li>
+        </ol>
+        <div class="call call-warn" style="margin-top:16px">
+          <b class="lead">Confirm before publishing — highest risk item</b>
+          <p>No signature, sign-off, or completion-approval field was found in the backend. Confirm this screen exists in the submitted build. If it does not, remove this capability from the manual and from the App Store description before resubmitting.</p>
+        </div>
+      </article>
+
+      <!-- T6 -->
+      <article class="ticket" id="t6">
+        <div class="t-head"><span class="t-id">T6</span><h3 class="t-title" style="margin:0">Update job status in real time</h3><span class="chip chip-ok">Documented</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Update job status in real time.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Job card</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Status</span>
+        </div>
+        <ol class="steps">
+          <li>Open a job from the <b>Jobs</b> tab.</li>
+          <li>Tap the <b>Status</b> control at the top of the job detail screen.</li>
+          <li>Choose the new state: <code>Open</code>, <code>In Progress</code>, <code>On Hold</code>, or <code>Completed</code>.</li>
+          <li>The change saves immediately and the job card in the list updates to match.</li>
+          <li>Administrators see the new status on their dashboard without any further action by the technician.</li>
+          <li>Adjust <b>Priority</b> from the same screen when a job escalates on site.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_orders</code> — fields <code>status</code>, <code>priority</code>, <code>updated_at</code>.</div>
+      </article>
+    </section>
+
+    <!-- ============ ADMINISTRATOR ============ -->
+    <section class="sec" id="administrator">
+      <div class="sec-h"><span class="sec-num">03</span><h2>Administrator</h2></div>
+      <p class="sec-sub">Sign in with the administrator account. An additional <b>Platform</b> tab appears in the tab bar. It is the operations suite and is the starting point for every capability below.</p>
+
+      <!-- A1 -->
+      <article class="ticket" id="a1">
+        <div class="t-head"><span class="t-id">A1</span><h3 class="t-title" style="margin:0">Monitor all active projects</h3><span class="chip chip-ok">Documented</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Monitor all active projects.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Platform tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Project Tracker</span>
+        </div>
+        <ol class="steps">
+          <li>Sign in with the administrator demonstration account.</li>
+          <li>Tap the <b>Platform</b> tab, then <b>Project Tracker</b>.</li>
+          <li>Every project across the organization is listed with client, stage, and completion percentage.</li>
+          <li>Tap a project to see its task list, with each task's completion state.</li>
+          <li>Filter by stage to isolate active work from closed projects.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Tables <code>projects</code> and <code>project_tasks</code> — fields <code>name</code>, <code>done</code>, <code>sort_order</code>.</div>
+      </article>
+
+      <!-- A2 -->
+      <article class="ticket flag" id="a2">
+        <div class="t-head"><span class="t-id">A2</span><h3 class="t-title" style="margin:0">Review technician submissions, notes, and photos</h3><span class="chip chip-verify">Confirm</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Review technician submissions, notes, and uploaded photos.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Platform tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Service Orders</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Order detail</span>
+        </div>
+        <ol class="steps">
+          <li>Tap the <b>Platform</b> tab, then <b>Service Orders</b>.</li>
+          <li>Every work order appears, regardless of which technician it belongs to.</li>
+          <li>Tap an order to open it. The detail view shows the assigned technician, checklist progress, hours recorded, and current status.</li>
+          <li>Scroll to <b>Photos</b> to view field images, and to <b>Notes</b> to read the technician's written updates.</li>
+          <li>Scroll to <b>Sign-off</b> to view the captured client signature and printed name.</li>
+        </ol>
+        <div class="call call-warn" style="margin-top:16px">
+          <b class="lead">Confirm before publishing</b>
+          <p>This capability depends on T2, T3, and T5. Whatever is removed from those items must be removed here as well.</p>
+        </div>
+      </article>
+
+      <!-- A3 -->
+      <article class="ticket" id="a3">
+        <div class="t-head"><span class="t-id">A3</span><h3 class="t-title" style="margin:0">Track operational metrics and job progress</h3><span class="chip chip-ok">Documented</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Track operational metrics and job progress.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Platform tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Dashboard</span>
+        </div>
+        <ol class="steps">
+          <li>Tap the <b>Platform</b> tab. The <b>Dashboard</b> opens by default.</li>
+          <li>Summary cards show open work orders, jobs in progress, completed this period, and active projects.</li>
+          <li><b>Profit Analysis</b> reports margin by project, comparing quoted value against recorded labor and materials.</li>
+          <li><b>Job Costing</b> breaks a single project into labor and materials against budget.</li>
+          <li>Tap any metric card to open the underlying records.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Tables <code>service_orders</code>, <code>projects</code>, <code>project_tasks</code>, <code>profit_analyses</code>.</div>
+      </article>
+
+      <!-- A4 -->
+      <article class="ticket" id="a4">
+        <div class="t-head"><span class="t-id">A4</span><h3 class="t-title" style="margin:0">Manage workflows and reporting</h3><span class="chip chip-ok">Documented</span></div>
+        <p class="t-ask"><b>Reviewer asked:</b> Manage workflows and reporting across the organization.</p>
+        <div class="run">
+          <span class="run-lbl">Navigation path</span>
+          <span class="run-node">Platform tab</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node end">Clients · Products · Proposals</span>
+        </div>
+        <ol class="steps">
+          <li>From the <b>Platform</b> tab, choose a module from the menu.</li>
+          <li><b>Client Management</b> — client records, contacts, and site history.</li>
+          <li><b>Product Library</b> — the equipment catalogue with cost and sell pricing used to build quotes.</li>
+          <li><b>Proposal Builder</b> — assemble a quote from catalogue items and produce a client-ready document.</li>
+          <li><b>Profit Analysis</b> — margin reporting across projects.</li>
+          <li>Create a work order from a client or project record to assign new field work.</li>
+        </ol>
+        <div class="datanote"><b>Data source</b>
+          Tables <code>clients</code>, <code>products</code>, <code>proposals</code>, <code>proposal_items</code>, <code>profit_analyses</code>.</div>
+      </article>
+    </section>
+
+    <!-- ============ SCREEN REFERENCE ============ -->
+    <section class="sec" id="reference">
+      <div class="sec-h"><span class="sec-num">04</span><h2>Screen reference</h2></div>
+      <p class="sec-sub">Every screen in the application, what it does, and who can reach it.</p>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>Screen</th><th>Purpose</th><th>Reached from</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><b>Sign in</b></td><td>Email and password authentication. Includes password reset.</td><td class="pathcell">App launch</td><td>All</td></tr>
+            <tr><td><b>Jobs</b></td><td>Work orders assigned to the signed-in technician, filterable by status.</td><td class="pathcell">Tab bar</td><td>Technician</td></tr>
+            <tr><td><b>Job detail</b></td><td>Single work order. Status, checklist, notes, photos, sign-off.</td><td class="pathcell">Jobs → card</td><td>Technician</td></tr>
+            <tr><td><b>Photos</b></td><td>Field images attached to a work order.</td><td class="pathcell">Job detail</td><td>Technician</td></tr>
+            <tr><td><b>Sign-off</b></td><td>Client signature capture on completion.</td><td class="pathcell">Job detail → Complete</td><td>Technician</td></tr>
+            <tr><td><b>Platform Dashboard</b></td><td>Organization-wide operational metrics.</td><td class="pathcell">Platform tab</td><td>Administrator</td></tr>
+            <tr><td><b>Service Orders</b></td><td>All work orders across all technicians.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Project Tracker</b></td><td>Active projects and task completion.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Client Management</b></td><td>Client records and site history.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Product Library</b></td><td>Equipment catalogue and pricing.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Proposal Builder</b></td><td>Quote assembly and client documents.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Profit Analysis</b></td><td>Margin reporting by project.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Account</b></td><td>Profile, privacy consents, sign out, delete account.</td><td class="pathcell">Tab bar</td><td>All</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="call call-warn" style="margin-top:20px">
+        <b class="lead">Confirm before publishing</b>
+        <p>Screen names above are drawn from the platform module names in the codebase. Open the submitted build and correct any label that differs. A reviewer looking for "Jobs" who finds "My Work" will report that the feature is missing.</p>
+      </div>
+    </section>
+
+    <!-- ============ TROUBLESHOOTING ============ -->
+    <section class="sec" id="troubleshoot">
+      <div class="sec-h"><span class="sec-num">05</span><h2>Troubleshooting</h2></div>
+      <p class="sec-sub">Common conditions and how to resolve them.</p>
+      <div class="grid2">
+        <div class="mini"><h4>The Jobs list is empty</h4><p>No work orders are assigned to this account, or every order is filtered out. Clear the status filter, then pull down to refresh.</p></div>
+        <div class="mini"><h4>The Platform tab is missing</h4><p>The signed-in account is not an administrator. Sign out and sign in with an administrator account.</p></div>
+        <div class="mini"><h4>A photo will not upload</h4><p>Confirm camera and photo permission in iOS Settings → TCL Tech Solutions. Queued uploads send automatically when signal returns.</p></div>
+        <div class="mini"><h4>The job will not complete</h4><p>Every required checklist item must be checked, and a sign-off captured, before the status can move to Completed.</p></div>
+        <div class="mini"><h4>Sign-in fails</h4><p>Confirm the address is verified. Use <b>Forgot password</b> to reset; the link opens the app directly.</p></div>
+        <div class="mini"><h4>Data looks stale</h4><p>Pull down to refresh on any list. The app reads live data and holds no long-term local cache.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ SUPPORT ============ -->
+    <section class="sec" id="support">
+      <div class="sec-h"><span class="sec-num">06</span><h2>Support</h2></div>
+      <p class="sec-sub">Direct contact for App Review and for field staff.</p>
+      <div class="grid2">
+        <div class="mini"><h4>Telephone</h4><p><a href="tel:+12109958655">(210) 995-8655</a><br>Monday to Friday, 8:00 to 18:00 Central.</p></div>
+        <div class="mini"><h4>Email</h4><p><a href="mailto:theconnectedlifestyletech@gmail.com">theconnectedlifestyletech@gmail.com</a><br>Response within 24 hours.</p></div>
+        <div class="mini"><h4>Company</h4><p>TCL Tech Solutions — The Connected Lifestyle<br>Veteran-owned · San Antonio, Texas</p></div>
+        <div class="mini"><h4>Privacy</h4><p>Field photographs and job records are visible only to the assigned technician and administrators. Accounts can be deleted in-app from the Account tab.</p></div>
+      </div>
+
+      <h3>Reply to paste into App Store Connect</h3>
+      <p style="color:var(--faint);font-size:14px;margin:0 0 4px">Edit the placeholders, then paste into the App Review message thread.</p>
+      <div class="copybox">
+        <button class="copybtn" data-copy="reply">Copy</button>
+        <pre id="reply">Hello,
+
+Thank you for the follow-up. A complete operations manual for the app is published here:
+
+  https://tcltechsolutions.com/app-manual
+
+It documents every function with the exact in-app navigation path. Direct links to each item you asked about:
+
+TECHNICIAN
+1. Receive assigned work orders .......... /app-manual#t1
+2. Upload installation photos ............ /app-manual#t2
+3. Record job notes and progress ......... /app-manual#t3
+4. Complete installation checklists ...... /app-manual#t4
+5. Capture completion sign-offs .......... /app-manual#t5
+6. Update job status in real time ........ /app-manual#t6
+
+ADMINISTRATOR
+1. Monitor all active projects ........... /app-manual#a1
+2. Review technician submissions ......... /app-manual#a2
+3. Track operational metrics ............. /app-manual#a3
+4. Manage workflows and reporting ........ /app-manual#a4
+
+Demonstration accounts, both email-verified and seeded with sample data:
+
+  Technician     [EMAIL] / [PASSWORD]
+  Administrator  [EMAIL] / [PASSWORD]
+
+Signing in with the administrator account reveals the Platform tab, which
+contains the organization-wide screens described above.
+
+Please let me know if any further detail would help.
+
+Best regards,
+Phil Russell
+Streamwalkers Corporation</pre>
+      </div>
+    </section>
+
+    <footer>
+      <p><strong>TCL Tech Solutions — The Connected Lifestyle.</strong> iOS operations manual. Veteran-owned, San Antonio, Texas.</p>
+      <p>Internal reference for App Review and field staff. Confirm every item marked <span class="chip chip-verify">Confirm</span> against the submitted build before publishing this page.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  // Highlight items awaiting confirmation
+  var t=document.getElementById('flagToggle'),l=document.getElementById('flagLabel');
+  t.addEventListener('click',function(){
+    var on=document.body.classList.toggle('only-flags');
+    t.setAttribute('aria-pressed',on?'true':'false');
+    l.textContent=on?'Showing items to confirm':'Show items to confirm';
+    if(on){var f=document.querySelector('.ticket.flag');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});}
+  });
+
+  // Copy the reviewer reply
+  document.querySelectorAll('.copybtn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.dataset.copy);
+      navigator.clipboard.writeText(el.innerText).then(function(){
+        var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1600);
+      },function(){b.textContent='Press Cmd+C';});
+    });
+  });
+
+  // Scroll spy
+  var links=[].slice.call(document.querySelectorAll('.sidenav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting)return;
+        links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});
+      });
+    },{rootMargin:'-96px 0px -70% 0px'});
+    secs.forEach(function(s){io.observe(s);});
+  }
+})();
+</script>
+</body>
+</html>
