@@ -1,5 +1,6 @@
 
-import { CheckCircle, Award, Users, Globe, Shield, Lightbulb, Camera, Volume2, Home, Zap, Star, Target } from "lucide-react";
+import { CheckCircle, Award, Users, Globe, Shield, Lightbulb, Camera, Volume2, Home, Zap, Star, Target, Info, ExternalLink, Mic, Film, Music } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const About = () => {
   const stats = [
@@ -13,32 +14,64 @@ const About = () => {
     {
       icon: Lightbulb,
       title: "Lutron RadioRA 3 Certified",
-      description: "Advanced lighting and shading control mastery, enabling energy efficiency, elegance, and personalized comfort in every project."
+      description: "Advanced lighting and shading control mastery, enabling energy efficiency, elegance, and personalized comfort in every project.",
+      benefit: "Lets us craft advanced lighting and shading systems that blend elegance, efficiency, and total comfort — dialing in the perfect scene for every room and time of day.",
+      url: "https://www.lutron.com/en-US/Pages/default.aspx"
     },
     {
       icon: Volume2,
       title: "URC Dealer – HAP Certified",
-      description: "Expertise in URC's Home Automation Platform ensuring seamless integration of entertainment, climate, and security systems."
+      description: "Expertise in URC's Home Automation Platform ensuring seamless integration of entertainment, climate, and security systems.",
+      benefit: "As a URC dealer, we design streamlined control systems that unify entertainment, climate, and security under one simple interface your family can actually use.",
+      url: "https://www.urc-automation.com/"
     },
     {
       icon: Star,
       title: "Savant Certified",
-      description: "Leverages Savant's luxury automation platform to craft high-performance, personalized experiences across audio, video, and environmental systems."
+      description: "Leverages Savant's luxury automation platform to craft high-performance, personalized experiences across audio, video, and environmental systems.",
+      benefit: "We deliver luxury automation experiences with personalized scenes and high-performance integration across lighting, audio, and video environments.",
+      url: "https://www.savant.com/"
     },
     {
       icon: Camera,
       title: "IC Realtime Certified",
-      description: "Designs and deploys enterprise-grade surveillance solutions that deliver crystal-clear monitoring and uncompromising security."
+      description: "Designs and deploys enterprise-grade surveillance solutions that deliver crystal-clear monitoring and uncompromising security.",
+      benefit: "Ensures enterprise-grade surveillance and security for your property — crystal-clear monitoring and true peace of mind, day or night.",
+      url: "https://icrealtime.com/"
     },
     {
       icon: Zap,
       title: "RTI Certified",
-      description: "Advanced training in RTI automation systems, creating customized control environments for residential and commercial applications."
+      description: "Advanced training in RTI automation systems, creating customized control environments for residential and commercial applications.",
+      benefit: "Allows us to create custom, intuitive control solutions for both residential and commercial environments — one remote, one app, everything at your fingertips.",
+      url: "https://www.rticorp.com/"
+    },
+    {
+      icon: Mic,
+      title: "Josh AI Designer & Programmer",
+      description: "Certified to design and program Josh.ai voice-first ecosystems where every device communicates seamlessly and scales with your home.",
+      benefit: "We build cohesive, voice-controlled ecosystems where every device communicates seamlessly — a natural-language interface for your entire home, scalable for the future.",
+      url: "https://www.josh.ai/"
+    },
+    {
+      icon: Film,
+      title: "Kaleidescape Authorized Dealer",
+      description: "Authorized to specify, sell, and install Kaleidescape reference cinema movie systems for uncompromising picture and sound.",
+      benefit: "Gives clients access to the world's finest reference-quality movie playback — lossless audio and reference video that outperforms every streaming service.",
+      url: "https://www.kaleidescape.com/"
+    },
+    {
+      icon: Music,
+      title: "Juke Audio Authorized Dealer",
+      description: "Authorized dealer for Juke Audio multi-room amplifiers and streaming distribution platforms.",
+      benefit: "Enables affordable, high-fidelity whole-home audio distribution — every zone, every streaming service, controlled from one app.",
+      url: "https://jukeaudio.com/"
     },
     {
       icon: Target,
       title: "Certified Home Theater Designer & Calibrator",
-      description: "Precision in theater design and calibration ensuring cinema-quality sound and visuals for immersive experiences."
+      description: "Precision in theater design and calibration ensuring cinema-quality sound and visuals for immersive experiences.",
+      benefit: "We design and calibrate systems that perform flawlessly and evolve with the demands of modern living — true cinema quality, engineered for your room."
     }
   ];
 
@@ -132,25 +165,51 @@ const About = () => {
         {/* Professional Certifications */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center mb-12">Professional Certifications</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {certifications.map((cert, index) => (
-              <div key={index} className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 rounded-lg p-3 flex items-center justify-center flex-shrink-0">
-                    <cert.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <h4 className="text-lg font-semibold mb-2">
-                      {cert.title}
-                    </h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {cert.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-10">
+            Our certifications are more than credentials — they are proof of our ability to deliver reliable, cutting-edge
+            solutions that elevate how our clients live, work, and entertain. Hover any certification to see the customer benefit.
+          </p>
+          <TooltipProvider delayDuration={150}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {certifications.map((cert, index) => (
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <a
+                      href={cert.url ?? "#"}
+                      target={cert.url ? "_blank" : undefined}
+                      rel={cert.url ? "noopener noreferrer" : undefined}
+                      className="group block bg-card rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-0.5 hover:ring-2 hover:ring-primary/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      aria-label={`${cert.title} — hover for details`}
+                    >
+                      <div className="flex items-start space-x-4">
+                        <div className="bg-primary/10 rounded-lg p-3 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                          <cert.icon className="w-6 h-6 text-primary" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <h4 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                              {cert.title}
+                            </h4>
+                            <div className="flex items-center gap-1 text-muted-foreground shrink-0">
+                              <Info className="w-4 h-4" aria-hidden="true" />
+                              {cert.url && <ExternalLink className="w-4 h-4" aria-hidden="true" />}
+                            </div>
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {cert.description}
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-xs text-sm leading-relaxed">
+                    <p className="font-semibold text-primary mb-1">What this means for you</p>
+                    <p>{cert.benefit}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          </TooltipProvider>
         </div>
 
         {/* Company Overview */}
