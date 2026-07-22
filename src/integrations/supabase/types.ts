@@ -610,6 +610,114 @@ export type Database = {
           },
         ]
       }
+      service_order_notes: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          id: string
+          service_order_id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          id?: string
+          service_order_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          service_order_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_order_notes_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_order_photos: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          service_order_id: string
+          sort_order: number
+          storage_path: string
+          uploaded_by: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          service_order_id: string
+          sort_order?: number
+          storage_path: string
+          uploaded_by: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          service_order_id?: string
+          sort_order?: number
+          storage_path?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_order_photos_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_order_signoffs: {
+        Row: {
+          captured_by: string
+          id: string
+          service_order_id: string
+          signature_path: string
+          signed_at: string
+          signer_name: string
+          signer_role: string | null
+        }
+        Insert: {
+          captured_by: string
+          id?: string
+          service_order_id: string
+          signature_path: string
+          signed_at?: string
+          signer_name: string
+          signer_role?: string | null
+        }
+        Update: {
+          captured_by?: string
+          id?: string
+          service_order_id?: string
+          signature_path?: string
+          signed_at?: string
+          signer_name?: string
+          signer_role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_order_signoffs_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: true
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       service_orders: {
         Row: {
           client_id: string | null
@@ -620,6 +728,7 @@ export type Database = {
           scheduled_for: string | null
           status: string
           technician: string | null
+          technician_id: string | null
           time_spent: number
           title: string
           updated_at: string
@@ -634,6 +743,7 @@ export type Database = {
           scheduled_for?: string | null
           status?: string
           technician?: string | null
+          technician_id?: string | null
           time_spent?: number
           title: string
           updated_at?: string
@@ -648,6 +758,7 @@ export type Database = {
           scheduled_for?: string | null
           status?: string
           technician?: string | null
+          technician_id?: string | null
           time_spent?: number
           title?: string
           updated_at?: string
@@ -751,6 +862,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_assigned_technician: {
+        Args: { _order_id: string; _user_id: string }
         Returns: boolean
       }
       issue_certificate_if_passed: {
