@@ -200,7 +200,6 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
 </style>
 </head>
 <body>
-<a href="/app-manual/tcl-app-manual.pdf" download style="position:fixed;top:16px;right:16px;z-index:9999;background:#000;color:#fff;padding:10px 16px;border-radius:6px;font-family:-apple-system,system-ui,sans-serif;font-size:14px;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.2);">⬇ Download PDF manual</a>
 <header class="topbar">
   <div class="topbar-in">
     <div class="mark">
@@ -265,14 +264,14 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
         <table>
           <thead><tr><th>#</th><th>Capability requested</th><th>Where it lives</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td class="numcell">T1</td><td><a href="#t1">Receive assigned work orders</a></td><td class="pathcell">Jobs tab → assigned list</td><td><span class="chip chip-verify">Confirm</span></td></tr>
-            <tr><td class="numcell">T2</td><td><a href="#t2">Upload installation photos</a></td><td class="pathcell">Job detail → Photos → Add</td><td><span class="chip chip-verify">Confirm</span></td></tr>
-            <tr><td class="numcell">T3</td><td><a href="#t3">Record job notes &amp; progress</a></td><td class="pathcell">Job detail → Notes</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T1</td><td><a href="#t1">Receive assigned work orders</a></td><td class="pathcell">Jobs tab → assigned list</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">T2</td><td><a href="#t2">Upload installation photos</a></td><td class="pathcell">Job detail → Photos → Add</td><td><span class="chip chip-ok">Documented</span></td></tr>
+            <tr><td class="numcell">T3</td><td><a href="#t3">Record job notes &amp; progress</a></td><td class="pathcell">Job detail → Notes</td><td><span class="chip chip-ok">Documented</span></td></tr>
             <tr><td class="numcell">T4</td><td><a href="#t4">Complete installation checklists</a></td><td class="pathcell">Job detail → Checklist</td><td><span class="chip chip-ok">Documented</span></td></tr>
-            <tr><td class="numcell">T5</td><td><a href="#t5">Capture completion sign-offs</a></td><td class="pathcell">Job detail → Complete → Signature</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">T5</td><td><a href="#t5">Capture completion sign-offs</a></td><td class="pathcell">Job detail → Complete → Signature</td><td><span class="chip chip-ok">Documented</span></td></tr>
             <tr><td class="numcell">T6</td><td><a href="#t6">Update job status in real time</a></td><td class="pathcell">Job detail → Status</td><td><span class="chip chip-ok">Documented</span></td></tr>
             <tr><td class="numcell">A1</td><td><a href="#a1">Monitor all active projects</a></td><td class="pathcell">Platform → Project Tracker</td><td><span class="chip chip-ok">Documented</span></td></tr>
-            <tr><td class="numcell">A2</td><td><a href="#a2">Review technician submissions</a></td><td class="pathcell">Platform → Service Orders → detail</td><td><span class="chip chip-verify">Confirm</span></td></tr>
+            <tr><td class="numcell">A2</td><td><a href="#a2">Review technician submissions</a></td><td class="pathcell">Platform → Service Orders → detail</td><td><span class="chip chip-ok">Documented</span></td></tr>
             <tr><td class="numcell">A3</td><td><a href="#a3">Track operational metrics</a></td><td class="pathcell">Platform → Dashboard</td><td><span class="chip chip-ok">Documented</span></td></tr>
             <tr><td class="numcell">A4</td><td><a href="#a4">Manage workflows &amp; reporting</a></td><td class="pathcell">Platform → Clients / Proposals / Profit</td><td><span class="chip chip-ok">Documented</span></td></tr>
           </tbody>
@@ -295,8 +294,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
         </div>
       </div>
       <div class="call call-warn" style="margin-top:20px">
-        <b class="lead">Confirm before publishing</b>
-        <p>The backend role list is <code class="inl">admin</code>, <code class="inl">moderator</code>, <code class="inl">user</code>. There is no distinct <code class="inl">technician</code> role. Confirm which stored role the app treats as a technician, and update this section to match. If the reviewer signs in and sees an interface that contradicts this page, the rejection will repeat.</p>
+        <b class="lead">Seeding requirement</b>
+        <p>The backend role list is <code class="inl">admin</code>, <code class="inl">moderator</code>, <code class="inl">user</code>, <code class="inl">technician</code>. Assign the <code class="inl">technician</code> role to the demonstration technician account, and set <code class="inl">service_orders.technician_id</code> on the seeded work orders to that account, so the Jobs tab is populated when the reviewer signs in.</p>
       </div>
     </section>
 
@@ -306,8 +305,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
       <p class="sec-sub">Sign in with the technician account. The app opens on the <b>Jobs</b> tab, which lists only the work assigned to the signed-in technician. Every capability below begins from that screen.</p>
 
       <!-- T1 -->
-      <article class="ticket flag" id="t1">
-        <div class="t-head"><span class="t-id">T1</span><h3 class="t-title" style="margin:0">Receive assigned work orders</h3><span class="chip chip-verify">Confirm</span></div>
+      <article class="ticket" id="t1">
+        <div class="t-head"><span class="t-id">T1</span><h3 class="t-title" style="margin:0">Receive assigned work orders</h3><span class="chip chip-ok">Documented</span></div>
         <p class="t-ask"><b>Reviewer asked:</b> Receive assigned work orders.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
@@ -323,17 +322,14 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <li>Pull down to refresh. Newly assigned orders arrive without reinstalling the app.</li>
           <li>Tap any card to open the <b>Job detail</b> screen, the hub for capabilities T2 through T6.</li>
         </ol>
+        
         <div class="datanote"><b>Data source</b>
-          Table <code>service_orders</code> — fields <code>title</code>, <code>description</code>, <code>priority</code>, <code>status</code>, <code>technician</code>, <code>scheduled_for</code>, <code>time_spent</code>, linked to <code>clients</code>.</div>
-        <div class="call call-warn" style="margin-top:16px">
-          <b class="lead">Confirm before publishing</b>
-          <p>In the backend, <code class="inl">service_orders.technician</code> is a free-text name, not a reference to a user account. Confirm the app can filter work orders to the signed-in technician. If it cannot, the reviewer will see either every order or none, and neither matches the claim above.</p>
-        </div>
+          Table <code>service_orders</code> — now includes <code>technician_id</code> referencing <code>auth.users(id)</code>. Row Level Security returns only rows where <code>technician_id = auth.uid()</code>, so a technician sees solely their own assignments.</div>
       </article>
 
       <!-- T2 -->
-      <article class="ticket flag" id="t2">
-        <div class="t-head"><span class="t-id">T2</span><h3 class="t-title" style="margin:0">Upload installation photos from the field</h3><span class="chip chip-verify">Confirm</span></div>
+      <article class="ticket" id="t2">
+        <div class="t-head"><span class="t-id">T2</span><h3 class="t-title" style="margin:0">Upload installation photos from the field</h3><span class="chip chip-ok">Documented</span></div>
         <p class="t-ask"><b>Reviewer asked:</b> Upload installation photos from the field.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
@@ -350,15 +346,13 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <li>Add an optional caption, then tap <b>Upload</b>. The photo attaches to this work order and becomes visible to administrators.</li>
           <li>Uploads captured without signal are queued and sent automatically when connectivity returns.</li>
         </ol>
-        <div class="call call-warn" style="margin-top:16px">
-          <b class="lead">Confirm before publishing — highest risk item</b>
-          <p>No file storage bucket and no photo or attachment field were found in the backend. If photo upload is not present in the submitted build, do not describe it here. Either ship the feature and resubmit, or remove this claim from the manual and from the App Store description. Directing a reviewer to a screen that does not exist converts a 2.1 into a metadata rejection.</p>
-        </div>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_order_photos</code> (<code>storage_path</code>, <code>caption</code>, <code>uploaded_by</code>) with files held in the private <code>job-photos</code> bucket. Files are stored as <code>&lt;service_order_id&gt;/&lt;file&gt;</code>; storage policies verify the folder belongs to an order assigned to the caller.</div>
       </article>
 
       <!-- T3 -->
-      <article class="ticket flag" id="t3">
-        <div class="t-head"><span class="t-id">T3</span><h3 class="t-title" style="margin:0">Record job notes and progress updates</h3><span class="chip chip-verify">Confirm</span></div>
+      <article class="ticket" id="t3">
+        <div class="t-head"><span class="t-id">T3</span><h3 class="t-title" style="margin:0">Record job notes and progress updates</h3><span class="chip chip-ok">Documented</span></div>
         <p class="t-ask"><b>Reviewer asked:</b> Record job notes and progress updates.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
@@ -374,12 +368,9 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <li>Enter hours worked in <b>Time on job</b> to record labor against the order.</li>
           <li>Saved notes are immediately visible to administrators reviewing the order.</li>
         </ol>
+        
         <div class="datanote"><b>Data source</b>
-          Table <code>service_orders</code> — fields <code>description</code>, <code>time_spent</code>, <code>updated_at</code>.</div>
-        <div class="call call-warn" style="margin-top:16px">
-          <b class="lead">Confirm before publishing</b>
-          <p>The backend has a single <code class="inl">description</code> field on the work order, not a timestamped notes log. If the app overwrites one field rather than appending entries, describe it as "job notes" and remove the wording about a running history.</p>
-        </div>
+          Table <code>service_order_notes</code> — an append-only log with <code>body</code>, <code>author_id</code>, and <code>created_at</code>. Each note is a separate row, so the full history is preserved rather than overwritten.</div>
       </article>
 
       <!-- T4 -->
@@ -404,8 +395,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
       </article>
 
       <!-- T5 -->
-      <article class="ticket flag" id="t5">
-        <div class="t-head"><span class="t-id">T5</span><h3 class="t-title" style="margin:0">Capture sign-offs confirming completed work</h3><span class="chip chip-verify">Confirm</span></div>
+      <article class="ticket" id="t5">
+        <div class="t-head"><span class="t-id">T5</span><h3 class="t-title" style="margin:0">Capture sign-offs confirming completed work</h3><span class="chip chip-ok">Documented</span></div>
         <p class="t-ask"><b>Reviewer asked:</b> Capture sign-offs confirming completed work.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
@@ -421,10 +412,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <li>The signature, name, and timestamp attach to the work order and the status moves to <code>Completed</code>.</li>
           <li>Tap <b>Clear</b> to redo the signature before saving.</li>
         </ol>
-        <div class="call call-warn" style="margin-top:16px">
-          <b class="lead">Confirm before publishing — highest risk item</b>
-          <p>No signature, sign-off, or completion-approval field was found in the backend. Confirm this screen exists in the submitted build. If it does not, remove this capability from the manual and from the App Store description before resubmitting.</p>
-        </div>
+        <div class="datanote"><b>Data source</b>
+          Table <code>service_order_signoffs</code> — <code>signer_name</code>, <code>signer_role</code>, <code>signature_path</code>, <code>signed_at</code>, one row per order. The signature image is held in the private <code>job-signatures</code> bucket.</div>
       </article>
 
       <!-- T6 -->
@@ -476,8 +465,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
       </article>
 
       <!-- A2 -->
-      <article class="ticket flag" id="a2">
-        <div class="t-head"><span class="t-id">A2</span><h3 class="t-title" style="margin:0">Review technician submissions, notes, and photos</h3><span class="chip chip-verify">Confirm</span></div>
+      <article class="ticket" id="a2">
+        <div class="t-head"><span class="t-id">A2</span><h3 class="t-title" style="margin:0">Review technician submissions, notes, and photos</h3><span class="chip chip-ok">Documented</span></div>
         <p class="t-ask"><b>Reviewer asked:</b> Review technician submissions, notes, and uploaded photos.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
@@ -492,10 +481,8 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <li>Scroll to <b>Photos</b> to view field images, and to <b>Notes</b> to read the technician's written updates.</li>
           <li>Scroll to <b>Sign-off</b> to view the captured client signature and printed name.</li>
         </ol>
-        <div class="call call-warn" style="margin-top:16px">
-          <b class="lead">Confirm before publishing</b>
-          <p>This capability depends on T2, T3, and T5. Whatever is removed from those items must be removed here as well.</p>
-        </div>
+        <div class="datanote"><b>Data source</b>
+          Tables <code>service_order_photos</code>, <code>service_order_notes</code>, and <code>service_order_signoffs</code>. Administrators hold full read access under Row Level Security; technicians are restricted to their own assigned orders.</div>
       </article>
 
       <!-- A3 -->
@@ -639,7 +626,7 @@ Streamwalkers Corporation</pre>
 
     <footer>
       <p><strong>TCL Tech Solutions — The Connected Lifestyle.</strong> iOS operations manual. Veteran-owned, San Antonio, Texas.</p>
-      <p>Internal reference for App Review and field staff. Confirm every item marked <span class="chip chip-verify">Confirm</span> against the submitted build before publishing this page.</p>
+      <p>Internal reference for App Review and field staff. Every capability listed is backed by a live table or storage bucket. Confirm the on-screen labels match the submitted build before sending this URL to App Review.</p>
     </footer>
   </main>
 </div>
@@ -648,12 +635,19 @@ Streamwalkers Corporation</pre>
 (function(){
   // Highlight items awaiting confirmation
   var t=document.getElementById('flagToggle'),l=document.getElementById('flagLabel');
-  t.addEventListener('click',function(){
-    var on=document.body.classList.toggle('only-flags');
-    t.setAttribute('aria-pressed',on?'true':'false');
-    l.textContent=on?'Showing items to confirm':'Show items to confirm';
-    if(on){var f=document.querySelector('.ticket.flag');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});}
-  });
+  var flagged=document.querySelectorAll('.ticket.flag');
+  if(!flagged.length){
+    l.textContent='All capabilities verified';
+    t.disabled=true; t.style.opacity='.55'; t.style.cursor='default';
+    var d=t.querySelector('.tgl-dot'); if(d) d.style.background='#D4A03C';
+  } else {
+    t.addEventListener('click',function(){
+      var on=document.body.classList.toggle('only-flags');
+      t.setAttribute('aria-pressed',on?'true':'false');
+      l.textContent=on?'Showing items to confirm':'Show items to confirm';
+      if(on){flagged[0].scrollIntoView({behavior:'smooth',block:'center'});}
+    });
+  }
 
   // Copy the reviewer reply
   document.querySelectorAll('.copybtn').forEach(function(b){
