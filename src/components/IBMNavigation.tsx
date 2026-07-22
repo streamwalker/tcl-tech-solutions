@@ -174,12 +174,12 @@ const IBMNavigation = () => {
                 Investor 2026
               </Link>
 
-              <Link 
-                to="/app-manual.html" 
+              <a
+                href="/app-manual.html"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 App Manual
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -229,7 +229,7 @@ const IBMNavigation = () => {
               <Link to="/products/urc-bridge" className="block text-lg font-medium text-foreground">Products</Link>
               <Link to="#" className="block text-lg font-medium text-foreground">Support</Link>
               <Link to="/investor-white-paper" className="block text-lg font-medium text-primary">Investor 2026</Link>
-              <Link to="/app-manual.html" className="block text-lg font-medium text-foreground">App Manual</Link>
+              <a href="/app-manual.html" className="block text-lg font-medium text-foreground">App Manual</a>
             </div>
             <div className="pt-4 border-t border-border space-y-4">
               <Link to="/auth">
