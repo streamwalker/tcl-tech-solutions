@@ -245,7 +245,7 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
     <section class="panel" id="review">
       <p class="eyebrow" style="margin-bottom:0">Guideline 2.1 · Information Needed</p>
       <h2>Where to find each capability</h2>
-      <p>This section answers the App Review request directly. Each capability below links to a step-by-step location guide with the exact navigation path. Sign in with the demonstration account, then follow any path.</p>
+      <p>This section answers the App Review request directly. Each capability below links to a step-by-step location guide with the exact navigation path. <b>Sign in from the Account tab</b> using the demonstration account below, then follow any path. The Jobs and Platform tabs show "Sign in required" until an account is signed in.</p>
 
       <h3 style="margin-top:26px">Demonstration account</h3>
       <div class="creds">
@@ -310,13 +310,13 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
         <p class="t-ask"><b>Reviewer asked:</b> Receive assigned work orders.</p>
         <div class="run">
           <span class="run-lbl">Navigation path</span>
-          <span class="run-node">Sign in</span><span class="run-link"><u></u><i></i><u></u></span>
+          <span class="run-node">Account tab</span><span class="run-link"><u></u><i></i><u></u></span><span class="run-node">Sign in</span><span class="run-link"><u></u><i></i><u></u></span>
           <span class="run-node">Jobs tab</span><span class="run-link"><u></u><i></i><u></u></span>
           <span class="run-node end">Assigned list</span>
         </div>
         <ol class="steps">
-          <li>Sign in with the technician demonstration account.</li>
-          <li>The app opens on the <b>Jobs</b> tab (first icon in the bottom tab bar).</li>
+          <li>Open the <b>Account</b> tab and sign in with the technician demonstration account.</li>
+          <li>Return to the <b>Jobs</b> tab in the bottom tab bar. Until you sign in it reads "Sign in required".</li>
           <li>Work orders assigned to this technician appear as cards, newest first. Each card shows the job title, client, priority, scheduled date, and current status.</li>
           <li>Use the segmented control at the top to filter by <code>Open</code>, <code>In Progress</code>, and <code>Completed</code>.</li>
           <li>Pull down to refresh. Newly assigned orders arrive without reinstalling the app.</li>
@@ -454,9 +454,9 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
           <span class="run-node end">Project Tracker</span>
         </div>
         <ol class="steps">
-          <li>Sign in with the administrator demonstration account.</li>
+          <li>Open the <b>Account</b> tab and sign in with the administrator demonstration account.</li>
           <li>Tap the <b>Platform</b> tab, then <b>Project Tracker</b>.</li>
-          <li>Every project across the organization is listed with client, stage, and completion percentage.</li>
+          <li>Projects are listed with client, stage, budget against spend, and completion percentage. Use the <b>Active</b> and <b>All</b> control to switch scope.</li>
           <li>Tap a project to see its task list, with each task's completion state.</li>
           <li>Filter by stage to isolate active work from closed projects.</li>
         </ol>
@@ -512,15 +512,13 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
         <div class="run">
           <span class="run-lbl">Navigation path</span>
           <span class="run-node">Platform tab</span><span class="run-link"><u></u><i></i><u></u></span>
-          <span class="run-node end">Clients · Products · Proposals</span>
+          <span class="run-node end">Workflows</span>
         </div>
         <ol class="steps">
-          <li>From the <b>Platform</b> tab, choose a module from the menu.</li>
-          <li><b>Client Management</b> — client records, contacts, and site history.</li>
-          <li><b>Product Library</b> — the equipment catalogue with cost and sell pricing used to build quotes.</li>
-          <li><b>Proposal Builder</b> — assemble a quote from catalogue items and produce a client-ready document.</li>
-          <li><b>Profit Analysis</b> — margin reporting across projects.</li>
-          <li>Create a work order from a client or project record to assign new field work.</li>
+          <li>Tap the <b>Platform</b> tab, then <b>Clients, Products, Proposals</b>.</li>
+          <li>The <b>Clients</b> section lists client records with status, address, project count, and revenue on file.</li>
+          <li>The <b>Products</b> section is the equipment catalogue, showing MSRP, dealer cost, and margin per item.</li>
+          <li>The <b>Proposals</b> section lists quotes with their line items, labour hours and rate, and a calculated total.</li>
         </ol>
         <div class="datanote"><b>Data source</b>
           Tables <code>clients</code>, <code>products</code>, <code>proposals</code>, <code>proposal_items</code>, <code>profit_analyses</code>.</div>
@@ -535,18 +533,15 @@ body.only-flags .fill{animation:blink 1.4s ease-in-out infinite}
         <table>
           <thead><tr><th>Screen</th><th>Purpose</th><th>Reached from</th><th>Role</th></tr></thead>
           <tbody>
-            <tr><td><b>Sign in</b></td><td>Email and password authentication. Includes password reset.</td><td class="pathcell">App launch</td><td>All</td></tr>
+            <tr><td><b>Sign in</b></td><td>Email and password authentication. Includes password reset.</td><td class="pathcell">Account tab</td><td>All</td></tr>
             <tr><td><b>Jobs</b></td><td>Work orders assigned to the signed-in technician, filterable by status.</td><td class="pathcell">Tab bar</td><td>Technician</td></tr>
             <tr><td><b>Job detail</b></td><td>Single work order. Status, checklist, notes, photos, sign-off.</td><td class="pathcell">Jobs → card</td><td>Technician</td></tr>
             <tr><td><b>Photos</b></td><td>Field images attached to a work order.</td><td class="pathcell">Job detail</td><td>Technician</td></tr>
             <tr><td><b>Sign-off</b></td><td>Client signature capture on completion.</td><td class="pathcell">Job detail → Complete</td><td>Technician</td></tr>
-            <tr><td><b>Platform Dashboard</b></td><td>Organization-wide operational metrics.</td><td class="pathcell">Platform tab</td><td>Administrator</td></tr>
+            <tr><td><b>Platform Dashboard</b></td><td>Operational metrics: open, in-progress, completed and on-hold orders, active projects, hours logged, budget against spend.</td><td class="pathcell">Platform tab</td><td>Administrator</td></tr>
             <tr><td><b>Service Orders</b></td><td>All work orders across all technicians.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
             <tr><td><b>Project Tracker</b></td><td>Active projects and task completion.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
-            <tr><td><b>Client Management</b></td><td>Client records and site history.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
-            <tr><td><b>Product Library</b></td><td>Equipment catalogue and pricing.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
-            <tr><td><b>Proposal Builder</b></td><td>Quote assembly and client documents.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
-            <tr><td><b>Profit Analysis</b></td><td>Margin reporting by project.</td><td class="pathcell">Platform menu</td><td>Administrator</td></tr>
+            <tr><td><b>Workflows</b></td><td>Three sections: Clients, Products, Proposals. Records, catalogue with margin, and quote totals.</td><td class="pathcell">Platform → Workflows</td><td>Administrator</td></tr>
             <tr><td><b>Account</b></td><td>Profile, privacy consents, sign out, delete account.</td><td class="pathcell">Tab bar</td><td>All</td></tr>
           </tbody>
         </table>
