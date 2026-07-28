@@ -19,6 +19,7 @@ const Footer = () => {
   const company = [
     { label: "About Us", to: "/business-plan" },
     { label: "Our Services", to: "/services" },
+    { label: "iOS App", to: "/ios-app" },
     { label: "Investor Relations", to: "/investor-white-paper" },
     { label: "Education & Resources", to: "/education" },
     { label: "Builder Deck", to: "/builder-deck" },
