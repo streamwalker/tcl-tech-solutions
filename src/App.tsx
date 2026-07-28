@@ -44,6 +44,7 @@ import NavICUPrivacy from "./pages/NavICUPrivacy";
 import OAuthConsent from "./pages/OAuthConsent";
 import McpIntegration from "./pages/McpIntegration";
 import IosApp from "./pages/IosApp";
+import iosAppOg from "./assets/ios-app-og.jpg";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
