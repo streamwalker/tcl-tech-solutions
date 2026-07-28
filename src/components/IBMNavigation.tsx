@@ -180,6 +180,13 @@ const IBMNavigation = () => {
               >
                 App Manual
               </a>
+
+              <Link
+                to="/ios-app"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
+                iOS App
+              </Link>
             </div>
           </div>
 
@@ -230,6 +237,7 @@ const IBMNavigation = () => {
               <Link to="#" className="block text-lg font-medium text-foreground">Support</Link>
               <Link to="/investor-white-paper" className="block text-lg font-medium text-primary">Investor 2026</Link>
               <a href="/app-manual.html" className="block text-lg font-medium text-foreground">App Manual</a>
+              <Link to="/ios-app" className="block text-lg font-medium text-foreground">iOS App</Link>
             </div>
             <div className="pt-4 border-t border-border space-y-4">
               <Link to="/auth">
