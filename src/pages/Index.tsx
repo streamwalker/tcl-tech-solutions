@@ -150,6 +150,10 @@ function Navbar({ activeSection }: { activeSection: string }) {
               onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
               Platform
             </Link>
+            <Link to="/ios-app" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
+              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
+              iOS App
+            </Link>
           </div>
           <a href="#contact" onClick={e => scrollTo(e, "#contact")} style={{ background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "10px 22px", borderRadius: 8, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 0.5, transition: "transform 0.2s", display: "inline-block" }}
             onMouseOver={e => (e.target as HTMLElement).style.transform = "translateY(-1px)"} onMouseOut={e => (e.target as HTMLElement).style.transform = "translateY(0)"}>
