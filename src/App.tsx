@@ -111,7 +111,7 @@ const URC_BRIDGE_JSONLD = {
   publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
 };
 
-type SeoCfg = { title: string; description: string; ogType?: "website" | "article"; jsonLd?: object | object[] };
+type SeoCfg = { title: string; description: string; ogType?: "website" | "article"; ogImage?: string; ogImageAlt?: string; jsonLd?: object | object[] };
 const SEO: Record<string, SeoCfg> = {
   "/": { title: "Smart Home Automation San Antonio TX | The Connected Lifestyle", description: "Veteran-owned smart home automation, home theater & IT services in San Antonio. Savant & Lutron dealer. Free consultation: (210) 995-8655.", jsonLd: [FAQ_JSONLD, HOWTO_JSONLD] },
   "/services": { title: "Services — Smart Home, Theater & IT | TCL Tech Solutions", description: "Smart home automation, home theater, enterprise networks, AI integration, and managed IT services in San Antonio." },
@@ -147,18 +147,96 @@ const SEO: Record<string, SeoCfg> = {
   "/ios-app": {
     title: "TCL Field Service iOS App | The Connected Lifestyle",
     description: "The TCL Field Service iOS app for technicians and admins: work orders, photos, notes, and client sign-off. iOS 17+, free on the App Store.",
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      name: "TCL Field Service",
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "iOS 17+",
-      description: "Field-service companion app for TCL technicians and administrators.",
-      installUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
-      url: "https://www.tcltechsolutions.com/ios-app",
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
-    },
+    ogImage: `https://www.tcltechsolutions.com${iosAppOg}`,
+    ogImageAlt: "TCL Field Service — iOS app for technicians and admins",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        name: "TCL Field Service",
+        applicationCategory: "BusinessApplication",
+        applicationSubCategory: "Field Service Management",
+        operatingSystem: "iOS 17+",
+        description:
+          "Native iOS field-service companion to the TCL Platform. Technicians manage assigned work orders, complete per-job checklists, capture photos and notes, and collect client sign-off. Administrators review workflows and progress in real time.",
+        installUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
+        downloadUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
+        url: "https://www.tcltechsolutions.com/ios-app",
+        image: `https://www.tcltechsolutions.com${iosAppOg}`,
+        screenshot: [
+          "https://www.tcltechsolutions.com/ios-app",
+        ],
+        featureList: [
+          "Assigned work-order queue",
+          "Per-job checklists",
+          "On-site photo capture",
+          "Technician notes",
+          "Client on-screen sign-off",
+          "In-app account deletion (Apple 5.1.1(v))",
+          "Row-level security & RBAC",
+        ],
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        publisher: {
+          "@type": "Organization",
+          name: "The Connected Lifestyle",
+          url: "https://www.tcltechsolutions.com",
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://www.tcltechsolutions.com/" },
+          { "@type": "ListItem", position: 2, name: "iOS App", item: "https://www.tcltechsolutions.com/ios-app" },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Who can sign in to the app?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "The app is provisioned for TCL technicians and administrators. Clients interested in our services should use the main website or call (210) 995-8655.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Is my data private?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. All data is protected by row-level security. Technicians only see work orders assigned to them, and photos and signatures live in private encrypted storage buckets scoped to each job.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How do I delete my account?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Open the Account tab and tap Delete Account. This permanently removes your profile, photos, notes, signatures, and role assignments from our systems.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does it work offline?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Basic viewing of already-loaded jobs works with intermittent connectivity, but photo/note uploads and sign-offs require a network connection to sync to the platform.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How do I get access?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Contact your TCL administrator, or email theconnectedlifestyletech@gmail.com to request technician or admin credentials.",
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -166,7 +244,7 @@ function Page({ path, children }: { path: string; children: ReactNode }) {
   const cfg = SEO[path];
   return (
     <>
-      {cfg && <Seo path={path} title={cfg.title} description={cfg.description} ogType={cfg.ogType} jsonLd={cfg.jsonLd as never} />}
+      {cfg && <Seo path={path} title={cfg.title} description={cfg.description} ogType={cfg.ogType} ogImage={cfg.ogImage} ogImageAlt={cfg.ogImageAlt} jsonLd={cfg.jsonLd as never} />}
       {children}
     </>
   );
