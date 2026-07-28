@@ -180,6 +180,13 @@ const IBMNavigation = () => {
               >
                 App Manual
               </a>
+
+              <Link
+                to="/ios-app"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
+                iOS App
+              </Link>
             </div>
           </div>
 
