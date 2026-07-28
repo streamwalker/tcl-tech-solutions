@@ -179,6 +179,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
           <Link to="/platform" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
             Platform
           </Link>
+          <Link to="/ios-app" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            iOS App
+          </Link>
         </div>
       )}
     </nav>
