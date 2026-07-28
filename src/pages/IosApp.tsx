@@ -1,5 +1,19 @@
 import { Link } from "react-router-dom";
-import { Apple, Smartphone, Camera, PenLine, ClipboardCheck, ShieldCheck, LogIn, UserCog } from "lucide-react";
+import {
+  Apple,
+  Home,
+  Sparkles,
+  Sofa,
+  Wifi,
+  ShieldCheck,
+  Smartphone,
+  PackageOpen,
+  Sliders,
+  CalendarCheck,
+  MessageSquare,
+  User,
+  Building2,
+} from "lucide-react";
 import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import demo1 from "@/assets/ios-demo-1.mp4.asset.json";
@@ -11,77 +25,125 @@ const APP_STORE_URL = "https://apps.apple.com/us/app/tcltechsolutions/id67873311
 const demos = [
   {
     src: demo1.url,
-    title: "Signing in & the Jobs tab",
+    title: "Browse your account & project dashboard",
     description:
-      "Sign in from the Account tab, then browse assigned work orders on the Jobs tab. See status, client, and address at a glance.",
+      "Sign in and see your TCL projects, service visits, and smart-home packages in one place — everything tied to your home, not someone else's.",
   },
   {
     src: demo2.url,
-    title: "Completing a service order",
+    title: "Track service & installation progress",
     description:
-      "Open a work order, work through the checklist, capture photos and notes, and collect the client's on-screen sign-off.",
+      "Watch technicians work through your checklist, upload photos, and collect your sign-off once the job is done to your satisfaction.",
   },
   {
     src: demo3.url,
-    title: "Workflows & Account",
+    title: "Manage workflows, pricing & account",
     description:
-      "Review the Workflows screen for admin operations and manage profile, sign out, and account deletion from the Account tab.",
+      "Review available service tiers, follow internal workflows, and manage your profile, privacy settings, and account from the same app.",
+  },
+];
+
+const benefits = [
+  {
+    icon: Home,
+    title: "Smart home automation",
+    body: "Browse lighting, climate, shade, and whole-home audio packages designed for San Antonio homes and lifestyles.",
+  },
+  {
+    icon: Sofa,
+    title: "Home theater & cinema",
+    body: "Explore Dolby Atmos, 4K/8K projection, and premium seating tiers — built to match your room and budget.",
+  },
+  {
+    icon: Wifi,
+    title: "Enterprise-grade networks",
+    body: "Choose the right network coverage, structured-cabling plan, and managed IT support for your property.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Security & managed services",
+    body: "Add monitoring, maintenance, and support packages so your technology keeps working long after installation day.",
   },
 ];
 
 const steps = [
   {
-    icon: LogIn,
-    title: "1. Install & sign in",
-    body: "Download from the App Store, then open the Account tab to sign in with the email your TCL admin provisioned. Email verification is required; anonymous sign-in is disabled.",
+    icon: Sparkles,
+    title: "1. Discover what's possible",
+    body: "Open the app and browse TCL's service categories. Smart home, theater, networking, and managed support — each with clear descriptions and tiered options.",
   },
   {
-    icon: Smartphone,
-    title: "2. Jobs tab",
-    body: "Every work order assigned to you appears on the Jobs tab, sorted by scheduled date. Tap any job to open its full detail view.",
+    icon: Sliders,
+    title: "2. Choose your setup",
+    body: "Select the package that fits your home and goals. Prefer a starter automation kit or a whole-home cinema? The app shows the difference side by side.",
   },
   {
-    icon: ClipboardCheck,
-    title: "3. Work the checklist",
-    body: "Each work order carries a checklist of tasks. Mark items complete as you go — progress syncs to the TCL Platform in real time.",
+    icon: PackageOpen,
+    title: "3. Build your package",
+    body: "Add or remove components to match your exact needs. Tiered pricing means you only pay for the technology and support level you want.",
   },
   {
-    icon: Camera,
-    title: "4. Photos & notes",
-    body: "Capture before/after photos and add notes directly on the job. Media is uploaded to encrypted job-photo storage tied to the work order.",
+    icon: CalendarCheck,
+    title: "4. Schedule & track your project",
+    body: "Book a consultation or installation window, then track progress as your TCL team moves from design to deployment.",
   },
   {
-    icon: PenLine,
-    title: "5. Client sign-off",
-    body: "Hand the device to the client and collect their signature on-screen. The signature is stored in a private bucket and stamped to the order.",
+    icon: MessageSquare,
+    title: "5. Stay in the loop",
+    body: "See technician notes, installation photos, and completion status in real time. Approve work and provide feedback without playing phone tag.",
   },
   {
-    icon: UserCog,
-    title: "6. Account & privacy",
-    body: "Manage your profile from the Account tab. Sign out or permanently delete your account and personal data at any time.",
+    icon: User,
+    title: "6. Own your account",
+    body: "Manage your profile, review privacy consents, and request account deletion directly from the Account tab — your data, your control.",
+  },
+];
+
+const audiences = [
+  {
+    icon: Home,
+    title: "Homeowners & families",
+    points: [
+      "Browse smart home, theater, and network packages",
+      "Build tiered setups that match your budget",
+      "Track installation progress and service visits",
+      "Review photos, notes, and final sign-off",
+      "Manage your account and privacy in one place",
+    ],
+  },
+  {
+    icon: Building2,
+    title: "Builders & property managers",
+    points: [
+      "See bundled packages for new construction",
+      "Compare enterprise networking and managed IT tiers",
+      "Track multiple projects across properties",
+      "Coordinate with TCL technicians and admins",
+      "Access proposals and service records on the go",
+    ],
   },
 ];
 
 const faqs = [
   {
-    q: "Who can sign in to the app?",
-    a: "The app is provisioned for TCL technicians and administrators. If you're a client interested in our services, use the main website or call (210) 995-8655.",
+    q: "What can I do in the TCL app as a customer?",
+    a: "You can browse TCL's smart home, theater, network, and managed-service offerings, compare tiered packages, build a setup that fits your needs, track your project's progress, and manage your account and privacy settings.",
+  },
+  {
+    q: "Do I need a TCL account to use the app?",
+    a: "Browsing and package details are available to anyone. To track an active project, schedule service, or manage your account, sign in with the email your TCL representative has provisioned.",
   },
   {
     q: "Is my data private?",
-    a: "Yes. All data is protected by row-level security. Technicians only see work orders assigned to them, and photos and signatures live in private encrypted storage buckets scoped to each job.",
+    a: "Yes. Row-level security keeps your project data, photos, and records scoped to your account and your assigned TCL team. You can also delete your account and data in-app from the Account tab.",
   },
   {
-    q: "How do I delete my account?",
-    a: "Open the Account tab and tap Delete Account. This permanently removes your profile, photos, notes, signatures, and role assignments from our systems.",
+    q: "Can I choose my own package or do I have to pick a preset?",
+    a: "Both. The app displays curated starter and premium tiers, and you can customize components within each package so the final quote matches your exact home and priorities.",
   },
   {
-    q: "Does it work offline?",
-    a: "Basic viewing of already-loaded jobs works with intermittent connectivity, but photo/note uploads and sign-offs require a network connection to sync to the platform.",
-  },
-  {
-    q: "How do I get access?",
-    a: "Contact your TCL administrator, or email theconnectedlifestyletech@gmail.com to request technician or admin credentials.",
+    q: "How do I get started?",
+    a: "Download the app from the App Store, browse the packages, or call (210) 995-8655 to schedule a free consultation with a TCL designer in the San Antonio area.",
   },
 ];
 
@@ -100,11 +162,11 @@ const IosApp = () => {
                   <Apple className="h-3.5 w-3.5" /> Available on the App Store · iOS 17+
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                  TCL Field Service for iOS
+                  Design your connected lifestyle from your iPhone
                 </h1>
                 <p className="text-lg text-muted-foreground mb-8 max-w-xl">
-                  The mobile companion to the TCL Platform. Technicians run assigned work orders, capture photos and notes,
-                  and collect client sign-off in the field. Admins review workflows on the go.
+                  The TCL Tech Solutions app puts smart home, home theater, and managed IT packages in your pocket.
+                  Browse tiered setups, build a package around your needs, and track your project from consultation to completion.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -125,7 +187,7 @@ const IosApp = () => {
                 <p className="text-xs text-muted-foreground mt-4">Veteran-owned · Built in San Antonio, Texas</p>
               </div>
 
-              {/* Hero video (first demo) */}
+              {/* Hero video */}
               <div className="mx-auto w-full max-w-[280px]">
                 <div className="rounded-[2.5rem] border-[10px] border-foreground/90 bg-black shadow-2xl overflow-hidden aspect-[9/19.5]">
                   <video
@@ -144,52 +206,65 @@ const IosApp = () => {
         {/* What it is */}
         <section className="py-16 lg:py-20 border-b border-border">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-foreground mb-4">What is TCL Field Service?</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-4">What is the TCL Tech Solutions app?</h2>
             <p className="text-lg text-muted-foreground mb-4">
-              TCL Field Service is our native iOS app for The Connected Lifestyle's technicians and administrators.
-              It's the field companion to the web-based TCL Platform — the two share the same database, roles, and
-              row-level security, so a job updated on your iPhone appears instantly on the operator dashboard.
+              It's the customer-facing iOS companion to The Connected Lifestyle. Instead of paging through a brochure,
+              you open the app and explore what a smarter home, theater, or network actually looks like — with real
+              packages, transparent tiers, and pricing shaped around your property.
             </p>
             <p className="text-lg text-muted-foreground">
-              The app is built with SwiftUI for iOS 17+, backed by an encrypted cloud database, and audited for
-              GDPR compliance with in-app account deletion (Apple Guideline 5.1.1(v)).
+              Once you become a TCL client, the same app becomes your project dashboard. You can track installation
+              progress, review technician updates, approve completed work, and manage your account — all from your phone.
             </p>
           </div>
         </section>
 
-        {/* Who it's for */}
+        {/* Benefits grid */}
         <section className="py-16 lg:py-20 bg-muted/30 border-b border-border">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-foreground mb-2 text-center">What you can explore</h2>
+            <p className="text-muted-foreground text-center mb-10">
+              Curated technology packages for the spaces you live and work in.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {benefits.map((b) => (
+                <div key={b.title} className="rounded-lg border border-border p-6 bg-white">
+                  <b.icon className="h-6 w-6 text-primary mb-3" />
+                  <h3 className="font-semibold text-foreground mb-2">{b.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{b.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Who it's for */}
+        <section className="py-16 lg:py-20 border-b border-border">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Who it's for</h2>
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-3">Technicians</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>• View work orders assigned to you</li>
-                  <li>• Work through per-job checklists</li>
-                  <li>• Capture on-site photos and technician notes</li>
-                  <li>• Collect client signatures with a stored sign-off record</li>
-                  <li>• Manage your profile and privacy from the Account tab</li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-3">Administrators</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>• Review the Workflows screen across all active jobs</li>
-                  <li>• See technician progress, photos, and sign-offs in real time</li>
-                  <li>• Cross-reference clients, projects, and proposals</li>
-                  <li>• Backed by role-based access control (RBAC)</li>
-                </ul>
-              </div>
+              {audiences.map((a) => (
+                <div key={a.title} className="bg-white rounded-lg border border-border p-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <a.icon className="h-6 w-6 text-primary" />
+                    <h3 className="text-xl font-semibold text-foreground">{a.title}</h3>
+                  </div>
+                  <ul className="space-y-2 text-muted-foreground">
+                    {a.points.map((p) => (
+                      <li key={p}>• {p}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* How to use */}
-        <section className="py-16 lg:py-20 border-b border-border">
+        <section className="py-16 lg:py-20 bg-muted/30 border-b border-border">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-foreground mb-2 text-center">How to use it</h2>
-            <p className="text-muted-foreground text-center mb-10">Six steps from install to sign-off.</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2 text-center">How it works</h2>
+            <p className="text-muted-foreground text-center mb-10">From browsing packages to a finished installation.</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {steps.map((s) => (
                 <div key={s.title} className="rounded-lg border border-border p-6 bg-white">
@@ -203,11 +278,11 @@ const IosApp = () => {
         </section>
 
         {/* Video demos */}
-        <section className="py-16 lg:py-20 bg-muted/30 border-b border-border">
+        <section className="py-16 lg:py-20 border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-foreground mb-2 text-center">See it in action</h2>
             <p className="text-muted-foreground text-center mb-10">
-              Three short screen recordings captured on iPhone 17 Pro Max.
+              Three screen recordings captured on iPhone — the customer and project experience inside one app.
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               {demos.map((d) => (
@@ -232,7 +307,7 @@ const IosApp = () => {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 lg:py-20 border-b border-border">
+        <section className="py-16 lg:py-20 bg-muted/30 border-b border-border">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Frequently asked questions</h2>
             <div className="space-y-6">
@@ -249,10 +324,10 @@ const IosApp = () => {
         {/* CTA */}
         <section className="py-16 lg:py-20 bg-gradient-to-b from-primary/5 to-background">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <ShieldCheck className="h-10 w-10 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-foreground mb-4">Ready to get started?</h2>
+            <Smartphone className="h-10 w-10 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl font-bold text-foreground mb-4">Ready to build your connected space?</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Download TCL Field Service and pair it with your TCL Platform account.
+              Download the TCL Tech Solutions app and start exploring packages designed around your lifestyle.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <a
