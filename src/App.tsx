@@ -43,6 +43,7 @@ import UpgradeModelPage from "./pages/platform/UpgradeModelPage";
 import NavICUPrivacy from "./pages/NavICUPrivacy";
 import OAuthConsent from "./pages/OAuthConsent";
 import McpIntegration from "./pages/McpIntegration";
+import IosApp from "./pages/IosApp";
 import { KnowledgeProvider } from "./contexts/KnowledgeContext";
 import { GlossaryDrawer } from "./components/knowledge/GlossaryDrawer";
 import { AIExplainerWidget } from "./components/knowledge/AIExplainerWidget";
@@ -142,6 +143,22 @@ const SEO: Record<string, SeoCfg> = {
   "/dashboard": { title: "Dashboard | The Connected Lifestyle", description: "TCL operator dashboard." },
   "/tools/upgrade-model": { title: "Upgrade Membership Model | TCL Tech Solutions", description: "Interactive deal-modeling tool: portfolio economics, AT&T comparison, and upgrade membership calculator." },
   "/navicu/privacy": { title: "NavICU Privacy Policy | TCL Tech Solutions", description: "NavICU iOS app privacy policy. The app does not collect data; all processing is on-device." },
+  "/ios-app": {
+    title: "TCL Field Service iOS App | The Connected Lifestyle",
+    description: "The TCL Field Service iOS app for technicians and admins: work orders, photos, notes, and client sign-off. iOS 17+, free on the App Store.",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "TCL Field Service",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "iOS 17+",
+      description: "Field-service companion app for TCL technicians and administrators.",
+      installUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
+      url: "https://www.tcltechsolutions.com/ios-app",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      publisher: { "@type": "Organization", name: "The Connected Lifestyle" },
+    },
+  },
 };
 
 function Page({ path, children }: { path: string; children: ReactNode }) {
@@ -194,6 +211,7 @@ const App = () => (
           <Route path="/products/urc-bridge/download" element={<Page path="/products/urc-bridge/download"><UrcBridgeDownload /></Page>} />
           <Route path="/tools/upgrade-model" element={<Page path="/tools/upgrade-model"><UpgradeModelPage /></Page>} />
           <Route path="/navicu/privacy" element={<Page path="/navicu/privacy"><NavICUPrivacy /></Page>} />
+          <Route path="/ios-app" element={<Page path="/ios-app"><IosApp /></Page>} />
           <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="/integrations/mcp" element={<Page path="/integrations/mcp"><McpIntegration /></Page>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
