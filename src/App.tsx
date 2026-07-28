@@ -145,20 +145,20 @@ const SEO: Record<string, SeoCfg> = {
   "/tools/upgrade-model": { title: "Upgrade Membership Model | TCL Tech Solutions", description: "Interactive deal-modeling tool: portfolio economics, AT&T comparison, and upgrade membership calculator." },
   "/navicu/privacy": { title: "NavICU Privacy Policy | TCL Tech Solutions", description: "NavICU iOS app privacy policy. The app does not collect data; all processing is on-device." },
   "/ios-app": {
-    title: "TCL Field Service iOS App | The Connected Lifestyle",
-    description: "The TCL Field Service iOS app for technicians and admins: work orders, photos, notes, and client sign-off. iOS 17+, free on the App Store.",
+    title: "TCL Tech Solutions iOS App | The Connected Lifestyle",
+    description: "The TCL Tech Solutions iOS app for San Antonio homeowners and builders: browse smart home, theater, and IT packages, build tiered setups, and track your project. iOS 17+, free on the App Store.",
     ogImage: `https://www.tcltechsolutions.com${iosAppOg}`,
-    ogImageAlt: "TCL Field Service — iOS app for technicians and admins",
+    ogImageAlt: "TCL Tech Solutions — iOS app for smart home, theater, and IT packages",
     jsonLd: [
       {
         "@context": "https://schema.org",
         "@type": "MobileApplication",
-        name: "TCL Field Service",
-        applicationCategory: "BusinessApplication",
-        applicationSubCategory: "Field Service Management",
+        name: "TCL Tech Solutions",
+        applicationCategory: "LifestyleApplication",
+        applicationSubCategory: "Smart Home & Home Theater",
         operatingSystem: "iOS 17+",
         description:
-          "Native iOS field-service companion to the TCL Platform. Technicians manage assigned work orders, complete per-job checklists, capture photos and notes, and collect client sign-off. Administrators review workflows and progress in real time.",
+          "Native iOS app from The Connected Lifestyle. Browse smart home automation, home theater, enterprise networking, and managed IT packages; choose tiered setups; build a custom package; and track your project from consultation to completion. Includes in-app account deletion and privacy controls.",
         installUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
         downloadUrl: "https://apps.apple.com/us/app/tcltechsolutions/id6787331106",
         url: "https://www.tcltechsolutions.com/ios-app",
@@ -167,12 +167,13 @@ const SEO: Record<string, SeoCfg> = {
           "https://www.tcltechsolutions.com/ios-app",
         ],
         featureList: [
-          "Assigned work-order queue",
-          "Per-job checklists",
-          "On-site photo capture",
-          "Technician notes",
-          "Client on-screen sign-off",
-          "In-app account deletion (Apple 5.1.1(v))",
+          "Browse smart home, home theater, and IT packages",
+          "Choose tiered setups based on budget and space",
+          "Build custom packages with add/remove components",
+          "Track project and installation progress",
+          "Review technician notes and photos",
+          "Approve completed work and sign off",
+          "In-app account deletion and privacy controls",
           "Row-level security & RBAC",
         ],
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -196,10 +197,18 @@ const SEO: Record<string, SeoCfg> = {
         mainEntity: [
           {
             "@type": "Question",
-            name: "Who can sign in to the app?",
+            name: "What can I do in the TCL app as a customer?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "The app is provisioned for TCL technicians and administrators. Clients interested in our services should use the main website or call (210) 995-8655.",
+              text: "You can browse TCL's smart home, theater, network, and managed-service offerings, compare tiered packages, build a setup that fits your needs, track your project's progress, and manage your account and privacy settings.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Do I need a TCL account to use the app?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Browsing and package details are available to anyone. To track an active project, schedule service, or manage your account, sign in with the email your TCL representative has provisioned.",
             },
           },
           {
@@ -207,31 +216,23 @@ const SEO: Record<string, SeoCfg> = {
             name: "Is my data private?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. All data is protected by row-level security. Technicians only see work orders assigned to them, and photos and signatures live in private encrypted storage buckets scoped to each job.",
+              text: "Yes. Row-level security keeps your project data, photos, and records scoped to your account and your assigned TCL team. You can also delete your account and data in-app from the Account tab.",
             },
           },
           {
             "@type": "Question",
-            name: "How do I delete my account?",
+            name: "Can I choose my own package or do I have to pick a preset?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Open the Account tab and tap Delete Account. This permanently removes your profile, photos, notes, signatures, and role assignments from our systems.",
+              text: "Both. The app displays curated starter and premium tiers, and you can customize components within each package so the final quote matches your exact home and priorities.",
             },
           },
           {
             "@type": "Question",
-            name: "Does it work offline?",
+            name: "How do I get started?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Basic viewing of already-loaded jobs works with intermittent connectivity, but photo/note uploads and sign-offs require a network connection to sync to the platform.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "How do I get access?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Contact your TCL administrator, or email theconnectedlifestyletech@gmail.com to request technician or admin credentials.",
+              text: "Download the app from the App Store, browse the packages, or call (210) 995-8655 to schedule a free consultation with a TCL designer in the San Antonio area.",
             },
           },
         ],
