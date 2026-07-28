@@ -202,6 +202,12 @@ const IBMNavigation = () => {
               <ShoppingCart className="h-4 w-4" />
             </Button>
             <div className="h-6 w-px bg-border"></div>
+            <Link
+              to="/ios-app"
+              className="text-foreground hover:text-primary transition-colors font-medium text-sm"
+            >
+              iOS App
+            </Link>
             <Link to="/auth">
               <Button variant="ghost" size="sm" className="text-foreground">
                 My TCL
