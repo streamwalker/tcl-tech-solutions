@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Connected Lifestyle | TCL Tech Solutions</title>
+    <meta name="description" content="Settle in. Switch on. Experience the connected lifestyle with TCL Tech Solutions.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://www.tcltechsolutions.com/share-preview.html">
+    <link rel="icon" href="/assets/share/tcl-icon-v1.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Connected Lifestyle | TCL Tech Solutions">
+    <meta property="og:description" content="Settle in. Switch on. Experience the connected lifestyle.">
+    <meta property="og:url" content="https://www.tcltechsolutions.com/share-preview.html">
+    <meta property="og:image" content="https://www.tcltechsolutions.com/assets/share/tcl-share-v2.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:video" content="https://www.tcltechsolutions.com/assets/share/tcl-preview-v2.mp4">
+    <meta property="og:video:secure_url" content="https://www.tcltechsolutions.com/assets/share/tcl-preview-v2.mp4">
+    <meta property="og:video:type" content="video/mp4">
+    <meta property="og:video:width" content="1200">
+    <meta property="og:video:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.tcltechsolutions.com/assets/share/tcl-share-v2.jpg">
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #09090c; color: #f7f2e9; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100svh; background: radial-gradient(ellipse at 50% 0, #292117 0, #09090c 65%); }
+      main { width: min(1120px, 100%); margin: auto; padding: clamp(20px, 4vw, 56px) 20px; }
+      .brand { display: inline-flex; align-items: center; gap: 12px; color: #f7f2e9; text-decoration: none; font-size: 13px; letter-spacing: .13em; font-weight: 700; }
+      .brand img { width: 42px; height: 42px; }
+      h1 { margin: 34px 0 12px; font: 400 clamp(32px, 5vw, 58px)/1.1 Georgia, serif; }
+      .intro { color: #c4bdb1; margin: 0 0 26px; line-height: 1.6; }
+      video { display: block; width: 100%; aspect-ratio: 1200 / 630; background: #09090c; border: 1px solid #74603c; border-radius: 14px; box-shadow: 0 20px 70px #0008; }
+      .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 24px 0 12px; }
+      button, .visit { border: 1px solid #9b7e47; border-radius: 7px; padding: 12px 20px; color: #f7f2e9; background: #242015; font: inherit; cursor: pointer; text-decoration: none; }
+      .visit { background: #dfbf76; color: #17130b; border-color: #dfbf76; }
+      button:hover, .visit:hover { filter: brightness(1.15); }
+      :focus-visible { outline: 3px solid #f2d38e; outline-offset: 4px; }
+      .note, #status { color: #aaa39a; font-size: 13px; line-height: 1.6; }
+      #status:empty { display: none; }
+      [hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="brand" href="/"><img src="/assets/share/tcl-icon-v1.svg" alt="">TCL TECH SOLUTIONS</a>
+      <h1>The Connected Lifestyle</h1>
+      <p class="intro">Settle in. Switch on. Make yourself at home.</p>
+      <video id="preview" muted loop playsinline controls preload="auto" poster="/assets/share/tcl-opening-v2.jpg" aria-label="Damon enters a home theater, sits down and relaxes as rainbow lighting and a space movie play.">
+        <source src="/assets/share/tcl-preview-v2.mp4" type="video/mp4">
+        <a href="/assets/share/tcl-preview-v2.mp4">Watch the preview</a>
+      </video>
+      <div class="actions">
+        <button id="play" type="button" hidden>Play preview</button>
+        <button id="restart" type="button">Play from beginning</button>
+        <a class="visit" href="/">Explore TCL Tech Solutions</a>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+      <p class="note">An imagined connected home, brought to life with AI. This preview repeats automatically.</p>
+    </main>
+    <script>
+      const video = document.getElementById('preview');
+      const playButton = document.getElementById('play');
+      const status = document.getElementById('status');
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+      async function play() {
+        try {
+          await video.play();
+          status.textContent = '';
+        } catch {
+          playButton.hidden = false;
+          status.textContent = 'Press Play preview to begin.';
+        }
+      }
+
+      function startFromBeginning(shouldPlay) {
+        video.pause();
+        video.currentTime = 0;
+        if (shouldPlay) play();
+        else playButton.hidden = false;
+      }
+
+      function initialize() {
+        video.muted = true;
+        startFromBeginning(!reducedMotion.matches);
+      }
+
+      if (video.readyState >= 1) initialize();
+      else video.addEventListener('loadedmetadata', initialize, { once: true });
+
+      // A return through browser history should also begin with the opening scene.
+      window.addEventListener('pageshow', event => {
+        if (event.persisted && video.readyState >= 1) initialize();
+      });
+      video.addEventListener('play', () => { playButton.hidden = true; });
+      video.addEventListener('pause', () => { playButton.hidden = false; });
+      video.addEventListener('error', () => {
+        status.textContent = 'The preview could not load. Please refresh to try again.';
+      });
+      playButton.addEventListener('click', play);
+      document.getElementById('restart').addEventListener('click', () => startFromBeginning(true));
+      reducedMotion.addEventListener('change', event => {
+        if (event.matches) video.pause();
+      });
+    </script>
+  </body>
+</html>
