@@ -260,6 +260,8 @@ const App = () => (
         <KnowledgeProvider>
         <Routes>
           <Route path="/" element={<Page path="/"><Index /></Page>} />
+          <Route path="/index.html" element={<Page path="/"><Index /></Page>} />
+          <Route path="/home" element={<Page path="/"><Index /></Page>} />
           <Route path="/auth" element={<Page path="/auth"><Auth /></Page>} />
           <Route path="/business-plan" element={<Page path="/business-plan"><BusinessPlan /></Page>} />
           <Route path="/investor-white-paper" element={<Page path="/investor-white-paper"><InvestorWhitePaper /></Page>} />

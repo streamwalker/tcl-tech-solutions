@@ -263,7 +263,7 @@ function ContactSection() {
   </div></section>;
 }
 
-const Index = () => {
+const TCLHome = () => {
   const [activeSection, setActiveSection] = useState("hero");
   const { hash } = useLocation();
   useEffect(() => {
@@ -278,6 +278,18 @@ const Index = () => {
     return () => cancelAnimationFrame(frame);
   }, [hash]);
   return <div className="tcl-home"><a className="tcl-skip-link" href="#main-content">Skip to content</a><Navbar activeSection={activeSection} /><main id="main-content"><HeroSection /><ServicesSection /><TowerSection /><PortfolioSection /><VideoSection /><ProcessSection /><ReviewsSection /><AboutSection /><FAQSection /><ContactSection /><div className="tcl-resources"><SEOContent /></div></main><div className="tcl-footer"><Footer /></div><ChatBot /></div>;
+};
+
+const Index = () => {
+  const { pathname, hash, search } = useLocation();
+  const openTower = (pathname === "/" || pathname === "/index.html") && !hash;
+  useEffect(() => {
+    if (openTower) window.location.replace(`/tower/index.html${search}`);
+  }, [openTower, search]);
+  if (openTower) {
+    return <main style={{ minHeight: "100svh", display: "grid", placeItems: "center", background: "#080c0e", color: "#dfbd76" }}><a href={`/tower/index.html${search}`}>Enter the Connected Tower →</a></main>;
+  }
+  return <TCLHome />;
 };
 
 export default Index;
