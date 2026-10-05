@@ -166,7 +166,7 @@ function ServicesSection() {
 }
 
 function TowerSection() {
-  return <section className="tcl-tower" aria-labelledby="tower-title"><div className="tcl-tower-media"><img src="/tower/media/B2-armor-lab-v3.png" alt="Damon and Phil in the Connected Tower Armor Lab" loading="lazy" width={1672} height={941} /></div><div className="tcl-tower-copy"><AnimateIn><p className="tcl-eyebrow">An immersive TCL experience</p><h2 id="tower-title">A new level<br />of <em>connected.</em></h2><p>Step inside the Connected Tower. Travel from the Armor Lab to the Sky Lounge and explore the possibilities on every level.</p><a className="tcl-button" href="/tower/index.html">Explore the tower <ArrowUpRight size={18} /></a><div className="tcl-tower-levels"><span>ARMOR LAB</span><span>CINEMA DECK</span><span>SKY LOUNGE</span></div></AnimateIn></div></section>;
+  return <section className="tcl-tower" aria-labelledby="tower-title"><div className="tcl-tower-media"><img src="/tower/media/03-design-lab.webp" alt="The Connected Tower Design Lab, a collaborative space for planning connected technology" loading="lazy" width={1672} height={941} /></div><div className="tcl-tower-copy"><AnimateIn><p className="tcl-eyebrow">An immersive TCL experience</p><h2 id="tower-title">A new level<br />of <em>connected.</em></h2><p>Step inside the Connected Tower. Explore the Design Lab, Cinema Deck, and Sky Lounge — five levels of connected possibilities.</p><a className="tcl-button" href="/tower/index.html">Explore the tower <ArrowUpRight size={18} /></a><div className="tcl-tower-levels"><span>DESIGN LAB</span><span>CINEMA DECK</span><span>SKY LOUNGE</span></div></AnimateIn></div></section>;
 }
 
 function VideoSection() {

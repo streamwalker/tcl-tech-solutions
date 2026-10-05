@@ -3,15 +3,15 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import './style.css';
 import './content.js';
 const BASE=import.meta.env.BASE_URL;
+const FLOOR_SPACING=6.1;
 const rooms=[
  {id:'sky-lounge',key:'04-sky-lounge',floor:'04',title:'Sky Lounge',kicker:'LIVE ABOVE THE ORDINARY',description:'Gather. Unwind. Stay a little longer. The journey begins with warm spaces, shared moments, and entertainment that belongs in your life.',tags:['Outdoor entertainment','Connected living']},
  {id:'design-lab',key:'03-design-lab',floor:'03',title:'Design Lab',kicker:'FROM POSSIBILITY TO PRECISION',description:'Materials meet imagination. Explore the details that turn a screen, a wall, and a room into one considered experience.',tags:['Builder design','Pre-wire planning']},
  {id:'cinema-deck',key:'02-cinema-deck',floor:'02',title:'Cinema Deck',kicker:'FEEL EVERY FRAME',description:'The lights soften. The room settles. Sound and picture become an experience worth staying home for.',tags:['Home theater','Immersive sound']},
  {id:'command-center',key:'01-command-center',floor:'01',title:'Command Center',kicker:'EVERYTHING IN HARMONY',description:'Step behind the experience. A cinematic vision of screens, systems, and people working together.',tags:['System coordination','Connected spaces']},
- {id:'operations',key:'B1-operations',floor:'B1',title:'Operations',kicker:'THE NEXT LEVEL OF READINESS',description:'Every extraordinary experience starts with preparation. The crew comes together as the tower reveals its futuristic side.',tags:['Professional installation','Ongoing support']},
- {id:'armor-lab',key:'B2-armor-lab',floor:'B2',title:'Armor Lab',kicker:'MEET THE MAKER',description:'A fictional Armor Lab portrait brings Damon and Phil into the tower’s cinematic world.',tags:['Damon & Phil','Creative concept']}
+ {id:'operations',key:'B1-operations',floor:'B1',title:'Operations',kicker:'THE NEXT LEVEL OF READINESS',description:'Every extraordinary experience starts with preparation. The crew comes together as the tower reveals its futuristic side.',tags:['Professional installation','Ongoing support']}
 ];
-const offerings=[["/services#premium-installations", "Outdoor & whole-home audio", "Connected entertainment for patios, gathering spaces, and every room in your home."], ["/builder-deck", "Builder design & pre-wire", "Coordinate technology with your floor plans, from structured wiring and conduit planning to trim-out and system calibration."], ["/services#home-theater-technology", "Home theater technology", "Bring sound and picture together with immersive theaters, projection, acoustic treatment, and integrated controls."], ["/services#enterprise-networks", "Networks & smart automation", "Connect lighting, security, entertainment, and business systems through thoughtfully designed networks and automation."], ["/services#managed-services", "Installation & ongoing support", "From professional installation to training and continuing support, keep your connected systems ready for everyday use."], ["/home#about", "Meet the founder", "Meet founder Damon Jackson and the people behind The Connected Lifestyle. This final floor is a creative Armor Lab concept featuring Damon and Phil."]];
+const offerings=[["/services#premium-installations", "Outdoor & whole-home audio", "Connected entertainment for patios, gathering spaces, and every room in your home."], ["/builder-deck", "Builder design & pre-wire", "Coordinate technology with your floor plans, from structured wiring and conduit planning to trim-out and system calibration."], ["/services#home-theater-technology", "Home theater technology", "Bring sound and picture together with immersive theaters, projection, acoustic treatment, and integrated controls."], ["/services#enterprise-networks", "Networks & smart automation", "Connect lighting, security, entertainment, and business systems through thoughtfully designed networks and automation."], ["/services#managed-services", "Installation & ongoing support", "From professional installation to training and continuing support, keep your connected systems ready for everyday use."]];
 rooms.forEach((r,i)=>{r.href=offerings[i][0];r.offering=offerings[i][1];r.description=offerings[i][2];r.kicker=r.offering.toUpperCase()});
 const menu=document.querySelector('#site-menu');document.querySelector('#menu-toggle').onclick=()=>menu.showModal();document.querySelector('#close-menu').onclick=()=>menu.close();menu.addEventListener('click',e=>{if(e.target===menu)menu.close()});
 document.querySelector('#rooms').innerHTML=rooms.map(r=>`<section class="room" id="${r.id}" aria-labelledby="title-${r.id}"><div class="room-copy"><span class="level-number">LEVEL ${r.floor}</span><p class="eyebrow">${r.kicker}</p><h2 id="title-${r.id}">${r.title}</h2><div class="room-line"></div><p class="description">${r.description}</p><div class="tags">${r.tags.map(t=>`<span>${t}</span>`).join('')}</div><a class="floor-entry" href="${r.href}">Explore ${r.offering} <span>↗</span></a></div></section>`).join('');
@@ -31,17 +31,17 @@ document.querySelector('#overview-toggle').onclick=()=>{overview=!overview;docum
 motionLabel();document.querySelector('#motion').onclick=()=>{paused=!paused;motionLabel();syncVideo(active);wake()};reduce.addEventListener('change',()=>{paused=reduce.matches;motionLabel();updateScroll();syncVideo(active);wake()});
 function updateScroll(){
  const sections=rooms.map(r=>document.getElementById(r.id)),vh=innerHeight;
- const first=sections[0].offsetTop-vh*.22,last=document.getElementById('suit-up').offsetTop-vh*.75;
+ const first=sections[0].offsetTop-vh*.22,last=document.getElementById('project-next').offsetTop-vh*.75;
  const wasVisible=visible;visible=scrollY<last;
  if(wasVisible!==visible)syncVideo(active);
  document.body.classList.toggle('in-tower',visible);
- let i=0;while(i<5&&scrollY>=sections[i+1].offsetTop-vh*.22)i++;
- const start=sections[i].offsetTop-vh*.22,end=i<5?sections[i+1].offsetTop-vh*.22:start+sections[i].offsetHeight;
+ let i=0;while(i<rooms.length-1&&scrollY>=sections[i+1].offsetTop-vh*.22)i++;
+ const start=sections[i].offsetTop-vh*.22,end=i<rooms.length-1?sections[i+1].offsetTop-vh*.22:start+sections[i].offsetHeight;
  const local=THREE.MathUtils.clamp((scrollY-start)/(end-start),0,1);
  const blend=THREE.MathUtils.smoothstep(local,.64,1);
- targetY=-(i+((reduce.matches||paused||compact.matches)?0:(i<5?blend:0)))*6.1;
+ targetY=-(i+((reduce.matches||paused||compact.matches)?0:(i<rooms.length-1?blend:0)))*FLOOR_SPACING;
  if(reduce.matches||paused||compact.matches)currentY=targetY;
- if(active!==i){dragX=0;active=i;fallback.src=BASE+'media/'+rooms[i].key+(rooms[i].key==='B2-armor-lab'?'-v3.png':'.webp');fallback.alt=rooms[i].title+' populated room concept';syncVideo(i)}
+ if(active!==i){dragX=0;active=i;fallback.src=BASE+'media/'+rooms[i].key+'.webp';fallback.alt=rooms[i].title+' populated room concept';syncVideo(i)}
  const entry=document.querySelector('#active-offering');entry.href=rooms[i].href;entry.textContent='Explore '+rooms[i].offering+' ↗';
  document.querySelector('#stage-floor').textContent=rooms[i].floor+' / '+rooms[i].title.toUpperCase();
  document.querySelectorAll('.floor-nav a').forEach((a,n)=>a.setAttribute('aria-current',String(n===i&&visible)));
@@ -72,8 +72,8 @@ function frame(now){raf=0;const dt=Math.min((now-previous)/1000||.016,.05);previ
  const distance=fitted?Math.max(5.06/(2*halfFov),9/(2*halfFov*camera.aspect))*1.015+.58:Math.min(4.80/(2*halfFov),9.0/(2*halfFov*camera.aspect))+.58;
  const pan=fitted?0:lookX;
  const hero=scrollY<innerHeight*.65;
- const cy=THREE.MathUtils.lerp(currentY+(hero&&!fitted?.22:0),-15.25,overviewBlend);
- const cz=THREE.MathUtils.lerp(distance,Math.max(62,23/camera.aspect),overviewBlend);
+ const cy=THREE.MathUtils.lerp(currentY+(hero&&!fitted?.22:0),-(rooms.length-1)*FLOOR_SPACING/2,overviewBlend);
+ const cz=THREE.MathUtils.lerp(distance,Math.max((rooms.length-1)*FLOOR_SPACING*1.85+5.5,23/camera.aspect),overviewBlend);
  camera.position.set(THREE.MathUtils.lerp(pan,5,overviewBlend),cy+(fitted?0:.12),cz);
  camera.lookAt(THREE.MathUtils.lerp(pan,-.4,overviewBlend),cy,0);
  if(car)car.position.y=currentY;
@@ -85,11 +85,11 @@ function frame(now){raf=0;const dt=Math.min((now-previous)/1000||.016,.05);previ
 async function init(){try{
  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x080c0e,0);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(36,1,.1,120);
  scene.add(new THREE.HemisphereLight(0xd0e6ea,0x182125,2));const lamp=new THREE.DirectionalLight(0xffd79c,3);lamp.position.set(2,9,10);scene.add(lamp);
- const gltf=await new GLTFLoader().loadAsync(BASE+'tower.glb');model=gltf.scene;scene.add(model);car=model.getObjectByName('Elevator_car');if(gltf.animations.length){mixer=new THREE.AnimationMixer(model);gltf.animations.forEach(clip=>mixer.clipAction(clip).play());metrics.animationClips=gltf.animations.length;}
+ const gltf=await new GLTFLoader().loadAsync(BASE+'tower-five-levels.glb');model=gltf.scene;scene.add(model);car=model.getObjectByName('Elevator_car');if(gltf.animations.length){mixer=new THREE.AnimationMixer(model);gltf.animations.forEach(clip=>mixer.clipAction(clip).play());metrics.animationClips=gltf.animations.length;}
  const loader=new THREE.TextureLoader();await Promise.all(rooms.map(async(r,i)=>{
- const texture=await loader.loadAsync(BASE+'media/'+r.key+(r.key==='B2-armor-lab'?'-v3.png':'.webp'));texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
- const panel=new THREE.Mesh(new THREE.PlaneGeometry(9,5.06),new THREE.MeshBasicMaterial({map:texture,toneMapped:false}));panel.position.set(0,-i*6.1,.58);scene.add(panel);panels[i]=panel;
- const glow=new THREE.Mesh(new THREE.PlaneGeometry(.025,4.72),new THREE.MeshBasicMaterial({color:0x55d7ec,transparent:true,opacity:.15,blending:THREE.AdditiveBlending,depthWrite:false}));glow.position.set(-4.43,-i*6.1,.61);scene.add(glow);glows.push(glow);
+ const texture=await loader.loadAsync(BASE+'media/'+r.key+'.webp');texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
+ const panel=new THREE.Mesh(new THREE.PlaneGeometry(9,5.06),new THREE.MeshBasicMaterial({map:texture,toneMapped:false}));panel.position.set(0,-i*FLOOR_SPACING,.58);scene.add(panel);panels[i]=panel;
+ const glow=new THREE.Mesh(new THREE.PlaneGeometry(.025,4.72),new THREE.MeshBasicMaterial({color:0x55d7ec,transparent:true,opacity:.15,blending:THREE.AdditiveBlending,depthWrite:false}));glow.position.set(-4.43,-i*FLOOR_SPACING,.61);scene.add(glow);glows.push(glow);
  }));
  stage.classList.add('ready');metrics.loaded=true;resize();updateScroll();syncVideo(active);
  }catch(e){console.error(e);stage.classList.remove('ready');document.querySelector('#stage-error').textContent='Room gallery mode';renderer?.dispose();renderer=null;}}
@@ -101,7 +101,15 @@ function release(e){if(captured!==e.pointerId)return;captured=null;if(innerWidth
 let lastViewportWidth=innerWidth;
 addEventListener('scroll',updateScroll,{passive:true});addEventListener('resize',()=>{const preserveFloor=innerWidth!==lastViewportWidth&&visible&&scrollY>100;const roomId=rooms[active].id;lastViewportWidth=innerWidth;resize();if(preserveFloor)scrollTo({top:document.getElementById(roomId).offsetTop,behavior:'instant'});updateScroll()});new ResizeObserver(resize).observe(stage);document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0;videos.forEach(v=>v?.pause())}else{previous=performance.now();syncVideo(active);wake()}});
 // Read-only production diagnostics for QA; no private data.
-window.towerDiagnostics=()=>({...metrics,activeFloor:rooms[active].floor,reducedMotion:reduce.matches,paused,visible,viewport:[innerWidth,innerHeight],fitMode:compact.matches?'contain':'cinematic',stageSize:[stage.clientWidth,stage.clientHeight],imageCorners:camera&&panels[active]?[-1,1].flatMap(x=>[-1,1].map(y=>new THREE.Vector3(x*4.5,panels[active].position.y+y*2.53,.58).project(camera).toArray())):[],videoClips:Object.values(videoManifest).filter(Boolean).length,mixerTime:mixer?.time,animatedFin:model?.getObjectByName("Floor_5_motorized_fin_1_0")?.quaternion.toArray()});
+window.towerDiagnostics=()=>({...metrics,activeFloor:rooms[active].floor,reducedMotion:reduce.matches,paused,visible,viewport:[innerWidth,innerHeight],fitMode:compact.matches?'contain':'cinematic',stageSize:[stage.clientWidth,stage.clientHeight],imageCorners:camera&&panels[active]?[-1,1].flatMap(x=>[-1,1].map(y=>new THREE.Vector3(x*4.5,panels[active].position.y+y*2.53,.58).project(camera).toArray())):[],videoClips:Object.values(videoManifest).filter(Boolean).length,mixerTime:mixer?.time,floorCount:rooms.length,animatedFin:model?.getObjectByName(`Floor_${rooms.length-1}_motorized_fin_1_0`)?.quaternion.toArray()});
 addEventListener('pagehide',e=>{cancelAnimationFrame(raf);raf=0;videos.forEach(v=>v?.pause());if(e.persisted)return;scene?.traverse(o=>{o.geometry?.dispose();if(o.material){const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{m.map?.dispose();m.dispose()})}});renderer?.dispose()});
 addEventListener('pageshow',e=>{if(e.persisted){previous=performance.now();syncVideo(active);wake()}});
-init();updateScroll();
+// Preserve old shared floor and closing links after retiring the final concept room.
+function normalizeLegacyHash(){
+ const next=location.hash==='#armor-lab'?'operations':location.hash==='#suit-up'?'project-next':null;
+ if(!next)return;
+ history.replaceState(null,'',location.pathname+location.search+'#'+next);
+ requestAnimationFrame(()=>document.getElementById(next)?.scrollIntoView({behavior:'instant'}));
+}
+addEventListener('hashchange',normalizeLegacyHash);
+normalizeLegacyHash();init();updateScroll();
