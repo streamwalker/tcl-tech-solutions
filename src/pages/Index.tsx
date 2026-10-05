@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, type ReactNode, type CSSProperties } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Plus, Check, Phone, Mail, MapPin, Clock, Play, Share2 } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Plus, Check, Phone, Mail, MapPin, Clock, Play, Pause, Share2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import ChatBot from "../components/ChatBot";
 import Footer from "../components/Footer";
@@ -128,10 +128,88 @@ function Navbar({ activeSection }: { activeSection: string }) {
 }
 
 function HeroSection() {
+  const hero = useRef<HTMLElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
+  const manuallyPaused = useRef(false);
+  const [playing, setPlaying] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const playFromStart = useCallback(() => {
+    const element = video.current;
+    if (!element || element.error) return;
+    element.currentTime = 0;
+    element.muted = true;
+    void element.play().catch(() => setPlaying(false));
+  }, []);
+
+  useEffect(() => {
+    const element = video.current;
+    const section = hero.current;
+    if (!element || !section) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mayAutoplay = () => !document.hidden && !reducedMotion.matches && !manuallyPaused.current;
+    const atTop = () => window.scrollY <= 24;
+    // Separate departure/arrival thresholds prevent repeated restarts from tiny scroll changes.
+    let leftTop = window.scrollY > 120;
+    let scrollFrame = 0;
+    const checkPosition = () => {
+      scrollFrame = 0;
+      if (window.scrollY > 120) leftTop = true;
+      else if (atTop() && leftTop) {
+        leftTop = false;
+        if (mayAutoplay()) playFromStart();
+      }
+    };
+    const onScroll = () => { if (!scrollFrame) scrollFrame = window.requestAnimationFrame(checkPosition); };
+    const onVisibility = () => {
+      if (document.hidden) element.pause();
+      else if (atTop() && mayAutoplay()) playFromStart();
+    };
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted && atTop() && mayAutoplay()) playFromStart();
+    };
+    const onMotionPreference = () => { if (reducedMotion.matches) element.pause(); };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) element.pause();
+    });
+    observer.observe(section);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pageshow", onPageShow);
+    document.addEventListener("visibilitychange", onVisibility);
+    reducedMotion.addEventListener("change", onMotionPreference);
+    const bounds = section.getBoundingClientRect();
+    if (bounds.bottom > 0 && bounds.top < window.innerHeight && mayAutoplay()) playFromStart();
+    return () => {
+      window.cancelAnimationFrame(scrollFrame);
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pageshow", onPageShow);
+      document.removeEventListener("visibilitychange", onVisibility);
+      reducedMotion.removeEventListener("change", onMotionPreference);
+      element.pause();
+    };
+  }, [playFromStart]);
+
+  const toggleVideo = () => {
+    if (!video.current) return;
+    if (!video.current.paused) {
+      manuallyPaused.current = true;
+      video.current.pause();
+    } else {
+      manuallyPaused.current = false;
+      playFromStart();
+    }
+  };
+
   return <>
-    <section id="hero" className="tcl-hero">
-      <img className="tcl-hero-image" src={heroBg} alt="An immersive living room with integrated home theater, ambient lighting and city views" width={1920} height={1080} fetchPriority="high" />
+    <section ref={hero} id="hero" className="tcl-hero">
+      <div className="tcl-hero-media">
+        <img className="tcl-hero-image" src={heroBg} alt="An immersive living room with integrated home theater, ambient lighting and city views" width={1920} height={1080} fetchPriority="high" />
+        <video ref={video} id="tcl-hero-video" className={`tcl-hero-video${videoReady && !videoFailed ? " is-ready" : ""}`} src="/media/tcl-landing-page.mp4" poster={heroBg} muted playsInline preload="auto" aria-label="TCL Tech Solutions connected lifestyle video" onLoadedData={() => setVideoReady(true)} onPlaying={() => { setPlaying(true); setHasPlayed(true); }} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} onError={() => { setVideoFailed(true); setPlaying(false); }} />
+      </div>
       <div className="tcl-hero-shade" />
+      {!videoFailed && <button className="tcl-hero-playback" type="button" aria-controls="tcl-hero-video" onClick={toggleVideo}>{playing ? <Pause size={15} /> : <Play size={15} />}<span>{playing ? "Pause video" : hasPlayed ? "Replay video" : "Play video"}</span></button>}
       <div className="tcl-hero-copy">
         <p className="tcl-eyebrow">San Antonio, Texas · Veteran-owned & operated</p>
         <h1>Technology that<br /><em>transforms spaces.</em></h1>

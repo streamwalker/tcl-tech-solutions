@@ -74,7 +74,13 @@
 
 /* Photography stays unobstructed on the right, with restrained copy on the left. */
 .tcl-hero { position: relative; min-height: min(100svh, 1040px); display: flex; align-items: center; isolation: isolate; padding: 150px 0 135px; }
-.tcl-hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+.tcl-hero-media { position: absolute; inset: 0; z-index: -3; overflow: hidden; }
+.tcl-hero-image, .tcl-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tcl-hero-video { opacity: 0; }
+.tcl-hero-video.is-ready { opacity: 1; }
+.tcl-hero-playback { position: absolute; top: 104px; right: 56px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 15px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #fff; background: rgba(4,7,10,.76); font-size: 12px; cursor: pointer; }
+.tcl-hero-playback:hover { background: rgba(4,7,10,.94); }
+.tcl-hero-playback:focus-visible { outline: 2px solid var(--tcl-gold); outline-offset: 4px; }
 .tcl-hero-shade { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: min(900px, 66vw); height: min(620px, 80%); z-index: -2; pointer-events: none; background: linear-gradient(90deg, rgba(4,7,10,.72), rgba(4,7,10,.48) 45%, transparent 100%); mask-image: linear-gradient(0deg, transparent, #000 20%, #000 80%, transparent); }
 .tcl-hero-copy { width: min(1600px, calc(100% - 112px)); margin-inline: auto; text-shadow: 0 2px 12px rgba(4,7,10,.45); }
 .tcl-hero h1 { font-size: clamp(52px, 6.2vw, 99px); font-weight: 450; line-height: 1.025; letter-spacing: -.06em; margin: 27px 0; max-width: 900px; text-wrap: balance; }
@@ -224,7 +230,7 @@
 .tcl-footer input { min-width: 0; }
 .tcl-footer a { overflow-wrap: anywhere; }
 
-@media (min-width: 1900px) { .tcl-hero-image { object-position: center 55%; } }
+@media (min-width: 1900px) { .tcl-hero-image, .tcl-hero-video { object-position: center 55%; } }
 @media (max-width: 1100px) {
   .tcl-container, .tcl-hero-copy { width: calc(100% - 64px); }
   .tcl-nav-inner { width: calc(100% - 48px); gap: 22px; }
@@ -294,7 +300,9 @@
   .tcl-nav-panel { gap: 22px; padding-inline: 20px; }
   .tcl-nav-panel a { font-size: 12px; }
   .tcl-hero { min-height: 0; display: block; padding: 70px 0 0; }
-  .tcl-hero-image { position: relative; inset: auto; height: auto; object-fit: contain; z-index: 0; }
+  .tcl-hero-media { position: relative; inset: auto; aspect-ratio: 16 / 9; z-index: 0; }
+  .tcl-hero-image, .tcl-hero-video { object-fit: contain; }
+  .tcl-hero-playback { top: 82px; right: 12px; }
   .tcl-hero-shade { display: none; }
   .tcl-hero-copy { padding-block: 32px 28px; }
   .tcl-hero h1 { font-size: clamp(43px, 11vw, 60px); line-height: 1.06; letter-spacing: -.055em; margin-top: 25px; }
