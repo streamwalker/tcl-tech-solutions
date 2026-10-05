@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import IBMNavigation from "@/components/IBMNavigation";
 import Footer from "@/components/Footer";
 import { ServicesPopups } from "@/components/NavigationPopups";
@@ -61,6 +62,15 @@ const badgeColors: Record<string, string> = {
 };
 
 const Services = () => {
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ block: "start" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <IBMNavigation />
@@ -91,7 +101,7 @@ const Services = () => {
                 <article
                   key={service.title}
                   id={service.title.toLowerCase().replace(/\s+/g, '-')}
-                  className="bg-background p-8 hover:bg-card transition-colors duration-200 group cursor-pointer"
+                  className="bg-background p-8 hover:bg-card transition-colors duration-200 group cursor-pointer scroll-mt-20"
                   itemScope
                   itemType="https://schema.org/Service"
                 >

@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, ReactNode, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect, useRef, useCallback, type ReactNode, type CSSProperties } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Plus, Check, Phone, Mail, MapPin, Clock, Play, Share2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import ChatBot from "../components/ChatBot";
 import Footer from "../components/Footer";
 import SEOContent from "../components/SEOContent";
-import CookieConsent from "../components/CookieConsent";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import portfolioHomeTheater from "../assets/portfolio-home-theater.jpg";
 import portfolioRooftopAudio from "../assets/portfolio-rooftop-audio.jpg";
@@ -16,7 +16,7 @@ import portfolioOutdoor from "../assets/portfolio-outdoor.jpg";
 import heroBg from "../assets/hero-bg.jpg";
 import paradeOfHomesLogo from "../assets/parade-of-homes-2026.png";
 import damonHeadshot from "../assets/damon-jackson-headshot.png";
-import paradeOfHomesLogo2 from "../assets/parade-of-homes-2026-logo.png";
+import "../styles/tcl-home.css";
 
 const SERVICES: Record<string, Array<{ icon: string; title: string; desc: string; features: string[] }>> = {
   residential: [
@@ -77,702 +77,155 @@ const STATS = [
   { value: "24/7", label: "Support Available" },
 ];
 
-function useInView(threshold = 0.15): [React.RefObject<HTMLDivElement>, boolean] {
+
+function AnimateIn({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
+    const element = ref.current;
+    if (!element) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
+    }, { threshold: 0.08 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={ref} className={`tcl-reveal ${visible ? "is-visible" : ""} ${className}`} style={{ "--reveal-delay": `${delay}s` } as CSSProperties}>{children}</div>;
 }
 
-function AnimateIn({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
-  const [ref, visible] = useInView();
-  return (
-    <div ref={ref} className={className} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(32px)", transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s` }}>
-      {children}
-    </div>
-  );
+function SectionHeading({ eyebrow, title, children }: { eyebrow: string; title: ReactNode; children?: ReactNode }) {
+  return <div className="tcl-section-heading"><p className="tcl-eyebrow">{eyebrow}</p><h2>{title}</h2>{children && <p className="tcl-lead">{children}</p>}</div>;
 }
 
 function Navbar({ activeSection }: { activeSection: string }) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const nav = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const mainLinks = [{ label: "Services", href: "#services" }, { label: "Our work", href: "#portfolio" }, { label: "Our story", href: "#about" }];
+  const extraLinks = [{ label: "How it works", href: "#process" }, { label: "Client reviews", href: "#reviews" }, { label: "FAQ", href: "#faq" }, { label: "Featured video", href: "#video" }];
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-  const links = [
-    { label: "Services", href: "#services" },
-    { label: "How It Works", href: "#process" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Reviews", href: "#reviews" },
-    { label: "About", href: "#about" },
-    { label: "FAQ", href: "#faq" },
-  ];
-
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const id = href.replace("#", "");
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-    setOpen(false);
-  };
-
-  return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 999, background: scrolled ? "rgba(10,10,14,0.95)" : "transparent", backdropFilter: scrolled ? "blur(16px)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none", transition: "all 0.4s ease", padding: scrolled ? "12px 0" : "20px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="#hero" onClick={e => scrollTo(e, "#hero")} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <div style={{ width: 38, height: 38, background: "linear-gradient(135deg, #D4A03C, #E8C36A)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 16, color: "#0A0A0E", letterSpacing: -0.5 }}>TCL</div>
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 15, color: "#F5F0E8", letterSpacing: 0.5, lineHeight: 1.1 }}>THE CONNECTED</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "#D4A03C", letterSpacing: 3, fontWeight: 500 }}>LIFESTYLE</div>
-          </div>
-        </a>
-        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-          <div className="nav-links-desktop" style={{ display: "flex", gap: 28 }}>
-            {links.map(l => (
-              <a key={l.href} href={l.href} onClick={e => scrollTo(e, l.href)} style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: activeSection === l.href.slice(1) ? "#D4A03C" : "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
-                onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => { if (activeSection !== l.href.slice(1)) (e.target as HTMLElement).style.color = "#9A9A9E"; }}>
-                {l.label}
-              </a>
-            ))}
-            <Link to="/press" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
-              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
-              Press
-            </Link>
-            <Link to="/platform" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
-              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
-              Platform
-            </Link>
-            <Link to="/ios-app" style={{ textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500, color: "#9A9A9E", letterSpacing: 0.5, transition: "color 0.3s" }}
-              onMouseOver={e => (e.target as HTMLElement).style.color = "#D4A03C"} onMouseOut={e => (e.target as HTMLElement).style.color = "#9A9A9E"}>
-              iOS App
-            </Link>
-          </div>
-          <a href="#contact" onClick={e => scrollTo(e, "#contact")} style={{ background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "10px 22px", borderRadius: 8, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 0.5, transition: "transform 0.2s", display: "inline-block" }}
-            onMouseOver={e => (e.target as HTMLElement).style.transform = "translateY(-1px)"} onMouseOut={e => (e.target as HTMLElement).style.transform = "translateY(0)"}>
-            Free Quote
-          </a>
-          <button onClick={() => setOpen(!open)} className="nav-hamburger" style={{ display: "none", background: "none", border: "none", cursor: "pointer", padding: 4 }}>
-            <div style={{ width: 22, height: 2, background: "#F5F0E8", marginBottom: 5, transition: "all 0.3s", transform: open ? "rotate(45deg) translateY(7px)" : "none" }} />
-            <div style={{ width: 22, height: 2, background: "#F5F0E8", marginBottom: 5, opacity: open ? 0 : 1, transition: "all 0.3s" }} />
-            <div style={{ width: 22, height: 2, background: "#F5F0E8", transition: "all 0.3s", transform: open ? "rotate(-45deg) translateY(-7px)" : "none" }} />
-          </button>
-        </div>
-      </div>
-      {open && (
-        <div style={{ background: "rgba(10,10,14,0.98)", padding: "24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          {links.map(l => (
-            <a key={l.href} href={l.href} onClick={e => scrollTo(e, l.href)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-              {l.label}
-            </a>
-          ))}
-          <Link to="/press" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-            Press
-          </Link>
-          <Link to="/platform" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-            Platform
-          </Link>
-          <Link to="/ios-app" onClick={() => setOpen(false)} style={{ display: "block", padding: "12px 0", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#9A9A9E", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-            iOS App
-          </Link>
-        </div>
-      )}
-    </nav>
-  );
+    const dismiss = (event: PointerEvent) => { if (nav.current && !nav.current.contains(event.target as Node)) setOpen(false); };
+    const escape = (event: KeyboardEvent) => { if (event.key === "Escape" && open) { setOpen(false); toggle.current?.focus(); } };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("keydown", escape); };
+  }, [open]);
+  return <nav ref={nav} className="tcl-nav" aria-label="Main navigation">
+    <div className="tcl-nav-inner">
+      <a className="tcl-wordmark" href="#hero" aria-label="TCL Tech Solutions home" onClick={() => setOpen(false)}><span>TCL</span><span>TECH SOLUTIONS<small>THE CONNECTED LIFESTYLE</small></span></a>
+      <div className="tcl-nav-primary">{mainLinks.map(link => <a key={link.href} href={link.href} aria-current={activeSection === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}</div>
+      <div className="tcl-nav-actions"><a className="tcl-nav-quote" href="#contact" onClick={() => setOpen(false)}>Let's connect <ArrowUpRight size={15} /></a><button ref={toggle} className="tcl-nav-toggle" aria-expanded={open} aria-controls="tcl-navigation-panel" aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}<span>Explore</span></button></div>
+    </div>
+    {open && <div id="tcl-navigation-panel" className="tcl-nav-panel">
+      <div><p className="tcl-eyebrow">Your connected lifestyle</p>{[...mainLinks, ...extraLinks].map(link => <a key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}<ArrowUpRight size={16} /></a>)}</div>
+      <div><p className="tcl-eyebrow">More from TCL</p>{[{ label: "Explore the tower", href: "/tower/index.html" }, { label: "Academy", href: "/education/academy" }, { label: "Platform", href: "/platform" }, { label: "iOS app", href: "/ios-app" }, { label: "Press & media", href: "/press" }].map(link => link.href.startsWith("/tower") ? <a key={link.href} href={link.href}>{link.label}<ArrowUpRight size={16} /></a> : <Link key={link.href} to={link.href} onClick={() => setOpen(false)}>{link.label}<ArrowUpRight size={16} /></Link>)}<a href="tel:2109958655">(210) 995-8655<Phone size={16} /></a></div>
+    </div>}
+  </nav>;
 }
 
 function HeroSection() {
-  // placeholder marker
-  const [days, setDays] = useState(0);
-  const [hrs, setHrs] = useState(0);
-  const [mins, setMins] = useState(0);
-  const [secs, setSecs] = useState(0);
-  useEffect(() => {
-    const end = new Date();
-    end.setDate(end.getDate() + 14);
-    end.setHours(23, 59, 59, 0);
-    const tick = () => {
-      const diff = Math.max(0, end.getTime() - new Date().getTime());
-      setDays(Math.floor(diff / 86400000));
-      setHrs(Math.floor((diff % 86400000) / 3600000));
-      setMins(Math.floor((diff % 3600000) / 60000));
-      setSecs(Math.floor((diff % 60000) / 1000));
-    };
-    tick();
-    const i = setInterval(tick, 1000);
-    return () => clearInterval(i);
-  }, []);
-
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  return (
-    <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", background: `linear-gradient(180deg, rgba(10,10,14,0.85) 0%, rgba(18,18,26,0.8) 50%, rgba(10,10,14,0.95) 100%), url(${heroBg}) center/cover no-repeat` }}>
-      <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(212,160,60,0.5) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
-      <div style={{ position: "absolute", top: "10%", right: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(212,160,60,0.08), transparent 70%)", borderRadius: "50%", filter: "blur(60px)" }} />
-      <div style={{ position: "absolute", bottom: "10%", left: "5%", width: 400, height: 400, background: "radial-gradient(circle, rgba(212,160,60,0.05), transparent 70%)", borderRadius: "50%", filter: "blur(80px)" }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "120px 24px 80px", textAlign: "center", position: "relative", zIndex: 1 }}>
-        <AnimateIn>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,160,60,0.1)", border: "1px solid rgba(212,160,60,0.2)", borderRadius: 100, padding: "8px 20px", marginBottom: 20 }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D4A03C", display: "inline-block", animation: "pulse 2s infinite" }} />
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, color: "#D4A03C", letterSpacing: 1 }}>VETERAN-OWNED &amp; OPERATED · SAN ANTONIO, TX</span>
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.05}>
-          <Link to="/press#parade-of-homes-2026" style={{ textDecoration: "none", display: "block", background: "linear-gradient(135deg, rgba(212,160,60,0.12), rgba(212,160,60,0.04))", border: "1px solid rgba(212,160,60,0.3)", borderRadius: 16, padding: "20px 28px", maxWidth: 620, margin: "0 auto 32px", backdropFilter: "blur(12px)", cursor: "pointer", transition: "all 0.3s" }}
-            onMouseOver={e => (e.currentTarget.style.borderColor = "rgba(212,160,60,0.6)")} onMouseOut={e => (e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)")}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-              <img src={paradeOfHomesLogo} alt="2026 Parade of Homes" style={{ height: 120, width: "auto", flexShrink: 0 }} />
-              <div style={{ textAlign: "left" }}>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, color: "#D4A03C", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 4 }}>PRESS RELEASE</div>
-                <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 16, fontWeight: 600, color: "#F5F0E8", lineHeight: 1.4, margin: 0 }}>
-                  Damon Jackson, Founder of TCL Tech Solutions, Named <span style={{ color: "#D4A03C" }}>Co-Chair</span> of the 2026 Parade of Homes
-                </p>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#D4A03C", marginTop: 6, display: "inline-block" }}>Read Full Press Release →</span>
-              </div>
-            </div>
-          </Link>
-        </AnimateIn>
-        <AnimateIn delay={0.1}>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(38px, 6vw, 76px)", fontWeight: 700, color: "#F5F0E8", lineHeight: 1.05, marginBottom: 24, letterSpacing: -1 }}>
-            Technology That<br />
-            <span style={{ background: "linear-gradient(135deg, #D4A03C, #E8C36A, #D4A03C)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Transforms Spaces</span>
-          </h1>
-        </AnimateIn>
-        <AnimateIn delay={0.2}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", color: "#7A7A80", maxWidth: 640, margin: "0 auto 40px", lineHeight: 1.7 }}>
-            Smart home automation, custom AV, commercial installations, and builder pre-wire packages — designed and installed with military precision.
-          </p>
-        </AnimateIn>
-        <AnimateIn delay={0.3}>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginBottom: 48 }}>
-            <a href="#contact" onClick={e => scrollTo(e, "contact")} style={{ background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "16px 36px", borderRadius: 10, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 700, letterSpacing: 0.5, transition: "all 0.3s", boxShadow: "0 4px 24px rgba(212,160,60,0.3)" }}>
-              Get Your Free Quote →
-            </a>
-            <a href="#services" onClick={e => scrollTo(e, "services")} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "#F5F0E8", padding: "16px 36px", borderRadius: 10, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600, transition: "all 0.3s" }}>
-              Explore Services
-            </a>
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.4}>
-          <div style={{ background: "rgba(212,160,60,0.06)", border: "1px solid rgba(212,160,60,0.15)", borderRadius: 16, padding: "20px 32px", display: "inline-flex", alignItems: "center", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C" }}>🔥 20% OFF — Limited Time</div>
-            <div style={{ display: "flex", gap: 12 }}>
-              {[{ v: days, l: "Days" }, { v: hrs, l: "Hrs" }, { v: mins, l: "Min" }, { v: secs, l: "Sec" }].map(t => (
-                <div key={t.l} style={{ textAlign: "center" }}>
-                  <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 8, padding: "8px 12px", fontFamily: "'DM Mono', monospace", fontSize: 20, fontWeight: 700, color: "#F5F0E8", minWidth: 44, border: "1px solid rgba(212,160,60,0.15)" }}>{String(t.v).padStart(2, "0")}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "#7A7A80", marginTop: 4, letterSpacing: 1 }}>{t.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.5}>
-          <div style={{ display: "flex", justifyContent: "center", gap: 48, marginTop: 56, flexWrap: "wrap" }}>
-            {STATS.map((s, i) => (
-              <div key={i} style={{ textAlign: "center" }}>
-                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 32, fontWeight: 700, color: "#D4A03C" }}>{s.value}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 1.5, marginTop: 4, textTransform: "uppercase" as const }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </AnimateIn>
+  return <>
+    <section id="hero" className="tcl-hero">
+      <img className="tcl-hero-image" src={heroBg} alt="An immersive living room with integrated home theater, ambient lighting and city views" width={1920} height={1080} fetchPriority="high" />
+      <div className="tcl-hero-shade" />
+      <div className="tcl-hero-copy">
+        <p className="tcl-eyebrow">San Antonio, Texas · Veteran-owned & operated</p>
+        <h1>Technology that<br /><em>transforms spaces.</em></h1>
+        <p>Smart home automation, custom AV, commercial installations, and builder pre-wire packages — designed and installed with military precision.</p>
+        <div className="tcl-actions"><a className="tcl-button" href="#contact">Get your free quote <ArrowUpRight size={18} /></a><a className="tcl-text-link" href="#services">Discover the possibilities <ArrowRight size={18} /></a></div>
       </div>
+      <div className="tcl-hero-bottom"><span>THE CONNECTED LIFESTYLE</span><a href="/tower/index.html">Enter the connected tower <ArrowUpRight size={17} /></a></div>
     </section>
-  );
-}
-
-function VideoSection() {
-  const shareUrl = (() => {
-    const base = typeof window !== "undefined" ? window.location.origin + window.location.pathname : "https://tcl.streamwalkers.com/";
-    const clean = base.endsWith("/") ? base : base + "/";
-    return clean.replace(/#.*$/, "") + "#video";
-  })();
-  const videoUrl = "https://www.youtube.com/watch?v=0gVKShqKTd4";
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => { if (!loaded) setFailed(true); }, 5000);
-    return () => clearTimeout(t);
-  }, [loaded]);
-  const copyLink = async () => {
-    const linkToCopy = shareUrl.includes("#video") ? shareUrl : `${shareUrl}#video`;
-    try {
-      await navigator.clipboard.writeText(linkToCopy);
-      toast.success("Link copied — jumps to the video", {
-        description: linkToCopy,
-      });
-    } catch {
-      toast.error("Could not copy link", { description: linkToCopy });
-    }
-  };
-  return (
-    <section id="video" style={{ background: "linear-gradient(180deg, #0A0A0E 0%, #12121A 100%)", padding: "100px 24px", borderTop: "1px solid rgba(212,160,60,0.1)", borderBottom: "1px solid rgba(212,160,60,0.1)" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#D4A03C", letterSpacing: 4, fontWeight: 600, marginBottom: 12 }}>FEATURED VIDEO</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(32px, 5vw, 52px)", color: "#F5F0E8", margin: 0, fontWeight: 700, letterSpacing: -1 }}>
-              See The Connected Lifestyle in Action
-            </h2>
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.1}>
-          <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,160,60,0.15)", background: "#000" }}>
-            {!failed && (
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/0gVKShqKTd4?si=K6mN-HbWR63j6GdU"
-                title="The Connected Lifestyle — Featured Video"
-                loading="lazy"
-                onLoad={() => setLoaded(true)}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
-              />
-            )}
-            {failed && (
-              <a
-                href={videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Watch The Connected Lifestyle on YouTube"
-                style={{
-                  position: "absolute", inset: 0, display: "block", textDecoration: "none", color: "#F5F0E8",
-                  backgroundImage:
-                    "linear-gradient(135deg, rgba(10,10,14,0.82) 0%, rgba(18,18,26,0.55) 50%, rgba(10,10,14,0.9) 100%), url('https://i.ytimg.com/vi/0gVKShqKTd4/maxresdefault.jpg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  boxShadow: "inset 0 0 0 1px rgba(212,160,60,0.25)",
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
-              >
-                {/* Top eyebrow */}
-                <div style={{ position: "absolute", top: 20, left: 22, display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: 3, color: "#D4A03C", textTransform: "uppercase" }}>
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D4A03C", boxShadow: "0 0 12px #D4A03C" }} />
-                  Featured · TCL Tech Solutions
-                </div>
-
-                {/* Centered play button */}
-                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{
-                    width: "clamp(64px, 12vw, 96px)", height: "clamp(64px, 12vw, 96px)", borderRadius: "50%",
-                    background: "linear-gradient(135deg, #D4A03C, #C49030)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    boxShadow: "0 20px 60px rgba(212,160,60,0.45), 0 0 0 8px rgba(212,160,60,0.12)",
-                  }}>
-                    <div style={{
-                      width: 0, height: 0,
-                      borderTop: "16px solid transparent",
-                      borderBottom: "16px solid transparent",
-                      borderLeft: "24px solid #0A0A0E",
-                      marginLeft: 6,
-                    }} />
-                  </div>
-                </div>
-
-                {/* Bottom info row */}
-                <div style={{ position: "absolute", left: 22, right: 22, bottom: 20, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-end", justifyContent: "space-between" }}>
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(18px, 2.4vw, 26px)", color: "#F5F0E8", fontWeight: 700, lineHeight: 1.2 }}>
-                      See The Connected Lifestyle in Action
-                    </div>
-                    <div style={{ marginTop: 6, fontSize: 12, color: "rgba(245,240,232,0.65)", letterSpacing: 0.5 }}>
-                      Tap to watch on YouTube
-                    </div>
-                  </div>
-                  <button
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFailed(false); setLoaded(false); }}
-                    style={{
-                      background: "rgba(10,10,14,0.55)", color: "#F5F0E8",
-                      border: "1px solid rgba(212,160,60,0.4)",
-                      padding: "9px 16px", borderRadius: 8, fontWeight: 600, fontSize: 12, cursor: "pointer",
-                      backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-                      letterSpacing: 0.4,
-                    }}
-                  >
-                    Try embedded player
-                  </button>
-                </div>
-              </a>
-            )}
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.15}>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
-            <button
-              onClick={copyLink}
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", border: "none", padding: "14px 28px", borderRadius: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 0.5, cursor: "pointer", boxShadow: "0 8px 24px rgba(212,160,60,0.25)" }}
-            >
-              🔗 Share This Video
-            </button>
-          </div>
-        </AnimateIn>
-      </div>
-    </section>
-  );
+    <div className="tcl-stats" aria-label="TCL at a glance">{STATS.map(stat => <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div>
+    <div className="tcl-promotion"><span>20% off — limited time.</span><a href="#contact">Ask about the current offer <ArrowRight size={16} /></a></div>
+  </>;
 }
 
 function ServicesSection() {
   const [tab, setTab] = useState("residential");
-  const tabs = [
-    { key: "residential", label: "🏠 Homeowners", desc: "Smart living starts here" },
-    { key: "commercial", label: "🏢 Businesses", desc: "Bars, restaurants, offices & more" },
-    { key: "builders", label: "🏗️ Builders", desc: "Production & custom builders" },
-  ];
-  return (
-    <section id="services" style={{ padding: "100px 0", background: "#0A0A0E", position: "relative" }}>
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(212,160,60,0.2), transparent)" }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>What We Do</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 16 }}>Services Tailored to You</h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "#7A7A80", maxWidth: 560, margin: "0 auto" }}>Whether you're a homeowner, business owner, or home builder — we have the expertise to bring your vision to life.</p>
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={0.1}>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 48, flexWrap: "wrap" }}>
-            {tabs.map(t => (
-              <button key={t.key} onClick={() => setTab(t.key)} style={{
-                background: tab === t.key ? "linear-gradient(135deg, #D4A03C, #C49030)" : "rgba(255,255,255,0.03)",
-                color: tab === t.key ? "#0A0A0E" : "#9A9A9E",
-                border: tab === t.key ? "none" : "1px solid rgba(255,255,255,0.08)",
-                padding: "14px 28px", borderRadius: 10, cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, transition: "all 0.3s", lineHeight: 1.4,
-              }}>
-                {t.label}<br />
-                <span style={{ fontSize: 11, fontWeight: 400, opacity: 0.7 }}>{t.desc}</span>
-              </button>
-            ))}
-          </div>
-        </AnimateIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
-          {SERVICES[tab].map((s, i) => (
-            <AnimateIn key={s.title} delay={i * 0.07}>
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: 28, transition: "all 0.4s", cursor: "default", height: "100%" }}
-                onMouseOver={e => { e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"; e.currentTarget.style.background = "rgba(212,160,60,0.03)"; }}
-                onMouseOut={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}>
-                <div style={{ fontSize: 32, marginBottom: 16 }}>{s.icon}</div>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 20, color: "#F5F0E8", fontWeight: 600, marginBottom: 10 }}>{s.title}</h3>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7, marginBottom: 16 }}>{s.desc}</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {s.features.map(f => (
-                    <span key={f} style={{ background: "rgba(212,160,60,0.08)", color: "#D4A03C", padding: "4px 10px", borderRadius: 6, fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500 }}>{f}</span>
-                  ))}
-                </div>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  const tabs = [{ key: "residential", label: "Homeowners", desc: "Smart living starts here", image: portfolioSmartHome }, { key: "commercial", label: "Businesses", desc: "Bars, restaurants, offices & more", image: portfolioRestaurantAv }, { key: "builders", label: "Builders", desc: "Production & custom builders", image: portfolioPrewire }];
+  const selected = tabs.find(item => item.key === tab)!;
+  const changeTabByKey = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const next = event.key === "ArrowRight" ? (index + 1) % tabs.length : event.key === "ArrowLeft" ? (index + tabs.length - 1) % tabs.length : event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : -1;
+    if (next < 0) return;
+    event.preventDefault(); setTab(tabs[next].key); document.getElementById(`service-tab-${tabs[next].key}`)?.focus();
+  };
+  return <section id="services" className="tcl-section">
+    <div className="tcl-container"><AnimateIn><SectionHeading eyebrow="Made for your world" title={<>Every space.<br /><em>More possibility.</em></>}>Whether you're a homeowner, business owner, or home builder — we have the expertise to bring your vision to life.</SectionHeading></AnimateIn>
+      <div className="tcl-tabs" role="tablist" aria-label="Services by customer type">{tabs.map((item, index) => <button key={item.key} id={`service-tab-${item.key}`} role="tab" aria-selected={tab === item.key} aria-controls="service-panel" tabIndex={tab === item.key ? 0 : -1} onKeyDown={event => changeTabByKey(event, index)} onClick={() => setTab(item.key)}>{item.label}<ArrowUpRight size={18} /></button>)}</div>
+    </div>
+    <div id="service-panel" role="tabpanel" aria-labelledby={`service-tab-${tab}`}>
+      <div className="tcl-service-banner"><img src={selected.image} alt={selected.desc} loading="lazy" width={800} height={544} /><div><p className="tcl-eyebrow">{selected.label}</p><h3>{selected.desc}</h3><a className="tcl-text-link" href="#contact">Design your solution <ArrowRight size={18} /></a></div></div>
+      <div className="tcl-container tcl-service-grid">{SERVICES[tab].map((service, index) => <article className="tcl-service" key={service.title}><span className="tcl-number">{String(index + 1).padStart(2, "0")}</span><h3>{service.title}</h3><p>{service.desc}</p><ul>{service.features.map(feature => <li key={feature}>{feature}</li>)}</ul></article>)}</div>
+    </div>
+  </section>;
+}
+
+function TowerSection() {
+  return <section className="tcl-tower" aria-labelledby="tower-title"><div className="tcl-tower-media"><img src="/tower/media/B2-armor-lab-v3.png" alt="Damon and Phil in the Connected Tower Armor Lab" loading="lazy" width={1672} height={941} /></div><div className="tcl-tower-copy"><AnimateIn><p className="tcl-eyebrow">An immersive TCL experience</p><h2 id="tower-title">A new level<br />of <em>connected.</em></h2><p>Step inside the Connected Tower. Travel from the Armor Lab to the Sky Lounge and explore the possibilities on every level.</p><a className="tcl-button" href="/tower/index.html">Explore the tower <ArrowUpRight size={18} /></a><div className="tcl-tower-levels"><span>ARMOR LAB</span><span>CINEMA DECK</span><span>SKY LOUNGE</span></div></AnimateIn></div></section>;
+}
+
+function VideoSection() {
+  const [playing, setPlaying] = useState(false);
+  const copyLink = async () => {
+    const link = `${window.location.origin}/#video`;
+    try { await navigator.clipboard.writeText(link); toast.success("Link copied — jumps to the video", { description: link }); }
+    catch { toast.error("Could not copy link", { description: link }); }
+  };
+  return <section id="video" className="tcl-section tcl-video-section"><div className="tcl-container"><AnimateIn><div className="tcl-heading-row"><SectionHeading eyebrow="See it in action" title={<>The connected<br /><em>lifestyle.</em></>} /><button className="tcl-text-link" onClick={copyLink}><Share2 size={16} /> Share this video</button></div></AnimateIn>
+    <div className="tcl-video-frame">{playing ? <iframe src="https://www.youtube-nocookie.com/embed/0gVKShqKTd4?autoplay=1&si=K6mN-HbWR63j6GdU" title="The Connected Lifestyle — Featured Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <button className="tcl-video-poster" onClick={() => setPlaying(true)} aria-label="Play The Connected Lifestyle featured video"><img src={heroBg} alt="" width={1920} height={1080} loading="lazy" /><span className="tcl-play"><Play size={26} fill="currentColor" /></span><span className="tcl-video-caption">See The Connected Lifestyle in Action</span></button>}</div>
+    <a className="tcl-video-external" href="https://www.youtube.com/watch?v=0gVKShqKTd4" target="_blank" rel="noopener noreferrer">Watch on YouTube <ArrowUpRight size={14} /></a>
+  </div></section>;
 }
 
 function ProcessSection() {
-  return (
-    <section id="process" style={{ padding: "100px 0", background: "linear-gradient(180deg, #0E0E14, #0A0A0E)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Our Process</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 16 }}>How It Works</h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "#7A7A80", maxWidth: 500, margin: "0 auto" }}>From first call to final walkthrough — a seamless experience built on trust.</p>
-          </div>
-        </AnimateIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
-          {PROCESS.map((p, i) => (
-            <AnimateIn key={i} delay={i * 0.1}>
-              <div style={{ textAlign: "center", position: "relative", padding: "36px 24px" }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>{p.icon}</div>
-                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 48, fontWeight: 700, color: "rgba(212,160,60,0.1)", position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)" }}>{p.step}</div>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 20, color: "#F5F0E8", fontWeight: 600, marginBottom: 8 }}>{p.title}</h3>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>{p.desc}</p>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="process" className="tcl-section tcl-process"><div className="tcl-container"><AnimateIn><SectionHeading eyebrow="How it works" title={<>A clear path<br /><em>from idea to everyday.</em></>}>From first call to final walkthrough — a seamless experience built on trust.</SectionHeading></AnimateIn><div className="tcl-process-grid">{PROCESS.map(item => <article key={item.step}><span className="tcl-number">{item.step}</span><h3>{item.title}</h3><p>{item.desc}</p></article>)}</div></div></section>;
 }
 
+const PROJECTS = [
+  { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", img: portfolioHomeTheater },
+  { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", img: portfolioRooftopAudio },
+  { title: "Smart Home Full Build", category: "Residential", desc: "automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", img: portfolioSmartHome },
+  { title: "New Construction Pre-Wire", category: "Builder", desc: "Complete pre-wire for a 52-home production community — structured wiring, AV, and security rough-in.", img: portfolioPrewire },
+  { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", img: portfolioRestaurantAv },
+  { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", img: portfolioOutdoor },
+];
+
 function PortfolioSection() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [filter, setFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const filters = ["All", "Residential", "Commercial", "Builder"];
-  const projects = [
-    { title: "Luxury Home Theater", category: "Residential", desc: "4K projection, Dolby Atmos 7.2.4, acoustic panels, and motorized screen in a dedicated theater room.", img: portfolioHomeTheater },
-    { title: "Rooftop Bar Audio", category: "Commercial", desc: "Multi-zone weatherproof sound system with DJ integration for a downtown San Antonio rooftop bar.", img: portfolioRooftopAudio },
-    { title: "Smart Home Full Build", category: "Residential", desc: "automation — lighting, climate, security, audio, and motorized shades across 4,200 sq ft.", img: portfolioSmartHome },
-    { title: "New Construction Pre-Wire", category: "Builder", desc: "Complete pre-wire for a 52-home production community — structured wiring, AV, and security rough-in.", img: portfolioPrewire },
-    { title: "Restaurant AV System", category: "Commercial", desc: "Background music zones, patio speakers, and 6-screen sports setup for a Tex-Mex restaurant.", img: portfolioRestaurantAv },
-    { title: "Outdoor Entertainment", category: "Residential", desc: "Weatherproof outdoor TV, landscape speakers, ambient patio lighting, and Wi-Fi extension.", img: portfolioOutdoor },
-  ];
-  const filtered = activeFilter === "All" ? projects : projects.filter(p => p.category === activeFilter);
-
-  const navigateLightbox = useCallback((dir: number) => {
-    if (selectedProject === null) return;
-    const newIdx = selectedProject + dir;
-    if (newIdx >= 0 && newIdx < filtered.length) setSelectedProject(newIdx);
-  }, [selectedProject, filtered.length]);
-
+  const projects = filter === "All" ? PROJECTS : PROJECTS.filter(project => project.category === filter);
+  const navigateLightbox = useCallback((direction: number) => { setSelectedProject(current => current === null ? null : Math.max(0, Math.min(projects.length - 1, current + direction))); }, [projects.length]);
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (selectedProject === null) return;
-      if (e.key === "ArrowLeft") navigateLightbox(-1);
-      if (e.key === "ArrowRight") navigateLightbox(1);
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [selectedProject, navigateLightbox]);
-
-  return (
-    <section id="portfolio" style={{ padding: "100px 0", background: "#0A0A0E" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Our Work</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 16 }}>Featured Projects</h2>
-          </div>
-        </AnimateIn>
-        {/* Category Filters */}
-        <AnimateIn delay={0.05}>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginBottom: 40, flexWrap: "wrap" }}>
-            {filters.map(f => (
-              <button key={f} onClick={() => { setActiveFilter(f); setSelectedProject(null); }} style={{
-                background: activeFilter === f ? "linear-gradient(135deg, #D4A03C, #C49030)" : "rgba(255,255,255,0.03)",
-                color: activeFilter === f ? "#0A0A0E" : "#9A9A9E",
-                border: activeFilter === f ? "none" : "1px solid rgba(255,255,255,0.08)",
-                padding: "10px 24px", borderRadius: 100, cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: 0.5, transition: "all 0.3s",
-              }}
-                onMouseOver={e => { if (activeFilter !== f) (e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"); }}
-                onMouseOut={e => { if (activeFilter !== f) (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"); }}>
-                {f}
-              </button>
-            ))}
-          </div>
-        </AnimateIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
-          {filtered.map((p, i) => (
-            <AnimateIn key={p.title} delay={i * 0.08}>
-              <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s", cursor: "pointer" }}
-                onClick={() => setSelectedProject(i)}
-                onMouseOver={e => { e.currentTarget.style.borderColor = "rgba(212,160,60,0.3)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                onMouseOut={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={544} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s" }}
-                    onMouseOver={e => (e.currentTarget.style.transform = "scale(1.05)")}
-                    onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
-                </div>
-                <div style={{ padding: 24, background: "rgba(255,255,255,0.02)" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, color: "#D4A03C", letterSpacing: 1.5, textTransform: "uppercase" as const }}>{p.category}</span>
-                  </div>
-                  <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 18, color: "#F5F0E8", fontWeight: 600, marginBottom: 8 }}>{p.title}</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", lineHeight: 1.6 }}>{p.desc}</p>
-                </div>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-      </div>
-
-      {/* Lightbox Modal */}
-      <Dialog open={selectedProject !== null} onOpenChange={(open) => { if (!open) setSelectedProject(null); }}>
-        <DialogContent className="max-w-4xl p-0 border-none bg-transparent shadow-none [&>button]:text-white [&>button]:opacity-100 [&>button]:top-3 [&>button]:right-3 [&>button]:z-50 [&>button]:bg-black/60 [&>button]:rounded-full [&>button]:p-2 [&>button]:h-auto [&>button]:w-auto">
-          {selectedProject !== null && filtered[selectedProject] && (
-            <div style={{ borderRadius: 16, overflow: "hidden", background: "#12121A", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <div style={{ position: "relative" }}>
-                <img src={filtered[selectedProject].img} alt={filtered[selectedProject].title} style={{ width: "100%", maxHeight: "60vh", objectFit: "cover" }} />
-                {/* Navigation arrows */}
-                {selectedProject > 0 && (
-                  <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", color: "#F5F0E8", fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    ←
-                  </button>
-                )}
-                {selectedProject < filtered.length - 1 && (
-                  <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", color: "#F5F0E8", fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    →
-                  </button>
-                )}
-              </div>
-              <div style={{ padding: "24px 28px" }}>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, color: "#D4A03C", letterSpacing: 1.5, textTransform: "uppercase" as const, background: "rgba(212,160,60,0.1)", padding: "4px 12px", borderRadius: 6 }}>{filtered[selectedProject].category}</span>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, color: "#F5F0E8", fontWeight: 700, marginTop: 12, marginBottom: 8 }}>{filtered[selectedProject].title}</h3>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#7A7A80", lineHeight: 1.7 }}>{filtered[selectedProject].desc}</p>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    </section>
-  );
+    if (selectedProject === null) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); navigateLightbox(event.key === "ArrowLeft" ? -1 : 1); } };
+    window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey);
+  }, [navigateLightbox, selectedProject]);
+  const project = selectedProject === null ? null : projects[selectedProject];
+  return <section id="portfolio" className="tcl-section tcl-portfolio"><div className="tcl-container"><AnimateIn><div className="tcl-heading-row"><SectionHeading eyebrow="Selected spaces" title={<>Designed to be<br /><em>experienced.</em></>} /><p className="tcl-lead">Our work speaks for itself. Explore some of the spaces we've transformed.</p></div></AnimateIn><div className="tcl-filters" aria-label="Filter projects">{["All", "Residential", "Commercial", "Builder"].map(item => <button key={item} aria-pressed={filter === item} onClick={() => { setFilter(item); setSelectedProject(null); }}>{item}</button>)}</div></div>
+    <div className="tcl-project-grid">{projects.map((item, index) => <button className="tcl-project" key={item.title} onClick={() => setSelectedProject(index)} aria-label={`View ${item.title}`}><img src={item.img} alt={item.title} width={800} height={544} loading="lazy" /><div className="tcl-project-copy"><span className="tcl-eyebrow">{item.category}</span><h3>{item.title}</h3><p>{item.desc}</p><span className="tcl-project-arrow"><ArrowUpRight size={24} /></span></div></button>)}</div>
+    <Dialog open={project !== null} onOpenChange={open => { if (!open) setSelectedProject(null); }}><DialogContent className="tcl-lightbox">{project && <><img src={project.img} alt={project.title} /><div className="tcl-lightbox-copy"><p className="tcl-eyebrow">{project.category}</p><DialogTitle>{project.title}</DialogTitle><DialogDescription>{project.desc}</DialogDescription><div className="tcl-lightbox-controls"><button aria-label="Previous project" disabled={selectedProject === 0} onClick={() => navigateLightbox(-1)}><ArrowLeft size={18} /></button><span>{(selectedProject ?? 0) + 1} / {projects.length}</span><button aria-label="Next project" disabled={selectedProject === projects.length - 1} onClick={() => navigateLightbox(1)}><ArrowRight size={18} /></button></div></div></>}</DialogContent></Dialog>
+  </section>;
 }
 
 function ReviewsSection() {
-  return (
-    <section id="reviews" style={{ padding: "100px 0", background: "linear-gradient(180deg, #0E0E14, #0A0A0E)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Testimonials</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 16 }}>What Our Clients Say</h2>
-          </div>
-        </AnimateIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
-          {REVIEWS.map((r, i) => (
-            <AnimateIn key={i} delay={i * 0.08}>
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: 28, height: "100%", display: "flex", flexDirection: "column" }}>
-                <div style={{ color: "#D4A03C", fontSize: 16, marginBottom: 14, letterSpacing: 2 }}>★★★★★</div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#C0C0C4", lineHeight: 1.7, flex: 1, fontStyle: "italic" }}>"{r.text}"</p>
-                <div style={{ marginTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 15, color: "#F5F0E8", fontWeight: 600 }}>{r.name}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80" }}>{r.type}</div>
-                  </div>
-                  <div style={{ background: "rgba(212,160,60,0.1)", padding: "4px 10px", borderRadius: 6, fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#D4A03C", fontWeight: 500 }}>Verified</div>
-                </div>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="reviews" className="tcl-section tcl-reviews"><div className="tcl-container"><AnimateIn><SectionHeading eyebrow="In their own words" title={<>Spaces transformed.<br /><em>Expectations exceeded.</em></>} /></AnimateIn><div className="tcl-review-grid">{REVIEWS.map(review => <figure key={review.name}><div className="tcl-stars" aria-label={`${review.rating} out of 5 stars`}>★★★★★</div><blockquote>“{review.text}”</blockquote><figcaption><strong>{review.name}</strong><span>{review.type}</span><small>Verified</small></figcaption></figure>)}</div></div></section>;
 }
 
 function AboutSection() {
-  return (
-    <section id="about" style={{ padding: "100px 0", background: "#0A0A0E" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: 56, alignItems: "center" }}>
-          <AnimateIn>
-            <div style={{ background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, background: "radial-gradient(circle, rgba(212,160,60,0.15), transparent)", borderRadius: "50%" }} />
-              <div style={{ fontSize: 48, marginBottom: 20 }}>🎖️</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600, color: "#D4A03C", letterSpacing: 2, marginBottom: 8, textTransform: "uppercase" as const }}>Veteran-Owned</div>
-              <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 28, fontWeight: 700, color: "#F5F0E8", lineHeight: 1.3, marginBottom: 16 }}>Built on Discipline.<br />Driven by Excellence.</div>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-                {["Licensed", "Bonded", "Insured", "10+ Years"].map(b => (
-                  <span key={b} style={{ background: "rgba(212,160,60,0.12)", color: "#D4A03C", padding: "6px 14px", borderRadius: 8, fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600 }}>{b}</span>
-                ))}
-              </div>
-            </div>
-          </AnimateIn>
-          <AnimateIn delay={0.15}>
-            <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Our Story</div>
-              <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 3.5vw, 40px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 20, lineHeight: 1.2 }}>From Service Member to Tech Leader</h2>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#7A7A80", lineHeight: 1.8, marginBottom: 16 }}>
-                TCL Tech Solutions — The Connected Lifestyle — was founded in San Antonio by a U.S. military veteran who saw an opportunity to bring the same discipline, precision, and reliability from military service into the world of home and commercial technology.
-              </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#7A7A80", lineHeight: 1.8, marginBottom: 16 }}>
-                With over a decade of experience in AV design, smart home automation, networking, and low-voltage wiring, we've completed 500+ projects across San Antonio — from first-time homeowners upgrading their entertainment to production builders wiring entire communities.
-              </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#7A7A80", lineHeight: 1.8, marginBottom: 28 }}>
-                We don't cut corners. We don't do cookie-cutter installs. Every project gets the same attention to detail that defined our military service — because your space deserves nothing less.
-              </p>
-              <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
-                <a href="#contact" onClick={e => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }} style={{ background: "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "14px 28px", borderRadius: 10, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700 }}>
-                  Work With Us →
-                </a>
-                <a href="tel:2109958655" style={{ color: "#D4A03C", padding: "14px 20px", textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600 }}>
-                  📞 (210) 995-8655
-                </a>
-              </div>
-            </div>
-          </AnimateIn>
-        </div>
-
-        {/* Damon Jackson Profile Card */}
-        <AnimateIn delay={0.1}>
-          <div style={{ marginTop: 80, background: "linear-gradient(135deg, rgba(212,160,60,0.06), rgba(212,160,60,0.02))", borderRadius: 20, padding: 48, border: "1px solid rgba(212,160,60,0.1)", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
-              <img src={damonHeadshot} alt="Damon Jackson, Founder & CEO of The Connected Lifestyle" style={{ width: 100, height: 100, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "3px solid #D4A03C" }} />
-              <div style={{ flex: 1, minWidth: 250 }}>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, fontWeight: 700, color: "#F5F0E8", marginBottom: 4 }}>Damon Jackson</h3>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#D4A03C", marginBottom: 8, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                  Founder & CEO · Co-Chair, 2026 Parade of Homes
-                  <img src={paradeOfHomesLogo2} alt="2026 Parade of Homes" style={{ height: 28, borderRadius: 4 }} />
-                </div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
-                  22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, RTI, IC Realtime, and Home Theater Design & Calibration.
-                </p>
-              </div>
-            </div>
-          </div>
-        </AnimateIn>
-
-        {/* Founder's Keynote Speech */}
-        <AnimateIn delay={0.2}>
-          <div style={{ marginTop: 56, textAlign: "center" }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Featured</div>
-            <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(24px, 3vw, 36px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 32 }}>Founder's Keynote Speech</h3>
-            <div style={{ maxWidth: 800, margin: "0 auto", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(212,160,60,0.1)", background: "rgba(255,255,255,0.02)" }}>
-              <video controls preload="metadata" style={{ width: "100%", display: "block", aspectRatio: "16/9" }}>
-                <source src="/videos/TCL_CEO_Keynote_Speech.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div style={{ padding: "20px 24px", textAlign: "left" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8", marginBottom: 6 }}>Damon Jackson — CEO, TCL Tech Solutions · Co-Chair, 2026 Parade of Homes</p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>
-                  In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and his role as Co-Chair of the 2026 Parade of Homes.
-                </p>
-              </div>
-            </div>
-            <a href="/press" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 28, padding: "12px 28px", background: "linear-gradient(135deg, #D4A03C, #B8860B)", color: "#1A1A2E", fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, borderRadius: 10, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")} onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
-              View More Media Coverage →
-            </a>
-          </div>
-        </AnimateIn>
-      </div>
-    </section>
-  );
+  return <section id="about" className="tcl-section tcl-about"><div className="tcl-container"><div className="tcl-about-intro"><AnimateIn><SectionHeading eyebrow="Our story · Veteran-owned" title={<>Built on discipline.<br /><em>Driven by excellence.</em></>} /><div className="tcl-credentials">{["Licensed", "Bonded", "Insured", "10+ Years"].map(item => <span key={item}><Check size={14} />{item}</span>)}</div></AnimateIn><AnimateIn delay={0.1}><div className="tcl-story"><h3>From Service Member to Tech Leader</h3><p>TCL Tech Solutions — The Connected Lifestyle — was founded in San Antonio by a U.S. military veteran who saw an opportunity to bring the same discipline, precision, and reliability from military service into the world of home and commercial technology.</p><p>With over a decade of experience in AV design, smart home automation, networking, and low-voltage wiring, we've completed 500+ projects across San Antonio — from first-time homeowners upgrading their entertainment to production builders wiring entire communities.</p><p>We don't cut corners. We don't do cookie-cutter installs. Every project gets the same attention to detail that defined our military service — because your space deserves nothing less.</p><a className="tcl-text-link" href="#contact">Work with us <ArrowRight size={18} /></a></div></AnimateIn></div>
+    <div className="tcl-founder"><div className="tcl-founder-portrait"><img src={damonHeadshot} alt="Damon Jackson, Founder and CEO of The Connected Lifestyle" loading="lazy" /></div><div className="tcl-founder-copy"><p className="tcl-eyebrow">The person behind the possibilities</p><h3>Damon Jackson</h3><p className="tcl-founder-role">Founder & CEO · Co-Chair, 2026 Parade of Homes</p><p>22-year U.S. Air Force veteran with a B.S. in Network & Communications Management. Certified in Lutron RadioRA 3, URC HAP, Savant, RTI, IC Realtime, and Home Theater Design & Calibration.</p><Link className="tcl-press-link" to="/press#parade-of-homes-2026"><img src={paradeOfHomesLogo} alt="2026 Parade of Homes" loading="lazy" /><span>Damon Jackson named Co-Chair of the 2026 Parade of Homes<small>Read the press release <ArrowUpRight size={14} /></small></span></Link></div></div>
+    <div className="tcl-keynote"><div><p className="tcl-eyebrow">Featured</p><h3>Founder's<br /><em>keynote speech.</em></h3><p>Damon Jackson — CEO, TCL Tech Solutions · Co-Chair, 2026 Parade of Homes</p><p>In this keynote, Damon shares his vision for the future of smart home technology in San Antonio, drawing on over two decades of military leadership and his role as Co-Chair of the 2026 Parade of Homes.</p></div><video controls preload="none" aria-label="Damon Jackson's keynote speech"><source src="/videos/TCL_CEO_Keynote_Speech.mp4" type="video/mp4" />Your browser does not support the video tag.</video></div>
+  </div></section>;
 }
 
 function FAQSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-  return (
-    <section id="faq" style={{ padding: "100px 0", background: "linear-gradient(180deg, #0E0E14, #0A0A0E)" }}>
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
-        <AnimateIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>FAQ</div>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 48px)", color: "#F5F0E8", fontWeight: 700 }}>Common Questions</h2>
-          </div>
-        </AnimateIn>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {FAQS.map((f, i) => (
-            <AnimateIn key={i} delay={i * 0.05}>
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, overflow: "hidden", transition: "all 0.3s" }}
-                onMouseOver={e => e.currentTarget.style.borderColor = "rgba(212,160,60,0.2)"}
-                onMouseOut={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"}>
-                <button onClick={() => setOpenIdx(openIdx === i ? null : i)} style={{ width: "100%", background: "none", border: "none", padding: "20px 24px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left" }}>
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#F5F0E8" }}>{f.q}</span>
-                  <span style={{ color: "#D4A03C", fontSize: 20, fontWeight: 300, transition: "transform 0.3s", transform: openIdx === i ? "rotate(45deg)" : "none", flexShrink: 0, marginLeft: 16 }}>+</span>
-                </button>
-                <div style={{ maxHeight: openIdx === i ? 200 : 0, overflow: "hidden", transition: "max-height 0.4s ease" }}>
-                  <p style={{ padding: "0 24px 20px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#7A7A80", lineHeight: 1.7 }}>{f.a}</p>
-                </div>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  const [open, setOpen] = useState<number | null>(null);
+  return <section id="faq" className="tcl-section tcl-faq"><div className="tcl-container tcl-faq-layout"><AnimateIn><SectionHeading eyebrow="A little clarity" title={<>Good questions.<br /><em>Clear answers.</em></>} /><a className="tcl-text-link" href="#contact">Let's talk about your project <ArrowRight size={17} /></a></AnimateIn><div>{FAQS.map((item, index) => <article className="tcl-faq-item" key={item.q}><h3><button aria-expanded={open === index} aria-controls={`faq-answer-${index}`} id={`faq-question-${index}`} onClick={() => setOpen(open === index ? null : index)}>{item.q}<Plus size={20} className={open === index ? "is-open" : ""} /></button></h3><div id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`} hidden={open !== index}><p>{item.a}</p></div></article>)}</div></div></section>;
 }
 
 function ContactSection() {
@@ -797,237 +250,34 @@ function ContactSection() {
       });
       if (dbError) throw dbError;
       setSubmitted(true);
-    } catch (e: any) {
+    } catch (e) {
       setError("Something went wrong. Please call us directly at (210) 995-8655.");
       console.error("Contact form error:", e);
     } finally {
       setSubmitting(false);
     }
   };
-  return (
-    <section id="contact" style={{ padding: "100px 0", background: "#0A0A0E", position: "relative" }}>
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(212,160,60,0.2), transparent)" }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 48 }}>
-          <AnimateIn>
-            <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 3, marginBottom: 12, textTransform: "uppercase" as const }}>Get Started</div>
-              <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 3.5vw, 44px)", color: "#F5F0E8", fontWeight: 700, marginBottom: 20, lineHeight: 1.2 }}>Ready to Transform<br />Your Space?</h2>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "#7A7A80", lineHeight: 1.8, marginBottom: 36 }}>
-                Fill out the form and we'll get back to you within 24 hours with a free consultation and custom quote. No pressure, no gimmicks — just real solutions.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                {[
-                  { icon: "📞", label: "Call Us", val: "(210) 995-8655", href: "tel:2109958655" },
-                  { icon: "✉️", label: "Email", val: "theconnectedlifestyletech@gmail.com", href: "mailto:theconnectedlifestyletech@gmail.com" },
-                  { icon: "📍", label: "Service Area", val: "San Antonio, TX & Surrounding" },
-                  { icon: "🕐", label: "Response Time", val: "Within 24 Hours" },
-                ].map(c => (
-                  <div key={c.label} style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                    <div style={{ width: 44, height: 44, background: "rgba(212,160,60,0.08)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{c.icon}</div>
-                    <div>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 1 }}>{c.label}</div>
-                      {c.href ? (
-                        <a href={c.href} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#F5F0E8", fontWeight: 500, textDecoration: "none" }}>{c.val}</a>
-                      ) : (
-                        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#F5F0E8", fontWeight: 500 }}>{c.val}</div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimateIn>
-          <AnimateIn delay={0.15}>
-            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 20, padding: 36 }}>
-              {submitted ? (
-                <div style={{ textAlign: "center", padding: "40px 0" }}>
-                  <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
-                  <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 24, color: "#F5F0E8", fontWeight: 700, marginBottom: 8 }}>Request Received!</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "#7A7A80" }}>We'll be in touch within 24 hours to schedule your free consultation.</p>
-                </div>
-              ) : (
-                <>
-                  <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 22, color: "#F5F0E8", fontWeight: 700, marginBottom: 24 }}>Request a Free Quote</h3>
-                  {[
-                    { key: "name", label: "Full Name", type: "text", placeholder: "John Smith" },
-                    { key: "email", label: "Email", type: "email", placeholder: "john@email.com" },
-                    { key: "phone", label: "Phone", type: "tel", placeholder: "(210) 555-1234" },
-                  ].map(f => (
-                    <div key={f.key} style={{ marginBottom: 16 }}>
-                      <label style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 0.5, marginBottom: 6, display: "block" }}>{f.label}</label>
-                      <input type={f.type} placeholder={f.placeholder} value={form[f.key as keyof typeof form]} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                        style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "12px 16px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#F5F0E8", outline: "none", boxSizing: "border-box" as const, transition: "border-color 0.3s" }}
-                        onFocus={e => e.target.style.borderColor = "rgba(212,160,60,0.4)"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"} />
-                    </div>
-                  ))}
-                  <div style={{ marginBottom: 16 }}>
-                    <label style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 0.5, marginBottom: 6, display: "block" }}>Project Type</label>
-                    <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}
-                      style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "12px 16px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#F5F0E8", outline: "none", boxSizing: "border-box" as const, appearance: "none" as const }}>
-                      <option value="residential" style={{ background: "#1A1A24" }}>🏠 Residential / Homeowner</option>
-                      <option value="commercial" style={{ background: "#1A1A24" }}>🏢 Commercial / Business</option>
-                      <option value="builder" style={{ background: "#1A1A24" }}>🏗️ Builder Partnership</option>
-                      <option value="other" style={{ background: "#1A1A24" }}>💬 Other / Not Sure</option>
-                    </select>
-                  </div>
-                  <div style={{ marginBottom: 24 }}>
-                    <label style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", letterSpacing: 0.5, marginBottom: 6, display: "block" }}>Tell Us About Your Project</label>
-                    <textarea placeholder="Describe your project, timeline, budget range..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                      rows={4} style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "12px 16px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "#F5F0E8", outline: "none", boxSizing: "border-box" as const, resize: "vertical" as const }}
-                      onFocus={e => e.target.style.borderColor = "rgba(212,160,60,0.4)"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"} />
-                  </div>
-                  {error && <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#e74c3c", marginBottom: 12 }}>{error}</p>}
-                  <button onClick={handleSubmit} disabled={submitting}
-                    style={{ width: "100%", background: submitting ? "#8a7a3a" : "linear-gradient(135deg, #D4A03C, #C49030)", color: "#0A0A0E", padding: "16px", borderRadius: 10, border: "none", fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 700, cursor: submitting ? "wait" : "pointer", letterSpacing: 0.5, transition: "all 0.3s", boxShadow: "0 4px 24px rgba(212,160,60,0.3)", opacity: submitting ? 0.7 : 1 }}
-                    onMouseOver={e => { if (!submitting) { (e.target as HTMLElement).style.transform = "translateY(-1px)"; (e.target as HTMLElement).style.boxShadow = "0 8px 32px rgba(212,160,60,0.4)"; } }}
-                    onMouseOut={e => { (e.target as HTMLElement).style.transform = "translateY(0)"; (e.target as HTMLElement).style.boxShadow = "0 4px 24px rgba(212,160,60,0.3)"; }}>
-                    {submitting ? "Submitting..." : "Submit Request →"}
-                  </button>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#7A7A80", textAlign: "center", marginTop: 12 }}>🔒 Your information is secure and never shared.</p>
-                </>
-              )}
-            </div>
-          </AnimateIn>
-        </div>
-      </div>
-    </section>
-  );
+
+  return <section id="contact" className="tcl-section tcl-contact"><div className="tcl-container tcl-contact-layout"><AnimateIn><SectionHeading eyebrow="Your space. Our expertise." title={<>Let's make<br /><em>it happen.</em></>}>Fill out the form and we'll get back to you within 24 hours with a free consultation and custom quote. No pressure, no gimmicks — just real solutions.</SectionHeading><div className="tcl-contact-details">{[{ Icon: Phone, label: "Call us", value: "(210) 995-8655", href: "tel:2109958655" }, { Icon: Mail, label: "Email", value: "theconnectedlifestyletech@gmail.com", href: "mailto:theconnectedlifestyletech@gmail.com" }, { Icon: MapPin, label: "Service area", value: "San Antonio, TX & Surrounding" }, { Icon: Clock, label: "Response time", value: "Within 24 Hours" }].map(({ Icon, label, value, href }) => <div key={label}><Icon size={18} /><div><span>{label}</span>{href ? <a href={href}>{value}</a> : <p>{value}</p>}</div></div>)}</div></AnimateIn>
+    <div className="tcl-contact-form">{submitted ? <div className="tcl-success" role="status"><Check size={36} /><h3>Request received!</h3><p>We'll be in touch within 24 hours to schedule your free consultation.</p></div> : <form onSubmit={event => { event.preventDefault(); void handleSubmit(); }}><p className="tcl-eyebrow">Start the conversation</p><h3>Request a free quote</h3>{[{ key: "name", label: "Full name", type: "text", autocomplete: "name", placeholder: "Your name" }, { key: "email", label: "Email", type: "email", autocomplete: "email", placeholder: "you@example.com" }, { key: "phone", label: "Phone", type: "tel", autocomplete: "tel", placeholder: "Your phone number" }].map(field => <div className="tcl-field" key={field.key}><label htmlFor={`contact-${field.key}`}>{field.label} <span aria-hidden="true">*</span></label><input id={`contact-${field.key}`} name={field.key} type={field.type} autoComplete={field.autocomplete} required placeholder={field.placeholder} value={form[field.key as keyof typeof form]} onChange={event => setForm({ ...form, [field.key]: event.target.value })} /></div>)}<div className="tcl-field"><label htmlFor="contact-type">Project type</label><select id="contact-type" name="type" value={form.type} onChange={event => setForm({ ...form, type: event.target.value })}><option value="residential">Residential / Homeowner</option><option value="commercial">Commercial / Business</option><option value="builder">Builder Partnership</option><option value="other">Other / Not Sure</option></select></div><div className="tcl-field"><label htmlFor="contact-message">Tell us about your project</label><textarea id="contact-message" name="message" rows={4} placeholder="Your ideas, timeline, and budget range…" value={form.message} onChange={event => setForm({ ...form, message: event.target.value })} /></div>{error && <p className="tcl-form-error" role="alert">{error}</p>}<button className="tcl-button" type="submit" disabled={submitting}>{submitting ? "Submitting…" : "Submit request"}<ArrowUpRight size={18} /></button><p className="tcl-form-note">Your information is secure and never shared.</p></form>}</div>
+  </div></section>;
 }
 
-function SiteFooter() {
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  return (
-    <footer style={{ padding: "48px 0 24px", background: "#08080C", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 36, marginBottom: 36 }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 32, height: 32, background: "linear-gradient(135deg, #D4A03C, #E8C36A)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, color: "#0A0A0E" }}>TCL</div>
-              <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 14, color: "#F5F0E8" }}>The Connected Lifestyle</div>
-            </div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", lineHeight: 1.7 }}>Veteran-owned smart home &amp; commercial tech solutions serving San Antonio and beyond.</p>
-          </div>
-          <div>
-            <h4 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 2, marginBottom: 16, textTransform: "uppercase" as const }}>Services</h4>
-            {["Home Theater", "Smart Automation", "Commercial AV", "Networking", "Builder Pre-Wire", "Security Systems"].map(s => (
-              <a key={s} href="#services" onClick={e => scrollTo(e, "services")} style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8, transition: "color 0.3s" }}
-                onMouseOver={e => (e.target as HTMLElement).style.color = "#F5F0E8"} onMouseOut={e => (e.target as HTMLElement).style.color = "#7A7A80"}>{s}</a>
-            ))}
-          </div>
-          <div>
-            <h4 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 2, marginBottom: 16, textTransform: "uppercase" as const }}>Company</h4>
-            {[
-              { l: "About", h: "#about" },
-              { l: "Reviews", h: "#reviews" },
-              { l: "Portfolio", h: "#portfolio" },
-              { l: "FAQ", h: "#faq" },
-              { l: "Contact", h: "#contact" },
-            ].map(s => (
-              <a key={s.l} href={s.h} onClick={e => scrollTo(e, s.h.replace("#", ""))} style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8, transition: "color 0.3s" }}
-                onMouseOver={e => (e.target as HTMLElement).style.color = "#F5F0E8"} onMouseOut={e => (e.target as HTMLElement).style.color = "#7A7A80"}>{s.l}</a>
-            ))}
-            <Link to="/press" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Press &amp; Media</Link>
-            <Link to="/business-plan" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Business Plan</Link>
-            <Link to="/capital-stack" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Capital Stack</Link>
-            <Link to="/investor-white-paper" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>Investor Paper</Link>
-          </div>
-          <div>
-            <h4 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600, color: "#D4A03C", letterSpacing: 2, marginBottom: 16, textTransform: "uppercase" as const }}>Contact</h4>
-            <a href="tel:2109958655" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8 }}>📞 (210) 995-8655</a>
-            <a href="mailto:theconnectedlifestyletech@gmail.com" style={{ display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", textDecoration: "none", marginBottom: 8, wordBreak: "break-all" as const }}>✉️ theconnectedlifestyletech@gmail.com</a>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#7A7A80", marginBottom: 8 }}>📍 San Antonio, TX</p>
-          </div>
-        </div>
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.04)", paddingTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#555" }}>© 2026 TCL Tech Solutions — The Connected Lifestyle. All rights reserved.</p>
-          <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="/privacy-policy" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#555", textDecoration: "none" }}>Privacy</Link>
-            <Link to="/terms-of-service" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#555", textDecoration: "none" }}>Terms</Link>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#555" }}>🇺🇸 Veteran-Owned</span>
-            <span style={{ color: "#333" }}>•</span>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "#555" }}>Licensed &amp; Insured</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-const OriginalLandingPage = () => {
-  const [activeSection, setActiveSection] = useState("hero");
-  useEffect(() => {
-    const sections = ["hero", "services", "process", "portfolio", "reviews", "about", "faq", "contact"];
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); });
-    }, { threshold: 0.3 });
-    sections.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const sectionId = window.location.hash.slice(1);
-    if (!sectionId) return;
-    let cancelled = false;
-    const scrollToVideo = () => {
-      const el = document.getElementById(sectionId);
-      if (!el) return false;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      el.setAttribute("tabindex", "-1");
-      (el as HTMLElement).focus({ preventScroll: true });
-      return true;
-    };
-    // Defer until layout/images settle so the target offset is correct.
-    const tries = [50, 200, 500, 1000];
-    tries.forEach((ms) => {
-      setTimeout(() => { if (!cancelled) scrollToVideo(); }, ms);
-    });
-    return () => { cancelled = true; };
-  }, []);
-
-  return (
-    <div style={{ background: "#0A0A0E", minHeight: "100vh", color: "#F5F0E8" }}>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        ::selection { background: rgba(212,160,60,0.3); color: #F5F0E8; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @media (max-width: 768px) {
-          .nav-links-desktop { display: none !important; }
-          .nav-hamburger { display: block !important; }
-        }
-      `}</style>
-      <Navbar activeSection={activeSection} />
-      <HeroSection />
-      <VideoSection />
-      <ServicesSection />
-      <ProcessSection />
-      <PortfolioSection />
-      <ReviewsSection />
-      <AboutSection />
-      <FAQSection />
-      <ContactSection />
-      <SEOContent />
-      <Footer />
-      <ChatBot />
-      
-    </div>
-  );
-};
-
-// Keep existing hash links (contact, video, portfolio, etc.) and all app routes working.
-// The isolated tower document retains its original full-screen WebGL/mobile behavior.
 const Index = () => {
+  const [activeSection, setActiveSection] = useState("hero");
   const { hash } = useLocation();
-  if (hash) return <OriginalLandingPage />;
-  return <main style={{ position: "fixed", inset: 0, background: "#080c0e", zIndex: 40 }}>
-    <iframe src="/tower/index.html" title="TCL Tech Solutions — The Connected Tower" allow="autoplay; fullscreen" style={{ width: "100%", height: "100%", border: 0, display: "block" }} />
-  </main>;
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) setActiveSection(entry.target.id); }); }, { rootMargin: "-10% 0px -55% 0px" });
+    ["hero", "video", "services", "process", "portfolio", "reviews", "about", "faq", "contact"].forEach(id => { const element = document.getElementById(id); if (element) observer.observe(element); });
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!hash) return;
+    const id = decodeURIComponent(hash.slice(1));
+    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: "start" }));
+    return () => cancelAnimationFrame(frame);
+  }, [hash]);
+  return <div className="tcl-home"><a className="tcl-skip-link" href="#main-content">Skip to content</a><Navbar activeSection={activeSection} /><main id="main-content"><HeroSection /><ServicesSection /><TowerSection /><PortfolioSection /><VideoSection /><ProcessSection /><ReviewsSection /><AboutSection /><FAQSection /><ContactSection /><div className="tcl-resources"><SEOContent /></div></main><div className="tcl-footer"><Footer /></div><ChatBot /></div>;
 };
 
 export default Index;
