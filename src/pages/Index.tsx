@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, ReactNode, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
 import Footer from "../components/Footer";
 import SEOContent from "../components/SEOContent";
@@ -958,7 +958,7 @@ function SiteFooter() {
   );
 }
 
-const Index = () => {
+const OriginalLandingPage = () => {
   const [activeSection, setActiveSection] = useState("hero");
   useEffect(() => {
     const sections = ["hero", "services", "process", "portfolio", "reviews", "about", "faq", "contact"];
@@ -971,10 +971,11 @@ const Index = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.location.hash !== "#video") return;
+    const sectionId = window.location.hash.slice(1);
+    if (!sectionId) return;
     let cancelled = false;
     const scrollToVideo = () => {
-      const el = document.getElementById("video");
+      const el = document.getElementById(sectionId);
       if (!el) return false;
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       el.setAttribute("tabindex", "-1");
@@ -1017,6 +1018,16 @@ const Index = () => {
       
     </div>
   );
+};
+
+// Keep existing hash links (contact, video, portfolio, etc.) and all app routes working.
+// The isolated tower document retains its original full-screen WebGL/mobile behavior.
+const Index = () => {
+  const { hash } = useLocation();
+  if (hash) return <OriginalLandingPage />;
+  return <main style={{ position: "fixed", inset: 0, background: "#080c0e", zIndex: 40 }}>
+    <iframe src="/tower/index.html" title="TCL Tech Solutions — The Connected Tower" allow="autoplay; fullscreen" style={{ width: "100%", height: "100%", border: 0, display: "block" }} />
+  </main>;
 };
 
 export default Index;
