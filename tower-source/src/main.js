@@ -41,7 +41,7 @@ function updateScroll(){
  const blend=THREE.MathUtils.smoothstep(local,.64,1);
  targetY=-(i+((reduce.matches||paused||compact.matches)?0:(i<5?blend:0)))*6.1;
  if(reduce.matches||paused||compact.matches)currentY=targetY;
- if(active!==i){dragX=0;active=i;fallback.src=BASE+'media/'+rooms[i].key+(rooms[i].key==='B2-armor-lab'?'.png':'.webp');fallback.alt=rooms[i].title+' populated room concept';syncVideo(i)}
+ if(active!==i){dragX=0;active=i;fallback.src=BASE+'media/'+rooms[i].key+(rooms[i].key==='B2-armor-lab'?'-v2.png':'.webp');fallback.alt=rooms[i].title+' populated room concept';syncVideo(i)}
  const entry=document.querySelector('#active-offering');entry.href=rooms[i].href;entry.textContent='Explore '+rooms[i].offering+' ↗';
  document.querySelector('#stage-floor').textContent=rooms[i].floor+' / '+rooms[i].title.toUpperCase();
  document.querySelectorAll('.floor-nav a').forEach((a,n)=>a.setAttribute('aria-current',String(n===i&&visible)));
@@ -88,7 +88,7 @@ async function init(){try{
  scene.add(new THREE.HemisphereLight(0xd0e6ea,0x182125,2));const lamp=new THREE.DirectionalLight(0xffd79c,3);lamp.position.set(2,9,10);scene.add(lamp);
  const gltf=await new GLTFLoader().loadAsync(BASE+'tower.glb');model=gltf.scene;scene.add(model);car=model.getObjectByName('Elevator_car');if(gltf.animations.length){mixer=new THREE.AnimationMixer(model);gltf.animations.forEach(clip=>mixer.clipAction(clip).play());metrics.animationClips=gltf.animations.length;}
  const loader=new THREE.TextureLoader();await Promise.all(rooms.map(async(r,i)=>{
- const texture=await loader.loadAsync(BASE+'media/'+r.key+(r.key==='B2-armor-lab'?'.png':'.webp'));texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
+ const texture=await loader.loadAsync(BASE+'media/'+r.key+(r.key==='B2-armor-lab'?'-v2.png':'.webp'));texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
  const panel=new THREE.Mesh(new THREE.PlaneGeometry(9,5.06),new THREE.MeshBasicMaterial({map:texture,toneMapped:false}));panel.position.set(0,-i*6.1,.58);scene.add(panel);panels[i]=panel;
  const glow=new THREE.Mesh(new THREE.PlaneGeometry(.025,4.72),new THREE.MeshBasicMaterial({color:0x55d7ec,transparent:true,opacity:.15,blending:THREE.AdditiveBlending,depthWrite:false}));glow.position.set(-4.43,-i*6.1,.61);scene.add(glow);glows.push(glow);
  }));
