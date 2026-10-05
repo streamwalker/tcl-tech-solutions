@@ -75,8 +75,8 @@
 /* Photography stays unobstructed on the right, with restrained copy on the left. */
 .tcl-hero { position: relative; min-height: min(100svh, 1040px); display: flex; align-items: center; isolation: isolate; padding: 150px 0 135px; }
 .tcl-hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
-.tcl-hero-shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(4,7,10,.76) 0%, rgba(4,7,10,.52) 34%, rgba(4,7,10,.12) 70%), linear-gradient(0deg, rgba(4,7,10,.78), transparent 34%); }
-.tcl-hero-copy { width: min(1600px, calc(100% - 112px)); margin-inline: auto; }
+.tcl-hero-shade { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: min(900px, 66vw); height: min(620px, 80%); z-index: -2; pointer-events: none; background: linear-gradient(90deg, rgba(4,7,10,.72), rgba(4,7,10,.48) 45%, transparent 100%); mask-image: linear-gradient(0deg, transparent, #000 20%, #000 80%, transparent); }
+.tcl-hero-copy { width: min(1600px, calc(100% - 112px)); margin-inline: auto; text-shadow: 0 2px 12px rgba(4,7,10,.45); }
 .tcl-hero h1 { font-size: clamp(52px, 6.2vw, 99px); font-weight: 450; line-height: 1.025; letter-spacing: -.06em; margin: 27px 0; max-width: 900px; text-wrap: balance; }
 .tcl-hero-copy > p:not(.tcl-eyebrow) { font-size: 16px; color: #d1d4d7; line-height: 1.8; max-width: 490px; margin-bottom: 32px; }
 .tcl-hero-bottom { position: absolute; bottom: 32px; left: 56px; right: 56px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255,255,255,.25); padding-top: 23px; }
@@ -251,7 +251,6 @@
   .tcl-nav-panel { max-height: calc(100svh - 70px); padding: 25px 28px 35px; gap: 35px; }
   .tcl-hero { min-height: 790px; padding-top: 145px; }
   .tcl-hero h1 { font-size: clamp(48px, 8vw, 70px); }
-  .tcl-hero-shade { background: linear-gradient(90deg, rgba(4,7,10,.85), rgba(4,7,10,.35)), linear-gradient(0deg, #06090d 0%, transparent 65%); }
   .tcl-hero-bottom > span { display: none; }
   .tcl-hero-bottom { justify-content: flex-end; }
   .tcl-service-grid { grid-template-columns: repeat(2,1fr); }
