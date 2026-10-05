@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BrandLogoGrid from "./BrandLogoGrid";
 import {
   Accordion,
   AccordionContent,
@@ -103,13 +104,6 @@ const internalLinks = [
   { to: "/cookie-policy", label: "Cookie Policy", desc: "Cookie usage" },
   { to: "/builder-deck", label: "Builder & Developer Resources", desc: "Builder deck" },
   { to: "/auth", label: "Sign In to My TCL Account", desc: "Account access" },
-];
-
-const brands = [
-  "Savant", "Lutron", "URC", "RTI", "Crestron",
-  "Sonos", "Bose", "JBL Synthesis", "AVA Cinema", "Ring", "Nest",
-  "Ecobee", "Sony", "Samsung", "LG", "Epson", "Denon", "Marantz",
-  "Ubiquiti", "Cisco Meraki", "Ruckus", "Aruba",
 ];
 
 const SEOContent = () => {
@@ -252,7 +246,7 @@ const SEOContent = () => {
           </div>
         </div>
 
-        {/* ── Brand Keywords ── */}
+        {/* ── Official Brand Logos ── */}
         <div id="brands">
           <h2 className="text-2xl font-bold text-foreground mb-3">
             Authorized Dealer & Certified Installer — Premium Technology Brands
@@ -261,13 +255,7 @@ const SEOContent = () => {
             As a veteran-owned smart home company in San Antonio, The Connected Lifestyle partners with 
             the industry's leading technology brands to deliver best-in-class residential and commercial installations.
           </p>
-          <div className="flex flex-wrap gap-3">
-            {brands.map((brand) => (
-              <span key={brand} className="bg-background border border-border text-foreground text-sm font-medium px-4 py-2 rounded-md">
-                {brand}
-              </span>
-            ))}
-          </div>
+          <BrandLogoGrid />
         </div>
       </div>
     </section>

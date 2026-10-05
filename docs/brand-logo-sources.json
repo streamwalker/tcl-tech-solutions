@@ -1,0 +1,413 @@
+{
+  "retrievedAt": "2026-10-05",
+  "sources": [
+    {
+      "brand": "Savant",
+      "localFilename": "savant.svg",
+      "localPath": "public/media/brands/savant.svg",
+      "website": "https://www.savant.com/",
+      "sourceUrl": "https://www.savant.com/static/07da280b7d745500164ccdaf9e1eee56/savantcom_vector-logo.svg",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Official current homepage header asset. Supplied dark brown artwork, #382E2B.",
+      "sha256": "84d5602d2077f83d66eff10b7fb2ef40fea9395e730d4e2cf24153b2136971c9",
+      "bytes": 2422,
+      "width": "153",
+      "height": "23",
+      "viewBox": "0 0 153 23"
+    },
+    {
+      "brand": "Lutron",
+      "localFilename": "lutron.svg",
+      "localPath": "public/media/brands/lutron.svg",
+      "website": "https://www.lutron.com/us/en",
+      "sourceUrl": "https://www-prod-ue1.lutron.com/us/themes/custom/lutron/logo-black.svg",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Official current homepage header asset, served by company-owned production host because www returned 403. Supplied dark gray #3E3E3E artwork.",
+      "sha256": "33226763a7722b62b4e49b5aced550fdc2bc78be41c0836a78c5cd2d6a8615f5",
+      "bytes": 6544,
+      "width": "108",
+      "height": "16",
+      "viewBox": "0 0 108 16"
+    },
+    {
+      "brand": "URC (Universal Remote Control)",
+      "localFilename": "urc.png",
+      "localPath": "public/media/brands/urc.png",
+      "website": "https://www.urc-automation.com/",
+      "sourceUrl": "https://www.urc-automation.com/wp-content/uploads/2017/09/logo-urc.png",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Official homepage header asset. Transparent black logo.",
+      "sha256": "3dc18f4ed68f79190bfd551ebd48d2091f6f3fd533f54174f0b44b6735b10280",
+      "bytes": 15551,
+      "width": 700,
+      "height": 173
+    },
+    {
+      "brand": "RTI (Remote Technologies)",
+      "localFilename": "rti.png",
+      "localPath": "public/media/brands/rti.png",
+      "website": "https://www.rticontrol.com/",
+      "sourceUrl": "https://www.avproglobal.com/cdn/shop/files/rti-logo.png?v=1687430095",
+      "background": "light",
+      "transparent": true,
+      "caveat": "rticontrol.com redirects to its official AVPro Global brand page, which supplies this purple header logo. Native 249 x 78 PNG; avoid enlarging beyond its native pixel width.",
+      "sha256": "85ae55feb680573229246469f60315b2791a6be7c9e51417a64026f7106c813a",
+      "bytes": 12200,
+      "width": 249,
+      "height": 78
+    },
+    {
+      "brand": "Crestron",
+      "localFilename": "crestron.png",
+      "localPath": "public/media/brands/crestron.png",
+      "website": "https://www.crestron.com/",
+      "sourceUrl": "https://kenticoprod.azureedge.net/kenticoblob/crestron/media/crestron/generalsiteimages/crestron-logo.png",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Official homepage header asset hosted on the CDN referenced by crestron.com. Blue artwork; small native 178 x 20 PNG, so use at 178 CSS pixels wide or less.",
+      "sha256": "5be499e797b1e9f5225f3ed770d57969cfb6b2414c96e9661140e51ef23e205b",
+      "bytes": 2810,
+      "width": 178,
+      "height": 20
+    },
+    {
+      "brand": "Sonos",
+      "localFilename": "sonos.svg",
+      "localPath": "public/media/brands/sonos.svg",
+      "website": "https://www.sonos.com/en-us/home",
+      "sourceUrl": "https://www.sonos.com/en-us/home",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Exact first inline header SVG copied verbatim from the official homepage. Original fill is currentColor, which renders black as an external image. Original em dimensions preserved; size in CSS without distortion.",
+      "sha256": "4f7fb77a1cc16dc5aa74ee996027f56935c1132e732af33c5cfa6af33a2c3221",
+      "bytes": 1816,
+      "width": "5em",
+      "height": "1em",
+      "viewBox": "0 0 514.55 106.88"
+    },
+    {
+      "brand": "Bose",
+      "localFilename": "bose.svg",
+      "localPath": "public/media/brands/bose.svg",
+      "website": "https://www.bose.com/home",
+      "sourceUrl": "https://www.bose.com/on/demandware.static/Sites-Bose_US-Site/-/default/dwd3b11170/images/logo.svg",
+      "background": "light",
+      "transparent": true,
+      "caveat": "Official homepage header asset. Supplied black artwork.",
+      "sha256": "4ca6f6f90b17df3258b9afe99d7081df3660f132945c1d20471dad894269cf8d",
+      "bytes": 2782,
+      "width": "170",
+      "height": "20",
+      "viewBox": "0 0 170 20"
+    },
+    {
+      "brand": "JBL Synthesis",
+      "filename": "jbl-synthesis.svg",
+      "website": "https://www.jblsynthesis.com/",
+      "source_url": "https://www.jblsynthesis.com/on/demandware.static/-/Sites-SYN-US-NCOM-Library/default/dw680ddb92/assets/images/logo.svg",
+      "background": "dark",
+      "dimensions": [
+        274,
+        54
+      ],
+      "viewBox": "0 0 274 54",
+      "caveat": "Official JBL Synthesis subbrand header asset, original colors and geometry.",
+      "local_path": "public/media/brands/jbl-synthesis.svg",
+      "sha256": "6033a80708e03fdb810d0ad1670ffbdd515da14ea82fc71e1eaba0702c176357",
+      "bytes": 8653
+    },
+    {
+      "brand": "AVA Cinema",
+      "filename": "ava.png",
+      "website": "https://www.ava.com/",
+      "source_url": "https://static.wixstatic.com/media/ef49d6_61a43e848b4640fbaa5528a420a44a5d~mv2.png",
+      "background": "dark",
+      "dimensions": [
+        1201,
+        600
+      ],
+      "alpha_bounds": [
+        148,
+        151,
+        1052,
+        449
+      ],
+      "caveat": "Official white AVA corporate wordmark from ava.com header. Cinema Remote is the product; no separate Cinema wordmark is claimed. Original transparent canvas retained.",
+      "local_path": "public/media/brands/ava.png",
+      "sha256": "abe05858c3ddd6177289141ed587a21f80cf6ea19295ca5bcda3e1f09f267734",
+      "bytes": 23480
+    },
+    {
+      "brand": "Ring",
+      "filename": "ring.svg",
+      "website": "https://ring.com/us/en",
+      "source_url": "https://site-nav.ring.com/media/ring-logo.svg",
+      "background": "light",
+      "viewBox": "0 0 194.85 122.05",
+      "dimensions": [
+        194.85,
+        122.05
+      ],
+      "caveat": "Official header asset; gray wordmark with original blue dot. No recoloring.",
+      "local_path": "public/media/brands/ring.svg",
+      "sha256": "07e47afea957a7d819ee169e9126c7715df582e1a051fca872e1816b5c6f3daf",
+      "bytes": 2801
+    },
+    {
+      "brand": "Nest",
+      "filename": "nest.svg",
+      "website": "https://nest.com/whats-happening/",
+      "source_url": "https://nest.com/nest-web-components.bundle.min.js?07012025002150258",
+      "background": "light",
+      "viewBox": "0 0 46 21",
+      "dimensions": [
+        46,
+        21
+      ],
+      "extraction": "Decoded original data:image/svg+xml;base64 export titled Nest Logo used by nl-global-header-nest-logo.",
+      "caveat": "Authentic legacy Nest wordmark still served by official nest.com components; this is not the newer Google Nest lockup. Google Partner Marketing Hub says logos are no longer shared for partner use and provides an access-request route.",
+      "guidelines_url": "https://partnermarketinghub.withgoogle.com/brands/google-nest/overview/overview/",
+      "local_path": "public/media/brands/nest.svg",
+      "sha256": "41cef5d2d93b10220054ce0a826f5b1834399fd4a415048fa9a9f08f5513c9dd",
+      "bytes": 1278
+    },
+    {
+      "brand": "ecobee",
+      "filename": "ecobee.png",
+      "website": "https://www.ecobee.com/en-us/newsroom/",
+      "source_url": "https://assets.ctfassets.net/a3qyhfznts9y/6i49dMoK4OhK3CZPDA7ZzG/30587a8719a3dc36b04ad7387a7838b3/Brand_Logo___CEO_Headshots.zip",
+      "archive_member": "Brand Logo & CEO Headshots/Brand-Logos/White/ecobee_white.png",
+      "background": "dark",
+      "dimensions": [
+        1500,
+        600
+      ],
+      "alpha_bounds": [
+        149,
+        178,
+        1351,
+        422
+      ],
+      "caveat": "Official white PNG from ecobee newsroom brand archive. Original transparent canvas retained.",
+      "local_path": "public/media/brands/ecobee.png",
+      "sha256": "c3c7286a0543c79422d738d0de4390ce820b3c4db0f485783b5fc910cdd15838",
+      "bytes": 16741
+    },
+    {
+      "brand": "Sony",
+      "filename": "sony.svg",
+      "website": "https://www.sony.co.jp/en/",
+      "source_url": "https://www.sony.co.jp/en/",
+      "background": "dark",
+      "viewBox": "0 0 100 18",
+      "dimensions": [
+        100,
+        18
+      ],
+      "extraction": "Exact inline svg from .cg-header__logo.",
+      "caveat": "Official Sony Corporation English header with original white paths.",
+      "local_path": "public/media/brands/sony.svg",
+      "sha256": "78b37a72f3a7258eba307eb30292dde94a2d5c256e2614650d7d2f244905118e",
+      "bytes": 4181
+    },
+    {
+      "brand": "Samsung",
+      "filename": "samsung.svg",
+      "website": "https://www.samsung.com/us/",
+      "source_url": "https://www.samsung.com/us/",
+      "background": "light",
+      "viewBox": "0 0 130 29",
+      "dimensions": [
+        130,
+        29
+      ],
+      "extraction": "Exact header SVG from .nv00-gnb-v4__logo, with xmlns added and HTML viewbox attribute normalized to XML viewBox. Paths/transforms unchanged.",
+      "caveat": "Official black wordmark; header includes 5-unit margin around 120x19 artwork.",
+      "local_path": "public/media/brands/samsung.svg",
+      "sha256": "7764dfbe7fa2ef5fcfe01a008a71a685ab9dfc0cb225c76ed5a42d96d9402913",
+      "bytes": 2224
+    },
+    {
+      "brand": "LG",
+      "local_filename": "lg.jpg",
+      "website": "https://www.lgcorp.com/about/ci/element",
+      "source_url": "https://www.lgcorp.com/images/common/img_ci_logo_pc2.jpg",
+      "background": "light",
+      "caveat": "Official LG corporate CI page asset; supplied JPEG includes white background.",
+      "local_path": "public/media/brands/lg.jpg",
+      "bytes": 14864,
+      "sha256": "790a9f583ad3ec693cabcdabba171b17f3b2d05964bc89ae3f96d2c705920577",
+      "width": 340,
+      "height": 149,
+      "format": "JPEG",
+      "mode": "RGB"
+    },
+    {
+      "brand": "Epson",
+      "local_filename": "epson.png",
+      "website": "https://epson.com/usa",
+      "source_url": "https://mediaserver.goepson.com/adaptivemedia/rendition?id=8c7ad5b2af1e4e117c60c715c5d079eeb865f74f&vid=8c7ad5b2af1e4e117c60c715c5d079eeb865f74f&prid=original&clid=SAPDAM&prclid=productpictures&assetDescr=logo-epson_420x100",
+      "background": "light",
+      "caveat": "Official header asset; blue wordmark on transparent background.",
+      "local_path": "public/media/brands/epson.png",
+      "bytes": 6793,
+      "sha256": "0199b85f9d0787c9d33bd42194c2c15e2f009b1ff707a5268dd9f6ebfa067640",
+      "width": 420,
+      "height": 100,
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_bbox": [
+        5,
+        4,
+        416,
+        96
+      ]
+    },
+    {
+      "brand": "Denon",
+      "local_filename": "denon.svg",
+      "website": "https://www.denon.com/en-us/",
+      "source_url": "https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dwb1d5bcd4/DENON_Logo_White.svg",
+      "background": "dark",
+      "caveat": "Official white footer wordmark; requires dark tile.",
+      "local_path": "public/media/brands/denon.svg",
+      "bytes": 4438,
+      "sha256": "3ef3cc4375219eebcab606903615ce743bbeeae6edd2f5505e3a0c012784c8e2",
+      "viewBox": "0 0 119 24",
+      "width": "119px",
+      "height": "24px"
+    },
+    {
+      "brand": "Marantz",
+      "local_filename": "marantz.svg",
+      "website": "https://www.marantz.com/en-us/",
+      "source_url": "https://www.marantz.com/on/demandware.static/-/Library-Sites-marantz_northamerica_shared/default/dw3253853a/Marantz_Logo_White.svg",
+      "background": "dark",
+      "caveat": "Official white footer wordmark; requires dark tile.",
+      "local_path": "public/media/brands/marantz.svg",
+      "bytes": 7281,
+      "sha256": "b6d107a20f7a38bbaa87f628df837727bcc852cffe723932cc648e230290d862",
+      "viewBox": "0 0 100 11",
+      "width": "100",
+      "height": "11"
+    },
+    {
+      "brand": "Ubiquiti",
+      "local_filename": "ubiquiti.png",
+      "website": "https://techspecs.ui.com/brand?tab=Ubiquiti",
+      "source_url": "https://techspecs.ui.com/static/brand/Ubiquiti/logo_horizontal_download.zip",
+      "archive_member": "ubiquitilogo-horizontal/UbiquitiHorizontal-logo-light.png",
+      "background": "dark",
+      "caveat": "Official brand pack white horizontal logo; requires dark tile. Original tightly framed PNG selected because SVG has substantial supplied whitespace.",
+      "local_path": "public/media/brands/ubiquiti.png",
+      "bytes": 1910717,
+      "sha256": "c38446e0e7ca58c8f2b479c6325e58b8ae50f5e5ab74b30a8aad0c6af16beeee",
+      "width": 5935,
+      "height": 1400,
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        0,
+        5935,
+        1400
+      ],
+      "optional_variants": [
+        {
+          "local_filename": "ubiquiti.svg",
+          "local_path": "public/media/brands/ubiquiti.svg",
+          "website": "https://techspecs.ui.com/brand?tab=Ubiquiti",
+          "source_url": "https://techspecs.ui.com/static/brand/Ubiquiti/logo_horizontal_download.zip",
+          "archive_member": "ubiquitilogo-horizontal/UbiquitiHorizontal-logo-light.svg",
+          "background": "dark",
+          "width": "1000",
+          "height": "500",
+          "viewBox": "0 0 1000 500",
+          "bytes": 4767,
+          "sha256": "9870c7dc91249b18bc58d335c0392f5d8ee40726033f679f1686ec5c65138d57",
+          "artwork_bounds": [
+            135.0,
+            163.833,
+            865.0,
+            336.166
+          ],
+          "artwork_dimensions": [
+            730.0,
+            172.333
+          ],
+          "supplied_margins": {
+            "left": 135.0,
+            "top": 163.833,
+            "right": 135.0,
+            "bottom": 163.834
+          },
+          "bounds_method": "Exact extrema of original SVG line and cubic Bezier path coordinates.",
+          "caveat": "Original official white horizontal SVG copied byte-for-byte from the brand ZIP. Canvas and substantial whitespace retained; no path changes or recoloring."
+        }
+      ]
+    },
+    {
+      "brand": "Cisco Meraki",
+      "local_filename": "cisco-meraki.png",
+      "website": "https://documentation.meraki.com/",
+      "source_url": "https://documentation.meraki.com/@public/production/site_13505/1749845593-logo.png",
+      "background": "light",
+      "caveat": "Official documentation header wordmark; dark lettering on transparent background.",
+      "local_path": "public/media/brands/cisco-meraki.png",
+      "bytes": 4910,
+      "sha256": "194f078dec4b0d9fd0b84a0f57a31eb8eea9a315cf1856e44af1cc44e46c07e8",
+      "width": 301,
+      "height": 68,
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_bbox": [
+        0,
+        5,
+        296,
+        63
+      ]
+    },
+    {
+      "brand": "Ruckus",
+      "local_filename": "ruckus.png",
+      "website": "https://www.ruckusnetworks.com/",
+      "source_url": "https://webresources.vistancenetworks.com/images/assets/RUCKUS-Networks-Logos-artwork_black-orange+%281%29.png/Zz1mM2Q2YTZmOGY3MmUxMWYwOGU2M2I2ZWM5OGJlMmFkNQ==",
+      "background": "light",
+      "caveat": "Official RUCKUS Networks header asset from the CDN referenced by its homepage; supplied black and orange artwork.",
+      "local_path": "public/media/brands/ruckus.png",
+      "bytes": 8813,
+      "sha256": "953632c00c5302fe2497113070dcb942e96c7e25d6938bb815078505113cb2e3",
+      "width": 458,
+      "height": 226,
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_bbox": [
+        34,
+        40,
+        423,
+        186
+      ]
+    },
+    {
+      "brand": "Aruba",
+      "local_filename": "aruba.svg",
+      "website": "https://developer.arubanetworks.com/central/docs",
+      "source_url": "https://files.readme.io/d8865c9-hpe_aruba_orange_pos_rgb.svg",
+      "background": "light",
+      "caveat": "Official HPE Aruba Networking developer portal logo hosted by its ReadMe documentation provider; orange and black variant.",
+      "local_path": "public/media/brands/aruba.svg",
+      "bytes": 4442,
+      "sha256": "f442ab140081d6769bfe6e933319eacf494e94e1683727345d58859f32dd4ffd",
+      "viewBox": "0 0 942.71 313.37",
+      "width": null,
+      "height": null
+    }
+  ],
+  "deliveryConversions": [],
+  "deliveryNotes": {
+    "Ubiquiti": "Official original SVG variant, unchanged; original transparent clear space is accommodated in CSS."
+  }
+}

@@ -1,0 +1,17 @@
+#brands { scroll-margin-top: 104px; }
+.brand-logo-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 28px 0 0; }
+.brand-logo-grid li { min-width: 0; }
+.brand-logo-card { display: flex; flex-direction: column; gap: 14px; height: 100%; padding: 12px; border: 1px solid #2a2e31; border-radius: 10px; background: #131719; color: #d9dcde; text-decoration: none; transition: border-color .18s ease, background-color .18s ease; }
+.brand-logo-card:hover { border-color: #a59366; background: #1a1f22; }
+.brand-logo-card:focus-visible { outline: 2px solid #dfc580; outline-offset: 4px; }
+.brand-logo-visual { display: flex; align-items: center; justify-content: center; height: 104px; padding: 18px; border-radius: 5px; }
+.brand-logo-visual--light { background: #fff; }
+.brand-logo-visual--dark { background: #131719; }
+.brand-logo-visual img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.brand-logo-visual:has(img[src$="/ubiquiti.svg"]) { padding: 0; }
+.brand-logo-caption { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 2px 2px; font-size: 12px; line-height: 1.35; }
+.brand-logo-caption > span { color: #9b9f9f; }
+@media (max-width: 1100px) { .brand-logo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .brand-logo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .brand-logo-visual { height: 94px; padding: 14px; } }
+@media (max-width: 480px) { .brand-logo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .brand-logo-card { padding: 10px; gap: 12px; } }
+@media (prefers-reduced-motion: reduce) { .brand-logo-card { transition: none; } }
