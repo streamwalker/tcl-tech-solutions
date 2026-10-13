@@ -348,6 +348,49 @@ function ContactSection() {
 
 const TCLHome = () => {
   const [activeSection, setActiveSection] = useState("hero");
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let lastInteraction = -Infinity;
+    let leaving = false;
+    const noteInteraction = () => { lastInteraction = performance.now(); };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", "End", " "].includes(event.key)) noteInteraction();
+    };
+    const reset = () => {
+      lastScrollY = window.scrollY;
+      lastInteraction = -Infinity;
+      leaving = false;
+    };
+    const onScroll = () => {
+      const scroller = document.scrollingElement;
+      const currentY = window.scrollY;
+      const movingDown = currentY > lastScrollY;
+      lastScrollY = currentY;
+      // Only visitor scrolling completes the tour; restored history positions do not.
+      if (!scroller || leaving || !movingDown || performance.now() - lastInteraction >= 2500 ||
+          document.querySelector('dialog[open], [role="dialog"]') ||
+          document.activeElement?.matches('input, textarea, select, [contenteditable="true"]')) return;
+      if (scroller.scrollHeight > scroller.clientHeight + 4 &&
+          scroller.scrollHeight - scroller.clientHeight - currentY <= 4) {
+        leaving = true;
+        window.location.assign("/tower/index.html");
+      }
+    };
+    window.addEventListener("wheel", noteInteraction, { passive: true });
+    window.addEventListener("touchmove", noteInteraction, { passive: true });
+    window.addEventListener("pointerdown", noteInteraction, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pageshow", reset);
+    return () => {
+      window.removeEventListener("wheel", noteInteraction);
+      window.removeEventListener("touchmove", noteInteraction);
+      window.removeEventListener("pointerdown", noteInteraction);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pageshow", reset);
+    };
+  }, []);
   const { hash } = useLocation();
   useEffect(() => {
     const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) setActiveSection(entry.target.id); }); }, { rootMargin: "-10% 0px -55% 0px" });
@@ -363,16 +406,4 @@ const TCLHome = () => {
   return <div className="tcl-home"><a className="tcl-skip-link" href="#main-content">Skip to content</a><Navbar activeSection={activeSection} /><main id="main-content"><HeroSection /><ServicesSection /><TowerSection /><PortfolioSection /><VideoSection /><ProcessSection /><ReviewsSection /><AboutSection /><FAQSection /><ContactSection /><div className="tcl-resources"><SEOContent /></div></main><div className="tcl-footer"><Footer /></div><ChatBot /></div>;
 };
 
-const Index = () => {
-  const { pathname, hash, search } = useLocation();
-  const openTower = (pathname === "/" || pathname === "/index.html") && !hash;
-  useEffect(() => {
-    if (openTower) window.location.replace(`/tower/index.html${search}`);
-  }, [openTower, search]);
-  if (openTower) {
-    return <main style={{ minHeight: "100svh", display: "grid", placeItems: "center", background: "#080c0e", color: "#dfbd76" }}><a href={`/tower/index.html${search}`}>Enter the Connected Tower →</a></main>;
-  }
-  return <TCLHome />;
-};
-
-export default Index;
+export default TCLHome;
