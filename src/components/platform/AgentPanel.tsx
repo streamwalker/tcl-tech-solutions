@@ -89,7 +89,7 @@ export function AgentPanel({ open, onClose }: AgentPanelProps) {
   if (!open) return null;
 
   return (
-    <div className="w-[380px] border-l border-border bg-card flex flex-col h-full">
+    <div className="tcl-agent-panel w-[380px] border-l border-border bg-card flex flex-col h-full">
       {/* Header */}
       <div className="h-12 flex items-center justify-between px-4 border-b border-border shrink-0">
         <div className="flex items-center gap-2">

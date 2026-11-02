@@ -1,3 +1,4 @@
+import FoldCompanion from "./components/FoldCompanion";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -258,6 +259,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <KnowledgeProvider>
+        <FoldCompanion />
         <Routes>
           <Route path="/" element={<Page path="/"><Index /></Page>} />
           <Route path="/index.html" element={<Page path="/"><Index /></Page>} />

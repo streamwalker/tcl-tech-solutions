@@ -1,0 +1,101 @@
+/* Window-size responsive baseline, including Duo outer/inner displays and split view. */
+html { scroll-padding-top: calc(88px + env(safe-area-inset-top, 0px)); }
+body { min-width: 0; }
+#root { min-width: 0; }
+#root :where(main, section, article, form, .flex-1) { min-width: 0; }
+#root :where(h1,h2,h3,p,a,button,label) { overflow-wrap: anywhere; }
+#root :where(img,video,iframe) { max-width: 100%; }
+#root :where(pre) { max-width: 100%; overflow-x: auto; }
+.tcl-dialog[role="dialog"] { max-width: calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); max-height: min(90dvh, calc(var(--visible-height, 100dvh) - 24px)); overflow-y: auto; overscroll-behavior: contain; }
+.tcl-home .tcl-nav { padding-top: env(safe-area-inset-top); }
+.tcl-home .tcl-nav-inner { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+.tcl-home .tcl-nav-panel { max-height: calc(var(--visible-height, 100dvh) - 80px - env(safe-area-inset-top)); overflow-y: auto; overscroll-behavior: contain; }
+.tcl-home .tcl-lightbox, .tcl-lightbox { max-height: 100dvh; overflow-y: auto; }
+.tcl-home .tcl-footer { padding-bottom: env(safe-area-inset-bottom); }
+.tcl-platform-shell { min-height: 100dvh; }
+.tcl-platform-header { height: auto; min-height: 52px; flex-wrap: wrap; gap: 8px; padding-block: 8px; }
+.tcl-agent-panel { flex-shrink: 0; max-width: 100%; }
+@media (max-width: 1100px) {
+  .tcl-platform-workspace { flex-direction: column; }
+  .tcl-platform-workspace > .tcl-agent-panel { width: 100%; height: min(520px, 75dvh); border-left: 0; border-top: 1px solid hsl(var(--border)); }
+}
+@media (pointer: coarse) {
+  #root :where(button, [role="tab"], [role="menuitem"]) { min-height: 44px; }
+  #root :where(input,select,textarea) { font-size: max(16px, 1em); }
+  .tcl-home .tcl-nav-toggle { min-width: 44px; }
+}
+/* Keep complete hero imagery visible in all phone/tablet windows, including short landscape. */
+@media (max-width: 1024px) {
+  .tcl-home .tcl-hero { min-height: 0; display: block; padding: calc(80px + env(safe-area-inset-top)) 0 0; }
+  .tcl-home .tcl-hero-media { position: relative; inset: auto; aspect-ratio: 16/9; z-index: 0; background: #08090b; }
+  .tcl-home .tcl-hero-image, .tcl-home .tcl-hero-video { object-fit: contain; }
+  .tcl-home .tcl-hero-shade { display: none; }
+  .tcl-home .tcl-hero-copy { padding-block: 28px; }
+  .tcl-home .tcl-hero h1 { font-size: clamp(36px, 7vw, 66px); }
+  .tcl-home .tcl-hero-playback { top: calc(92px + env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); }
+  .tcl-home .tcl-hero-bottom { position: static; margin-inline: 24px; padding-block: 20px; flex-wrap: wrap; }
+  .tcl-home .tcl-nav-primary { display: none; }
+  .tcl-home .tcl-nav-inner { min-height: 80px; gap: 12px; }
+}
+@media (max-width: 700px) {
+  .tcl-home .tcl-container { width: calc(100% - 40px); }
+  .tcl-home .tcl-tower, .tcl-home .tcl-founder, .tcl-home .tcl-review-grid { grid-template-columns: minmax(0,1fr); }
+  .tcl-home .tcl-contact .tcl-section-heading h2 { font-size: clamp(34px, 9vw, 54px); }
+  .tcl-home .tcl-nav-panel { grid-template-columns: minmax(0,1fr); }
+  .tcl-home .tcl-service-banner { min-height: 280px; }
+}
+@media (max-width: 400px) {
+  .tcl-home .tcl-nav-quote { display: none; }
+  .tcl-home .tcl-service-grid { grid-template-columns: minmax(0,1fr); }
+  .tcl-home .tcl-tabs { display: flex; flex-wrap: wrap; }
+  .tcl-home .tcl-tabs button { flex: 1 1 auto; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .tcl-home .tcl-hero-media { max-height: 65svh; aspect-ratio: auto; height: 65svh; }
+  .tcl-home .tcl-nav-panel { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+  .tcl-chat-dialog[role="dialog"] { bottom: 8px; right: 8px; height: calc(var(--visible-height,100dvh) - 16px); }
+}
+/* Progressive enhancement when the browser exposes the fold's actual geometry. */
+html[data-segments="book"] #root { width: var(--segment-0-width); }
+html[data-segments="book"] #root:has(.tcl-home) { width: 100%; }
+html[data-segments="book"] .tcl-home .tcl-hero { display: grid; grid-template-columns: var(--segment-0-width) calc(var(--segment-1-left) - var(--segment-0-right)) var(--segment-1-width); padding: 96px 0 24px; }
+html[data-segments="book"] .tcl-hero .tcl-hero-copy { grid-column: 1; grid-row: 1; width: calc(100% - 40px); }
+html[data-segments="book"] .tcl-hero .tcl-hero-media { grid-column: 3; grid-row: 1; position: relative; inset: auto; align-self: center; aspect-ratio: 16/9; z-index: 0; }
+html[data-segments="book"] .tcl-hero .tcl-hero-image, html[data-segments="book"] .tcl-hero .tcl-hero-video { object-fit: contain; }
+html[data-segments="book"] .tcl-hero .tcl-hero-shade { display: none; }
+html[data-segments="book"] .tcl-hero .tcl-hero-playback { top: 100px; right: 16px; }
+html[data-segments="book"] .tcl-hero .tcl-hero-bottom { grid-column: 3; position: static; margin: 20px; }
+html[data-segments="book"] .tcl-hero h1 { font-size: clamp(32px,4vw,54px); }
+html[data-segments="book"] .tcl-home main > :not(.tcl-hero), html[data-segments="book"] .tcl-home .tcl-footer { max-width: var(--segment-0-width); margin-inline: 0; }
+html[data-segments="book"] .tcl-home .tcl-nav-inner { width: 100%; padding: 12px; display: grid; grid-template-columns: calc(var(--segment-0-width) - 24px) 1fr; column-gap: calc(var(--segment-1-left) - var(--segment-0-right) + 24px); }
+html[data-segments="book"] .tcl-nav-primary { display: none; }
+html[data-segments="book"] .tcl-home .tcl-nav-actions { justify-content: flex-end; }
+html[data-segments="book"] .tcl-home .tcl-nav-panel { width: var(--segment-1-width); margin-left: var(--segment-1-left); grid-template-columns: 1fr; }
+html[data-segments="book"] .tcl-dialog[role="dialog"] { left: calc(var(--segment-1-left) + var(--segment-1-width)/2); right: auto; max-width: calc(var(--segment-1-width) - 24px); transform: translate(-50%,-50%); }
+html[data-segments="book"] .tcl-home :is(.tcl-tower,.tcl-founder,.tcl-contact-layout,.tcl-service-grid,.tcl-project-grid,.tcl-keynote,.tcl-about-intro,.tcl-faq-layout,.tcl-review-grid) { grid-template-columns: minmax(0,1fr); }
+html[data-segments="book"] .tcl-home .tcl-container { width: calc(100% - 32px); }
+html[data-segments="book"] .tcl-home .tcl-heading-row { flex-direction: column; align-items: start; }
+html[data-segments="book"] .brand-logo-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+html[data-segments="stacked"] .tcl-home .tcl-hero-media { height: max(160px,calc(var(--segment-0-height) - 96px)); aspect-ratio: auto; }
+html[data-segments="stacked"] .tcl-home .tcl-hero-copy { padding-top: calc(var(--segment-1-top) - var(--segment-0-bottom) + 24px); }
+.tcl-fold-companion { display: none; }
+html[data-segments="book"] .tcl-fold-companion[data-hero-visible="false"] { display: block; position: fixed; z-index: 1; left: var(--segment-1-left); top: 96px; width: var(--segment-1-width); max-height: calc(100dvh - 112px); overflow-y: auto; padding: 20px; background: #111316; color: #f5f3ed; }
+.tcl-fold-companion img { width: 100%; height: auto; object-fit: contain; }
+.tcl-fold-companion h2 { font-size: 28px; line-height: 1.2; margin: 16px 0; }
+.tcl-fold-companion p { color: #dfbd76; font-size: 12px; margin-top: 20px; }
+.tcl-fold-companion nav { display: grid; gap: 12px; }
+.tcl-fold-companion a { display: block; min-height: 44px; padding: 12px; border: 1px solid #776c55; }
+html[data-segments="book"] #root > :not(.tcl-home) :is(nav.fixed,nav.sticky) { max-width: var(--segment-0-width); }
+html[data-segments="book"] .tcl-home .tcl-service-banner { min-height: 280px; }
+html[data-segments="book"] .tcl-home .tcl-nav-quote { display: none; }
+html[data-segments="book"] .tcl-home .tcl-section-heading h2 { font-size: 36px; }
+html[data-segments="book"] .tcl-home .tcl-stats { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 24px 16px; }
+html[data-segments="book"] .tcl-home .tcl-tabs { flex-wrap: wrap; }
+html[data-segments="book"] .tcl-home .tcl-project { min-height: 300px; }
+html[data-segments="book"] .tcl-home .tcl-footer .grid { grid-template-columns: minmax(0,1fr); }
+
+html[data-segments="book"] .tcl-secondary-nav :is(.md\:flex,.lg\:flex) { display: none; }
+html[data-segments="book"] .tcl-secondary-nav :is(.md\:hidden,.lg\:hidden) { display: block; }
+html[data-segments="book"] #root:not(:has(.tcl-home)) :is([class*="md:grid-cols-"],[class*="lg:grid-cols-"]) { grid-template-columns: minmax(0,1fr); }
+
+html[data-segments="book"] .tcl-cookie-banner { left: var(--segment-1-left); width: var(--segment-1-width); max-height: calc(var(--visible-height,100dvh) - 24px); overflow: auto; }

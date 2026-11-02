@@ -48,7 +48,7 @@ const CookieConsent = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
+    <div className="tcl-cookie-banner fixed bottom-0 left-0 right-0 z-50 p-4">
       <div className="max-w-4xl mx-auto bg-card border border-border rounded-xl shadow-lg p-6">
         <div className="flex items-start justify-between mb-4">
           <h3 className="text-lg font-semibold text-foreground">Cookie Preferences</h3>

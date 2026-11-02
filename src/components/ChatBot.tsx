@@ -120,7 +120,7 @@ const ChatBot = () => {
 
       {/* Chat Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="fixed bottom-6 right-6 top-auto left-auto m-0 max-w-sm w-80 h-96 p-0 translate-x-0 translate-y-0 data-[state=open]:slide-in-from-bottom-2 data-[state=closed]:slide-out-to-bottom-2">
+        <DialogContent className="tcl-chat-dialog fixed bottom-6 right-6 top-auto left-auto m-0 max-w-sm w-80 h-96 p-0 translate-x-0 translate-y-0 data-[state=open]:slide-in-from-bottom-2 data-[state=closed]:slide-out-to-bottom-2">
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b bg-blue-600 text-white rounded-t-lg">

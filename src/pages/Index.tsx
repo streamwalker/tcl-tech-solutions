@@ -382,6 +382,8 @@ const TCLHome = () => {
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pageshow", reset);
+    window.addEventListener("resize", reset);
+    window.addEventListener("tcl:viewportchange", reset);
     return () => {
       window.removeEventListener("wheel", noteInteraction);
       window.removeEventListener("touchmove", noteInteraction);
@@ -389,6 +391,8 @@ const TCLHome = () => {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pageshow", reset);
+      window.removeEventListener("resize", reset);
+      window.removeEventListener("tcl:viewportchange", reset);
     };
   }, []);
   const { hash } = useLocation();

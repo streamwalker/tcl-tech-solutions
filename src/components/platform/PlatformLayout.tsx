@@ -19,10 +19,10 @@ export function PlatformLayout({ children }: PlatformLayoutProps) {
   return (
     <AgentProvider>
       <SidebarProvider>
-        <div className="min-h-screen flex w-full">
+        <div className="tcl-platform-shell min-h-screen flex w-full">
           <PlatformSidebar onToggleAgent={() => setAgentOpen((o) => !o)} agentOpen={agentOpen} />
           <div className="flex-1 flex flex-col min-w-0">
-            <header className="h-12 flex items-center border-b border-border bg-card px-4 justify-between">
+            <header className="tcl-platform-header h-12 flex items-center border-b border-border bg-card px-4 justify-between">
               <div className="flex items-center gap-2">
                 <SidebarTrigger />
                 <span className="text-sm font-medium text-muted-foreground">TCL Integration Platform</span>
@@ -43,8 +43,8 @@ export function PlatformLayout({ children }: PlatformLayoutProps) {
               </div>
             </header>
             <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 flex overflow-hidden">
-                <main className="flex-1 p-6 overflow-auto">
+              <div className="tcl-platform-workspace flex-1 flex overflow-hidden">
+                <main className="min-w-0 flex-1 p-4 sm:p-6 overflow-auto">
                   {children}
                 </main>
                 <AgentPanel open={agentOpen} onClose={() => setAgentOpen(false)} />

@@ -1,0 +1,68 @@
+/* Full-frame artwork and usable controls across changing window sizes. */
+html { scroll-padding-top: 0; }
+body { min-width: 0; }
+header { padding-top: env(safe-area-inset-top); padding-left: max(16px,env(safe-area-inset-left)); padding-right: max(16px,env(safe-area-inset-right)); }
+header button { min-height: 44px; min-width: 44px; }
+#site-menu { max-height: calc(var(--visible-height,100dvh) - 24px); overflow-y: auto; overscroll-behavior: contain; }
+#site-search { font-size: 16px; }
+#site-menu a { overflow-wrap: anywhere; }
+#close-menu { min-width: 44px; min-height: 44px; }
+@media (max-width: 1024px), (orientation: portrait) {
+  :root { --scene-top: calc(80px + env(safe-area-inset-top)); --scene-height: min(56.25vw, 38svh); --copy-top: calc(var(--scene-top) + var(--scene-height) + 18px); }
+  header { height: var(--scene-top); background: #080c0e; }
+  .wordmark { gap: 6px; font-size: 9px; }
+  .wordmark small { font-size: 5px; }
+  .header-actions { gap: 2px; }
+  .header-actions .book { display: none; }
+  #menu-toggle,#overview-toggle,#motion { font-size: 10px; }
+  #overview-toggle,#motion { max-width: 48px; }
+  #stage { width: 100%; height: var(--scene-height); top: var(--scene-top); left: 0; right: auto; bottom: auto; z-index: 3; background: #080c0e; }
+  #stage:after,.stage-caption { display: none; }
+  #stage-fallback { object-fit: contain; }
+  .intro { display: block; background: none; padding: var(--copy-top) 20px 100px; min-height: 110svh; }
+  .intro h1 { font-size: clamp(30px,7vw,56px); }
+  .intro .lede { max-width: 560px; font-size: 14px; }
+  .concept-directory { width: 100%; max-width: none; margin-top: 24px; padding: 12px; }
+  .concept-directory img { display: none; }
+  .concept-floor-grid span { min-height: 44px; }
+  .room { min-height: 160svh; padding: var(--copy-top) 20px 150px; }
+  .room-copy { width: 100%; max-width: none; position: relative; top: auto; padding: 0; text-shadow: none; background: #080c0e; }
+  .room h2 { font-size: clamp(28px,6vw,46px); }
+  .room .description { max-width: 600px; font-size: 14px; }
+  .floor-nav { inset: auto 16px calc(72px + env(safe-area-inset-bottom)); flex-direction: row; transform: none; gap: 2px; background: #080c0ef5; border: 1px solid #33464a; }
+  .floor-nav a { min-height: 44px; flex: 1; text-align: center; padding: 14px 2px; font-size: 10px; }
+  .floor-nav a[aria-current=true]:before { display: none; }
+  .active-offering { inset: auto 16px calc(20px + env(safe-area-inset-bottom)); max-width: none; min-height: 44px; text-align: center; padding: 13px 8px; font-size: 11px; }
+  .journey { display: none; }
+  .finale { padding: 70px 20px calc(40px + env(safe-area-inset-bottom)); }
+  .finale-path { grid-template-columns: 1fr; }
+  .finale-path a+a { border-left: 0; border-top: 1px solid #3b504e; }
+  footer { flex-wrap: wrap; gap: 16px; font-size: 9px; }
+  .overview-mode #stage { top: var(--scene-top); height: calc(100svh - var(--scene-top) - 140px); width: 100%; }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  :root { --scene-top: calc(64px + env(safe-area-inset-top)); --scene-height: calc(100svh - var(--scene-top) - 80px); --copy-top: calc(var(--scene-top) + 16px); }
+  #stage { width: 52%; }
+  .intro,.room { padding: var(--copy-top) 20px 100px 56%; }
+  .intro h1 { font-size: clamp(26px,4vw,42px); }
+  .intro .lede,.room .description { font-size: 13px; }
+  .intro .subtle,.concept-directory { display: none; }
+  .floor-nav { right: 49%; bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .active-offering { left: 56%; bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .overview-mode #stage { width: 52%; height: var(--scene-height); }
+}
+@media (max-width: 400px) { .wordmark small { display: none; } .wordmark > span:last-child { max-width: 95px; } }
+html[data-segments="book"] #stage { width: var(--segment-0-width); height: calc(100svh - 160px); left: var(--segment-0-left); top: 88px; }
+html[data-segments="book"] .intro,html[data-segments="book"] .room { display: block; padding: 100px 20px 140px calc(var(--segment-1-left) + 20px); }
+html[data-segments="book"] .room-copy { width: 100%; max-width: none; position: relative; top: auto; }
+html[data-segments="book"] .intro h1 { font-size: clamp(30px,4vw,48px); }
+html[data-segments="book"] .concept-directory { display: block; width: 100%; margin-top: 20px; }
+html[data-segments="book"] .floor-nav { left: 16px; right: calc(100vw - var(--segment-0-right) + 16px); bottom: 20px; }
+html[data-segments="book"] .active-offering { left: calc(var(--segment-1-left) + 16px); right: 16px; bottom: 20px; }
+html[data-segments="book"] .finale { margin-left: var(--segment-1-left); padding: 90px 20px 50px; }
+html[data-segments="book"] #site-menu { width: calc(var(--segment-1-width) - 24px); margin-left: calc(var(--segment-1-left) + 12px); }
+html[data-segments="stacked"] { --scene-top: 80px; --scene-height: max(80px,calc(var(--segment-0-height) - 90px)); --copy-top: calc(var(--segment-1-top) + 16px); }
+html[data-segments="stacked"] #stage { top: var(--scene-top); left: 0; width: 100%; height: var(--scene-height); }
+html[data-segments="stacked"] .intro,html[data-segments="stacked"] .room { padding: var(--copy-top) 20px 150px; }
+html[data-segments="stacked"] .room-copy { position: relative; top: auto; }
+html[data-segments="stacked"] #site-menu { max-height: calc(var(--segment-1-height) - 24px); margin-top: calc(var(--segment-1-top) + 12px); }
