@@ -106,6 +106,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
+              <li><a href="/documents/TCL-Tech-Solutions-Capability-Statement.pdf" download className="text-gray-300 hover:text-blue-400 transition-colors text-sm">Capability Statement (PDF)</a></li>
               {company.map((item) => (
                 <li key={item.label}>
                   <Link to={item.to} className="text-gray-300 hover:text-blue-400 transition-colors text-sm">{item.label}</Link>
