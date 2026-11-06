@@ -376,3 +376,6 @@
 /* Approved interactive capability statement download. */
 .tcl-home .tcl-capability-download { margin-top: 24px; flex-wrap: wrap; max-width: 100%; text-align: center; }
 .tcl-capability-download span { font-size: 11px; opacity: .75; white-space: nowrap; }
+
+.tcl-hero .tcl-app-download { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
+.tcl-hero .tcl-capability-download { margin-top: 0; text-shadow: none; }

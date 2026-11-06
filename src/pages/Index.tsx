@@ -216,6 +216,7 @@ function HeroSection() {
         <p>Smart home automation, custom AV, commercial installations, and builder pre-wire packages — designed and installed with military precision.</p>
         <div className="tcl-actions"><a className="tcl-button" href="#contact">Get your free quote <ArrowUpRight size={18} /></a><a className="tcl-text-link" href="#services">Discover the possibilities <ArrowRight size={18} /></a></div>
         <div className="tcl-app-download">
+          <a className="tcl-button tcl-capability-download" href="/documents/TCL-Tech-Solutions-Capability-Statement.pdf" download><Download size={18} aria-hidden="true" />Download Capability Statement <span>PDF · 2 pages</span></a>
           <a className="tcl-app-store-badge" href="https://apps.apple.com/us/app/tcltechsolutions/id6787331106" aria-label="Download TCLTechSolutions on the App Store">
             <img src="/media/download-on-the-app-store.svg" alt="Download on the App Store" width={144} height={48} />
           </a>
