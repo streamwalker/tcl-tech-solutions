@@ -12,6 +12,7 @@ export default function BrandLogoGrid() {
   const [playing, setPlaying] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(true);
   const [hovered, setHovered] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [onScreen, setOnScreen] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [visibleSlides, setVisibleSlides] = useState<number[]>([0, 1, 2, 3]);
@@ -40,19 +41,20 @@ export default function BrandLogoGrid() {
       setVisibleSlides(api.slidesInView());
       setSelected(api.selectedScrollSnap());
     };
-    const stop = () => setPlaying(false);
+    const startDrag = () => setDragging(true);
+    const endDrag = () => setDragging(false);
     update();
-    api.on("slidesInView", update).on("select", update).on("reInit", update).on("pointerDown", stop);
+    api.on("slidesInView", update).on("select", update).on("reInit", update).on("pointerDown", startDrag).on("pointerUp", endDrag);
     return () => {
-      api.off("slidesInView", update).off("select", update).off("reInit", update).off("pointerDown", stop);
+      api.off("slidesInView", update).off("select", update).off("reInit", update).off("pointerDown", startDrag).off("pointerUp", endDrag);
     };
   }, [api]);
 
   useEffect(() => {
-    if (!api || !playing || reducedMotion || hovered || !onScreen || !pageVisible) return;
+    if (!api || !playing || reducedMotion || hovered || dragging || !onScreen || !pageVisible) return;
     const timer = window.setInterval(() => api.scrollNext(), 5500);
     return () => window.clearInterval(timer);
-  }, [api, playing, reducedMotion, hovered, onScreen, pageVisible]);
+  }, [api, playing, reducedMotion, hovered, dragging, onScreen, pageVisible]);
 
   const navigate = (direction: "previous" | "next") => {
     setPlaying(false);
@@ -68,7 +70,7 @@ export default function BrandLogoGrid() {
           navigate(event.key === "ArrowLeft" ? "previous" : "next");
         }
       }}>
-      <div className="brand-carousel-viewport" ref={viewportRef} onPointerEnter={() => setHovered(true)} onPointerLeave={() => setHovered(false)}>
+      <div className="brand-carousel-viewport" ref={viewportRef} onPointerEnter={(event) => setHovered(event.pointerType === "mouse")} onPointerLeave={() => setHovered(false)}>
         <div className="brand-carousel-track" aria-live="off">
           {technologyBrands.map((brand, index) => (
             <div className="brand-carousel-slide" key={brand.name} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${technologyBrands.length}`} aria-hidden={!visibleSlides.includes(index)}>

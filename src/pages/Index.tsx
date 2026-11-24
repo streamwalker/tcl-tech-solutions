@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Plus, Check, Phone, Mail,
 import { supabase } from "@/integrations/supabase/client";
 import ChatBot from "../components/ChatBot";
 import Footer from "../components/Footer";
+import BrandLogoGrid from "../components/BrandLogoGrid";
 import SEOContent from "../components/SEOContent";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
@@ -229,6 +230,21 @@ function HeroSection() {
   </>;
 }
 
+function BrandsSection() {
+  return (
+    <section id="brands" className="tcl-container pt-16" aria-labelledby="brands-title">
+      <h2 id="brands-title" className="text-2xl font-bold text-foreground">
+        Authorized Dealer &amp; Certified Installer — Premium Technology Brands
+      </h2>
+      <p className="pt-3 text-muted-foreground">
+        As a veteran-owned smart home company in San Antonio, The Connected Lifestyle partners with
+        the industry's leading technology brands to deliver best-in-class residential and commercial installations.
+      </p>
+      <BrandLogoGrid />
+    </section>
+  );
+}
+
 function ServicesSection() {
   const [tab, setTab] = useState("residential");
   const tabs = [{ key: "residential", label: "Homeowners", desc: "Smart living starts here", image: portfolioSmartHome }, { key: "commercial", label: "Businesses", desc: "Bars, restaurants, offices & more", image: portfolioRestaurantAv }, { key: "builders", label: "Builders", desc: "Production & custom builders", image: portfolioPrewire }];
@@ -408,7 +424,7 @@ const TCLHome = () => {
     const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: "start" }));
     return () => cancelAnimationFrame(frame);
   }, [hash]);
-  return <div className="tcl-home"><a className="tcl-skip-link" href="#main-content">Skip to content</a><Navbar activeSection={activeSection} /><main id="main-content"><HeroSection /><ServicesSection /><TowerSection /><PortfolioSection /><VideoSection /><ProcessSection /><ReviewsSection /><AboutSection /><FAQSection /><ContactSection /><div className="tcl-resources"><SEOContent /></div></main><div className="tcl-footer"><Footer /></div><ChatBot /></div>;
+  return <div className="tcl-home"><a className="tcl-skip-link" href="#main-content">Skip to content</a><Navbar activeSection={activeSection} /><main id="main-content"><HeroSection /><BrandsSection /><ServicesSection /><TowerSection /><PortfolioSection /><VideoSection /><ProcessSection /><ReviewsSection /><AboutSection /><FAQSection /><ContactSection /><div className="tcl-resources"><SEOContent /></div></main><div className="tcl-footer"><Footer /></div><ChatBot /></div>;
 };
 
 export default TCLHome;

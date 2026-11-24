@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import BrandLogoGrid from "./BrandLogoGrid";
 import {
   Accordion,
   AccordionContent,
@@ -244,18 +243,6 @@ const SEOContent = () => {
               </Link>
             ))}
           </div>
-        </div>
-
-        {/* ── Official Brand Logos ── */}
-        <div id="brands">
-          <h2 className="text-2xl font-bold text-foreground mb-3">
-            Authorized Dealer & Certified Installer — Premium Technology Brands
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            As a veteran-owned smart home company in San Antonio, The Connected Lifestyle partners with 
-            the industry's leading technology brands to deliver best-in-class residential and commercial installations.
-          </p>
-          <BrandLogoGrid />
         </div>
       </div>
     </section>
